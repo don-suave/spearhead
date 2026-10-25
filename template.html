@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spearhead Online – Prototyp</title>
+<style>
+:root{color-scheme:dark;--bg:#0c0e11;--panel:#1b1e24;--ink:#ece6d8;--mute:#a09b90;--gold:#d2a94a;--line:#3a3f48}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font:14px/1.35 Georgia,serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top,0px) + 6px) 8px 14px;display:flex;gap:8px;align-items:center;pointer-events:none;background:linear-gradient(#000b,#0000)}
+.pill{background:#14171cd9;border:1px solid var(--line);border-radius:18px;padding:5px 11px;pointer-events:auto;white-space:nowrap;font-size:13px}
+#hud .sp{flex:1}#mu{position:fixed;left:8px;right:8px;top:calc(env(safe-area-inset-top,0px) + 46px);text-align:center;pointer-events:none;z-index:4}#mu .pill{pointer-events:none;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;font-weight:bold;font-size:12px;padding:3px 10px}
+button{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+button:disabled{opacity:.4}
+#undo{width:36px;height:34px;padding:0;border-radius:18px;pointer-events:auto;background:#14171cd9;font-size:17px}#undo:disabled{opacity:.35}
+#menu{width:36px;height:34px;padding:0;border-radius:18px;pointer-events:auto;background:#14171cd9;font-size:17px}
+#next{position:fixed;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);background:var(--gold);color:#1a1405;font-weight:bold;border:0;padding:12px 16px}
+#hint{position:fixed;left:136px;right:130px;margin:0 auto;width:fit-content;max-width:calc(100vw - 266px);bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:none;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 8px;white-space:normal;z-index:5}
+#hint #ht{flex:1 1 140px;min-width:0;line-height:1.25}
+#hint button{flex:none}
+@media (max-width:700px){#hint{left:8px;right:8px;max-width:calc(100vw - 16px);bottom:calc(env(safe-area-inset-bottom,0px) + 68px + var(--oh,0px))}}
+#hint button{padding:2px 8px}
+#once{position:fixed;left:8px;bottom:calc(env(safe-area-inset-bottom,0px) + 62px);pointer-events:none;display:flex;flex-direction:column;gap:3px;max-width:min(62vw,420px);z-index:3}
+#once .or{display:flex;flex-wrap:wrap;gap:3px}
+#once button{pointer-events:auto;width:34px;height:46px;padding:0;border-radius:7px;background:linear-gradient(#2a2f38,#171a20);border:2px solid var(--line);font-size:19px;line-height:1;position:relative;box-shadow:0 2px 6px #0008}
+#once button.me{border-color:#3d8fd9}#once button.en{border-color:#d9503d}#once button.us{opacity:.55}
+#once button.us::after{content:'';position:absolute;left:3px;right:3px;top:50%;border-top:3px solid #e0603c;transform:rotate(-35deg)}
+#hb{display:contents}#hb button{background:#ffffff14;color:var(--ink);border:1px solid var(--gold);border-radius:8px;padding:2px 8px;font-size:12px}
+#cards{position:fixed;left:8px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);display:flex;gap:5px;pointer-events:none}
+.kc{pointer-events:auto;width:34px;height:46px;padding:0;border-radius:7px;background:linear-gradient(#2a2f38,#171a20);border:1px solid var(--line);font-size:19px;line-height:1;position:relative;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #0008}
+.kc.on{border-color:var(--gold);box-shadow:0 0 9px #e6c36a99}
+.kc i{position:absolute;right:-3px;top:-3px;font-style:normal;font-size:10px;background:var(--gold);color:#1a1405;border-radius:8px;padding:1px 3px}
+#pop{position:fixed;inset:0;z-index:100;background:#0007;display:none;align-items:center;justify-content:center;padding:16px;box-sizing:border-box}
+.sheet{background:var(--panel);border:1px solid var(--gold);border-radius:14px;padding:16px;width:100%;max-width:360px;max-height:85vh;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.sheet h3{margin:0;color:var(--gold);font-size:17px}.sheet p{margin:0;color:var(--ink)}
+.sheet button small{display:block;color:var(--mute);font-size:11px}
+.sheet button{text-align:left}
+.ph{display:flex;gap:4px;flex-wrap:wrap}.ph span{padding:3px 8px;border-radius:10px;background:#0003;font-size:12px}.ph .on{background:var(--gold);color:#1a1405}
+.dr{display:flex;flex-wrap:wrap;gap:4px;margin:3px 0 6px}
+.dr{--ds:27px}#dice .dr{--ds:22px}#dice .dr.s{--ds:18px}#dice .dr.xs{--ds:14px}.sheet .dr{--ds:28px}.sheet .dr.s{--ds:23px}.sheet .dr.xs{--ds:18px}.dr{gap:3px}#pop.bot{align-items:flex-end;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.d{display:inline-flex;width:var(--ds);height:var(--ds);align-items:center;justify-content:center;border-radius:6px;background:#efe9d8;color:#1a1405;font:bold calc(var(--ds)*.56) Georgia;font-style:normal;box-shadow:inset 0 -3px #0003;animation:tum .7s cubic-bezier(.2,.8,.3,1) both}
+.d.ok{background:#8fd18f}.d.no{background:#d98a7a}
+@keyframes tum{0%{transform:translateY(-30px) rotate(-420deg) scale(.4);opacity:0}65%{transform:rotate(25deg) scale(1.15);opacity:1}100%{transform:none}}
+.sheet p small{display:block;color:var(--mute);margin-top:4px}
+#dice{position:fixed;left:8px;top:calc(env(safe-area-inset-top,0px) + 48px);background:#14171cee;border:1px solid var(--line);border-radius:10px;padding:8px;max-width:72vw;max-height:55vh;overflow:hidden;display:none;pointer-events:none;font-size:12px}
+#dice .ts{margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--line)}#dice .ts:last-of-type{border:0;margin:0;padding:0}#dice .tx{font-size:10px;opacity:.55;margin-top:4px}
+</style></head><body>
+<canvas id="c"></canvas><div id="once"></div><div id="cards"></div>
+<div id="hud"><button id="menu">☰</button><button id="undo" title="Aktion neu starten" disabled>↶</button><div class="pill" id="st"></div><div class="sp"></div><div class="pill" id="cp" style="display:none"></div><div class="pill" id="vp"></div></div><div id="mu"></div>
+<div id="hint" class="pill"><span id="ht"></span><button id="rl" title="links drehen">↺</button><button id="rr" title="rechts drehen">↻</button><button id="ho" style="display:none">Optionen</button><button id="hy" style="display:none">✓ Fertig</button><span id="hb"></span><button id="hx">✕</button></div>
+<button id="next">Weiter ▸</button>
+<div id="dice"></div><div id="pop"></div>
+<script>/*APP*/</script></body></html>

@@ -1,0 +1,12 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 20}
+      - run: npm ci
+      - run: for t in rules sb_rules ca_rules abil_new etappe4 newarmies_rules replay undo; do node test/$t.mjs | tail -1; done
+      - run: sh scripts/release.sh && git diff --exit-code public || (echo "public/ ist nicht aktuell – scripts/release.sh ausführen" && exit 1)

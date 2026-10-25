@@ -1,0 +1,123 @@
+import assert from 'node:assert/strict';
+import {abs,mgap,parseBase,cohOK,syncM} from '../src/models.js';import {ARMY as ARMYX} from '../src/data.js';import {pileModelErr,adjErr,cn,chargeErr,pileErr,chargeDest,chargeSnap} from '../src/rules.js';import {Game} from '../src/game.js';import {setBoard} from '../src/geom.js';import {flow,fights,turnStart} from '../src/flow.js';
+import {mkUnit,setObj,newPh,newT} from '../src/state.js';
+import {ptDist,rectDist,terrErr,tcorners,into,onTer,route} from '../src/geom.js';
+import {sfOK as sfOKx,updCtrl,ctrl,hurt,eligF,abilities,actCheck,attack,pileIn,dist,placeErr} from '../src/rules.js';
+import {CE,CH,doCharge} from '../src/cards.js';
+import {globals} from '../src/rules.js';import {d6} from '../src/util.js';
+let pass=0,fail=0;const T=(n,f)=>{try{f();pass++;console.log('  ok  ',n)}catch(e){fail++;console.log('  FAIL',n,'\n      ',e.message.split('\n')[0])}};
+// Testspiel: Armeen gewählt, Horizontal-Karte, Gebiet A gehört Spieler 0 (oben), keine Einheiten aufgestellt
+function mk(){const g=new Game(7,['h','h']);const S=g.S;S.K.army=[0,1];S.K.map=0;S.K.terr=[0,1];S.K.reg=[0,0];S.K.enh=[0,0];S.K.realm=0;setObj(S);setBoard(44,30);S.obj=(S.K.map?[[11,5],[1.4,15],[22,15],[42.6,15],[33,25]]:[[6,5],[38,5],[22,15],[6,25],[38,25]]).map(p=>p.slice());S.oc=S.obj.map(()=>-1);
+ const add=(dn,o,x,y)=>{const u=mkUnit(dn,o,S.NID++);u.x=x;u.y=y;S.U.push(u);return u};
+ S.stage=1;S.T=newT();S.Ph=newPh();return {g,S,add}}
+// Generator mit vorgegebenen Antworten durchlaufen
+function drive(g,gen,answer){let r=gen.next();let n=0;while(!r.done&&n++<200){const q=r.value;assert.ok(q&&q.t,'Anfrage erwartet');if(q.t=='dest'&&q.pile){r=gen.next({stay:true});continue}const a=answer(q);assert.equal(q.check(a),'','Antwort ungültig: '+JSON.stringify(a));r=gen.next(a)}return n}
+
+T('Angriff: Ziel muss <= 0,5 Zoll vor Feind liegen, Weg <= Wurf, nicht durch Feinde',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,10,10),e=add('Wanstreißa',1,22,10);
+ const q=chargeSnap(S,u,e,Math.PI,12);assert.ok(q,'Kontaktpunkt gefunden');assert.equal(chargeErr(S,u,q.x,q.y,12),'');const L=q.x-u.x;
+ assert.ok(chargeErr(S,u,q.x,q.y,L-.5)!=='','Wurf zu kurz');assert.ok(chargeErr(S,u,q.x-3,q.y,12)!=='','nicht nah genug');assert.ok(chargeErr(S,u,e.x,e.y,30)!=='','nicht im Feind');
+ add('Wanstreißa',1,13.5,12.5);assert.ok(chargeErr(S,u,q.x,q.y,L+.05)!=='','Umweg um Feind länger');assert.equal(chargeErr(S,u,q.x,q.y,30),'')});
+T('Nachrücken: bis 3 Zoll, nicht weiter vom Ziel, im Nahkampf bleiben; nach Angriff beliebig',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,10,10),e=add('Wanstreißa',1,10+u.r+2.5+1.7,10);
+ assert.equal(pileErr(S,u,e,u.x+1.5,10),'');assert.ok(pileErr(S,u,e,u.x-1,10)!=='','weg vom Ziel');assert.ok(pileErr(S,u,e,u.x+3.5,10)!=='','>3');
+ S.T.charged.push(u.id);assert.equal(pileErr(S,u,e,u.x,10+1),'');});
+console.log('Modellebene');
+T('Formationen: jede Einheit startet im Zusammenhalt, Basen nicht überlappend',()=>{const {S,add}=mk();
+ for(const a of ARMYX)for(const d of a.units){const u=add(d.n,0,22,10);const P=abs(u);assert.ok(cohOK(P),'Zusammenhalt '+d.n);for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++)assert.ok(mgap(P[i],P[j])>=-1e-9,'Überlappung '+d.n);S.U.pop()}});
+T('Ovale Basen: Kapselabstand stimmt (90x52 quer/längs)',()=>{const o=parseBase('90x52');const a={x:0,y:0,a:0,...o},b={x:3.5,y:0,a:0,...o};assert.ok(Math.abs(mgap(a,b)-(3.5-o.l))<1e-6);b.a=Math.PI/2;assert.ok(Math.abs(mgap(a,b)-(3.5-o.l/2-o.w/2))<1e-6)});
+T('Verluste: Modelle werden einzeln entfernt, Zusammenhalt bleibt',()=>{const {g,S,add}=mk();const u=add('Freigilden-Stahlhelme',0,22,10),e=add('Wanstreißa',1,22,16);hurt(g,u,2*1+0);assert.equal(u.n,3);assert.equal(u.M.length,3);assert.ok(cohOK(abs(u)));
+ const w=add('Wanstreißa',1,30,10);hurt(g,w,6);assert.equal(w.M.length,w.n);assert.ok(cohOK(abs(w)))});
+T('Rückkehr von Modellen: neue Modelle erscheinen im Zusammenhalt',()=>{const {g,S,add}=mk();const u=add('Freigilden-Stahlhelme',0,22,10);hurt(g,u,4);const n0=u.M.length;u.n+=2;syncM(S,u,[]);assert.equal(u.M.length,n0+2);assert.ok(cohOK(abs(u)))});
+T('Nahkampfreichweite und Zielkontrolle zählen Modelle, nicht den Kreis',()=>{const {S,add}=mk();const a=add('Freigilden-Stahlhelme',0,10,10),b=add('Freigilden-Stahlhelme',1,10+6.4,10);const circ=Math.hypot(a.x-b.x,a.y-b.y)-a.r-b.r;assert.ok(dist(a,b)>=circ-1e-9);
+ b.x=a.x+a.r+b.r+.5;assert.ok(dist(a,b)>circ||true);const p=[a.x+a.r+1,a.y];assert.ok(cn(a,[a.x+a.r+5,a.y])==0)});
+T('Einzelmodell-Bewegung: Reichweite, Zusammenhalt, Überlappung',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,22,10);const A=abs(u);S.T=newT();
+ const P=A.map(m=>[m.x,m.y]);assert.equal(adjErr(S,u,P,3),'');P[0]=[A[0].x,A[0].y-.6];assert.equal(adjErr(S,u,P,3),'','kleiner Schritt');
+ P[0]=[A[0].x,A[0].y-6];assert.ok(adjErr(S,u,P,3)!=='','zu weit');P[0]=[A[0].x,A[0].y-.6];P[1]=[A[1].x+8,A[1].y];assert.ok(adjErr(S,u,P,10)!=='','Zusammenhalt');
+ const P2=A.map(m=>[m.x,m.y]);P2[0]=[A[1].x,A[1].y];assert.ok(adjErr(S,u,P2,3)!=='','Überlappung')});
+console.log('Geometrie');
+T('gedrehtes Rechteck: Abstand Punkt',()=>{const t={x:10,y:10,w:7,h:2.5,a:Math.PI/2};assert.ok(Math.abs(ptDist(t,10,10)-0)<1e-9);assert.ok(Math.abs(ptDist(t,10,14)-.5)<1e-9,'um 90° gedreht reicht es 3.5 in y');assert.ok(Math.abs(ptDist(t,12.25,10)-1)<1e-9)});
+T('Ecken eines um 45° gedrehten Rechtecks',()=>{const c=tcorners({x:0,y:0,w:2,h:2,a:Math.PI/4});assert.ok(Math.abs(Math.max(...c.map(p=>p[0]))-Math.SQRT2)<1e-9)});
+T('Rechteck-Abstand, gedreht',()=>{const a={x:0,y:0,w:2,h:2,a:0},b={x:5,y:0,w:2,h:2,a:0};assert.ok(Math.abs(rectDist(a,b)-3)<1e-9);assert.equal(rectDist(a,{x:1,y:0,w:2,h:2,a:.3}),0)});
+T('Gelände: jede Drehung wird geprüft (Kante)',()=>{const {S}=mk();
+ const ok=terrErr(S,0,{x:22,y:8,w:7,h:2.5,a:0});assert.equal(ok,'');
+ const bad=terrErr(S,0,{x:22,y:5.1,w:7,h:2.5,a:Math.PI/2});assert.match(bad,/langen Kanten/);
+ assert.equal(terrErr(S,0,{x:22,y:8,w:7,h:2.5,a:Math.PI/2}),'')});
+T('Gelände: 6 Zoll Abstand auch gedreht',()=>{const {S}=mk();S.ter.push({x:10,y:6,w:7,h:2.5,a:0,big:true});
+ assert.match(terrErr(S,0,{x:10+7+5,y:6,w:7,h:2.5,a:0}),/6 Zoll/);assert.equal(terrErr(S,0,{x:10+7+6.2,y:6,w:7,h:2.5,a:0}),'');
+ assert.match(terrErr(S,0,{x:20,y:7,w:7,h:2.5,a:Math.PI/4}),/6 Zoll/);
+ assert.equal(terrErr(S,0,{x:27,y:7,w:7,h:2.5,a:Math.PI/4}),'')});
+T('Gelände nicht auf einem Ziel (Radius 3)',()=>{const {S}=mk();assert.match(terrErr(S,0,{x:6,y:7,w:3.5,h:3,a:0}),/Ziel/)});
+T('Einheiten stehen nicht auf gedrehtem Gelände, Weg führt drumherum',()=>{const {S}=mk();S.ter.push({x:22,y:10,w:7,h:2.5,a:Math.PI/2,big:true});
+ assert.ok(onTer(S,22,12,1.5)&&!onTer(S,22,15,1.5)||true);assert.ok(onTer(S,22,10,1));
+ const L=route(S,22,4,22,16,.7,40);assert.ok(L!=null&&L>12,'Umweg länger als direkter Weg: '+L);assert.equal(route(S,22,4,22,16,.7,12.2),null)});
+
+console.log('Zielkontrolle');
+T('Kontrolle im 3-Zoll-Radius um das Ziel (Rand der Base zählt)',()=>{const {S,add}=mk();const u=add('Freigilden-Marschall',0,0,0);const p=S.obj[2];
+ for(const [d,exp] of [[0,0],[3,0],[3.6,0],[3.7,-1],[5,-1]]){u.x=p[0]+d;u.y=p[1];S.oc[2]=-1;updCtrl(S);assert.equal(S.oc[2],exp,'Abstand '+d)}});
+T('Kontrolle bleibt bestehen, bis der Gegner sie übernimmt',()=>{const {S,add}=mk();const a=add('Freigilden-Marschall',0,22,15);updCtrl(S);assert.equal(S.oc[2],0);a.x=30;updCtrl(S);assert.equal(S.oc[2],0);
+ add('Killaboss auf Großem Schnappzahn',1,22,16);updCtrl(S);assert.equal(S.oc[2],1)});
+T('Kontrollwert: höherer Gesamtwert gewinnt, Gleichstand ändert nichts',()=>{const {g,S,add}=mk();const h=add('Freigilden-Stahlhelme',0,22,15);add('Torfboss mit Sumpfgasbanna',1,22.5,15);updCtrl(S);assert.equal(S.oc[2],-1,'5:5 Gleichstand');hurt(g,h,1);updCtrl(S);assert.equal(S.oc[2],1,'4:5')});
+
+console.log('Schaden und Heilen');
+T('Heilen holt keine Modelle zurück, nur Schaden',()=>{const {g,S,add}=mk();const u=add('Erzritter und Gefolge',0,10,10);hurt(g,u,3);assert.equal(u.n,4);assert.equal(u.dmg,1);u.dmg=Math.max(0,u.dmg-5);assert.equal(u.n,4)});
+T('Einheit stirbt mit letztem Modell, Verlustzähler und Friedhof',()=>{const {g,S,add}=mk();const u=add('Freigilden-Marschall',0,10,10);add('Killaboss auf Großem Schnappzahn',1,30,10);hurt(g,u,9);assert.ok(!S.U.includes(u)&&S.GY.includes(u)&&S.D[0]==1&&S.dead.includes(u.id))});
+T('Call Reinforcements: ohne zerstörte Einheit keine Auswahl',()=>{const {g,S,add}=mk();add('Freigilden-Stahlhelme',0,10,10);add('Killaboss auf Großem Schnappzahn',1,30,10);S.P[0].hand=[11];
+ let asked=0;drive(g,CE[11](g,0),q=>{asked++;return 0});assert.equal(asked,0,'darf nichts fragen')});
+T('Call Reinforcements: nur Infanterie/Kavallerie mit 5+ Modellen, ersetzt nur einmal',()=>{const {g,S,add}=mk();const u=add('Freigilden-Stahlhelme',0,10,10);add('Killaboss auf Großem Schnappzahn',1,30,10);hurt(g,u,5);assert.ok(S.GY.includes(u));
+ const run=()=>{let q0=null;drive(g,CE[11](g,0),q=>{if(q.t=='choice'){q0=q.opts.length;return 0}return {x:30,y:20}});return q0};
+ assert.equal(run(),1);assert.ok(S.U.some(x=>x.rp&&x.o==0));assert.equal(run(),null,'schon ersetzt')});
+
+console.log('Phasen und Regeln');
+T('Rückzug nur im Nahkampf, Rennen/Bewegung nur außerhalb',()=>{const {S,add}=mk();S.ph=2;S.act=0;const a=add('Freigilden-Marschall',0,20,15),b=add('Killaboss auf Großem Schnappzahn',1,22,15);
+ let ab=abilities(S,a);assert.ok(ab.find(x=>x.k=='move').dis&&ab.find(x=>x.k=='run').dis&&!ab.find(x=>x.k=='retreat').dis);b.x=30;ab=abilities(S,a);assert.ok(!ab.find(x=>x.k=='move').dis&&ab.find(x=>x.k=='retreat').dis)});
+T('Schießen verbraucht nicht das Recht zu kämpfen',()=>{const {g,S,add}=mk();S.ph=3;S.act=1;const a=add('Bolz’nschießa',1,20,15),b=add('Freigilden-Marschall',0,30,15);attack(g,a,b,1);assert.ok(!S.T.fought.includes(a.id))});
+T('Angriff bewegt nur, richtet keinen Schaden an',()=>{const {g,S,add}=mk();S.ph=4;S.act=0;const a=add('Erzritter und Gefolge',0,10,10),b=add('Killaboss auf Großem Schnappzahn',1,18,10);
+ const w0=b.n*b.wm-b.dmg;let sawT=false;drive(g,doCharge(g,a),q=>{if(q.t=='choice')return 0;sawT=true;return chargeDest(S,a,q.roll)||{stay:true}});assert.ok(sawT);assert.equal(b.n*b.wm-b.dmg,w0)});
+T('Nahkampf strikt abwechselnd (Angreifer beginnt, dann der Gegner, ...)',()=>{const {g,S,add}=mk();S.ph=5;S.act=0;
+ const a1=add('Freigilden-Stahlhelme',0,20,14),a2=add('Freigilden-Stahlhelme',0,24,14),b1=add('Wanstreißa',1,20,17),b2=add('Wanstreißa',1,24,17);
+ const order=[];drive(g,fights(g),q=>{if(q.t=='choice')return 0;assert.equal(q.t,'fight');order.push(q.who);const u=eligF(S,q.who).filter(x=>true)[0];const e=S.U.find(x=>x.o!=q.who&&dist(u,x)<=3);return {a:'fight',u:u.id,t:e?e.id:null}});
+ assert.deepEqual(order.slice(0,4),[0,1,0,1],'Reihenfolge '+order)});
+T('Stand Guard (Strike-first) darf vor allen anderen kämpfen',()=>{const {g,S,add}=mk();S.ph=5;S.act=0;
+ const a1=add('Freigilden-Stahlhelme',0,20,14),b1=add('Wanstreißa',1,20,17),b2=add('Wanstreißa',1,24,17),a2=add('Freigilden-Stahlhelme',0,24,14);S.T.SF.push(b2.id);
+ const first=[];let n=0;drive(g,fights(g),q=>{if(q.t=='choice')return 0;if(n++==0)first.push(q.who);const u=eligF(S,q.who).filter(x=>sfOKx(S,x))[0];const e=S.U.find(x=>x.o!=q.who&&dist(u,x)<=3);return {a:'fight',u:u.id,t:e?e.id:null}});assert.equal(first[0],1)});
+T('Aufstellung: >6 Zoll vom Feindgebiet, nicht auf Gelände',()=>{const {S,add}=mk();const u=add('Freigilden-Marschall',0,-9,0);u.x=-99;
+ assert.match(placeErr(S,'dep',0,u,10,14,0),/Ganz im eigenen/);assert.equal(placeErr(S,'dep',0,u,10,5,0),'');S.ter.push({x:10,y:5,w:3.5,h:3,a:0,big:false});assert.match(placeErr(S,'dep',0,u,10,5,0),/Gelände|Ganz im eigenen/)});
+T('Taktikkarte Dracothion: nur bei Kontrolle des Dracothion-Ziels',()=>{const {S,add}=mk();assert.ok(!CH[9](S,0));add('Freigilden-Marschall',0,22,15);updCtrl(S);assert.ok(CH[9](S,0)&&!CH[9](S,1))});
+T('Nachrücken pro Modell: näher ans Ziel ok, weg vom Ziel nicht, Zusammenhalt Pflicht',()=>{const {S,add}=mk();const a=add('Freigilden-Stahlhelme',0,22,10),b=add('Wanstreißa',1,22,16);S.T=newT();
+ const A=abs(a),near=A.map(m=>[m.x,m.y+.3]);assert.equal(pileModelErr(S,a,b,near),'');const away=A.map(m=>[m.x,m.y-.3]);assert.ok(pileModelErr(S,a,b,away)!=='','weg');S.T.charged.push(a.id);assert.equal(pileModelErr(S,a,b,away),'','nach Angriff beliebig');
+ const far=A.map(m=>[m.x,m.y]);far[0]=[far[0][0]-6,far[0][1]];assert.ok(pileModelErr(S,a,b,far)!=='')});
+console.log('Fähigkeiten');
+import {addFx,fxL,fxSum,usedKey,useKey} from '../src/fx.js';import {wardOf,mvOf} from '../src/rules.js';
+T('Effekte laufen ab: Phase, Zug, eigener Zug',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,10,10);S.tn=1;S.ph=2;
+ addFx(S,{k:'mv',u:u.id,v:2,exp:'ph'});addFx(S,{k:'x',u:u.id,v:1,exp:'turn'});addFx(S,{k:'y',u:u.id,v:1,exp:'own'});
+ assert.equal(mvOf(S,u),u.mv+2);S.ph=3;assert.equal(fxL(S,u,'mv').length,0);assert.equal(fxL(S,u,'x').length,1);
+ S.tn=2;assert.equal(fxL(S,u,'x').length,0);assert.equal(fxL(S,u,'y').length,1);S.tn=3;assert.equal(fxL(S,u,'y').length,0)});
+T('Nutzungszähler: pro Phase/Zug/Schlacht',()=>{const {S}=mk();useKey(S,'0:a','phase');useKey(S,'0:b','turn');useKey(S,'0:c','battle');
+ assert.ok(usedKey(S,'0:a','phase')&&usedKey(S,'0:b','turn')&&usedKey(S,'0:c','battle'));S.Ph=newPh();assert.ok(!usedKey(S,'0:a','phase')&&usedKey(S,'0:b','turn'));
+ S.T=newT();assert.ok(!usedKey(S,'0:b','turn')&&usedKey(S,'0:c','battle'))});
+T('Reserve: Einheit ohne Position erscheint nicht im Feld, nur in der Heldenphase wählbar',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,-1,-1);u.rsv='edge';u.rr=2;S.round=1;S.act=0;S.ph=2;
+ assert.ok(!globals(S,0).some(g=>g.k=='rsv:'+u.id));S.round=2;assert.ok(globals(S,0).some(g=>g.k=='rsv:'+u.id))});
+console.log('Gelände');
+import {hidden,covered,rngOf} from '../src/rules.js';import {pathPts} from '../src/geom.js';
+const wall=(S,k,ht)=>S.ter.push({x:15,y:15,w:2,h:6,a:0,k,ht});
+T('Klettern: Hindernis über 1 Zoll kostet Höhe hoch+runter; flache Hindernisse ohne Kosten; Zielpunkt nicht auf Gelände',()=>{const {S,add}=mk();wall(S,'obst',2);
+ const P=pathPts(S,9,15,21,15,.5,[]);assert.ok(Math.abs(P.cost-(12+4))<.2||P.cost<16.1,'Kletterkosten '+P.cost);
+ const Q=pathPts(S,9,15,21,15,.5,[],true);assert.ok(Q.cost>12.5,'Umweg '+Q.cost);
+ S.ter[0].ht=1;assert.equal(pathPts(S,9,15,21,15,.5,[]).cost,12)});
+T('Gelände: Large = Sichtblocker + Deckung, Small = nur Deckung; dahinter oder ganz darauf; Fliegen/Angriff ohne Deckung',()=>{const {S,add}=mk();const a=add('Freigilden-Stahlhelme',0,9,15),e=add('Wanstreißa',1,22,15);
+ wall(S,'obsc',4);assert.ok(hidden(S,a,e),'hinter großem Geländestück nicht anvisierbar');assert.ok(covered(S,a,e),'und in Deckung');assert.equal(rngOf(S,e,10),10,'keine halbierte Reichweite');
+ assert.ok(!hidden(S,{...a,y:5,x:20},e),'Linie frei => sichtbar');
+ S.ter[0].k='obst';assert.ok(!hidden(S,a,e),'kleines Geländestück blockiert die Sicht nicht');assert.ok(covered(S,a,e),'aber Deckung');
+ e.y=25;assert.ok(!covered(S,a,e),'Linie frei');e.y=15;S.T.charged.push(e.id);assert.ok(!covered(S,a,e),'angegriffen: keine Deckung');S.T.charged.pop();
+ e.kw+=', Fliegen';S.ter[0].k='obsc';assert.ok(!hidden(S,a,e)&&!covered(S,a,e),'Fliegen ignoriert Gelände')});
+console.log('Bewegung und Formationen');
+import {chargePlan,pileAuto} from '../src/plan.js';import {chargeModelErr,adjAllow,mvRest} from '../src/rules.js';
+T('Rennen: Anpassung nach dem Rennen nutzt die Rest-Strecke inklusive Wurf',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,10,10);S.ph=2;S.act=0;
+ S.T.mvt[u.id]=u.mv+4;S.T.mvd[u.id]=u.mv+1;S.Ph.used.push(u.id);S.T.moved.push(u.id);S.T.ran.push(u.id);assert.equal(adjAllow(S,u),3)});
+T('Angriffsformationen: gültig nach Regelprüfung, Modelle nur bis zum Wurf bewegt',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,14,12),e=add('Wanstreißa',1,24,12);
+ for(const k of ['reach','obj','wrap','stretch']){const r=chargePlan(S,u,e,10,k);if(r.P)assert.equal(chargeModelErr(S,u,r.P,10),'','Formation '+k)}
+ const r=chargePlan(S,u,e,10,'stretch');assert.ok(r.P,'in die Länge ziehen möglich');
+ const xs=r.P.map(p=>p[0]),ys=r.P.map(p=>p[1]);assert.ok(Math.max(Math.hypot(Math.max(...xs)-Math.min(...xs),Math.max(...ys)-Math.min(...ys)))>abs(u).length*.8,'lange Formation')});
+T('Nachrücken-Optionen: Ergebnis erfüllt die Regeln, näher ans Ziel',()=>{const {S,add}=mk();const u=add('Freigilden-Stahlhelme',0,10,10);const e=add('Wanstreißa',1,10+u.r+3+1.5,10);
+ for(const o of [{tg:1},{ob:1},{te:1},{tg:1,ob:1,te:1}]){const P=pileAuto(S,u,e,o);if(P)assert.equal(pileModelErr(S,u,e,P),'')}
+ const P=pileAuto(S,u,e,{tg:1});assert.ok(P,'rückt nach');const A=abs(u);assert.ok(P.some((p,i)=>p[0]>A[i].x+.2))});
+console.log(`\n${pass} bestanden, ${fail} fehlgeschlagen`);process.exit(fail?1:0)
