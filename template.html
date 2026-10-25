@@ -12,7 +12,7 @@ button{font:inherit;color:var(--ink);background:var(--panel);border:1px solid va
 button:disabled{opacity:.4}
 #undo{width:36px;height:34px;padding:0;border-radius:18px;pointer-events:auto;background:#14171cd9;font-size:17px}#undo:disabled{opacity:.35}
 #menu,#info{width:36px;height:34px;padding:0;border-radius:18px;pointer-events:auto;background:#14171cd9;font-size:17px}#info{font:italic 700 18px Georgia,serif}
-#rl{position:fixed;inset:0;z-index:300;background:#14171c;display:none}#rl iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#rov{position:fixed;inset:0;z-index:300;background:#14171c;display:none}#rov iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 #next{position:fixed;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);background:var(--gold);color:#1a1405;font-weight:bold;border:0;padding:12px 16px}
 #hint{position:fixed;left:136px;right:130px;margin:0 auto;width:fit-content;max-width:calc(100vw - 266px);bottom:calc(env(safe-area-inset-bottom,0px) + 12px);display:none;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 8px;white-space:normal;z-index:5}
 #hint #ht{flex:1 1 140px;min-width:0;line-height:1.25}
@@ -45,7 +45,7 @@ button:disabled{opacity:.4}
 #dice .ts{margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--line)}#dice .ts:last-of-type{border:0;margin:0;padding:0}#dice .tx{font-size:10px;opacity:.55;margin-top:4px}
 </style></head><body>
 <canvas id="c"></canvas><div id="once"></div><div id="cards"></div>
-<div id="hud"><button id="menu">☰</button><button id="info" title="Regeln">i</button><button id="undo" title="Aktion neu starten" disabled>↶</button><div class="pill" id="st"></div><div class="sp"></div><div class="pill" id="cp" style="display:none"></div><div class="pill" id="vp"></div></div><div id="mu"></div><div id="rl"></div>
+<div id="hud"><button id="menu">☰</button><button id="info" title="Regeln">i</button><button id="undo" title="Aktion neu starten" disabled>↶</button><div class="pill" id="st"></div><div class="sp"></div><div class="pill" id="cp" style="display:none"></div><div class="pill" id="vp"></div></div><div id="mu"></div><div id="rov"></div>
 <div id="hint" class="pill"><span id="ht"></span><button id="rl" title="links drehen">↺</button><button id="rr" title="rechts drehen">↻</button><button id="ho" style="display:none">Optionen</button><button id="hy" style="display:none">✓ Fertig</button><span id="hb"></span><button id="hx">✕</button></div>
 <button id="next">Weiter ▸</button>
 <div id="dice"></div><div id="pop"></div>

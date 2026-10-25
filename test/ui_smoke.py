@@ -10,6 +10,7 @@ with sync_playwright() as p:
     pg.on('pageerror',lambda e: errs.append('PAGEERR '+str(e)))
     pg.goto('file:///home/claude/sh/dist/spearhead.html')
     pg.wait_for_timeout(500)
+    pg.evaluate("document.getElementById('hgo')&&document.getElementById('hgo').click()")
     def st():
         return pg.evaluate("""()=>{const G=window.__G,V=window.__V,q=G.req;return {pop:document.getElementById('pop').style.display=='flex',req:q&&q.t,who:q&&q.who,mode:V.mode&&V.mode.t,kind:V.mode&&V.mode.q&&V.mode.q.kind,busy:V.busy,over:G.S.over,ph:G.S.ph,round:G.S.round,act:G.S.act,nextDis:document.getElementById('next').disabled,zone:V.mode&&V.mode.zone?V.mode.zone.length:-1,ang:V.mode&&V.mode.a}}""")
     def screen(wx,wy):

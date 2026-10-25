@@ -125,6 +125,30 @@ a.lk.ab{text-decoration:underline;font-weight:600}
 footer{margin:28px 0 0;color:var(--mut);font-size:13px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--mut);margin-top:8px}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+
+.nav{position:sticky;top:calc(57px + env(safe-area-inset-top,0px));z-index:15;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:6px 0;margin:0 -2px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none;font-size:14px;color:var(--fg)}
+details.un{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:8px 0;box-shadow:var(--shadow)}
+details.un>summary{list-style:none;cursor:pointer;padding:10px 12px;display:block}
+details.un>summary::-webkit-details-marker{display:none}
+details.un>summary h3{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+details.un>summary h3::before{content:"▸";color:var(--gold);font-size:14px;transition:transform .15s}
+details.un[open]>summary h3::before{transform:rotate(90deg)}
+.mini{display:flex;flex-wrap:wrap;gap:2px 9px;margin:3px 0 0 22px;font-size:13px;color:var(--mut)}
+.mini b{color:var(--fg)}
+.mini .w{display:block;flex-basis:100%;font-size:13px}
+details.un>.ub{padding:0 12px 8px}
+.cheat{padding:12px;margin:12px 0}
+.cheat .fl2{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.cheat .fl2 a{padding:4px 10px;border-radius:999px;color:#fff;text-decoration:none;font-size:13px;font-weight:600}
+.cheat .nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.cheat .nums div{background:var(--card2);border-radius:10px;padding:5px 8px;font-size:11.5px;line-height:1.25;color:var(--mut)}
+.cheat .nums b{display:block;font-size:16px;color:var(--fg)}
+.grp{margin:18px 0 4px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700}
+details.rl .s{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+details.rl[open] .s{-webkit-line-clamp:unset;display:block}
+details.ab>summary{padding:8px 12px;min-height:40px}
 </style>
 </head>
 <body>
@@ -150,6 +174,7 @@ const UI={
  mv:['Bew.','Move'],hp:['Ausd.','Health'],sv:['Schutz','Save'],cv:['Kontr.','Control'],wd:['Rett.','Ward'],mo:['Mod.','Models'],
  rng:['Reichw.','Range'],att:['Att.','Atk'],hit:['Treff.','Hit'],wnd:['Verw.','Wnd'],rend:['Wucht','Rend'],dmg:['Schad.','Dmg'],
  rw:['Fernkampf','Ranged'],mw:['Nahkampf','Melee'],ab:['Fähigkeiten','Abilities'],gen:['General','General'],
+ grp:[['Grundlagen','Vorbereitung & Rundenbeginn','Die Phasen eines Zugs','Angriff & Schaden','Gelände, Ziele & Sieg'],['Basics','Pre-battle & round start','The phases of a turn','Attack & damage','Terrain, objectives & victory']],cheat:['Auf einen Blick','At a glance'],nums:[[['3"','Kampfreichweite'],['½"','Zusammenhalt'],['4','Schlachtrunden'],['4 / 5','BP pro Runde (Außenseiter)'],['±1','max. Modifikator Treffer/Verw.'],['1','Kern-Fähigkeit je Phase']],[['3"','Combat range'],['½"','Coherency'],['4','Battle rounds'],['4 / 5','CP per round (underdog)'],['±1','max. hit/wound modifier'],['1','Core ability per phase']]],
  openall:['Alles ausklappen','Expand all'],closeall:['Alles einklappen','Collapse all'],
  sp:['Spearhead-Hinweis','Spearhead note'],
  search:['Suchbegriff eingeben …','Enter a search term …'],noRes:['Nichts gefunden.','Nothing found.'],
@@ -221,6 +246,7 @@ function abil(ai,key,ab,pre){
 function armyPage(ai){
  const a=A[ai];
  let h=`<div class="crumb"><a href="#/sp">${T('t1')}</a></div><div class="pg-h" data-k="head"><span class="fac" style="margin:0">${esc(P(a.f))}</span><h1>${esc(P(a.n))}</h1></div>`;
+ h+=`<nav class="nav"><a href="#" data-j="s-t">${T('traits')}</a><a href="#" data-j="s-r">${T('reg')}</a><a href="#" data-j="s-e">${T('enh')}</a><a href="#" data-j="s-u">${T('units')}</a></nav>`;
  h+=`<div class="tools"><button class="btn" data-act="all">${T('openall')}</button><button class="btn" data-act="none">${T('closeall')}</button></div>`;
  const sec=(k,title,hint)=>`<div class="sec" data-k="s-${k}"><h2>${title}</h2>${hint?`<small>${hint}</small>`:''}</div>`;
  if(a.traits.length){h+=sec('t',T('traits'));a.traits.forEach((x,j)=>h+=abil(ai,'t'+j,x))}
@@ -228,9 +254,9 @@ function armyPage(ai){
  h+=sec('e',T('enh'),T('enhh'));a.enh.forEach((x,j)=>h+=abil(ai,'e'+j,x));
  h+=sec('u',T('units'));
  a.units.forEach((u,k)=>{
-  h+=`<article class="unit" data-k="u${k}" id="k-u${k}"><header><h3>${esc(P(u.n))}</h3>${u.g?`<span class="gen">${T('gen')}</span>`:''}</header>`;
+  const wsum=[...u.rw,...u.mw].map(w=>esc(P(w.n))).join(' · ');
+  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span><span class="w">${wsum}</span></div></summary><div class="ub">`;
   h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}</div>`;
-  h+=`<div class="stats"><div><small>${T('mv')}</small><b>${u.mv}"</b></div><div><small>${T('hp')}</small><b>${u.hp}</b></div><div><small>${T('sv')}</small><b>${plus(u.sv)}</b></div><div><small>${T('cv')}</small><b>${u.cv}</b></div><div><small>${T('wd')}</small><b>${u.wd?u.wd+'+':'–'}</b></div><div><small>${T('mo')}</small><b>${u.m}</b></div></div>`;
   if(u.b)h+=`<div class="hint">${fmtBase(u.b)}</div>`;
   if(u.note)h+=`<p class="note">${linkify(P(u.note),ai,null)}</p>`;
   const wt=(ws,ranged)=>{
@@ -240,7 +266,7 @@ function armyPage(ai){
   if(u.rw.length)h+=`<div class="sub">${T('rw')}</div>`+wt(u.rw,true);
   if(u.mw.length)h+=`<div class="sub">${T('mw')}</div>`+wt(u.mw,false);
   if(u.ab.length){h+=`<div class="sub">${T('ab')}</div>`;u.ab.forEach((x,j)=>h+=abil(ai,'u'+k+'a'+j,x))}
-  h+='</article>';
+  h+='</div></details>';
  });
  return h+`<footer>${T('ver')}</footer>`;
 }
@@ -254,12 +280,18 @@ function spOverview(){
  });
  return h;
 }
+const GRP=[['ablauf','messen','sicht','schriftrolle','faehigkeiten','befehle'],['vorbereitung','aufstellung','rundenbeginn','zugablauf'],['heldenphase','bewegung','fernkampf','angriff','kampf'],['angriffsfolge','modifikatoren','schaden','waffenf'],['gelaende','ziele','heilen','verstaerkung','sp','taktik','armee','ende']];
 function rulesPage(){
  let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t2')}</h1><p class="hint">${T('d2')}</p>`;
+ const chain=[['h','heldenphase'],['b','bewegung'],['f','fernkampf'],['a','angriff'],['k','kampf']];
+ h+=`<div class="card cheat"><b class="ser">${T('cheat')}</b><div class="fl2">${chain.map(([c,id])=>`<a href="#" data-j="${id}" style="background:var(--c-${c})">${esc(P(rById[id].t))}</a>`).join('')}</div><div class="nums">${UI.nums[li()].map(n=>`<div><b>${esc(n[0])}</b>${esc(n[1])}</div>`).join('')}</div></div>`;
  h+=`<div class="tools"><button class="btn" data-act="all">${T('openall')}</button><button class="btn" data-act="none">${T('closeall')}</button></div>`;
- h+=`<div class="legend">${Object.keys(PH).map(k=>`<span><i class="dot" style="background:var(--c-${k})"></i>${PH[k][li()]}</span>`).join('')}</div>`;
- R.forEach((r,n)=>{
-  h+=`<details class="rl" data-ph="${r.ph}" data-k="${r.id}" id="k-${r.id}" ${open.has(route+'|'+r.id)?'open':''}><summary><h3><span class="num">${n+1}</span>${esc(P(r.t))}</h3><div class="s">${esc(P(r.s))}</div></summary><ul>${r.d.map(d=>`<li>${linkify(P(d),-1)}</li>`).join('')}</ul>${r.sp?`<div class="spn"><b>${T('sp')}:</b> ${linkify(P(r.sp),-1)}</div>`:''}</details>`;
+ let n=0;
+ GRP.forEach((g,gi)=>{
+  h+=`<div class="grp" data-k="g${gi}">${UI.grp[li()][gi]}</div>`;
+  g.forEach(id=>{const r=rById[id];n++;
+   h+=`<details class="rl" data-ph="${r.ph}" data-k="${r.id}" id="k-${r.id}" ${open.has(route+'|'+r.id)?'open':''}><summary><h3><span class="num">${n}</span>${esc(P(r.t))}</h3><div class="s">${esc(P(r.s))}</div></summary><ul>${r.d.map(d=>`<li>${linkify(P(d),-1)}</li>`).join('')}</ul>${r.sp?`<div class="spn"><b>${T('sp')}:</b> ${linkify(P(r.sp),-1)}</div>`:''}</details>`;
+  });
  });
  return h+`<footer>${T('ver')}</footer>`;
 }
@@ -397,6 +429,7 @@ function wire(){
 }
 let opts_noFocus=false;
 document.addEventListener('click',ev=>{
+ const dj=ev.target.closest('[data-j]');if(dj){ev.preventDefault();jumpTo(dj.dataset.j,dj.closest('.cheat')!=null);return}
  const t=ev.target.closest('a.lk,.lang button,#bk,#hm,#cl,.sheet [data-s],.sheet .x,.back');if(!t)return;
  if(t.matches('a.lk')){ev.preventDefault();
   if(t.dataset.g){sheetId=t.dataset.g;renderSheet()}

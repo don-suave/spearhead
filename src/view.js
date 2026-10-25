@@ -21,11 +21,11 @@ function hint(t){$('hint').style.display=t?'flex':'none';$('ht').textContent=t||
 const drg=()=>mode&&(mode.t=='move'||mode.t=='dest');
 function rehint(){const m=mode;hint(m?m.hint:'');const pl=m&&m.t=='place';const hb=$('hb');hb.innerHTML='';
  if(m&&m.t=='bar'){m.q.opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o.b||o.t;b.onclick=()=>answer(i);hb.appendChild(b)});['rl','rr','ho','hy','hx'].forEach(i=>$(i).style.display='none');return}
- $('rl').style.display=$('rr').style.display=((pl&&(m.q.kind=='terr'||m.q.kind=='relic'))||drg())?'':'none';
+ $('rov').style.display=$('rr').style.display=((pl&&(m.q.kind=='terr'||m.q.kind=='relic'))||drg())?'':'none';
  $('ho').style.display='none';$('hy').style.display=m&&m.t=='adj'?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
  $('hx').style.display=m&&m.t!='fightsel'&&((m.t=='place'&&m.q.cancel)||m.t!='place')?'':'none';
  $('hx').textContent=m&&m.t=='dest'?(m.chg?'Angriff abbrechen':m.pile?'Nicht nachrücken':'Stehen bleiben'):m&&(m.t=='place'||m.t=='tgt')?'✕ Abbrechen':'✕';
- const ra=!m&&G&&rsvAvail();if(ra&&ra.length){hint('Reserve bereit: '+ra.map(g=>g.t).join(' · '));$('ho').style.display='';$('ho').textContent='Aufstellen';$('hx').style.display='none';$('rl').style.display=$('rr').style.display='none'}}
+ const ra=!m&&G&&rsvAvail();if(ra&&ra.length){hint('Reserve bereit: '+ra.map(g=>g.t).join(' · '));$('ho').style.display='';$('ho').textContent='Aufstellen';$('hx').style.display='none';$('rov').style.display=$('rr').style.display='none'}}
 const rsvAvail=()=>{const q=G&&G.req;return q&&q.t=='act'&&!G.isAI(q.who)?globals(G.S,q.who).filter(g=>g.k.startsWith('rsv:')):[]};
 $('ho').onclick=()=>{const l=rsvAvail();if(!l.length)return;const q=G.req;pop('Aus der Reserve aufstellen','Welche Einheit soll jetzt aufgestellt werden?',l.map(g=>({t:g.t,s:g.s,fn:()=>answer({a:g.k})})))};
 function note(t){hint(t);clearTimeout(ntm);ntm=setTimeout(rehint,2600)}
@@ -116,13 +116,13 @@ $('hx').onclick=()=>{const m=mode;if(!m)return;
  if(m.t=='tgt'){answer({cancel:true});return}
  setMode(m.back||null)};
 const rot=d=>{const m=mode;if(drg()){m.a=(m.a||0)+d;if(m.gx!=null)dragHint(m);return}if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic')){m.a=(m.a+d+2*Math.PI)%(2*Math.PI);m.zone=null;if(m.gx!=null)hint(placeErr(G.S,'terr',m.q.who,m.q.u,m.gx,m.gy,m.a)||'Gedreht: '+Math.round(m.a*180/Math.PI)+'° – loslassen zum Platzieren')}};
-$('rl').onclick=()=>rot(-Math.PI/12);$('rr').onclick=()=>rot(Math.PI/12);
+$('rov').onclick=()=>rot(-Math.PI/12);$('rr').onclick=()=>rot(Math.PI/12);
 addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/12);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/12)});
 // Regel-App als Overlay (Spielstand bleibt erhalten)
-function rulesApp(){const o=$('rl');if(!o)return;
+function rulesApp(){const o=$('rov');if(!o)return;
  fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
 $('info').onclick=rulesApp;
-addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rl');if(o){o.style.display='none';o.innerHTML=''}}});
+addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
 $('menu').onclick=()=>{const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
  pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small>`,
