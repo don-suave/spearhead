@@ -1,5 +1,5 @@
 // Geometrie: Spielfeld, Territorien, gedrehte Geländerechtecke, Wegfindung
-export let W=30,H=22;export const CR=3;export function setBoard(w,h){W=w;H=h}
+export let W=30,H=22.4;export const CR=3;export function setBoard(w,h){W=w;H=h}
 // Radius eines Ziels (Zoll): Eintrag [x,y,r]; Standard 3
 export const OR=p=>p[2]==null?3:p[2];
 // Zielform: Kreis [x,y,r] oder Rechteck [x,y,r,w,h,a]; objD = Abstand eines Punkts zur Zielfläche (0 innen)

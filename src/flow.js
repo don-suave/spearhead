@@ -59,7 +59,7 @@ function* terrain(G){const S=G.S,K=S.K;
   const [w,h]=TERSZ[big?'big':'small'];S.ter.push({x:a.x,y:a.y,w,h,a:a.a||0,big:!!big,...TERK[big?'big':'small']})}}
 const SBG={A:['Large Wall','Small Fence'],B:['Small Wall','Large Fence']};
 function* terrainSB(G){const S=G.S,K=S.K;
- if(K.realm==1){const c=SB_TER['Crypt of Blood'];S.ter.push({x:15,y:11,w:c.w,h:c.h,a:Math.atan2(H,W),big:true,k:c.k,ht:c.ht,my:'crypt',nm:'Crypt of Blood'})}
+ if(K.realm==1){const c=SB_TER['Crypt of Blood'];S.ter.push({x:W/2,y:H/2,w:c.w,h:c.h,a:Math.atan2(H,W),big:true,k:c.k,ht:c.ht,my:'crypt',nm:'Crypt of Blood'})}
  const gi=yield* choice(G,K.def,'5. Geländegruppe','Verteidiger wählt eine Geländegruppe, der Angreifer erhält die andere:',[{t:'Gruppe A',s:'Large Wall + Small Fence'},{t:'Gruppe B',s:'Small Wall + Large Fence'}]);
  const grp=[gi?SBG.B:SBG.A,gi?SBG.A:SBG.B];
  yield* infoR(G,0,'5. Gelände aufstellen',`Schlachtfeld: ${K.realm?'Ossia':'Dolorum'} · Karte: ${K.map?'diagonal':'horizontal'}<br>Verteidiger (${S.P[K.def].n}) erhält ${grp[0].join(' + ')}, Angreifer (${S.P[K.att].n}) ${grp[1].join(' + ')}. Je 1 großes und 1 kleines Gelände ganz im eigenen Gebiet, mehr als 6 Zoll zu anderem Gelände, mehr als 3 Zoll zu den langen Kanten und zum Feindgebiet, nicht auf Zielen.${K.realm?'<br>In der Mitte steht die Crypt of Blood.':''}<br><small>Geländemaße geschätzt (Modellfotos).</small>`,'Los');

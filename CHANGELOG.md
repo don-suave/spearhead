@@ -1,5 +1,10 @@
 # Changelog
 
+## v72
+- Feld überall 30×22,4; Ziele nach Mattenmaßen (Aqshy, Ghyran, Dolorum, Ossia), alle mit 3" Radius um die Mitte
+- Ossia-Korrektur zurückgenommen (Radius wieder 3"); Crypt of Blood in der Feldmitte
+- Neues Aqshy-Mattenbild passend zu 30×22,4
+
 ## v71
 - Ossia: Ziele mit 2,5" Radius wie auf der Matte; Crypt of Blood exakt auf der Diagonalen und kleiner
 - Dig Two Graves: Gebiet nach Modellmitte der getöteten Modelle

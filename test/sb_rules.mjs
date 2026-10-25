@@ -16,11 +16,11 @@ const pickT=(re,i)=>q=>(q.t=='choice'&&re.test(q.title||''))?i:undefined;
 const seedR=(S,i)=>{S.rng=i*7919+13};
 const hero0=add=>add('Fluchfürst',0,10,5),hero1=add=>add('Freigilden-Marschall',1,10,16);
 
-T('Packwechsel: Feldgröße, Karten und Rückschaltung auf Fire and Jade',()=>{setPack(1);assert.equal(W,30);assert.equal(H,22);assert.equal(TAC[0][0],'Dig Two Graves');assert.equal(TAC.length,12);assert.equal(TWD[0].length,6);assert.equal(TWD[1].length,6);assert.equal(Object.keys(CH).length,12);assert.equal(CMD[6].r,'atk');
- setPack(0);assert.equal(W,30);assert.equal(H,22);assert.equal(TAC[0][0],'War of Attrition');assert.equal(CMD[7].r,'chg');assert.equal(TWD[0][0][0],'rf');setPack(1)});
-T('Dolorum: 5 Ziele mit Radien und Namen',()=>{const {S}=mk(0);assert.equal(S.obj.length,5);assert.deepEqual(ONM(S),['Delusion','Necropolis','Grief','Blood','Night']);assert.ok(S.obj.every(p=>OR(p)==3));assert.deepEqual(S.obj[2].slice(0,2),[15,11])});
+T('Packwechsel: Feldgröße, Karten und Rückschaltung auf Fire and Jade',()=>{setPack(1);assert.equal(W,30);assert.equal(H,22.4);assert.equal(TAC[0][0],'Dig Two Graves');assert.equal(TAC.length,12);assert.equal(TWD[0].length,6);assert.equal(TWD[1].length,6);assert.equal(Object.keys(CH).length,12);assert.equal(CMD[6].r,'atk');
+ setPack(0);assert.equal(W,30);assert.equal(H,22.4);assert.equal(TAC[0][0],'War of Attrition');assert.equal(CMD[7].r,'chg');assert.equal(TWD[0][0][0],'rf');setPack(1)});
+T('Dolorum: 5 Ziele mit Radien und Namen',()=>{const {S}=mk(0);assert.equal(S.obj.length,5);assert.deepEqual(ONM(S),['Delusion','Necropolis','Grief','Blood','Night']);assert.ok(S.obj.every(p=>OR(p)==3));assert.deepEqual(S.obj[2].slice(0,2),[15,11.2])});
 T('Ossia: 4 Ziele',()=>{const {S}=mk(1);assert.equal(S.obj.length,4);assert.equal(S.on.length,4)});
-T('Gebiete: horizontal und diagonal',()=>{let {S}=mk(0,0);assert.ok(into(S,0,15,4)>0&&into(S,1,15,4)<0&&into(S,1,15,18)>0);assert.ok(Math.abs(into(S,0,15,5)-6)<1e-9);
+T('Gebiete: horizontal und diagonal',()=>{let {S}=mk(0,0);assert.ok(into(S,0,15,4)>0&&into(S,1,15,4)<0&&into(S,1,15,18)>0);assert.ok(Math.abs(into(S,0,15,5)-6.2)<1e-9);
  ({S}=mk(0,1));assert.ok(into(S,0,25,3)>0,'A oben rechts');assert.ok(into(S,1,5,19)>0,'B unten links');assert.ok(into(S,0,5,19)<0)});
 T('Zielkontrolle mit Radius 2,5 / 3,5',()=>{const {S,add}=mk(0);const a=add(sk(),0,15,11);updCtrl(S);assert.equal(S.oc[2],0);const b=add(sk(),1,7.5,5.6);updCtrl(S);assert.equal(S.oc[0],1,'Entfernung 3.1-1.2 < 2.5');const c=add(sk(),1,7.5,7.4);c.x=7.5;c.y=8.5;updCtrl(S);assert.equal(S.oc[0],1)});
 T('Geländeplatzierung: Gebiet, 3"/6"-Regeln, Ziele, eigene Maße',()=>{const {S}=mk(0);const lw={big:true,w:7,h:1.4,name:'Large Wall'};

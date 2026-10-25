@@ -1,7 +1,8 @@
 // Daten der Battlepacks (reine Daten, keine Regeln-Logik). Pack 0 = Fire and Jade (Grundspiel, 44x30), Pack 1 = Sand and Bone, Pack 2 = City of Ash.
 // Zielmarken: [x,y,Radius,Name]; Maße in Zoll, Feld 30x22.
-export const SB_DOL=[[7.5,2.5,3,'Delusion'],[27.5,5,3,'Necropolis'],[15,11,3,'Grief'],[2.5,17,3,'Blood'],[22.5,19.5,3,'Night']];
-export const SB_OSS=[[2.6,5,2.5,'Delusion'],[17.5,8.8,2.5,'Necropolis'],[12.5,13.2,2.5,'Blood'],[27.4,17,2.5,'Night']];
+// Maße von den Matten (Abstand der Zielmitte vom Mattenrand), Feld 30×22,4, alle Ziele mit 3" Radius um die Mitte
+export const SB_DOL=[[7.5,2.5,3,'Delusion'],[27.5,5,3,'Necropolis'],[15,11.2,3,'Grief'],[2.5,17.4,3,'Blood'],[22.5,19.9,3,'Night']];
+export const SB_OSS=[[2.5,5,3,'Delusion'],[17.5,8.75,3,'Necropolis'],[12.5,13.65,3,'Blood'],[27.5,17.4,3,'Night']];
 // Geländeformen (Breite x Tiefe in Zoll, Höhe); k: obsc = Sichtblocker (Deckung, Sichtschutz, instabil), obst = Hindernis (Deckung, instabil), my = mystisch
 export const SB_TER={
  'Large Wall':{w:7,h:0.8,k:'obsc',ht:4,big:true},'Small Wall':{w:4,h:0.8,k:'obst',ht:3,big:false},
@@ -41,9 +42,10 @@ export const SB_TAC=[
 
 // ---- City of Ash (Gelände- und Zielpositionen: vorläufig, Kartenbilder fehlten) ----
 // Zielmarken City of Ash: Kreis [x,y,r,Name] oder Rechteck [x,y,r,Name,w,h,a] (vermessen aus Mattenfotos, Feld 30x22)
-export const CA_BAS=[[2.5,2.3,2.1,'Great Wheel'],[22.6,5.7,2.1,'Ghal Maraz'],[15,11,6.5,'The Ruin',11,7.2,0],[7.4,16.3,2.1,'Twin-Tailed Comet'],[27.5,19.7,2.1,'High Star']];
-export const CA_CRO=[[5.9,6.4,3.3,'Great Wheel',4,5.2,-0.3316],[19.8,3.1,3.3,'Ghal Maraz',4,5.2,1.2392],[15,11,3.5,'The Junction'],[10.2,18.9,3.3,'Twin-Tailed Comet',4,5.2,1.2392],[24.1,15.6,3.3,'High Star',4,5.2,-0.3316]];
-export const CA_ROADS=[{x:15,y:11,w:44,h:4,a:-0.2793},{x:15,y:11,w:34,h:4,a:1.3614},{x:15,y:11,r:3.5}];
+const CAY=v=>Math.round(v*22.4/22*100)/100,CAS=l=>l.map(p=>{const q=p.slice();q[1]=CAY(q[1]);return q});
+export const CA_BAS=CAS([[2.5,2.3,2.1,'Great Wheel'],[22.6,5.7,2.1,'Ghal Maraz'],[15,11,6.5,'The Ruin',11,7.2,0],[7.4,16.3,2.1,'Twin-Tailed Comet'],[27.5,19.7,2.1,'High Star']]);
+export const CA_CRO=CAS([[5.9,6.4,3.3,'Great Wheel',4,5.2,-0.3316],[19.8,3.1,3.3,'Ghal Maraz',4,5.2,1.2392],[15,11,3.5,'The Junction'],[10.2,18.9,3.3,'Twin-Tailed Comet',4,5.2,1.2392],[24.1,15.6,3.3,'High Star',4,5.2,-0.3316]]);
+export const CA_ROADS=[{x:15,y:11.2,w:44,h:4,a:-0.2793},{x:15,y:11.2,w:34,h:4,a:1.3614},{x:15,y:11.2,r:3.5}];
 export const CA_RS={'Barrel of Emberstone':[2.4,2],'Crate of Aqua Ghyranis':[2.6,1.6],'Ulguan Steel Caltrops':[3.5,1.2],'Battered Barricade':[4,1.2],'Inconspicuous Manhole':[2.2,2]};
 export const CA_MANOR={len:4,th:0.8,ht:5};
 export const CA_TW=[[
@@ -74,4 +76,4 @@ export const CA_TAC=[
  ['Material Gains','Complete at the end of your turn if you control more relics than your opponent.','Grind Them to Dust','Any Combat Phase. Declare: pick a friendly unit. It can use 2 FIGHT abilities this phase; after the first it suffers D3 mortal damage and has STRIKE-LAST for the rest of the turn.']];
 export const CA_REL={'Barrel of Emberstone':'Once per turn, your Hero Phase: pick a friendly unit within 3": it adds 1 to the wound rolls of its attacks this turn.','Crate of Aqua Ghyranis':'Passive: units wholly within 6" have WARD (5+).','Ulguan Steel Caltrops':'Once per turn, your Combat Phase: roll a D3 for each unit within 3" that charged this turn; on a 2+ it suffers that much mortal damage.','Battered Barricade':'Passive: units wholly within 3" cannot be shot unless the shooter is within their combat range (3").','Inconspicuous Manhole':'Once per turn, your Movement Phase: remove a friendly unit wholly within 3" and set it up again wholly in friendly territory, more than 6" from enemy units.'};
 export const CA_START={'Ashen Bastion':['Battered Barricade','Inconspicuous Manhole'],'Shattered Crossroads':['Barrel of Emberstone','Crate of Aqua Ghyranis']};
-export const PACKN=['Fire and Jade (Grundspiel, 44×30)','Sand and Bone (30×22)','City of Ash (30×22)'];
+export const PACKN=['Fire and Jade (Grundspiel, 30×22,4)','Sand and Bone (30×22,4)','City of Ash (30×22,4)'];

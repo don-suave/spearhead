@@ -211,8 +211,8 @@ export const ARMY=[{f:'Städte Sigmars',n:'Zenestras Zeloten',
 ];
 import {ARMY2} from './armies2.js';
 ARMY.push(...ARMY2);
-// Ziele Fire and Jade, proportional vom früheren 44x30-Feld auf 30x22 umgerechnet
-export const HZ=[[4.1,3.7],[25.9,3.7],[15,11],[4.1,18.3],[25.9,18.3]],DG=[[7.5,3.7],[1,11],[15,11],[29,11],[22.5,18.3]];
+// Ziele Fire and Jade: Maße von den Matten (Abstand der Zielmitte vom Rand), Feld 30×22,4
+export const HZ=[[3,3],[25.25,3.5],[15,11.2],[4.75,18.9],[27,19.4]],DG=[[7.5,3.5],[0.75,11.2],[15,11.2],[29.25,11.2],[22.5,18.9]];
 export const HZN=['Vulcatrix','Ignax','Dracothion','Behemat','Nagendra'],DGN=['Vulcatrix','Behemat','Dracothion','Ignax','Nagendra'];
 export const REALM=['Aqshy','Ghyran'];
 export const PH=['Beginn des Zugs','Heldenphase','Bewegungsphase','Fernkampfphase','Angriffsphase','Nahkampfphase','Ende des Zugs'];
