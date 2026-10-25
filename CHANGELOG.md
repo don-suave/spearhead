@@ -1,5 +1,8 @@
 # Changelog
 
+## v69
+- Regel-App: Spearhead-Seiten mit zwei Tabs (Armee-Regeln / Modelle), ohne Scrollen
+
 ## v68
 - Regel-App: Einheiten als kompakte Karten (Werte + Waffen in der Kopfzeile, Details per Antippen), Schnellnavigation; Regelübersicht mit „Auf einen Blick“ und gruppiert
 

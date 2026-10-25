@@ -130,7 +130,15 @@ footer{margin:28px 0 0;color:var(--mut);font-size:13px}
 .nav::-webkit-scrollbar{display:none}
 .nav a{white-space:nowrap;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none;font-size:14px;color:var(--fg)}
 details.un{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:8px 0;box-shadow:var(--shadow)}
-details.un>summary{list-style:none;cursor:pointer;padding:10px 12px;display:block}
+details.un>summary{list-style:none;cursor:pointer;padding:7px 12px 8px;display:block}
+details.un{margin:6px 0}
+details.un>summary h3{font-size:16.5px;line-height:1.25}
+.abn{margin-top:1px}
+.wl{margin-top:0;line-height:1.35}
+.crumb{margin:0 0 4px}
+main{padding-top:8px}
+.tabs{padding:2px 0 6px}
+.tabs button{padding:7px 6px}
 details.un>summary::-webkit-details-marker{display:none}
 details.un>summary h3{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 details.un>summary h3::before{content:"▸";color:var(--gold);font-size:14px;transition:transform .15s}
@@ -148,7 +156,20 @@ details.un>.ub{padding:0 12px 8px}
 .grp{margin:18px 0 4px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700}
 details.rl .s{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 details.rl[open] .s{-webkit-line-clamp:unset;display:block}
-details.ab>summary{padding:8px 12px;min-height:40px}
+details.ab>summary{padding:7px 12px;min-height:38px;flex-wrap:nowrap}
+details.ab>summary .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:0 1 auto}
+details.ab>summary .chip{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:50%}
+details.ab{margin:6px 0}
+.sec h2{font-size:16px}
+.tabs{display:flex;gap:6px;position:sticky;top:calc(57px + env(safe-area-inset-top,0px));z-index:15;background:var(--bg);padding:4px 0 8px}
+.tabs button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:9px 6px;font-weight:700;cursor:pointer;color:var(--mut)}
+.tabs button.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.tabs small{opacity:.8}
+.wl{display:flex;justify-content:space-between;gap:8px;margin:1px 0 0 22px;font-size:12.5px;color:var(--mut)}
+.wl .wn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;color:var(--fg)}
+.wl .wv{white-space:nowrap;flex:none}
+.abn{margin:3px 0 0 22px;font-size:12.5px;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sec{margin:12px 0 4px}
 </style>
 </head>
 <body>
@@ -175,6 +196,7 @@ const UI={
  rng:['Reichw.','Range'],att:['Att.','Atk'],hit:['Treff.','Hit'],wnd:['Verw.','Wnd'],rend:['Wucht','Rend'],dmg:['Schad.','Dmg'],
  rw:['Fernkampf','Ranged'],mw:['Nahkampf','Melee'],ab:['Fähigkeiten','Abilities'],gen:['General','General'],
  grp:[['Grundlagen','Vorbereitung & Rundenbeginn','Die Phasen eines Zugs','Angriff & Schaden','Gelände, Ziele & Sieg'],['Basics','Pre-battle & round start','The phases of a turn','Attack & damage','Terrain, objectives & victory']],cheat:['Auf einen Blick','At a glance'],nums:[[['3"','Kampfreichweite'],['½"','Zusammenhalt'],['4','Schlachtrunden'],['4 / 5','BP pro Runde (Außenseiter)'],['±1','max. Modifikator Treffer/Verw.'],['1','Kern-Fähigkeit je Phase']],[['3"','Combat range'],['½"','Coherency'],['4','Battle rounds'],['4 / 5','CP per round (underdog)'],['±1','max. hit/wound modifier'],['1','Core ability per phase']]],
+ tabA:['Armee-Regeln','Army rules'],tabM:['Modelle','Models'],
  openall:['Alles ausklappen','Expand all'],closeall:['Alles einklappen','Collapse all'],
  sp:['Spearhead-Hinweis','Spearhead note'],
  search:['Suchbegriff eingeben …','Enter a search term …'],noRes:['Nichts gefunden.','Nothing found.'],
@@ -243,21 +265,23 @@ function abil(ai,key,ab,pre){
  const k=`${ai}|${key}`;
  return `<details class="ab" data-k="${key}" id="k-${key}" ${open.has(route+'|'+key)?'open':''}><summary><span class="nm">${esc(n)}</span>${chip?`<span class="chip">${esc(chip)}</span>`:''}</summary><div class="body"><p>${linkify(rest,ai,key)}</p></div></details>`;
 }
+let armyTab='a';
+const tabOf=k=>/^u/.test(k)?'m':'a';
 function armyPage(ai){
  const a=A[ai];
- let h=`<div class="crumb"><a href="#/sp">${T('t1')}</a></div><div class="pg-h" data-k="head"><span class="fac" style="margin:0">${esc(P(a.f))}</span><h1>${esc(P(a.n))}</h1></div>`;
- h+=`<nav class="nav"><a href="#" data-j="s-t">${T('traits')}</a><a href="#" data-j="s-r">${T('reg')}</a><a href="#" data-j="s-e">${T('enh')}</a><a href="#" data-j="s-u">${T('units')}</a></nav>`;
- h+=`<div class="tools"><button class="btn" data-act="all">${T('openall')}</button><button class="btn" data-act="none">${T('closeall')}</button></div>`;
+ let h=`<div class="crumb"><a href="#/sp">${T('t1')}</a> · ${esc(P(a.f))}</div>`;
+ h+=`<div class="tabs"><button data-tab="a" class="${armyTab=='a'?'on':''}">${T('tabA')}</button><button data-tab="m" class="${armyTab=='m'?'on':''}">${T('tabM')} <small>${a.units.length}</small></button></div>`;
  const sec=(k,title,hint)=>`<div class="sec" data-k="s-${k}"><h2>${title}</h2>${hint?`<small>${hint}</small>`:''}</div>`;
- if(a.traits.length){h+=sec('t',T('traits'));a.traits.forEach((x,j)=>h+=abil(ai,'t'+j,x))}
- h+=sec('r',T('reg'),T('regh'));a.reg.forEach((x,j)=>h+=abil(ai,'r'+j,x));
- h+=sec('e',T('enh'),T('enhh'));a.enh.forEach((x,j)=>h+=abil(ai,'e'+j,x));
- h+=sec('u',T('units'));
+ if(armyTab=='a'){
+  if(a.traits.length){h+=sec('t',T('traits'));a.traits.forEach((x,j)=>h+=abil(ai,'t'+j,x))}
+  h+=sec('r',T('reg'),T('regh'));a.reg.forEach((x,j)=>h+=abil(ai,'r'+j,x));
+  h+=sec('e',T('enh'),T('enhh'));a.enh.forEach((x,j)=>h+=abil(ai,'e'+j,x));
+  return h+`<footer>${T('ver')}</footer>`;
+ }
  a.units.forEach((u,k)=>{
-  const wsum=[...u.rw,...u.mw].map(w=>esc(P(w.n))).join(' · ');
-  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span><span class="w">${wsum}</span></div></summary><div class="ub">`;
-  h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}</div>`;
-  if(u.b)h+=`<div class="hint">${fmtBase(u.b)}</div>`;
+  const wl=(w,ranged)=>`<div class="wl"><span class="wn">${esc(P(w.n))}</span><span class="wv">${ranged?w.r+'" · ':''}${esc(P(w.a))}× · ${plus(w.h)}/${plus(w.w)} · ${rend(w.rd)} · ${esc(P(w.d))}</span></div>`;
+  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span></div>${u.rw.map(w=>wl(w,true)).join('')}${u.mw.map(w=>wl(w,false)).join('')}${u.ab.length?`<div class="abn">${u.ab.map(x=>esc(P(x.n))).join(' · ')}</div>`:''}</summary><div class="ub">`;
+  h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}${u.b?`<span class="chip">${fmtBase(u.b)}</span>`:''}</div>`;
   if(u.note)h+=`<p class="note">${linkify(P(u.note),ai,null)}</p>`;
   const wt=(ws,ranged)=>{
    let t=`<div class="tw"><table class="w"><tr><th></th>${ranged?`<th>${T('rng')}</th>`:''}<th>${T('att')}</th><th>${T('hit')}</th><th>${T('wnd')}</th><th>${T('rend')}</th><th>${T('dmg')}</th></tr>`;
@@ -268,7 +292,7 @@ function armyPage(ai){
   if(u.ab.length){h+=`<div class="sub">${T('ab')}</div>`;u.ab.forEach((x,j)=>h+=abil(ai,'u'+k+'a'+j,x))}
   h+='</div></details>';
  });
- return h+`<footer>${T('ver')}</footer>`;
+ return h;
 }
 function spOverview(){
  let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t1')}</h1><p class="hint">${T('d1')}</p>`;
@@ -389,7 +413,7 @@ function restoreAnchor(a){
  if(!a)return;const e=main.querySelector(`[data-k="${CSS.escape(a.k)}"]`);
  if(e){window.scrollBy(0,e.getBoundingClientRect().top-a.off)}else window.scrollTo(0,a.sy);
 }
-let lastRouteKey='';
+let lastRouteKey='',lastArmy=null;
 function render(opts={}){
  const p=parse();const base='/'+p.slice(0,2).join('/');
  const keepScroll=opts.keep;const anc=keepScroll?captureAnchor():null;
@@ -397,7 +421,7 @@ function render(opts={}){
  let html='';
  const deep=p[0]=='sp'&&p[1]!=null?p[2]:(p[0]=='rules'||p[0]=='gloss'?p[1]:null);
  if(!p.length)html=homePage();
- else if(p[0]=='sp'){html=A[p[1]]?armyPage(+p[1]):spOverview()}
+ else if(p[0]=='sp'){if(A[p[1]]){if(p[2])armyTab=tabOf(p[2]);else if(!opts.keep&&lastArmy!=p[1])armyTab='a';lastArmy=p[1];html=armyPage(+p[1])}else html=spOverview()}
  else if(p[0]=='rules')html=rulesPage();
  else if(p[0]=='gloss')html=glossPage();
  else if(p[0]=='search'){if(p[1]!=null)searchQ=p[1];html=searchPage()}
@@ -430,10 +454,11 @@ function wire(){
 let opts_noFocus=false;
 document.addEventListener('click',ev=>{
  const dj=ev.target.closest('[data-j]');if(dj){ev.preventDefault();jumpTo(dj.dataset.j,dj.closest('.cheat')!=null);return}
+ const tb=ev.target.closest('[data-tab]');if(tb){armyTab=tb.dataset.tab;window.scrollTo(0,0);open.size;render({keep:true});return}
  const t=ev.target.closest('a.lk,.lang button,#bk,#hm,#cl,.sheet [data-s],.sheet .x,.back');if(!t)return;
  if(t.matches('a.lk')){ev.preventDefault();
   if(t.dataset.g){sheetId=t.dataset.g;renderSheet()}
-  else if(t.dataset.a){const [ai,key]=t.dataset.a.split('|');if(parse()[1]!=ai||parse()[0]!='sp'){location.hash='#/sp/'+ai+'/'+key}else jumpTo(key,true)}
+  else if(t.dataset.a){const [ai,key]=t.dataset.a.split('|');if(parse()[1]!=ai||parse()[0]!='sp'){location.hash='#/sp/'+ai+'/'+key}else{if(tabOf(key)!=armyTab){armyTab=tabOf(key);render({keep:true})}jumpTo(key,true)}}
   return}
  if(t.id=='bk'){if(history.length>1)history.back();else location.hash='#/';return}
  if(t.id=='hm'){location.hash='#/';return}
