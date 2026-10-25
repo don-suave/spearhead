@@ -118,6 +118,11 @@ $('hx').onclick=()=>{const m=mode;if(!m)return;
 const rot=d=>{const m=mode;if(drg()){m.a=(m.a||0)+d;if(m.gx!=null)dragHint(m);return}if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic')){m.a=(m.a+d+2*Math.PI)%(2*Math.PI);m.zone=null;if(m.gx!=null)hint(placeErr(G.S,'terr',m.q.who,m.q.u,m.gx,m.gy,m.a)||'Gedreht: '+Math.round(m.a*180/Math.PI)+'° – loslassen zum Platzieren')}};
 $('rl').onclick=()=>rot(-Math.PI/12);$('rr').onclick=()=>rot(Math.PI/12);
 addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/12);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/12)});
+// Regel-App als Overlay (Spielstand bleibt erhalten)
+function rulesApp(){const o=$('rl');if(!o)return;
+ fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
+$('info').onclick=rulesApp;
+addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rl');if(o){o.style.display='none';o.innerHTML=''}}});
 $('menu').onclick=()=>{const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
  pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small>`,

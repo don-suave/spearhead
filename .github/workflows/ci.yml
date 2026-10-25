@@ -9,4 +9,5 @@ jobs:
         with: {node-version: 20}
       - run: npm ci
       - run: for t in rules sb_rules ca_rules abil_new etappe4 newarmies_rules replay undo; do node test/$t.mjs | tail -1; done
+      - run: node rules/build.mjs --strict
       - run: sh scripts/release.sh && git diff --exit-code public || (echo "public/ ist nicht aktuell – scripts/release.sh ausführen" && exit 1)

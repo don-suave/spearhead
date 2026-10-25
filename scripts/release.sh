@@ -3,6 +3,8 @@
 # Aufruf: sh scripts/release.sh  (Version steht in VERSION)
 set -e; cd "$(dirname "$0")/.."; V="v$(cat VERSION)"
 node build.mjs --min >/dev/null
+node rules/build.mjs >/dev/null
+cp dist/regeln.html public/regeln.html
 python3 - "$V" <<'P'
 import sys
 V=sys.argv[1];s=open('dist/spearhead.html',encoding='utf8').read()

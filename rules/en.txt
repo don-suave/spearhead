@@ -1,0 +1,970 @@
+Schattenhafter Meisterspion	Shadowy Master Spy
+Die Flüsterklinge wird nicht aufgestellt. Ab Runde 2 darf sie in deiner Bewegungsphase („Plötzlicher Hinterhalt“) innerhalb 6" um eine feindliche Einheit aufgestellt werden, nicht im Nahkampf.	The Whisperblade is not deployed. From round 2, in your Movement phase ("Sudden Ambush"), it can be set up within 6" of an enemy unit, not in combat.
+Fürstin des Rads	Lady of the Wheel
+Fällt ein befreundetes Modell durch eine Nahkampfattacke, wirf so viele Würfel wie sein Ausdauerwert; je 5+ erleidet die angreifende Einheit 1 tödlichen Schaden (nach dem Kämpfen).	When a friendly model is slain by a melee attack, roll dice equal to its Health; each 5+ inflicts 1 mortal damage on the attacking unit (after the Fight).
+Freigilden-Marschall	Freeguild Marshal and Relic Envoy
+Duellpistolen	Duelling Pistols
+Meisterhafte Waffe	Masterwork Weapon
+Befehl des Marschalls	Marshal's Order
+Der Reliquienbote-Marker wechselt von dieser Einheit zu einer sichtbaren befreundeten Einheit ganz innerhalb 12".	The Relic Envoy marker passes from this unit to a visible friendly unit wholly within 12".
+Reliquienbote	Relic Envoy
+Solange eine andere befreundete Einheit den Marker trägt: +1 auf Verwundungswürfe ihrer Nahkampfattacken. Wird der Marschall zerstört, verschwindet der Marker.	While another friendly unit holds the marker, add 1 to its melee wound rolls. If the Marshal is destroyed, the marker is removed.
+Pontifex Zenestra	Pontifex Zenestra
+Zepter des Rads	Sceptre of the Wheel
+Gefäß des Sigmar	Vessel of Sigmar
+Bis zu 3 sichtbare Einheiten (eigene oder feindliche), je ein W3: bei 2+ erhält eine befreundete Einheit Rettung 5+ bis zu deinem nächsten Zug, eine feindliche erleidet tödlichen Schaden in Höhe des Wurfs.	Up to 3 visible units (friendly or enemy), roll a D3 each: on 2+ a friendly unit gets Ward 5+ until your next turn, an enemy unit suffers mortal damage equal to the roll.
+Flüsterklinge	Whisperblade
+Verzaubertes Rapier	Enchanted Rapier
+Gefahr erkannt, Gefahr gebannt	Danger Sensed, Danger Banished
+In deinem Zug hat die Einheit Kämpft zuerst.	During your turn this unit has Strike-first.
+Erzritter und Gefolge	Archknight and Retinue
+Befehlsstabwaffen	Command Staff Weapons
+Talentierte Kämpfer	Talented Fighters
+Einmal pro Zug, wenn du einen Befehl einsetzt: Nach dem Abhandeln nimmst du die Karte wieder auf die Hand (Befehl nochmals nutzen oder das Vorhaben werten).	Once per turn, when you use a command: after resolving it, take the card back into your hand (use the command again or score its tactic).
+Freigilden-Stahlhelme	Freeguild Steelhelms
+Freigilden-Waffen	Freeguild Weapons
+Fanatische Anhänger	Fanatical Followers
+Bringe 1 getötetes Modell in die Einheit zurück.	Return 1 slain model to this unit.
+Moorpirscha-Waaagh	Swampskulka Waaagh
+Dein General und eine andere befreundete Einheit ganz innerhalb 12" um ihn haben in dieser Phase Kämpft zuerst.	Your general and another friendly unit wholly within 12" of them have Strike-first this phase.
+Killaboss auf Großem Schnappzahn	Killaboss on Great Gnashtoof
+Schartiger Boss-Spieß	Jagged Boss Skewer
+Knochen knackende Schnappzähne	Bone-crunching Jaws
+Gehört alles zum Plan	It's All Part of the Plan
+Eine andere befreundete Einheit ganz innerhalb 9": +3 auf den Kontrollwert bis zu deinem nächsten Zug.	Another friendly unit wholly within 9": +3 control score until your next turn.
+Torfboss mit Sumpfgasbanna	Swampboss with Gasbanna
+Torfboss-Spalta	Swampboss Cleaver
+Moordrachenatem	Bog Dragon Breath
+Wirf für jede feindliche Einheit im Nahkampf mit ihr einen Würfel: 1 = nichts, 2-5 = 1 tödlicher Schaden, 6 = W3 tödlicher Schaden.	Roll a die for each enemy unit in combat with it: 1 = nothing, 2-5 = 1 mortal damage, 6 = D3 mortal damage.
+Bolz’nschießa	Boltboyz
+Bolz’nschießa	Boltboy Crossbows
+Schartige Klinge	Jagged Blade
+Schön gezielt	Well Aimed
++1 auf Trefferwürfe der Fernkampfattacken, wenn die Einheit in diesem Zug keine Bewegung eingesetzt hat.	+1 to hit rolls of shooting attacks if the unit has not used a Move ability this turn.
+Wanstreißa	Gutrippaz
+Gemeines Hackbeil	Nasty Cleaver
+Angst machen	Scare 'Em
+Wirf einen Würfel: bei 3+ gilt in dieser Phase −1 auf Trefferwürfe gegen diese Einheit (wirkt nicht gegen Attacken von Helden).	Roll a die: on 3+, subtract 1 from hit rolls targeting this unit this phase (no effect on Hero attacks).
+Bestienkillabogen	Beast-killer Bow
+Bestienkillabolz’n	Beast-killer Bolts
+Schartige Klingen	Jagged Blades
+Gekillt	Slain
+Schaden der Bestienkillabolz'n ist 6 statt W6, wenn das Ziel ein Monster ist.	The Damage of the Beast-killer Bolts is 6 instead of D6 against Monsters.
+Die Unruhigen Toten	The Restless Dead
+Eine Skelette-Einheit wird nicht aufgestellt. Ab Runde 3 setzt sie in deiner Bewegungsphase („Die Toten erheben sich“, 1× pro Schlacht, Armee) ein: ganz innerhalb 3" einer Schlachtfeldkante und mehr als 6" von Feinden aufstellen.	One Skeleton unit is not deployed. From round 3 it can rise in your Movement phase ("The Dead Rise", once per battle, army): set up wholly within 3" of a battlefield edge and more than 6" from enemies.
+Aura des Altertums	Aura of Ancientry
+Wähle eine feindliche Einheit im Nahkampf mit einer befreundeten Einheit; Wurf 3+: −1 Wucht ihrer Nahkampfwaffen bis zu deinem nächsten Zug.	Pick an enemy unit in combat with a friendly unit; on 3+ subtract 1 from the Rend of its melee weapons until your next turn.
+Fluchfürst	Wight King
+Unheilvolle Gruftklinge	Baleful Tombblade
+König schlurfender Knochen	King of Shambling Bones
+Wähle eine Knochenhorde-Einheit ganz innerhalb 12"; Wurf 2+: +1 auf Trefferwürfe ihrer Nahkampfattacken für den Rest des Zugs.	Pick a Deathrattle unit wholly within 12"; on 2+ add 1 to its melee hit rolls for the rest of the turn.
+Grabhügelwache	Barrow Guard
+Fluchklinge	Cursed Blade
+Fürstliche Wache	Royal Guard
+Solange dein General in Nahkampfreichweite dieser Einheit ist, haben beide Rettung (5+).	While your general is within this unit's combat range, both have Ward (5+).
+Grabhügelritter	Barrow Knights
+Grablanze	Barrow Lance
+Skelettpferdhufe und -zähne	Skeletal Steed's Hooves and Teeth
+Verflucht, sich wieder zu erheben	Cursed to Rise Again
+Bringe 1 getötetes Modell in die Einheit zurück.	Return 1 slain model to this unit.
+Skelette (Knochenhorde)	Skeletons (Deathrattle)
+Uralte Waffe	Ancient Weapon
+Skelettlegion	Skeleton Legion
+Bringe W3 getötete Modelle in die Einheit zurück.	Return D3 slain models to this unit.
+Die lauernde Rattenschar	The Lurking Vermin Horde
+Nagloch-Überfall	Gnawhole Ambush
+Einmal pro Schlacht, Aufstellungsphase: Wähle eine nicht aufgestellte befreundete Einheit; sie wird in den Tunneln in der Tiefe in Reserve gestellt. Einheiten, die am Ende der dritten Schlachtrunde nicht per „Nagloch-Überfall“ erschienen sind, werden zerstört.	Once per battle, deployment phase: pick a friendly unit that has not been set up; it is placed in reserve in the Tunnels Below. Units that have not appeared by using "Gnawhole Ambush" by the end of battle round 3 are destroyed.
+Deine Bewegungsphase: Eine befreundete Einheit aus den Tunneln in der Tiefe wird ganz innerhalb 6" um eine Ecke des Schlachtfelds und mehr als 9" von allen Feinden aufgestellt.	Your Movement phase: a friendly unit from the Tunnels Below is set up wholly within 6" of a battlefield corner and more than 9" from all enemy units.
+Inbrünstiger Ansturm	Fervent Charge
+Einmal pro Zug (Armee), Bewegungsphase: Eine Einheit darf Angriff einsetzen, auch wenn sie in diesem Zug gerannt ist.	Once per turn (army), your Movement phase: a friendly unit can use Charge abilities this turn even if it ran.
+Wilde Zeloten	Wild Zealots
+Passiv: +3 auf den Kontrollwert der Freigilden-Stahlhelme.	Passive: +3 to the control score of Freeguild Steelhelms units.
+Frommer Befehlshaber	Pious Commander
+Passiv: +1 Attacken und +1 Wucht der Meisterhaften Waffe des Generals.	Passive: +1 Attacks and +1 Rend on your general's Masterwork Weapon.
+Vorwärts!	Forward!
+Einmal pro Zug, Reaktion auf Rennen einer Nicht-Helden-Einheit nahe dem General: kein Rennenwurf, stattdessen +6 Zoll.	Once per turn, reaction to a Run by a non-Hero unit near the general: no run roll, instead +6" Move.
+Bleibt standhaft, Kameraden	Stand Firm, Comrades
+Einmal pro Schlacht, Heldenphase: Sichtbare Nicht-Helden-Einheit ganz innerhalb 12 Zoll um den General hat Rettung 4+ bis zur nächsten Schlachtrunde.	Once per battle, your Hero phase: a visible non-Hero unit wholly within 12" of the general has Ward (4+) until the next battle round.
+Inbrünstige Forderung	Fervent Demand
+Beliebige Nahkampfphase (1× pro Zug angenommen): Sichtbare Nicht-Helden-Einheit ganz innerhalb 12 Zoll um den General: +1 auf Trefferwürfe ihrer Nahkampfattacken für den Rest des Zugs.	Any combat phase (assumed once per turn): a visible non-Hero unit wholly within 12" of the general adds 1 to hit rolls of its melee attacks for the rest of the turn.
+Krach machen	Making Noise
+Passiv: In der ersten Schlachtrunde −1 auf Verwundungswürfe für Attacken feindlicher Einheiten.	Passive: in the first battle round subtract 1 from wound rolls of attacks made by enemy units.
+Schlammbedeckt	Mud-Covered
+Beginn der ersten Schlachtrunde: Eine befreundete Einheit ist in dieser Schlacht für Feinde, die weiter als 12 Zoll entfernt sind, nicht sichtbar.	Start of the first battle round: one friendly unit cannot be seen by enemies more than 12" away for the whole battle.
+Egomane	Egomaniac
+Passiv: Ist eine andere befreundete Einheit in Nahkampfreichweite des Generals, wirf vor jedem Schadenspunkt gegen den General einen Würfel: bei 4+ trifft der Punkt stattdessen jene Einheit.	Passive: if another friendly unit is within the general's combat range, roll a die before each damage point on the general: on 4+ it hits that unit instead.
+Kiesel, der wie Morks Auge aussieht	Pebble That Looks Like Mork's Eye
+Einmal pro Schlacht, gegnerische Bewegungsphase: In der nächsten Fernkampfphase haben befreundete Einheiten ganz innerhalb 12 Zoll um den General Rettung 5+.	Once per battle, enemy Movement phase: in the next Shooting phase friendly units wholly within 12" of the general have Ward (5+).
+Klävvara Plan	Cunnin' Plan
+Einmal pro Zug, deine Heldenphase: Befreundete Einheit ganz innerhalb 12 Zoll um den General: Setzt sie in diesem Zug Rückzug ein, erleidet sie keinen tödlichen Schaden und darf später noch Fernkampf und Angriff einsetzen.	Once per turn, your Hero phase: a friendly unit wholly within 12" of the general that retreats this turn takes no mortal damage and can still shoot and charge.
+Augenbiss-Asche	Eyebite Ash
+Einmal pro Schlacht, beliebige Nahkampfphase: Feind im Nahkampf mit dem General; W6: 1–4 = −1 auf seine Trefferwürfe für den Rest der Phase, 5+ = −1 für den Rest der Schlacht.	Once per battle, any combat phase: an enemy in combat with the general; D6: 1-4 = -1 to its hit rolls for the phase, 5+ = -1 for the rest of the battle.
+Überwältigende Horden	Overwhelming Hordes
+Passiv: +1 auf Verwundungswürfe im Nahkampf für befreundete Nicht-Helden, wenn das Ziel weniger Modelle hat als die angreifende Einheit.	Passive: +1 to wound rolls of non-Hero friendly melee attacks against units with fewer models than the attacker.
+Totenheerzug	Deathly March
+Einmal pro Zug (Armee), Heldenphase: Nicht-Helden-Einheit außerhalb des Nahkampfs: +1 Zoll Bewegung und +3 Kontrollwert für den Zug.	Once per turn (army), your Hero phase: a non-Hero friendly unit not in combat gets +1" Move and +3 control score for the rest of the turn.
+Shyshianische Klinge	Shyishian Blade
+Passiv: Wucht der Unheilvollen Gruftklinge des Generals ist 2.	Passive: the Rend of your general's Baleful Tombblade is 2.
+Geraubte Lebenskraft	Stolen Vitality
+Passiv: Jeder kritische Treffer des Generals heilt ihn um 2 (nach der Attacke).	Passive: each time your general scores a critical hit, Heal (2) the general after the attack.
+Angetrieben von Hass	Driven by Hate
+Angriffsphase: Andere befreundete Einheit vollständig innerhalb von 12 Zoll um den General darf ihre Angriffswürfe wiederholen (Zug).	Your Charge phase: another friendly unit wholly within 12" of the general can re-roll charge rolls for the rest of the turn.
+Seelensog-Anhänger	Soulsuck Pendant
+Einmal pro Schlacht, Nahkampfphase: Feind im Nahkampf mit dem General; Wurf 2+: kämpft zuletzt.	Once per battle, any combat phase: an enemy in combat with the general; on 2+ it fights last for the rest of the turn.
+Städte Sigmars	Cities of Sigmar
+Zenestras Zeloten	Zenestra's Zealots
+Held	Hero
+Infanterie	Infantry
+Heldin	Hero
+Priesterin	Priest
+Verstärkung	Reinforcements
+Orruk-Kriegsclans	Orruk Warclans
+Sumpfschleichabande	Swampskulka Gang
+Kavallerie	Cavalry
+Kriegsmaschine	War Machine
+Seelenbrand-Grabesfürsten	Soulblight Gravelords
+Knochenhorde-Gruftheer	Deathrattle Tomb Host
+Skaven	Skaven
+Nagschmausschwarm	Gnawfeast Clawpack
+Warpsteingeschosse	Warpstone Bullets
+Einmal pro Schlacht, Fernkampfphase: Eine Fernkampfwaffe einer befreundeten Einheit hat in dieser Phase Krit. (tödlich).	Once per battle, Shooting phase: a missile weapon of a friendly unit has Crit (Mortal) this phase.
+Zu schnell zum Treffen-Treffen	Too Fast to Hit-Hit
+Passiv: Befreundete Einheiten erleiden durch Rückzug keinen tödlichen Schaden.	Passive: friendly units suffer no mortal damage when they Retreat.
+Herr der wimmelnden Horde	Lord of the Swarming Horde
+Reaktion auf Verstärkung rufen: Ersatzeinheit darf vollständig innerhalb von 13 Zoll um den General, nicht im Nahkampf, aufgestellt werden.	Reaction to Call for Reinforcements: the replacement unit can be set up wholly within 13" of the general and not in combat.
+Warpsteinamulett	Warpstone Amulet
+Passiv: −1 auf Schutzwürfe feindlicher Einheiten, die mit dem General im Nahkampf sind.	Passive: subtract 1 from save rolls of enemy units in combat with the general.
+Skryre-Verbindungen	Skryre Connections
+Passiv: Rattlingpistole des Generals hat 2W6 Attacken.	Passive: the general's Ratling Pistol has 2D6 Attacks.
+Mantel aus vernähten Siegen	Cloak of Stitched Victories
+Passiv: General hat Rettung 5+.	Passive: the general has Ward 5+.
+Klauenfürst auf Nagbestie	Clawlord on Gnaw-beast
+Rattlingpistole	Ratling Pistol
+Warpgeschmiedete Hellebarde	Warpforged Halberd
+Meißelzähne der Nagbestie	Gnaw-beast's Chisel Teeth
+Grauer Prophet	Grey Seer
+Zauberer	Wizard
+Warpsteinstab	Warpstone Staff
+Wille der gehörnten Ratte	Will of the Horned Rat
+Heldenphase: 3+ → Ergebnis auf den Kontrollwert (bis zum nächsten eigenen Zug)	Hero phase: 3+ → add the result to a control score (until your next turn)
+Verdorren	Wither
+Heldenphase: Zauber 2W6 (6+): W3 tödlicher Schaden, Feind innerhalb 13"	Hero phase: casting roll 2D6 (6+): D3 mortal damage, enemy within 13"
+Warlock-Techniker	Warlock Engineer
+Warpstein-Muskete	Warpstone Musket
+Warpgeschmiedeter Dolch	Warpforged Dagger
+Clanratten	Clanrats
+Rostige Klinge	Rusty Blade
+Rattenogors	Rat Ogors
+Warpflammenkanone	Warpflame Gun
+Klauen, Klingen und Fänge	Claws, Blades and Fangs
+Entfesselte Warpwut	Unleashed Warp-fury
+Nahkampfphase, 1× pro Schlacht: W3 tödlicher Schaden auf diese Einheit, +1 Attacke (Phase)	Combat phase, once per battle: D3 mortal damage to this unit, +1 Attack (phase)
+Warpblitzschwarm	Warpspark Swarm
+Warpsteinbeschlagene Rüstung	Warpstone-studded Armour
+Einmal pro Schlacht, Reaktion: Gegner sagt Attacke an und Ziel ist deine Sturmbestien-Einheit: Rettung 5+ für den Zug.	Once per battle, reaction: the enemy declares an attack and the target is your Stormfiends unit: Ward 5+ for the turn.
+Endloser Rattenschwarm	Endless Rat Swarm
+Passiv: Wimmelnder Schwarm bringt W6 statt W3 Modelle zurück.	Passive: Swarming Tide returns D6 instead of D3 models.
+Geschickter Manipulator	Deft Manipulator
+Passiv: General hat Rettung 4+, solange er innerhalb von 1 Zoll um eine befreundete Clanratten-Einheit ist.	Passive: the general has Ward 4+ while within 1" of a friendly Clanrats unit.
+Schwefelsprung	Sulphurous Leap
+Heldenphase: Zauberwurf 2W6, bei 6+ den General entfernen und weiter als 6 Zoll von allen Feinden wieder aufstellen; keine Bewegung in der nächsten Bewegungsphase.	Hero phase: casting roll 2D6, on 6+ remove the general and set it up again more than 6" from all enemies; no move in the next Movement phase.
+Warpblitzkäfig	Warplightning Cage
+Einmal pro Schlacht, Nahkampfphase: Sichtbarer Feind innerhalb von 6 Zoll; Wurf 2+: kämpft zuletzt, bei 1: 1 tödlicher Schaden auf den General.	Once per battle, combat phase: visible enemy within 6"; roll 2+: it fights last; on a 1: 1 mortal damage to the general.
+Fersengeld	Make Haste
+Nahkampfphase: Wurf 3+: sofort Rückzug ohne tödlichen Schaden.	Combat phase: roll 3+: immediately Retreat without mortal damage.
+Sturmbestien	Stormfiends
+Rattlingkanonen	Ratling Cannons
+Giftwindfäuste	Poisoned Wind Fists
+Schockfäuste	Shock Gauntlets
+Brutale Fausthiebe	Brutal Pummelling
+Warpblitzkanone	Warplightning Cannon
+Warpblitzgeschosse	Warplightning Blasts
+Zähne und Messer der Mannschaft	Crew's Teeth and Knives
+Sturmgeschmiedete Ewige	Stormcast Eternals
+Yndrastas Speerspitze	Yndrasta's Spearhead
+Schlag sie zurück	Strike Them Back
+Ende eines beliebigen Zugs: Befreundete Einheiten, die ein Ziel beanspruchen und im Nahkampf sind, rücken nach; Feind innerhalb von 1 Zoll: Wurf 4+ = 1 tödlicher Schaden.	End of any turn: friendly units claiming an objective and in combat Pile In; enemy within 1": roll 4+ = 1 mortal damage.
+Erbitterte Verteidigung	Stubborn Defence
+Passiv: Befreundete Einheiten haben Rettung 6+, solange sie ein von dir kontrolliertes Ziel beanspruchen.	Passive: friendly units have Ward 6+ while claiming an objective you control.
+Oberste Jäger	Apex Hunters
+Passiv: Schaden von Thengavar ist 2W6 gegen Monster.	Passive: the Damage of Thengavar is 2D6 against Monsters.
+Mit der Wut des Sturms zuschlagen	Strike with the Fury of the Storm
+Passiv: Die Generalin kämpft zuerst, wenn sie in diesem Zug angegriffen hat.	Passive: the general fights first if she charged this turn.
+Strahlender Glanz	Radiant Glory
+Einmal pro Schlacht, Bewegungsphase: Je 1 getötetes Modell in befreundeten Einheiten vollständig innerhalb von 12 Zoll um die Generalin zurückbringen.	Once per battle, Movement phase: return 1 slain model each to friendly units wholly within 12" of the general.
+Falke der celestischen Himmel	Falcon of the Celestial Skies
+Einmal pro Schlacht, Nahkampfphase: +1 auf Trefferwürfe befreundeter Einheiten vollständig innerhalb von 12 Zoll um die Generalin (Phase).	Once per battle, combat phase: +1 to hit rolls for friendly units wholly within 12" of the general (phase).
+Yndrasta, der Celestische Speer	Yndrasta, the Celestial Spear
+Fliegen	Fly
+Thengavar	Thengavar
+Klinge des hohen Himmels	Blade of the High Heavens
+Streiterin des Sigmar	Sigmar's Champion
+Nahkampfphase, 1× pro Schlacht: Rettung 5+ (Phase)	Combat phase, once per battle: Ward 5+ (phase)
+Bezwinger	Vanquishers
+Celestisches Großschwert	Celestial Greatblade
+Ritter Vexillor	Knight-Vexillor
+Sigmarit-Kriegsklinge	Sigmarite Warblade
+Banner der Neugeschmiedeten	Banner of the Reforged
+Heldenphase: heile W3 und +3 Kontrollwert (12")	Hero phase: heal D3 and +3 control score (12")
+Annihilatoren	Annihilators
+Meteorhammer	Meteoric Hammer
+Gewalt eines Meteors	Force of a Meteor
+Angriffsphase: nach Angriffswurf 8+: Feind innerhalb 1" kämpft zuletzt	Charge phase: after a charge roll of 8+: enemy within 1" fights last
+Sturmschlag-Streitwagen	Stormstrike Chariot
+Großer Sturmbogen	Great Stormbow
+Sturmschlag-Axt	Stormstrike Axe
+Sturmgryphenschnabel und -klauen	Stormgryph's Beak and Claws
+Entfesseltes Azyr	Unleashed Azyr
+Angriffsphase: nach dem Angriff 2+ → W3 tödlicher Schaden (Feind innerhalb 1")	Charge phase: after charging 2+ → D3 mortal damage (enemy within 1")
+Wachsame Bruderschaft	Vigilant Brotherhood
+Am richtigen Ort zuschlagen	Strike at the Right Place
+Einmal pro Schlacht, Reaktion auf Rückzug: Kein tödlicher Schaden; die Einheit darf danach noch angreifen.	Once per battle, reaction to a Retreat: no mortal damage; the unit can still charge afterwards.
+Ruhmreiches Gleißen	Glorious Radiance
+Einmal pro Schlacht, Nahkampfphase: Befreundete Einheit im Nahkampf; am Ende der Phase für jedes getötete Modell Wurf 4+: 1 tödlicher Schaden auf Feind im Nahkampf mit ihr.	Once per battle, combat phase: friendly unit in combat; at the end of the phase roll for each model slain: on 4+ 1 mortal damage to an enemy in combat with it.
+Heilige Schriften	Holy Scripts
+Morrdas Kralle	Morrda's Claw
+Passiv: Gesegnete Großaxt des Generals hat Krit. (tödlich).	Passive: the general's Blessed Greataxe has Crit (Mortal).
+Quecksilbertrank	Quicksilver Potion
+Einmal pro Schlacht, Nahkampfphase: General kämpft in dieser Phase zuerst.	Once per battle, combat phase: the general fights first this phase.
+Nullamulett	Null Amulet
+Einmal pro Schlacht, Ende eines Zugs: Für jede Feind-Einheit, die dasselbe Ziel beansprucht wie der General, Wurf 2+: Ergebnis vom Kontrollwert abziehen.	Once per battle, end of a turn: for each enemy unit claiming the same objective as the general, roll 2+: subtract the result from its control score.
+Fürst Vigilant auf Schattengryph	Lord-Vigilant on Gryph-charger
+Gesegnete Großaxt	Blessed Greataxe
+Schattengryphschnabel und -krallen	Gryph-charger's Beak and Talons
+Urteil verhängen	Pass Judgement
+Nahkampfphase, 1× pro Schlacht: Nicht-Held (12") kämpft zweimal, danach zuletzt	Combat phase, once per battle: a non-Hero (12") fights twice, then last
+Geplanter Angriff	Planned Strike
+Heldenphase: Ziel wählen, das du nicht kontrollierst; +1 Treffer gegen Feinde dort	Hero phase: pick an objective you do not control; +1 to hit against enemies there
+Fürst Veritant	Lord-Veritant
+Priester	Priest
+Stab der Entsagung	Staff of Abjuration
+Urteilsklinge	Judgement Blade
+Reinigendes Feuer	Cleansing Flame
+Heldenphase: Gebet 3+ → je Modell des Ziels (12") 5+ = 1 tödlicher Schaden	Hero phase: prayer 3+ → for each model in the target (12") a 5+ = 1 mortal damage
+Prosecutoren	Prosecutors
+Sturmrufer-Speer	Stormcall Javelin
+Liberatoren	Liberators
+Kriegshammer	Warhammer
+Großhammer	Grandhammer
+Nachtspuk	Nighthaunt
+Verfluchte Fesselhorde	Cursed Shacklehorde
+Verblassen	Fade Away
+Einmal pro Zug (Armee), beliebige Heldenphase: Befreundete Einheit; Wurf 3+: +1 auf Schutzwürfe für den Rest des Zugs.	Once per turn (army), any Hero phase: friendly unit; roll 3+: +1 to save rolls for the rest of the turn.
+Wachsender Schrecken	Growing Dread
+Einmal pro Zug (Armee), Ende eines beliebigen Zugs: Befreundete Einheit; Wurf 2+: Die aktuelle Rundennummer wird vom Kontrollwert feindlicher Einheiten im Nahkampf mit dem Ziel abgezogen.	Once per turn (army), end of any turn: friendly unit; roll 2+: subtract the current battle round number from the control score of enemy units in combat with the target.
+Geistergeheul	Spectral Howl
+Einmal pro Schlacht, beliebige Heldenphase: Sichtbarer Feind innerhalb 12 Zoll um den General: −1 Würfel bei seinen Angriffswürfen (mind. 1) für den Zug.	Once per battle, any Hero phase: visible enemy within 12" of the general: −1 die on its charge rolls (min. 1) for the turn.
+Tödliche Besessenheit	Deadly Obsession
+Beliebige Nahkampfphase (1× pro Zug angenommen): Feindlicher Held innerhalb 12 Zoll um den General und eine Feind-Einheit in dessen Nahkampfreichweite: W3, bei 2+ so viel tödlicher Schaden auf Held oder Einheit.	Any combat phase (assumed once per turn): enemy Hero within 12" of the general and an enemy unit in that Hero's combat range: roll a D3, on 2+ that much mortal damage to the Hero or the unit.
+Horrorgeschichten	Horror Stories
+Einmal pro Schlacht, Nahkampfphase: Feindliche Infanterie/Kavallerie innerhalb 6 Zoll um den General: Wird sie per Verstärkung rufen ersetzt, hat die Ersatzeinheit nur die halbe Modellzahl (aufgerundet).	Once per battle, combat phase: enemy Infantry/Cavalry within 6" of the general: if it is replaced by Call for Reinforcements, the replacement has only half the models (rounded up).
+Unheiliges Antlitz	Unholy Visage
+Deine Heldenphase (1× pro Zug angenommen): Sichtbarer Feind innerhalb 6 Zoll um den General; 3+: Ziel setzt sofort Rückzug ein, danach bei Nahkampf 2W3 tödlicher Schaden.	Your Hero phase (assumed once per turn): visible enemy within 6" of the general; 3+: the target immediately Retreats, then 2D3 mortal damage if it is in combat.
+General Peingespenst	Tormented General
+Fesselgeist-Ketten	Shackle-ghost Chains
+Gefangene Seelenenergie	Trapped Soul Energy
+Heldenphase: 3+ → +1 auf Verwundungswürfe einer Einheit ganz innerhalb 12" (Zug)	Hero phase: 3+ → +1 to wound rolls of a unit wholly within 12" (turn)
+Kettenghaste	Chainghasts
+Ghastflegel	Ghast Flails
+Noch ein Glied in der Kette	Another Link in the Chain
+Nahkampfphase: W6 (+1 nahe dem General) 3+ → +1 auf Trefferwürfe im Nahkampf für Einheiten ganz innerhalb 12"	Combat phase: D6 (+1 near the general) 3+ → +1 to melee hit rolls for units wholly within 12"
+Klingengeist-Wiedergänger	Bladegheist Revenants
+Große Grabklinge	Great Grave-blade
+Sensenmegären	Scythed Harridans
+Sensenglieder	Scythes
+Schreckensreiter	Dreadscythe Harridans
+Furchtklinge	Terror Blade
+Hufe	Hooves
+Geisterhaftes Verblassen	Spectral Fade
+Bewegungsphase, 1× pro Schlacht: Einheit entfernen und mehr als 6" von allen Feinden neu aufstellen	Movement phase, once per battle: remove the unit and set it up again more than 6" from all enemies
+Maggotkin des Nurgle	Maggotkin of Nurgle
+Seuchenzelle	Bubonic Cell
+Korrumpierung des Landes	Corruption of the Land
+Einmal pro Zug (Armee), Ende deines Zugs: Geländestück wählen; W6 je Feind-Einheit innerhalb 3 Zoll, bei 4+ W3 tödlicher Schaden.	Once per turn (army), end of your turn: pick a terrain feature; D6 per enemy unit within 3", on 4+ D3 mortal damage.
+Verwesender Boden	Rotting Ground
+Einmal pro Schlacht, gegnerische Heldenphase: Feindliche Einheiten haben −1 Bewegung und −1 auf Rennenwürfe für den Zug.	Once per battle, enemy Hero phase: enemy units have −1 Move and −1 on run rolls for the turn.
+Unnatürliche Vitalität	Unnatural Vitality
+Passiv: Der General hat Rettung 4+.	Passive: the general has Ward 4+.
+Subkutanes Schwären	Subcutaneous Seething
+Passiv: −1 auf Verwundungswürfe von Attacken gegen den General.	Passive: −1 to wound rolls of attacks against the general.
+Gasausstoß	Gas Release
+Einmal pro Schlacht, beliebige Nahkampfphase: Feind im Nahkampf mit dem General kämpft in diesem Zug zuletzt.	Once per battle, any combat phase: an enemy in combat with the general fights last this turn.
+Überreife Totenschädel	Overripe Skulls
+Deine Fernkampfphase, General nicht im Nahkampf: Sichtbarer Feind innerhalb 7 Zoll: W6 4+ → 1 tödlicher Schaden.	Your Shooting phase, general not in combat: visible enemy within 7": D6 4+ → 1 mortal damage.
+Fäulnisboten-Hexer	Rotbringer Sorcerer
+Faulholzstab	Rotwood Staff
+Fleischige Fülle	Fleshy Abundance
+Heldenphase: Zauber 2W6 (6+): −1 auf Verwundungswürfe gegen eine Einheit ganz innerhalb 12" (bis zu deinem nächsten Zug)	Hero phase: casting roll 2D6 (6+): −1 to wound rolls against a unit wholly within 12" (until your next turn)
+Nurglinge	Nurglings
+Bestie	Beast
+Nurglinge-Klauen	Nurgling Claws
+Schleimbestie	Plaguebeast
+Schleimbestie-Klauen	Plaguebeast Claws
+Aufdringlich	Pestering
+Angriffsphase: nach dem Angriff, Feind im Nahkampf: W3, 2+ → so viel tödlicher Schaden	Charge phase: after charging, enemy in combat: D3, 2+ → that much mortal damage
+Krieger des Faulsumpf-Credos	Rotbringer Warriors of the Blight Creed
+Credo-Waffen	Creed Weapons
+Khazalid	Khazalid
+Drakkblud-Clangarde	Drakkblud Clanguard
+Inghildes leitendes Licht	Inghild's Guiding Light
+Einmal pro Schlacht, beliebige Heldenphase: Befreundete Infanterie-Einheit wird entfernt und mehr als 6 Zoll von allen Feinden neu aufgestellt.	Once per battle, any Hero phase: a friendly Infantry unit is removed and set up again more than 6" from all enemies.
+Den Groll sühnen	Atone for the Grudge
+Einmal pro Schlacht, Aufstellungsphase: Wähle eine Feind-Einheit, die „vom Groll betroffen“ ist; befreundete Infanterie darf in ihrem Nahkampf Trefferwürfe von 1 wiederholen (angenommen: jede Feind-Einheit wählbar).	Once per battle, deployment phase: pick an enemy unit that is "Grudge-stricken"; friendly Infantry may re-roll hit rolls of 1 in combat with it (assumed: any enemy unit can be picked).
+Eiserne Einschüchterung	Iron Intimidation
+Einmal pro Schlacht, Heldenphase: Sichtbarer Feind innerhalb 12 Zoll um den General: −W6 Kontrollwert bis zu deinem nächsten Zug.	Once per battle, Hero phase: visible enemy within 12" of the general: −D6 control score until your next turn.
+Gut durchdachte Taktiken	Well-Laid Tactics
+Einmal pro Schlacht, Bewegungsphase: Sichtbare befreundete Einheit vollständig innerhalb 12 Zoll um den General darf sich zurückziehen (ohne tödlichen Schaden) und später noch angreifen.	Once per battle, Movement phase: a visible friendly unit wholly within 12" of the general may retreat (without mortal damage) and still charge later.
+Ragnissons Kobaltbräu	Ragnisson's Cobalt Brew
+Passiv: +2 Attacken für die Nahkampfwaffe des Generals.	Passive: +2 Attacks for the general's melee weapon.
+Einen Groll zu vergelten	A Grudge to Repay
+Gegnerische Fernkampfphase: Befreundete Einheit außerhalb des Nahkampfs, der in dieser Phase Schaden zugeteilt wurde, darf eine Normale Bewegung ausführen.	Enemy Shooting phase: a friendly unit not in combat that was allocated damage this phase may make a Normal Move.
+Hjulda Drakkblud	Hjulda Drakkblud
+Azangrom	Azangrom
+Gestrenge Führung	Stern Leadership
+Heldenphase: Clanschilde ganz innerhalb 12": W6 3+ (Wiederholung mit Grollmarker) → +1 Wucht im Nahkampf (bis zu deinem nächsten Zug)	Hero phase: Clan Shields wholly within 12": D6 3+ (re-roll with a Grudge token) → +1 Rend in combat (until your next turn)
+Clanschilde	Clan Shields
+Kromdron-Waffe	Kromdron Weapon
+Gholems des Gazul	Gazul's Gholems
+Gazul-Großhammer	Gazul's Greathammer
+Eidwahrerkanone	Oathkeeper Cannon
+Besatzung	Crew
+Runenhämmerer-Lehrling	Runesmiter Apprentice
+Fernkampfphase, 1× pro Zug: Ziel aller Schüsse dieser Einheit; W6 3+ (Wiederholung mit Grollmarker) → Rune der Verwerfung / Verbrennungen / Schock	Shooting phase, once per turn: target of all shots of this unit; D6 3+ (re-roll with a Grudge token) → Rune of Banishment / Burns / Shock
+Magma-Fyrd	Magma Fyrd
+Kampfeslustig	Spoiling for a Fight
+Einmal pro Schlacht (Armee), Aufstellungsphase: Befreundete Nicht-Monster-Einheit darf eine Normale Bewegung ausführen.	Once per battle (army), deployment phase: a friendly non-Monster unit may make a Normal Move.
+Glut der Runen	Heat of the Runes
+Einmal pro Zug (Armee), Ende des gegnerischen Zugs: Befreundete Einheit (je Einheit 1× pro Schlacht) würfelt 6 Würfel gegen eine Feind-Einheit im Nahkampf mit ihr; je 4+ = 1 tödlicher Schaden.	Once per turn (army), end of the enemy turn: a friendly unit (once per unit per battle) rolls 6 dice against an enemy unit in combat with it; each 4+ = 1 mortal damage.
+Flammenkrone	Crown of Flame
+Einmal pro Schlacht, beliebige Nahkampfphase: Der General hat Rettung 4+ für den Rest des Zugs; ab deinem nächsten Zug für den Rest der Schlacht −1 auf seine Rettungswürfe.	Once per battle, any combat phase: the general has Ward 4+ for the rest of the turn; from your next turn for the rest of the battle −1 to its ward rolls.
+Fŷrfunken	Fyrspark
+Ende eines beliebigen Zugs: Feind im Nahkampf mit dem General erleidet 1 tödlichen Schaden.	End of any turn: an enemy in combat with the general suffers 1 mortal damage.
+Das Feuer schüren	Stoke the Fires
+Einmal pro Schlacht, deine Fernkampfphase: Tosender Fŷratem des Generals hat für die Phase W3+4 Attacken; bei jedem unmodifizierten Treffer von 1 erleidet der General W3 Schaden (ohne Rettung).	Once per battle, your Shooting phase: the general's Roaring Fyrebreath has D3+4 Attacks for the phase; on each unmodified hit roll of 1 the general suffers D3 damage (no ward).
+Logenvater	Lodge Father
+Passiv: +1 auf Rettungswürfe befreundeter Nicht-Monster-Einheiten vollständig innerhalb 3 Zoll um den General.	Passive: +1 to ward rolls of friendly non-Monster units wholly within 3" of the general.
+Goldrunenvater auf Magmadroth	Goldrune Father on Magmadroth
+Monster	Monster
+Tosender Fŷratem	Roaring Fyrebreath
+Schlüsselgroßaxt	Keyed Greataxe
+Magmadrothmaul	Magmadroth's Maw
+Goldrunenwerker	Goldrune Worker
+Schlüsselaxt	Keyed Axe
+Die Runen erwecken	Awaken the Runes
+Heldenphase: Einheit ganz innerhalb 12", 3+ → −1 auf Verwundungswürfe der Nahkampfattacken gegen sie (bis zu deinem nächsten Zug)	Hero phase: unit wholly within 12", 3+ → −1 to wound rolls of melee attacks against it (until your next turn)
+Vulkyn-Flammensucher	Vulkyn Flamekeepers
+Vulkynwaffen	Vulkyn Weapons
+Feuerdroth-Zähne	Fire Drothe Teeth
+Verdammtes Viech	Damned Beast
+Nahkampfphase: Feind im Nahkampf, 3+ → −1 auf seine Nahkampf-Trefferwürfe (Zug)	Combat phase: enemy in combat, 3+ → −1 to its melee hit rolls (turn)
+Goldwächter	Gold Wardens
+Magmapike	Magmapike
+Lavaverkrustet	Lava-encrusted
+Fernkampfphase: Feind, der Schaden von dieser Einheit erlitt: 3+ → −1 Bewegung bis zu deinem nächsten Zug	Shooting phase: enemy that suffered damage from this unit: 3+ → −1 Move until your next turn
+Blutdrangjagd	Bloodcrave Hunt
+Endlose Legionen	Endless Legions
+Einmal pro Schlacht, deine Bewegungsphase: Zerstörte befreundete Skelette-der-Knochenhorde-Einheit wählen; Ersatzeinheit aus W6 Modellen in befreundetem Territorium, mehr als 6 Zoll von allen Feinden aufstellen.	Once per battle, your Movement phase: pick a destroyed friendly Deathrattle Skeletons unit; set up a replacement unit of D6 models in friendly territory, more than 6" from all enemies.
+Verheerender Sturmangriff	Devastating Charge
+Beliebige Angriffsphase: Blutritter-Einheit, die in diesem Zug angegriffen hat: W3 tödlicher Schaden auf jede feindliche Einheit, über die sie sich bei der Angriffsbewegung hinweggebewegt hat (angenommen: Einheiten nahe der Bewegungslinie).	Any Charge phase: a Blood Knights unit that charged this turn: D3 mortal damage to each enemy unit it moved across during the charge move (assumed: units near the movement line).
+Grabsandscherbe	Gravesand Shard
+Reaktion, 1× pro Schlacht: Du sagst „Skelettlegion“ für eine Einheit innerhalb 9 Zoll um den General an: +1 auf jeden Legionswurf.	Reaction, once per battle: you declare "Skeleton Legion" for a unit within 9" of the general: +1 to every legion roll.
+Fledermauswolke	Bat Swarm
+Einmal pro Schlacht, deine Bewegungsphase: General wird entfernt und mehr als 6 Zoll von allen Feinden neu aufgestellt.	Once per battle, your Movement phase: the general is removed and set up again more than 6" from all enemies.
+Aura der Nacht	Aura of Night
+Passiv: Negative Modifikatoren (Wucht) auf Schutzwürfe gegen Fernkampfattacken auf den General werden ignoriert.	Passive: negative modifiers (Rend) to save rolls against shooting attacks on the general are ignored.
+Geistersturmwind	Ghostly Storm Wind
+Deine Heldenphase: Zauber 2W6; bei 7+ erleidet jede feindliche Einheit 1 tödlichen Schaden.	Your Hero phase: casting roll 2D6; on 7+ every enemy unit suffers 1 mortal damage.
+Vampirfürst	Vampire Lord
+Vampir	Vampire
+Dynastische Kriegsreliquie	Dynastic War Relic
+Abscheuliche Übertragung	Abominable Transmission
+Heldenphase: sichtbarer Feind (6"): Zauber 2W6 (6+) → Würfel = Ausdauer des Ziels, je 5+ 1 tödlicher Schaden und heile (1)	Hero phase: visible enemy (6"): casting roll 2D6 (6+) → dice = the target's Health, each 5+ = 1 mortal damage and Heal (1)
+Nahkampfphase: Legionswurf (W6) je getötetem Modell, je 6 kehrt 1 Modell zurück	Combat phase: legion roll (D6) per slain model; on each 6, 1 model returns
+Blutritter	Blood Knights
+Templerlanze oder Templerschwert	Templar Lance or Templar Blade
+Hufe und Zähne des Nachtmahrs	Nightmare's Hooves and Teeth
+Vargheister	Vargheists
+Mörderische Fänge und Krallen	Murderous Fangs and Claws
+Hedoniten des Slaanesh	Hedonites of Slaanesh
+Epikureische Feiernde	Epicurean Revellers
+Boten der Entehrung	Heralds of Disgrace
+Passiv: Wenn abwechselnd Kämpfen-Fähigkeiten gewählt werden, darfst du 2 befreundete Dämonetten-Einheiten statt 1 wählen; die zweite kämpft unmittelbar nach der ersten.	Passive: when Fight abilities are chosen alternately, you may pick 2 friendly Daemonette units instead of 1; the second fights immediately after the first.
+Dämonischer Ansturm	Daemonic Onslaught
+Einmal pro Schlacht, Aufstellungsphase: Befreundete Jägerinnen- oder Slaaneshbestien-Einheit ganz innerhalb 12 Zoll um den General darf eine Normale Bewegung ausführen.	Once per battle, deployment phase: a friendly Seeker or Slaangor Fiend unit wholly within 12" of the general may make a Normal Move.
+Verzerrte Anmut	Distorted Grace
+Passiv: Hat der General in diesem Zug angegriffen, darf er beim Nachrücken W6 Zoll weiter ziehen.	Passive: if the general charged this turn, it may Pile In up to D6" further.
+Hohe Höflinge	Exalted Courtiers
+Passiv: Solange der General ganz in Nahkampfreichweite einer befreundeten Dämonetten-Einheit ist, haben beide Einheiten Rettung 5+.	Passive: while the general is wholly within combat range of a friendly Daemonette unit, both units have Ward 5+.
+Gewaltexzess	Excess of Violence
+Einmal pro Schlacht, beliebige Nahkampfphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll um den General: Nahkampfwaffen haben bis zu deinem nächsten Zug Krit. (2 Treffer).	Once per battle, any combat phase: visible friendly unit wholly within 12" of the general: melee weapons have Crit (2 Hits) until your next turn.
+Unwiderstehlicher Seelenduft	Irresistible Soul-scent
+Einmal pro Schlacht, deine Bewegungsphase: Jägerinnen-/Slaaneshbestien-Einheit ganz innerhalb 12 Zoll um den General wird entfernt und mehr als 6 Zoll von allen Feinden neu aufgestellt.	Once per battle, your Movement phase: a Seeker/Slaangor Fiend unit wholly within 12" of the general is removed and set up again more than 6" from all enemies.
+Das Zwieträchtige Dreigestirn	The Contorted Trinity
+Waffen der Drei	Weapons of the Three
+Gunstspender	Favour Bestower
+Heldenphase: bis zu X Einheiten (12"), Zauber 2W6 (6+): Dämonetten Anti-Angriff, Jägerinnen +2" Bewegung, Slaaneshbestien +1 auf Nahkampf-Trefferwürfe	Hero phase: up to X units (12"), casting roll 2D6 (6+): Daemonettes gain Counter-charge, Seekers +2" Move, Slaangor Fiends +1 to melee hit rolls
+Slaaneshbestien	Slaangor Fiends
+Tödliche Zangen und Widerhakenstachel	Deadly Pincers and Barbed Stingers
+Einlullender Duft	Lulling Scent
+Angriffsphase, 1× pro Zug (Armee): Feind (9" bzw. im Nahkampf mit dieser Einheit): 4+ → kämpft in diesem Zug zuletzt	Charge phase, once per turn (army): enemy (9" or in combat with this unit): 4+ → it fights last this turn
+Dämonetten	Daemonettes
+Durchbohrende Klauen	Piercing Claws
+Jägerinnen	Seekers
+Quälende Klauen	Tormenting Claws
+Giftige Slaaneshpferdzunge	Poisonous Slaanesh Horse Tongue
+Ogor-Schlundstämme	Ogor Mawtribes
+Fresshorde-Plünderer	Warglutt Marauders
+Brutales Voranstürmen	Brutal Onrush
+Einmal pro Schlacht, Ende deines Zugs: Befreundete Einheit, die in diesem Zug angegriffen hat, bewegt sich bis zu 2W6 Zoll (aus dem Nahkampf heraus, aber nicht im Nahkampf endend).	Once per battle, end of your turn: a friendly unit that charged this turn moves up to 2D6" (out of combat, but not ending in combat).
+Blendende Staubwolken	Blinding Dust Clouds
+Passiv: −1 auf Trefferwürfe für Attacken gegen befreundete Einheiten, die im selben Zug aufgestellt wurden.	Passive: −1 to hit rolls for attacks against friendly units set up in the same turn.
+Wallbrecher	Wall-breaker
+Passiv: Der General kann Geländestücke überqueren, als hätte er Fliegen.	Passive: the general can cross terrain features as if it had Fly.
+Kräftige Lunge	Powerful Lungs
+Passiv: Rennenwürfe von 1–3 für Einheiten ganz innerhalb 9 Zoll um den General zählen als 4.	Passive: run rolls of 1–3 count as 4 for units wholly within 9" of the general.
+Todpreller	Death-scarer
+Passiv: Der General hat Rettung 6+, solange er weiter als 3 Zoll von allen befreundeten Einheiten entfernt ist.	Passive: the general has Ward 6+ while more than 3" from all friendly units.
+Knorpelfresser	Gristle-chewer
+Einmal pro Schlacht, Ende eines beliebigen Zugs: Jede feindliche Einheit im Nahkampf mit dem General erleidet W3 Schaden; dann heile (3) den General.	Once per battle, end of any turn: every enemy unit in combat with the general suffers D3 damage; then Heal (3) the general.
+Tyrann	Tyrant
+Hackbeile des Tyrannen	Tyrant's Cleavers
+Brüllender Kriegsherr	Roaring Warlord
+Heldenphase: sichtbare Einheit (12"): 3+ → +1 auf Angriffswürfe (Zug)	Hero phase: visible unit (12"): 3+ → +1 to charge rolls (turn)
+Hungrige Ogors	Hungry Ogors
+Ogor-Waffen	Ogor Weapons
+Hungrige Ogors (3 Modelle)	Hungry Ogors (3 models)
+Eisenwänste	Ironguts
+Eisenwanst-Waffe	Irongut Weapon
+Prankenbiestreiter	Mournfang Riders
+Bauchbeißer-Waffen	Gutbuster Weapons
+Hörner und Zähne des Prankenbiests	Mournfang's Horns and Teeth
+Blutiger Schrecken	Bloody Terror
+Nahkampfphase, 1× pro Zug (Armee): Einheit hat angegriffen → Feind im Nahkampf mit ihr: 3+ → −1 auf seine Trefferwürfe (Zug)	Combat phase, once per turn (army): unit has charged → enemy in combat with it: 3+ → −1 to its hit rolls (turn)
+Schlundsucher-Mob	Maw-seeker Mob
+Verkoster	Tastemaker
+Beliebige Nahkampfphase: Ist der Fleischerkessel voll, wähle eine sichtbare befreundete Einheit ganz innerhalb 12 Zoll um den General: +1 auf Trefferwürfe der Nahkampfattacken für den Rest des Zugs; dann wird der Kessel leer.	Any combat phase: if the Butcher's Cauldron is full, pick a visible friendly unit wholly within 12" of the general: +1 to melee hit rolls for the rest of the turn; then the Cauldron becomes empty.
+Eifrige Essensbeschaffer	Eager Foragers
+Passiv: Solange der Fleischerkessel leer ist, haben befreundete Einheiten ganz innerhalb 12 Zoll um den General +2 Zoll Bewegung.	Passive: while the Butcher's Cauldron is empty, friendly units wholly within 12" of the general have +2" Move.
+Gut bestückte Vorratskammer	Well-stocked Larder
+Beginn der ersten Schlachtrunde: Der Fleischerkessel wird voll.	Start of the first battle round: the Butcher's Cauldron becomes full.
+Großzügige Portionen	Generous Portions
+Ende eines beliebigen Zugs: Ist der Fleischerkessel voll, heile (1) jede sichtbare befreundete Einheit ganz innerhalb 9 Zoll um den General.	End of any turn: if the Butcher's Cauldron is full, Heal (1) every visible friendly unit wholly within 9" of the general.
+Widerliche Tischmanieren	Disgusting Table Manners
+Einmal pro Schlacht, Reaktion auf eine Angriff-Fähigkeit einer sichtbaren feindlichen Einheit innerhalb 12 Zoll um den General: −W3 vom Angriffswurf; ist der Kessel voll, −3 statt dessen (danach leer).	Once per battle, reaction to a Charge ability of a visible enemy unit within 12" of the general: −D3 from the charge roll; if the Cauldron is full, −3 instead (then empty).
+Nagender Hunger	Gnawing Hunger
+Einmal pro Schlacht, gegnerische Bewegungsphase: Jede befreundete Einheit außerhalb des Nahkampfs darf sich bis zu W3 Zoll bewegen (W6 Zoll, wenn der Kessel leer und die Einheit ganz innerhalb 9 Zoll um den General ist); nicht im Nahkampf endend.	Once per battle, enemy Movement phase: every friendly unit not in combat may move up to D3" (D6" if the Cauldron is empty and the unit is wholly within 9" of the general); not ending in combat.
+Fleischer	Butcher
+Fleischerwerkzeuge	Butcher's Tools
+Rostschlund	Rustmaw
+Heldenphase: sichtbarer Feind (12"): Zauber 2W6 (6+; voller Kessel: W3, bei 2+ +2); −1 Wucht auf seine Nahkampfwaffen bis zu deinem nächsten Zug	Hero phase: visible enemy (12"): casting roll 2D6 (6+; full Cauldron: D3, on 2+ +2); −1 Rend on its melee weapons until your next turn
+Metzger	Slaughtermaster
+Metzgerwerkzeuge	Slaughtermaster's Tools
+Gedärmdeuter	Gutseer
+Gedärmdeuterwerkzeuge	Gutseer's Tools
+Fokusse der Wanstmagie	Foci of Bellyspeak Magic
+Heldenphase, 1× pro Zug (Armee): beim nächsten Rostschlund gelten Reichweite und Sichtbarkeit von dieser Einheit aus	Hero phase, once per turn (army): for the next Rustmaw, range and visibility are measured from this unit
+Verschlinger-Schlundrudel	Gorger Maw-pack
+Keulen, Klauen und Kiefer	Clubs, Claws and Jaws
+Ödschar	Skaventide Blight
+Präsenz der Fruchtbarkeit	Presence of Fertility
+Einmal pro Phase, deine Heldenphase: Befreundete Einheit wählen; heile (W3).	Once per phase, your Hero phase: pick a friendly unit; Heal (D3).
+Voller Wunder	Full of Wonders
+Passiv: Wird ein befreundetes Modell getötet, darf eine feindliche Einheit innerhalb 1 Zoll um es gewählt werden: W6, bei 4+ 1 tödlicher Schaden.	Passive: when a friendly model is slain, an enemy unit within 1" of it may be picked: roll a die, on 4+ 1 mortal damage.
+Seuchenhüter-Beschwörer	Plaguebearer Summoner
+Ende eines beliebigen Zugs: Befreundete Seuchenhüter-Einheit ganz innerhalb 14 Zoll um den General: 1 getötetes Modell kehrt zurück.	End of any turn: a friendly Plaguebearers unit wholly within 14" of the general: 1 slain model returns.
+Fauliger Atem	Foul Breath
+Deine Fernkampfphase: Feindliche Einheit innerhalb 7 Zoll um den General; für jedes ihrer Modelle ein Würfel, jede 5+ = 1 tödlicher Schaden.	Your Shooting phase: enemy unit within 7" of the general; one die per model in it, each 5+ = 1 mortal damage.
+Nurgles Gärtner	Nurgle's Gardeners
+Deine Bewegungsphase: Beansprucht der General ein Ziel, das kein Feind beansprucht, W6: bei 3+ ist es entweiht. Befreundete Einheiten haben Rettung 4+, solange sie ein entweihtes Ziel beanspruchen; bei feindlicher Kontrolle endet die Entweihung.	Your Movement phase: if the general claims an objective no enemy claims, roll a die: on 3+ it is desecrated. Friendly units have Ward 4+ while claiming a desecrated objective; if an enemy controls it, the desecration ends.
+Gabe des Fieberwahns	Gift of Feverish Delirium
+Einmal pro Schlacht, beliebige Nahkampfphase: +1 auf den Attackenwert der Nahkampfwaffen befreundeter Einheiten ganz innerhalb 7 Zoll um den General bis Phasenende.	Once per battle, any combat phase: +1 to the Attacks of melee weapons of friendly units wholly within 7" of the general until the end of the phase.
+Pestpockiger Buchhalter	Plague-ridden Accountant
+Ekelhaftes Niesen	Disgusting Sneeze
+Aufgerissenes Maul	Gaping Maw
+Zählt weiter, ich beobachte euch	Keep Counting, I'm Watching You
+Heldenphase: Seuchenhüter (14"): +1 Attacke (Nahkampf) oder +1 auf Schutzwürfe bis zu deinem nächsten Zug	Hero phase: Plaguebearers (14"): +1 Attack (melee) or +1 to save rolls until your next turn
+Eitriger Fliegenfürst	Pustulent Fly-lord
+Seuchensense	Plague Scythe
+Faulfliegen-Kiefer und -Stachel	Rot-fly Jaws and Sting
+Zerstörung und Verfall	Ruin and Decay
+Angriffsphase: hat die Einheit angegriffen, Feind innerhalb 1": 2+ → W3 tödlicher Schaden	Charge phase: if the unit charged, enemy within 1": 2+ → D3 mortal damage
+Faulige Pestkönige	Putrid Plague Kings
+Verseuchte Waffe	Diseased Weapon
+Seuchenhüter	Plaguebearers
+Seuchenschwert	Plague Sword
+Füsilierzug	Fusil Platoon
+Gut versorgt	Well Supplied
+Einmal pro Zug (Armee), deine Fernkampfphase: Befreundete Nicht-Helden-Einheit; W6, bei 3+: +1 auf Verwundungswürfe der Fernkampfattacken für den Rest der Phase.	Once per turn (army), your Shooting phase: a friendly non-Hero unit; roll a die, on 3+: +1 to wound rolls of shooting attacks for the rest of the phase.
+Respektierter Anführer	Respected Leader
+Einmal pro Schlacht, Aufstellungsphase: Befreundete Wilderkorps-Jäger-Einheiten erhalten das Schlüsselwort Verstärkung.	Once per battle, deployment phase: friendly Wildercorps Hunters units gain the Reinforcements keyword.
+Versierter Taktiker	Skilled Tactician
+Einmal pro Schlacht, deine Bewegungsphase: Wähle 2 zerstörte, nicht ersetzte Freigilden-Füsiliere-Einheiten; stelle 1 Ersatzeinheit mit 10 Modellen mehr als 6 Zoll von allen Feinden auf.	Once per battle, your Movement phase: pick 2 destroyed, unreplaced Freeguild Fusiliers units; set up 1 replacement unit with 10 models more than 6" from all enemies.
+Felsenfest	Rock Solid
+Passiv: Der General hat Rettung 5+.	Passive: the general has Ward 5+.
+Schildschlag	Shield Bash
+Einmal pro Zug, deine Bewegungsphase: Feindliche Infanterie-/Kriegsmaschine-/Kavallerie-Einheit im Nahkampf mit dem General; W6, bei 3+ zieht sie sich sofort zurück.	Once per turn, your Movement phase: an enemy Infantry/War Machine/Cavalry unit in combat with the general; roll a die, on 3+ it immediately retreats.
+Salve aus nächster Nähe	Point-blank Volley
+Einmal pro Zug, gegnerische Nahkampfphase: Feindliche Einheit im Nahkampf mit dem General; W3, bei 2+ so viel tödlicher Schaden.	Once per turn, enemy combat phase: an enemy unit in combat with the general; roll a D3, on 2+ that much mortal damage.
+Füsiliermajor auf Ogor-Kriegshüne	Fusil-Major on Ogor Warhulk
+Kastelit	Castelite
+Langgewehr	Long Rifle
+Kriegshünen-Streitkolben	Warhulk Mace
+Markiertes Ziel	Marked Target
+Fernkampfphase: Feind, den diese Einheit beschossen hat: +1 auf Trefferwürfe der Fernkampfattacken befreundeter Einheiten gegen ihn (Zug)	Shooting phase: an enemy this unit shot at: +1 to hit rolls of shooting attacks by friendly units against it (turn)
+Alchemit-Kriegsschmied	Alchemite Warforger
+Zangenstab	Tongs Staff
+Glühende Waffen	Glowing Weapons
+Heldenphase: Zauber 2W6 (6+): Einheit (12"): Nahkampfwaffen Krit. (tödlich) bis zu deinem nächsten Zug	Hero phase: casting roll 2D6 (6+): unit (12"): melee weapons have Crit (Mortal) until your next turn
+Freigilden-Füsiliere	Freeguild Fusiliers
+Gewehrkanone	Gun-cannon
+Bajonett	Bayonet
+Wilderkorps-Jäger	Wildercorps Hunters
+Jagdarmbrust	Hunting Crossbow
+Jagdwaffen	Hunting Weapons
+Fährtenhundbiss	Tracker Hound Bite
+Behemats Söhne	Sons of Behemat
+Felsenwerfer	Stone Lobbas
+Griesgrämige Gestalten	Grumpy Types
+Einmal pro Schlacht, beliebige Nahkampfphase: Befreundete Einheit im Nahkampf: +1 auf den Attackenwert der Nahkampfwaffen für den Rest des Zugs.	Once per battle, any combat phase: friendly unit in combat: +1 to the Attacks of its melee weapons for the rest of the turn.
+Gierige Diebe	Greedy Thieves
+Passiv: +5 auf den Kontrollwert befreundeter Einheiten.	Passive: +5 to the control score of friendly units.
+Harter Schädel	Thick Skull
+Einmal pro Schlacht, beliebige Nahkampfphase: +1 auf Trefferwürfe der Koppnuss des Generals für den Rest des Zugs.	Once per battle, any combat phase: +1 to hit rolls of the general's Headbutt for the rest of the turn.
+Riesenschritte	Giant Strides
+Passiv: +1 auf die Angriffswürfe des Generals.	Passive: +1 to the general's charge rolls.
+Glücksfelsen	Lucky Rock
+Einmal pro Schlacht, deine Fernkampfphase: +1 auf den Attackenwert der Schmeißsteine des Generals für den Rest des Zugs.	Once per battle, your Shooting phase: +1 to the Attacks of the general's Hurled Rocks for the rest of the turn.
+Hungriger Schlinger	Hungry Gobbler
+Ende eines beliebigen Zugs: Wurde in diesem Zug mindestens ein Modell durch Nahkampfattacken des Generals getötet, heile (W3) den General.	End of any turn: if at least one model was slain by the general's melee attacks this turn, Heal (D3) the general.
+Steinkloppa	Stone Pounder
+Schmeißsteine	Hurled Rocks
+Riesenkeule und Steine	Giant Club and Rocks
+Koppnuss	Headbutt
+Fallen lassen, werfen oder rollen	Drop, Throw or Roll
+Fernkampfphase: Fallen lassen (Nahbeschuss), Werfen (+6" Reichweite) oder Rollen (+1 Treffer); Effekt je Zug nur für 1 Einheit	Shooting phase: Drop (Shoot in Combat), Throw (+6" range) or Roll (+1 to hit); the effect applies to 1 unit per turn
+Umgekegelt	Skittled
+Fernkampfphase: Feind, dem Schaden zugewiesen wurde: 3+ → seine Angriffswürfe nutzen den niedrigeren Würfel zweimal (bis zu deinem nächsten Zug)	Shooting phase: enemy that was allocated damage: 3+ → its charge rolls use the lower die twice (until your next turn)
+Mach ein Auge zu!	Close One Eye!
+Heldenphase: andere Einheit (12" um den General): +1 auf Trefferwürfe der Fernkampfattacken (Zug)	Hero phase: other unit (12" of the general): +1 to hit rolls of shooting attacks (turn)
+Steinschmeißer	Stone Thrower
+Schauderhafte Traumschnitter	Dreadful Dreamcutters
+Unvergleichliche Schnelligkeit	Unmatched Swiftness
+Einmal pro Schlacht, beliebige Nahkampfphase: Befreundete Einheit kämpft in dieser Phase zuerst.	Once per battle, any combat phase: a friendly unit fights first this phase.
+Präsenz der Ablenkung	Presence of Distraction
+Deine Bewegungsphase: Befreundete Einheit darf Rückzug einsetzen und später im Zug noch Fernkampf und Angriff einsetzen.	Your Movement phase: a friendly unit may Retreat and still shoot and charge later in the turn.
+Amulett des Slaanesh	Amulet of Slaanesh
+Deine Heldenphase: Heile (W3) die Generalin.	Your Hero phase: Heal (D3) the general.
+Zerrspiegel	Distorting Mirror
+Einmal pro Zug, deine Fernkampfphase: Feindliche Einheit innerhalb 9 Zoll um die Generalin; W6, bei 4+ −1 auf ihre Schutzwürfe bis zu deinem nächsten Zug.	Once per turn, your Shooting phase: enemy unit within 9" of the general; roll a die, on 4+ −1 to its save rolls until your next turn.
+Kakofonischer Chor	Cacophonous Choir
+Deine Heldenphase: Zauber 2W6; bei 6+ Kakofoniewurf (W6): jede feindliche Einheit innerhalb 6 Zoll, deren Kontrollwert niedriger ist, erleidet W3 tödlichen Schaden (je Einheit würfeln).	Your Hero phase: casting roll 2D6; on 6+ cacophony roll (D6): every enemy unit within 6" with a lower control score suffers D3 mortal damage (roll per unit).
+Zepter der Dominanz	Sceptre of Domination
+Beliebige Nahkampfphase (angenommen: 1× pro Phase): Für jede feindliche Einheit im Nahkampf mit der Generalin ein Würfel; 5+ = kämpft in dieser Phase zuletzt.	Any combat phase (assumed once per phase): one die for every enemy unit in combat with the general; on 5+ it fights last this phase.
+Scherbensprecherin des Slaanesh	Shardspeaker of Slaanesh
+Schleierstab	Veil Staff
+Vision der Verdammnis	Vision of Damnation
+Heldenphase: Zauber 2W6 (6+): 6 Würfel, je 4+ = 1 Verderbtheitspunkt	Hero phase: casting roll 2D6 (6+): 6 dice, each 4+ = 1 depravity point
+Silbergleven-Jäger	Sliverblade Hunters
+Silbergleve	Silverglaive
+Giftzunge des Erhabenen Slaaneshpferds	Exalted Steed's Poison Tongue
+Slaangor-Scheusale	Slaangor Fiendbloods
+Rasiermesserscharfe Klauen	Razor-sharp Claws
+Rasiermesserscharfe Klaue und Goldene Waffe	Razor-sharp Claw and Golden Weapon
+Töten um jeden Preis	Kill at Any Cost
+Ende der gegnerischen Fernkampfphase: Einheit, der Schaden zugewiesen wurde, bewegt sich normal	End of the enemy Shooting phase: a unit that was allocated damage moves normally
+Giftdorn-Schützen (mit Homunkulus)	Venom-thorn Archers (with Homunculus)
+Giftdorn-Bogen	Venom-thorn Bow
+Sybaritenklinge	Sybarite Blade
+Giftdorn-Schützen	Venom-thorn Archers
+Wächter von Glutwacht	Emberwatch Wardens
+Nahkampfdrill	Close-combat Drill
+Passiv: Fernkampfwaffen befreundeter Einheiten haben Nahbeschuss, aber −1 auf Trefferwürfe der Fernkampfattacken, solange die Einheit im Nahkampf ist.	Passive: ranged weapons of friendly units have Shoot in Combat, but −1 to hit rolls of shooting attacks while the unit is in combat.
+Kommt und holt es euch, Schurken	Come and Get It, Scoundrels
+Passiv: +5 auf den Kontrollwert befreundeter Nicht-Helden im Nahkampf mit mindestens 1 feindlichen Einheit mit 6+ Modellen oder Ausdauer 3+.	Passive: +5 to the control score of friendly non-Heroes in combat with at least 1 enemy unit with 6+ models or Health 3+.
+Wurfmesser	Throwing Knives
+Beliebige Fernkampfphase: Sichtbare feindliche Einheit innerhalb 10 Zoll um den General; W6, bei 3+ 1 tödlicher Schaden.	Any Shooting phase: visible enemy unit within 10" of the general; roll a die, on 3+ 1 mortal damage.
+Heißblütige Ausdauer	Hot-blooded Stamina
+Passiv: Der General darf nach Rennen oder Rückzug noch angreifen; Rückzug verursacht keinen tödlichen Schaden.	Passive: the general may still charge after running or retreating; retreating causes no mortal damage.
+Erfahrener Kundschafter	Experienced Scout
+Einmal pro Schlacht, deine Bewegungsphase: Befreundete Einheit ganz innerhalb 6 Zoll um eine Schlachtfeldkante wird ganz innerhalb 3 Zoll um eine Kante, mehr als 6 Zoll von Feinden, neu aufgestellt.	Once per battle, your Movement phase: a friendly unit wholly within 6" of a battlefield edge is set up again wholly within 3" of an edge, more than 6" from enemies.
+Klinge des Kraken	Blade of the Kraken
+Einmal pro Schlacht, beliebige Nahkampfphase: Verdopple für den Rest des Zugs den Attackenwert der Nahkampfwaffen des Generals.	Once per battle, any combat phase: double the Attacks of the general's melee weapons for the rest of the turn.
+Jorvan Kreel, Erbe des Kraken	Jorvan Kreel, Heir of the Kraken
+Kundschafterklingen	Scout Blades
+Erfahrene Plänkler	Experienced Skirmishers
+Bewegungsphase: Einheit (12" um diese Einheit): 3+ → +2" Bewegung, aber kein Rennen (Zug)	Movement phase: unit (12" of this unit): 3+ → +2" Move, but no running (turn)
+Mallus-Schmiedepriester	Mallus Forge Priest
+Sigmarit-Kriegshammer	Sigmarite Warhammer
+Das Land weihen	Hallow the Land
+Heldenphase: Ziel innerhalb 12", Gebetswurf W6 (3+): Einheiten, die das Ziel beanspruchen, haben Rettung 5+ (Zug)	Hero phase: objective within 12", prayer roll D6 (3+): units claiming the objective have Ward 5+ (turn)
+Freigilden-Junker	Freeguild Squires
+Waffen des Edelmuts	Weapons of Nobility
+Felsenfester Wille	Rock-hard Will
+Nahkampfphase: hat die Einheit nicht angegriffen: Feind im Nahkampf mit ihr: −1 Wucht seiner Waffen gegen diese Einheit (Zug)	Combat phase: if the unit did not charge: an enemy in combat with it: −1 Rend on its weapons against this unit (turn)
+Freigilden-Grenadiere	Freeguild Grenadiers
+Ruinenausputzer-Arsenal	Ruin Clearer Arsenal
+Grenadier-Bartaxt	Grenadier Bearded Axe
+Crixxits Jagdrudel	Crixxit's Hunt Pack
+Weg des huschenden Schattens	Path of the Flitting Shadow
+Einmal pro Schlacht (Armee), deine Bewegungsphase: Befreundete Einheit ganz innerhalb 6 Zoll um eine Schlachtfeldkante wird ganz innerhalb 3 Zoll um eine Kante, mehr als 6 Zoll von Feinden, neu aufgestellt.	Once per battle (army), your Movement phase: a friendly unit wholly within 6" of a battlefield edge is set up again wholly within 3" of an edge, more than 6" from enemies.
+Weg der unheimlichen Klaue	Path of the Uncanny Claw
+Einmal pro Schlacht (Armee), beliebige Nahkampfphase: Befreundeter Held kämpft für den Rest des Zugs zuerst.	Once per battle (army), any combat phase: a friendly Hero fights first for the rest of the turn.
+Mörderische Akrobatik	Murderous Acrobatics
+Passiv: Greift der General an, kann er sich durch feindliche Modelle bewegen.	Passive: when the general charges, it can move through enemy models.
+Meister der Schatten	Master of Shadows
+Passiv: +1 auf den Schattenlaufwurf, wenn der General „In Schatten gehüllt“ einsetzt.	Passive: +1 to the shadow-run roll when the general uses "Shrouded in Shadow".
+Bloß ein Schatten	Merely a Shadow
+Passiv: Der General hat Rettung 4+, solange er ganz in Nahkampfreichweite einer befreundeten Einheit mit mindestens 3 Modellen ist.	Passive: the general has Ward 4+ while wholly within combat range of a friendly unit with at least 3 models.
+Todesschrei	Death Scream
+Beliebige Nahkampfphase: Feindliche Einheit innerhalb 6 Zoll um den General; W6, bei 3+ −1 auf ihre Trefferwürfe für den Rest des Zugs.	Any combat phase: enemy unit within 6" of the general; roll a die, on 3+ −1 to its hit rolls for the rest of the turn.
+Meisterassassine Crixxit	Master Assassin Crixxit
+Klingen der dreizehn Schnitte	Blades of the Thirteen Cuts
+Los-los, bringt sie zur Strecke	Go-go, Bring Them Down
+Heldenphase: Gossenläufer (12"): 3+ → +1 auf Angriffswürfe (Zug)	Hero phase: Gutter Runners (12"): 3+ → +1 to charge rolls (turn)
+In Schatten gehüllt	Shrouded in Shadow
+Nahkampfphase, 1× pro Zug (Armee): Held, andere Einheit mit ≥2 Modellen: W6 (3+): Held erscheint ganz innerhalb 6" von ihr (auch im Nahkampf)	Combat phase, once per turn (army): Hero, other unit with ≥2 models: D6 (3+): the Hero appears wholly within 6" of it (even in combat)
+Meisterassassine	Master Assassin
+Tränenklinge	Tear Blade
+Gossenläufer	Gutter Runners
+Eshin-Spezialistenklingen	Eshin Specialist Blades
+Sprengratten	Blast Rats
+Angriffsphase, 1× pro Zug (Armee): Gossenläufer mit Marker: Feind (9"): 3+ → 1 tödlicher Schaden; bei 1–2 geht der Marker verloren	Charge phase, once per turn (army): Gutter Runners with a marker: enemy (9"): 3+ → 1 mortal damage; on a 1–2 the marker is lost
+Schattenläufer	Night Runners
+Schleudern und vergiftete Wurfsterne	Slings and Poisoned Throwing Stars
+Vergiftete Klingen	Poisoned Blades
+Rauchbomben	Smoke Bombs
+Nahkampfphase, 1× pro Zug (Armee): Einheit im Nahkampf: 4+ → sofortiger Rückzug	Combat phase, once per turn (army): unit in combat: 4+ → immediate Retreat
+Helschmiede des Hashut	Helsmiths of Hashut
+Helfeuerheer	Helforge Host
+Mahlender Vormarsch	Grinding Advance
+Einmal pro Schlacht, Aufstellungsphase: Bis zu 2 befreundete Infernale-Kohorte-Einheiten: Jedes Ziel bewegt sich sofort bis zu 3 Zoll, setzt aber in der ersten Schlachtrunde keine Angriff-Fähigkeiten ein.	Once per battle, deployment phase: up to 2 friendly Infernal Cohort units: each target immediately moves up to 3", but does not use Charge abilities in the first battle round.
+Unterdrückendes Bombardement	Suppressing Bombardment
+Einmal pro Zug, deine Fernkampfphase: Feindliche Infanterie-Einheit, der in diesem Zug durch Attacken einer befreundeten Peinigerbombarde Schaden zugewiesen wurde: Bis zu deinem nächsten Zug 1 Würfel weniger bei ihren Angriffswürfen (mindestens 1).	Once per turn, your Shooting phase: enemy Infantry unit that was allocated damage this turn by attacks of a friendly Tormentor Bombard: until your next turn 1 die fewer on its charge rolls (min. 1).
+Pergament der Petrifikation	Parchment of Petrification
+Einmal pro Schlacht, beliebige Heldenphase: Der General hat für den Rest des Zugs Rettung 2+, kann aber weder Fähigkeiten einsetzen noch als Ziel befreundeter Fähigkeiten gewählt werden.	Once per battle, any Hero phase: the general has Ward 2+ for the rest of the turn, but cannot use abilities or be picked as the target of friendly abilities.
+Obsidiantalisman	Obsidian Talisman
+Passiv: Ignoriere den ersten Schadenspunkt, der dem General in jeder Phase zugewiesen würde.	Passive: ignore the first damage point that would be allocated to the general in each phase.
+Kelch der Finsternis	Chalice of Darkness
+Einmal pro Schlacht, deine Fernkampfphase: Sichtbare feindliche Einheit innerhalb 12 Zoll um den General: W3 tödlicher Schaden.	Once per battle, your Shooting phase: visible enemy unit within 12" of the general: D3 mortal damage.
+Amulett des brennenden Hasses	Amulet of Burning Hatred
+Einmal pro Schlacht, beliebige Nahkampfphase: Die Attacken des Generals erzielen für den Rest des Zugs kritische Treffer bei einem unmodifizierten Trefferwurf von 5+.	Once per battle, any combat phase: the general's attacks score critical hits on an unmodified hit roll of 5+ for the rest of the turn.
+Kriegsdespot	War Despot
+Dämonenflammengleve	Daemonflame Glaive
+Schwarzherziger Eroberer	Black-hearted Conqueror
+Passiv: Solange diese Einheit mindestens 1 DKP hat, gelten befreundete Einheiten mit 0 DKP als hätten sie 1 DKP, wenn sie ganz innerhalb 6 Zoll um diese Einheit und für sie sichtbar sind. Je DKP dieser Einheit +3 Zoll auf die Reichweite.	Passive: while this unit has at least 1 DKP, friendly units with 0 DKP count as having 1 DKP if they are wholly within 6" of this unit and visible to it. For each DKP of this unit +3" range.
+Dominator-Maschine	Dominator Engine
+Feuersturmkanonen	Firestorm Cannons
+Hörner und vernichtende Hiebe	Horns and Crushing Blows
+Peinigerbombarde	Tormentor Bombard
+Schwall verderbender Energie	Surge of Corrupting Energy
+Artilleristenwaffen	Gunner Weapons
+Zerstörerisches Bombardement	Destructive Bombardment
+Einmal pro Zug (Armee), deine Fernkampfphase: Hat die Einheit in diesem Zug eine Fernkampf-Fähigkeit eingesetzt und für alle Attacken dieselbe feindliche Einheit gewählt, kannst du als zusätzliche Ziele so viele feindliche Einheiten innerhalb 6 Zoll um das Ziel wählen, wie die Einheit DKP hat. Wirf je Ziel einen Würfel: bei 3+ −3 auf den Kontrollwert des Ziels für den Rest des Zugs.	Once per turn (army), your Shooting phase: if the unit used a Shooting ability this turn and picked the same enemy unit for all attacks, you may pick as additional targets as many enemy units within 6" of the target as the unit has DKP. Roll a die per target: on 3+ −3 to the target's control score for the rest of the turn.
+Infernale Kohorte	Infernal Cohort
+Hashutitenspeer	Hashutite Spear
+Infernale Kohorte (Gongträger)	Infernal Cohort (Gong Bearer)
+Schlagt die Gongs	Strike the Gongs
+Beliebige Heldenphase, 1× pro Schlacht: Gongträger-Marker entfernen, W3 Modelle zurück	Any Hero phase, once per battle: remove the Gong Bearer marker, D3 models return
+Seraphon	Seraphon
+Sonnenblütige Pirscher	Sunblooded Prowlers
+Schuppenschutz	Scaly Protection
+Deine Heldenphase: Befreundete Saurus-Einheit; Wurf 3+: Die Einheit hat bis zum Beginn deines nächsten Zugs Rettung 6+.	Your Hero phase: friendly Saurus unit; roll 3+: the unit has Ward 6+ until the start of your next turn.
+Anhänger Huanchis	Followers of Huanchi
+Deine Fernkampfphase: Befreundete Skink-Einheit; Wurf 3+: Ihre Fernkampfwaffen haben bis Zugende Krit. (verwundet), auch Begleiter-Waffen.	Your Shooting phase: friendly Skink unit; roll 3+: its missile weapons have Crit (Wound) until the end of the turn, including Companion weapons.
+Instinktiver Anführer	Instinctive Leader
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll um den General, nicht im Nahkampf; Wurf 3+: Sie darf sofort eine Normale Bewegung ausführen.	Your Hero phase: visible friendly unit wholly within 12" of the general, not in combat; roll 3+: it may immediately make a Normal Move.
+Brutales Zerfleischen	Brutal Mauling
+Beliebige Nahkampfphase: Feindliche Einheit im Nahkampf mit dem General: Für den Rest des Zugs keine Rettungswürfe für das Ziel.	Any combat phase: enemy unit in combat with the general: for the rest of the turn the target gets no save rolls.
+Giftgetierschwarm	Venom-beast Swarm
+Beliebige Nahkampfphase: Feindliche Einheit im Nahkampf mit dem General: Befindet sich der Giftgetier-Marker auf dem Schlachtfeld, wirf W3. Bei 1 entferne den Marker, bei 2+ W3-Ergebnis tödlicher Schaden auf das Ziel.	Any combat phase: enemy unit in combat with the general: if the Venom-beast marker is on the battlefield, roll a D3. On a 1 remove the marker; on 2+ mortal damage equal to the D3 result to the target.
+Von den Alten gesegnet	Blessed by the Old Ones
+Ende eines beliebigen Zugs: Wurde der General zerstört, wirf einen Würfel. Bei 2+ stelle eine Ersatzeinheit mit 1 Sonnenblut-Modell mehr als 6 Zoll von allen Feinden auf.	End of any turn: if the general was destroyed, roll a die. On 2+ set up a replacement unit with 1 Sunblood model more than 6" from all enemies.
+Vergeltung Azyrs	Azyr's Retribution
+Ende eines beliebigen Zugs: Jede feindliche Einheit im Nahkampf mit einer befreundeten Saurus-Einheit: Wurf 4+ → 1 tödlicher Schaden.	End of any turn: every enemy unit in combat with a friendly Saurus unit: roll 4+ → 1 mortal damage.
+Verborgene Jäger	Hidden Hunters
+Beide Huanchis-Jäger-Einheiten und die Chotec-Echse werden nicht aufgestellt. Ab Schlachtrunde 3, deine Bewegungsphase: Chamäleon-Hinterhalt – mehr als 6 Zoll von allen Feinden aufstellen.	Both Huanchi's Hunters units and the Chotec lizard are not deployed. From battle round 3, your Movement phase: Chameleon Ambush – set up more than 6" from all enemies.
+Sonnenblut-Kohorte	Sunblood Cohort
+Saurus	Saurus
+1 Sonnenblut und 2 Saurus-Leibwächter, alle mit Celestit-Waffen. Das Giftgetier der Einheit ist ein Marker. Die Einheit zählt als dein General.	1 Sunblood and 2 Saurus Guard, all with Celestite weapons. The unit's venom-beast is a marker. The unit counts as your general.
+Celestit-Waffen	Celestite Weapons
+Saurus-Krieger	Saurus Warriors
+Celestit-Keule	Celestite Club
+Huanchis Jäger	Huanchi's Hunters
+Skink	Skink
+Blasrohr	Blowpipe
+Schwache Klauen	Weak Claws
+Sternengift	Starvenom
+Beliebige Fernkampfphase: Feindliche Einheit, der in diesem Zug durch Blasrohr-Attacken dieser Einheit Schaden zugewiesen wurde; Wurf 2+: −1 auf Verwundungswürfe ihrer Nahkampfattacken bis Zugende.	Any Shooting phase: enemy unit that was allocated damage this turn by this unit's Blowpipe attacks; roll 2+: −1 to wound rolls of its melee attacks until the end of the turn.
+Terraflügler	Terrawings
+Bissige Kiefer	Biting Jaws
+Nervenzerreißende Schreie	Nerve-shredding Screeches
+Nahkampfphase: Feind im Nahkampf: 4+ → −1 auf seine Trefferwürfe (Zug)	Combat phase: enemy in combat: 4+ → −1 to its hit rolls (turn)
+Chotec-Echse	Chotec Lizard
+Klumpen brennende Säure	Globs of Burning Acid
+Flammenmaul	Flame-maw
+Sonnenakolythen	Sun Acolytes
+Passiv: Die Einheit hat eine Mannschaft aus 3 Sonnenakolythen (Marker). +1 Kontrollwert je Akolyth. Ohne Akolythen ist der Kontrollwert höchstens 1. Bei jedem unmodifizierten Schutzwurf von 1 entferne 1 Akolythen nach Abhandlung der Attacke.	Passive: the unit has a crew of 3 Sun Acolytes (markers). +1 control score per acolyte. Without acolytes the control score is at most 1. On every unmodified save roll of 1 remove 1 acolyte after the attack is resolved.
+Klingen des Khorne	Blades of Khorne
+Blutgeschworene Pilger	Bloodsworn Pilgrims
+Von Khorne gesegnet	Blessed by Khorne
+Einmal pro Zug, Beginn deines Zuges: Wirf einen Würfel. Bei 2+ erhältst du 1 Blutzehnt-Punkt.	Once per turn, start of your turn: roll a die. On 2+ you gain 1 Blood Tithe point.
+Durch Blut erweckte Runen	Runes Awakened by Blood
+Passiv: Befreundete Einheiten haben Rettung 5+, wenn sie in derselben Phase eine Kämpfen-Fähigkeit eingesetzt haben.	Passive: friendly units have Ward 5+ if they used a Fight ability in the same phase.
+Frisches Blut	Fresh Blood
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 16 Zoll um den General; Gebetswurf W6: Bei 3+ heile (W3) die Einheit.	Your Hero phase: visible friendly unit wholly within 16" of the general; prayer roll D6: on 3+ Heal (D3) the unit.
+Kopfjäger	Head Hunter
+Beliebige Nahkampfphase: Feindlicher Held im Nahkampf mit dem General: Der General kämpft in dieser Phase zuerst, aber alle seine Attacken müssen diesen Helden zum Ziel haben.	Any combat phase: enemy Hero in combat with the general: the general fights first this phase, but all its attacks must target that Hero.
+Die rote Rüstung	The Red Armour
+Unheilige Flammen	Unholy Flames
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 16 Zoll um den General; Gebetswurf W6: Bei 4+ +1 Wucht auf ihre Nahkampfwaffen bis zu deinem nächsten Zug.	Your Hero phase: visible friendly unit wholly within 16" of the general; prayer roll D6: on 4+ +1 Rend on its melee weapons until your next turn.
+Der Blutzehnt	The Blood Tithe
+Passiv: Jedes Mal, wenn eine Einheit zerstört wird, erhältst du 1 Blutzehnt-Punkt.	Passive: each time a unit is destroyed, you gain 1 Blood Tithe point.
+Mordlust	Murderous Impulse
+Einmal pro Zug, beliebige Heldenphase: Gib 1 Blutzehnt-Punkt aus und wähle bis zu W3 befreundete Einheiten. Jede bewegt sich W6 Zoll (einzeln würfeln).	Once per turn, any Hero phase: spend 1 Blood Tithe point and pick up to D3 friendly units. Each moves D6" (roll separately).
+Mordpriester	Slaughterpriest
+Metzgerklinge und Wuthammer	Butcher's Blade and Wrath-hammer
+Schädelbrecher	Skullcrusher
+Blutbeschmierte Gleve	Blood-soaked Glaive
+Messinghufe des Molochs	Moloch's Brazen Hooves
+Messing-Stampede	Brazen Stampede
+Angriffsphase: nach dem Angriff: Feind innerhalb 1": 2+ → 1 tödlicher Schaden	Charge phase: after charging: enemy within 1": 2+ → 1 mortal damage
+Blutkrieger	Bloodletters
+Ausweidende Axt und Blutfaust	Disembowelling Axe and Blood Fist
+Keine Atempause	No Respite
+Passiv: Jedes Mal, wenn ein Modell dieser Einheit getötet wird, darfst du eine feindliche Einheit im Nahkampf mit ihr wählen; Wurf 4+: 1 tödlicher Schaden.	Passive: each time a model of this unit is slain, you may pick an enemy unit in combat with it; roll 4+: 1 mortal damage.
+Blutjäger	Bloodhunters
+Jägerklingen	Hunter Blades
+Rasende Hingabe	Frenzied Devotion
+Ende eines beliebigen Zuges: Ist die Einheit innerhalb 8 Zoll um deinen General, bringe W3 getötete Modelle zurück.	End of any turn: if the unit is within 8" of your general, return D3 slain models.
+Töchter des Khaine	Daughters of Khaine
+Herzspaltzirkel	Heartflayer Troupe
+Mörderische Offenbarung	Murderous Revelation
+Einmal pro Schlacht, deine Heldenphase: Alle befreundeten Einheiten erhalten die Fähigkeit der Riten des Blutes, die sie zu Beginn der nächsten Schlachtrunde erhalten würden (sie behalten sie, bekommen sie aber später nicht noch einmal).	Once per battle, your Hero phase: all friendly units gain the ability of the Rites of Blood that they would gain at the start of the next battle round (they keep it, but do not receive it again later).
+Segen des Khaine	Blessing of Khaine
+Beliebige Nahkampfphase: Befreundete Einheit ganz innerhalb 12 Zoll um die Generalin (nicht die Generalin selbst): +1 auf ihre Schutzwürfe in dieser Phase.	Any combat phase: friendly unit wholly within 12" of the general (not the general herself): +1 to its save rolls this phase.
+In Blut gebadet	Bathed in Blood
+Passiv: Jedes Mal, wenn die Generalin ein Modell tötet, heile (1) die Generalin.	Passive: each time the general slays a model, Heal (1) the general.
+Von Rache getrieben	Driven by Vengeance
+Passiv: +1 Wucht auf die Nahkampfwaffen befreundeter Blutpirscherinnen-Einheiten ganz innerhalb 12 Zoll um die Generalin.	Passive: +1 Rend on the melee weapons of friendly Bloodstoker units wholly within 12" of the general.
+Flammende Rednerin	Fiery Orator
+Deine Heldenphase: Befreundete Einheit ganz innerhalb 9 Zoll um die Generalin, nicht im Nahkampf: Wirf einen Würfel je getötetem Modell. Für jede 5+ bringst du 1 getötetes Modell zurück.	Your Hero phase: friendly unit wholly within 9" of the general, not in combat: roll a die per slain model. For every 5+ you return 1 slain model.
+Schattennebelfläschchen	Shadow-mist Vial
+Einmal pro Schlacht, beliebige Nahkampfphase: Bis Phasenende −1 auf Trefferwürfe für Attacken gegen befreundete Einheiten ganz innerhalb 12 Zoll um die Generalin.	Once per battle, any combat phase: until the end of the phase −1 to hit rolls for attacks against friendly units wholly within 12" of the general.
+Riten des Blutes	Rites of Blood
+Zu Beginn jeder Schlachtrunde erhalten alle befreundeten Einheiten passiv: Runde 1 Hast der Blutlust (+1 auf Rennenwürfe), Runde 2 Ungestüme Raserei (+1 auf Angriffswürfe), Runde 3 Wut der Fanatikerin (+1 auf Trefferwürfe im Nahkampf), Runde 4 Stärke der Schlächterin (+1 auf Verwundungswürfe im Nahkampf). Frühere Riten bleiben erhalten.	At the start of each battle round all friendly units passively gain: round 1 Haste of Bloodlust (+1 to run rolls), round 2 Wild Frenzy (+1 to charge rolls), round 3 Fanatic's Fury (+1 to melee hit rolls), round 4 Slaughterer's Strength (+1 to melee wound rolls). Earlier rites are kept.
+Melusai-Eisenschuppe	Melusai Ironscale
+Keldrisaíth	Keldrisaith
+In Kristall verwandelt	Turned to Crystal
+Ende eines beliebigen Zuges: Feindliche Einheit innerhalb 1 Zoll; Wurf 2+: 1 tödlicher Schaden.	End of any turn: enemy unit within 1"; roll 2+: 1 mortal damage.
+Hexenkriegerinnen	Witch Aelves
+Sciansá-Paar	Sciansa Pair
+Fluchfeuerhexer	Cursefire Sorcerer
+Fluchfeuerarmbrust	Cursefire Crossbow
+Verfluchter Säbel	Cursed Sabre
+Bösartiger Biss des Dunklen Rosses	Dark Steed's Vicious Bite
+Feuer des Verderbens	Fire of Ruin
+Heldenphase: Zauber 2W6 (6+): W3 tödlicher Schaden, Feind innerhalb 12"	Hero phase: casting roll 2D6 (6+): D3 mortal damage, enemy within 12"
+Blutpirscherinnen	Bloodstokers
+Herzsucherbogen	Heartseeker Bow
+Scianlar	Scianlar
+Herzsucher	Heartseeker
+Passiv: Fernkampfattacken der Einheit erzielen bei einem unmodifizierten Trefferwurf von 5+ einen kritischen Treffer, wenn sie im selben Zug keine Bewegung-Fähigkeit eingesetzt hat.	Passive: the unit's shooting attacks score a critical hit on an unmodified hit roll of 5+ if it did not use a Move ability this turn.
+Mondwahn-Gits	Gloomspite Gitz
+Rudelfletscha-Jäga	Snarlpack Hunters
+Flankenkämpfer	Flanking Fighters
+Einmal pro Schlacht, Aufstellungsphase: Wähle bis zu 2 befreundete Einheiten. Entferne sie vom Schlachtfeld und stelle sie weiter als 6 Zoll von allen feindlichen Einheiten entfernt wieder auf.	Once per battle, deployment phase: pick up to 2 friendly units. Remove them from the battlefield and set them up again more than 6" from all enemy units.
+Schimmerexplosion	Glimmer Explosion
+Passiv: Wird eine befreundete Kriegsmaschine zerstört, wähle vor dem Entfernen eine feindliche Einheit innerhalb 3 Zoll und wirf einen W3. Bei 2+ füge ihr tödlichen Schaden in Höhe des Ergebnisses zu.	Passive: when a friendly War Machine is destroyed, before removing it pick an enemy unit within 3" and roll a D3. On 2+ inflict mortal damage equal to the result.
+Klävva wie ein Zahnfletscha	Chomp Like a Snarlfang
+Einmal pro Schlacht, beliebige Nahkampfphase: +1 Wucht für Nahkampfwaffen befreundeter Einheiten ganz innerhalb 12 Zoll um den Träger, bis Zugende.	Once per battle, any combat phase: +1 Rend for melee weapons of friendly units wholly within 12" of the bearer, until the end of the turn.
+Fetzgits Strahlen	Fangz's Rays
+Einmal pro Schlacht, beliebige Nahkampfphase: Feindliche Einheit im Nahkampf mit dem General: −1 auf ihre Trefferwürfe bis Zugende.	Once per battle, any combat phase: enemy unit in combat with the general: −1 to its hit rolls until the end of the turn.
+Sonn’nräuber-Scherbe	Sun-stealer Shard
+Einmal pro Schlacht, gegnerische Bewegungsphase: Befreundete Einheiten ganz innerhalb 6 Zoll um diese Einheit können bis Zugende nicht Ziel von Fernkampfattacken sein, außer der Angreifer ist im Nahkampf mit dem Ziel.	Once per battle, enemy Movement phase: friendly units wholly within 6" of this unit cannot be the target of shooting attacks until the end of the turn, unless the attacker is in combat with the target.
+Hinterhältiger Meuchelmörder	Sneaky Assassin
+Ende eines beliebigen Zuges: Feindlicher Held im Nahkampf mit dieser Einheit; wirf einen W3, bei 2+ tödlicher Schaden in Höhe des Ergebnisses.	End of any turn: enemy Hero in combat with this unit; roll a D3, on 2+ mortal damage equal to the result.
+Schnell wie Fetzgit	Quick as Fangz
+Passiv: Befreundete Einheiten können Angriff einsetzen, auch wenn sie im selben Zug zurückgezogen haben; Rückzug fügt ihnen keinen tödlichen Schaden zu.	Passive: friendly units can use Charge even if they retreated in the same turn; Retreat causes them no mortal damage.
+Fletschaboss	Snarlboss
+Boss-Stutza	Boss Prodder
+Geiferndes Zahnfletscha-Maul	Slavering Snarlfang Maw
+Gefolge-Wolfsgits	Retinue Wolf Gits
+Grotbogen	Grot Bow
+Piks’nda Stock	Prodder Staff
+Rudelfletscha	Snarlpack
+Spitze Pfähla	Pointy Spears
+Riesenzahnfletscha-Maul	Giant Snarlfang Maw
+Sonn’nräuber-Kriegswag’n	Sun-stealer War Wagon
+Wag’nschlitza und Piks’nda Stock	Wagon Slicer and Prodder Staff
+Rasende Zerstörung	Raging Destruction
+Deine Bewegungsphase: Bewegung bis zum Bewegungswert durch Modelle und feindliche Nahkampfreichweite, nicht im Nahkampf endend; eine feindliche Infanterie-Einheit, durch die sie sich bewegt hat, erleidet W3 tödlichen Schaden.	Your Movement phase: move up to its Move through models and enemy combat range, not ending in combat; an enemy Infantry unit it moved through suffers D3 mortal damage.
+Mondsuchtmob	Bad Moon Madmob
+Irre Horden	Mad Hordes
+Deine Heldenphase: Eine befreundete Mondclan-Piksa-Einheit, die die Fähigkeit einsetzt, bringt bis zu W3 getötete Modelle zurück.	Your Hero phase: a friendly Moonclan Stabba unit using the ability returns up to D3 slain models.
+Die Hand des Gork	The Hand of Gork
+Einmal pro Schlacht (Armee), deine Bewegungsphase: Befreundete Einheit nicht im Nahkampf: vom Feld nehmen und weiter als 9 Zoll von allen Feinden wieder aufstellen.	Once per battle (army), your Movement phase: friendly unit not in combat: removed from the field and set up again more than 9" from all enemies.
+An ’nem andern Tag weiterkämpf’n	Fight Another Day
+Ende eines beliebigen Zuges: Wenn der General in diesem Zug Kämpfen eingesetzt hat, bewegt er sich bis zu 2W6 Zoll, ohne im Nahkampf zu enden.	End of any turn: if the general used Fight this turn, it moves up to 2D6" without ending in combat.
+Klamme Kutte	Clammy Cowl
+Passiv: −1 auf Trefferwürfe für Attacken, die den General zum Ziel haben.	Passive: −1 to hit rolls for attacks targeting the general.
+Halluzinogenes Pilzgebräu	Hallucinogenic Fungus Brew
+Passiv: Der General hat in Runde 1 Rettung 4+, in Runde 2 Rettung 5+, in Runde 3 und 4 Rettung 6+.	Passive: the general has Ward 4+ in round 1, Ward 5+ in round 2, Ward 6+ in rounds 3 and 4.
+Nachtschattenpilz	Nightshade Fungus
+Einmal pro Schlacht, gegnerische Bewegungsphase: Befreundete Einheit in Nahkampfreichweite des Generals kann in der nächsten Fernkampfphase nicht Ziel von Fernkampfattacken sein.	Once per battle, enemy Movement phase: a friendly unit within combat range of the general cannot be the target of shooting attacks in the next Shooting phase.
+Im Licht des Bös’n Mondes	By the Light of the Bad Moon
+Einmal pro Schlacht, Beginn Runde 1: Ein Territorium liegt im Licht des Mondes (Runde 1–2, danach das andere). Befreundete Einheiten ganz darin: Mondclan-Piksa +3 Kontrolle; Squighoppa kein tödlicher Schaden durch Rückzug; Felsmagen-Troggoths +1 auf Schutzwürfe.	Once per battle, start of round 1: one territory is in the light of the moon (rounds 1–2, then the other). Friendly units wholly inside it: Moonclan Stabbas +3 control; Squig Hoppers take no mortal damage from retreating; Rockgut Troggoths +1 to save rolls.
+Wahnboss	Madcap Boss
+Rettung (6+)	Ward (6+)
+Mondschlitzer	Moonslicer
+Mondclan-Piksa	Moonclan Stabbas
+Piksa	Stabba
+Netzgits	Netters
+Nahkampfphase: feindliche Infanterie im Nahkampf: 2+ → −1 auf ihre Trefferwürfe (Phase)	Combat phase: enemy Infantry in combat: 2+ → −1 to their hit rolls (phase)
+Squighoppa	Squig Hoppers
+Schneida	Cutter
+Squigmaul voller Zähne	Squig Maw Full of Teeth
+Squiglawine	Squig Avalanche
+Deine Bewegungsphase ab Runde 3 (statt Aufstellung): ganz in deinem Territorium, innerhalb 3 Zoll um eine Kante, weiter als 6 Zoll von Feinden aufstellen.	Your Movement phase from round 3 (instead of deployment): set up wholly in your territory, within 3" of an edge, more than 6" from enemies.
+Boing! Boing! Boing!	Boing! Boing! Boing!
+Beliebige Bewegungsphase: Feindliche Einheit, über die sich Modelle bewegt haben; je Modell, das sich über sie bewegt hat, ein Würfel; je 4+ 1 tödlicher Schaden. (Bewegung W6+8 Zoll, hier 11 angesetzt.)	Any Movement phase: enemy unit that models moved across; one die per model that moved across it; each 4+ 1 mortal damage. (Move D6+8", set to 11 here.)
+Felsmagen-Troggoths	Rockgut Troggoths
+Rettung (5+)	Ward (5+)
+Felsen werfen	Hurl Boulders
+Riesige Steinkeule	Massive Stone Club
+Sternenpanzerheer	Starscale Warhost
+Raubtierhafte Kämpfer	Predatory Fighters
+Einmal pro Phase, Ende eines beliebigen Zuges: Wirf einen Würfel je feindlicher Einheit im Nahkampf mit mindestens einer befreundeten Einheit; bei 3+ 1 tödlicher Schaden.	Once per phase, end of any turn: roll a die for each enemy unit in combat with at least one friendly unit; on 3+ 1 mortal damage.
+Tempelstadtbewacher	Temple-city Guardians
+Passiv: Befreundete Einheiten haben Rettung 6+, solange sie ganz in befreundetem Territorium stehen.	Passive: friendly units have Ward 6+ while wholly in friendly territory.
+Soteks Blick	Sotek's Gaze
+Ende eines beliebigen Zuges: Wirf einen Würfel, addiere das Ergebnis in diesem Zug auf den Kontrollwert des Generals.	End of any turn: roll a die and add the result to the general's control score this turn.
+Klinge der Realitäten	Blade of Realities
+Passiv: +1 Wucht auf die Reliquien-Celestitwaffe des Generals.	Passive: +1 Rend on the general's Relic Celestite Weapon.
+Uralter Stratege	Ancient Strategist
+Einmal pro Schlacht, gegnerische Bewegungsphase: Befreundete Einheit ganz innerhalb 12 Zoll um den General (nicht er selbst) kann Normale Bewegung einsetzen.	Once per battle, enemy Movement phase: a friendly unit wholly within 12" of the general (not the general itself) may use a Normal Move.
+Chotecs Zorn	Chotec's Wrath
+Passiv: Der Attackenwert des Sonnenbolzenhandschuhs des Generals ist 6 statt W6.	Passive: the Attacks of the general's Sunbolt Gauntlet are 6 instead of D6.
+Saurus-Hornnackenveteran auf Carnosaurier	Saurus Oldblood on Carnosaur
+Sonnenbolzenhandschuh	Sunbolt Gauntlet
+Reliquien-Celestitwaffe	Relic Celestite Weapon
+Massige Carnosaurier-Kiefer	Carnosaur's Massive Jaws
+Bestie der dunklen Dschungel	Beast of the Dark Jungles
+Nahkampfphase (General im Nahkampf): Gigantische Kiefer (Würfel > Ausdauer ⇒ 1 Modell getötet) oder Brüllen (−W6 Kontrolle)	Combat phase (general in combat): Gigantic Jaws (die > Health ⇒ 1 model slain) or Roar (−D6 control)
+Uralter Kriegsherr	Ancient Warlord
+Heldenphase: Einheit ganz innerhalb 12": +1 auf Angriffswürfe (bis zum nächsten Zug)	Hero phase: unit wholly within 12": +1 to charge rolls (until your next turn)
+Geordnete Kohorten	Ordered Cohorts
+Passiv: +1 auf Schutzwürfe, solange die Einheit ein von dir kontrolliertes Ziel beansprucht.	Passive: +1 to save rolls while the unit claims an objective you control.
+Kroxigors	Kroxigors
+Drachenbisskeule	Drakebite Maul
+Himmelsherrscher der Kharadron	Kharadron Overlords
+Grundstok-Wegbereiter	Grundstok Trailblazers
+Schnelle Umpositionierung	Swift Repositioning
+Einmal pro Schlacht (Armee), deine Bewegungsphase: Befreundete Einheit mit Fliegen vom Feld nehmen und weiter als 6 Zoll von Feinden wieder aufstellen; sie kann in diesem Zug nicht angreifen.	Once per battle (army), your Movement phase: a friendly unit with Fly is removed from the field and set up again more than 6" from enemies; it cannot charge this turn.
+Propeller-Abwind	Propeller Downdraft
+Passiv: −1 auf Angriffswürfe feindlicher Einheiten innerhalb 9 Zoll um ein befreundetes Grundstok-Kanonenboot.	Passive: −1 to charge rolls of enemy units within 9" of a friendly Grundstok Gunhauler.
+Nottreibstofftanks	Emergency Fuel Tanks
+Einmal pro Schlacht (Armee), beliebige Nahkampfphase: Der General hat bis Zugende Kämpft zuerst.	Once per battle (army), any combat phase: the general has Strike-first until the end of the turn.
+Prospektor und Pionier	Prospector and Pioneer
+Passiv: +2 auf den Kontrollwert des Generals.	Passive: +2 to the general's control score.
+Celestium-Sprengbomben	Celestium Blast Bombs
+Beliebige Nahkampfphase: Feindliche Einheit im Nahkampf mit dem General; Wurf 3+: Sie kann bis Zugende keine Rettungswürfe ausführen.	Any combat phase: enemy unit in combat with the general; roll 3+: it cannot make save rolls until the end of the turn.
+Rückzugsabsicherungen	Retreat Safeguards
+Passiv: −1 auf den Schaden, den der General durch Rückzug erleidet.	Passive: −1 to the damage the general suffers from retreating.
+Kanonenboot-Eskorte	Gunhauler Escort
+Passiv: −1 auf Trefferwürfe gegen befreundete Himmelsherrscher-Infanterie ganz innerhalb 6 Zoll um ein befreundetes Grundstok-Kanonenboot.	Passive: −1 to hit rolls against friendly Sky-Fleet Infantry wholly within 6" of a friendly Grundstok Gunhauler.
+Endrinenmeister mit Luftschiffrüstung	Endrinmaster with Dirigible Suit
+Aetherkanone	Aethershot Cannon
+Rüstungswaffenbatterie	Armour Weapon Battery
+Verbesserte Aethermatische Säge	Improved Aethermatic Saw
+Grundstok-Donnerschützen	Grundstok Thunderers
+Aetherschrotgewehr	Aethershot Carbine
+Aetherverdampfer	Aetheric Vaporiser
+Grundstok-Mörser	Grundstok Mortar
+Gewehrkolben	Rifle Butt
+Waffen (je 1 Modell)	Weapons (1 model each)
+Aetherschrotgewehr, Aetherverdampfer/Deckfeger, Mörser/Aetherkanone, je 1 Modell; alle zusätzlich Gewehrkolben. (Hier vereinfacht als Einheitsprofil.)	Aethershot Carbine, Aetheric Vaporiser/Deck Sweeper, Mortar/Aethershot Cannon, 1 model each; all also Rifle Butt. (Simplified here as a unit profile.)
+Knallkonfusionsgeschosse	Concussive Shells
+Einmal pro Schlacht (Armee), Fernkampfphase: Feindliche Einheit, der durch diese Einheit Schaden zugewiesen wurde: −W6 auf Kontrolle bis Zugende.	Once per battle (army), Shooting phase: enemy unit that was allocated damage by this unit: −D6 control until the end of the turn.
+Grundstok-Kanonenboot	Grundstok Gunhauler
+Himmelsartillerie	Sky Artillery
+Enterwaffen	Boarding Weapons
+Kanonenboot-Abwehrfeuer	Gunhauler Defensive Fire
+Nahkampfphase: Feind im Nahkampf, der angegriffen hat: W3, bei 2+ tödlicher Schaden in Höhe des Ergebnisses	Combat phase: enemy in combat that charged: D3, on 2+ mortal damage equal to the result
+Endrinentakler	Endrinriggers
+Schnellfeuer-Nietgewehr	Rapid-fire Rivet Gun
+Aethermatische Salvenkanone	Aethermatic Volley Cannon
+Schwere Himmelstakler-Waffe	Heavy Skyrigger Weapon
+Aethermatische Säge	Aethermatic Saw
+Wendige Himmelsfahrer	Nimble Skyfarers
+Gegnerische Bewegungsphase: Wurf 3+: Die Einheit kann sofort Normale Bewegung einsetzen.	Enemy Movement phase: roll 3+: the unit may immediately use a Normal Move.
+Lichtfürsten der Lumineth	Lumineth Realm-lords
+Strahlende Phalanx	Glittering Phalanx
+Arkane Überlegenheit	Arcane Superiority
+Passiv: +1 auf Zauberwürfe des Generals.	Passive: +1 to the general's casting rolls.
+Verbesserte Reflexe	Improved Reflexes
+Passiv: +1 auf Schutzwürfe befreundeter Einheiten bis Phasenende, die durch Überlegene Reaktionen unmittelbar nach einer anderen Einheit Kämpfen einsetzen.	Passive: +1 to save rolls of friendly units until the end of the phase that use Fight immediately after another unit through Superior Reactions.
+Überwältigende Hitze	Overwhelming Heat
+Deine Heldenphase: Sichtbare feindliche Einheit innerhalb 24 Zoll; Zauberwurf 2W6, bei 7+ halber Bewegungswert bis zu deinem nächsten Zug und Würfel: ≥ Schutzwert ⇒ W3 tödlicher Schaden.	Your Hero phase: visible enemy unit within 24"; casting roll 2D6, on 7+ half Move until your next turn, and dice: ≥ Save ⇒ D3 mortal damage.
+Schutz von Hysh	Protection of Hysh
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll; Zauberwurf 2W6, bei 7+ Rettung 5+ bis zu deinem nächsten Zug.	Your Hero phase: visible friendly unit wholly within 12"; casting roll 2D6, on 7+ Ward 5+ until your next turn.
+Wegstein	Waystone
+Deine Bewegungsphase: Die Generalin vom Feld nehmen und weiter als 6 Zoll von Feinden wieder aufstellen.	Your Movement phase: the general is removed from the field and set up again more than 6" from enemies.
+Schnelligkeit von Hysh	Swiftness of Hysh
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18 Zoll; Zauberwurf 2W6, bei 5+ doppelter Bewegungswert bis zu deinem nächsten Zug.	Your Hero phase: visible friendly unit wholly within 18"; casting roll 2D6, on 5+ double Move until your next turn.
+Kriegsfacetten	War Aspects
+Pflicht, Beginn jeder Schlachtrunde: Wähle 1 von 3 Kriegsfacetten; nur diese kann in der Runde eingesetzt werden.	Mandatory, start of each battle round: pick 1 of 3 War Aspects; only that one can be used in the round.
+Scinari-Cathallar	Scinari Cathallar
+Verzweifelnde Berührung	Despairing Touch
+Hyshs Macht	Might of Hysh
+Einmal pro Zug (Armee), deine Heldenphase, Kriegsfacette: Befreundete Einheit; Wurf 2+: Kritische Treffer bei unmodifiziertem 5+ bis zu deinem nächsten Zug.	Once per turn (army), your Hero phase, War Aspect: friendly unit; roll 2+: critical hits on an unmodified 5+ until your next turn.
+Strahlende Kompanie	Radiant Company
+Passiv: −1 auf Trefferwürfe für Attacken gegen befreundete Einheiten.	Passive: −1 to hit rolls for attacks against friendly units.
+Überlegene Reaktionen	Superior Reactions
+Passiv: Beim Kämpfen darfst du an der Reihe 2 Einheiten statt 1 wählen.	Passive: when fighting, you may pick 2 units instead of 1 on your turn.
+Vanari-Klingenmeister	Vanari Bladelords
+Sonnenmetall-Zweihandklinge: Schlaghagel	Sunmetal Greatblade: Flurry of Blows
+Schwertmeister	Swordmaster
+Bei jedem Kämpfen: Profil Perfekter Streich (Würfel je Attacke, bei 2+ 1 tödlicher Schaden, ohne Attackenabfolge) oder Schlaghagel (hier als Standardprofil).	Each Fight: Perfect Strike profile (die per Attack, on 2+ 1 mortal damage, no attack sequence) or Flurry of Blows (set as the standard profile here).
+Vanari-Auralanschützen	Vanari Auralan Sentinels
+Auralan-Bogen	Auralan Bow
+Vanari-Dolch	Vanari Dagger
+In hohem Bogen	High Arc
+Fernkampfphase: +6" Reichweite der Bögen, aber −1 auf Trefferwürfe (Phase)	Shooting phase: +6" range for the bows, but −1 to hit rolls (phase)
+Vanari-Auralanwächter	Vanari Auralan Wardens
+Wächterspieß	Warden's Spear
+Mondfeueramphore	Moonfire Flask
+Nahkampfphase, 1× pro Schlacht: Feind im Nahkampf, der angegriffen hat: 2+ → W3 tödlicher Schaden	Combat phase, once per battle: enemy in combat that charged: 2+ → D3 mortal damage
+Jünger des Tzeentch	Disciples of Tzeentch
+Wandelklingenzirkel	Fluxblade Coven
+Unstete Gestalt	Fickle Form
+Passiv: Wird ein befreundetes Kairische-Akolythen-Modell im Nahkampf getötet, wirf einen Würfel; bei 4+ bringe 1 getötetes Modell in eine befreundete Tzaangors-Einheit innerhalb 9 Zoll zurück.	Passive: when a friendly Kairic Acolytes model is slain in combat, roll a die; on 4+ return 1 slain model to a friendly Tzaangors unit within 9".
+Ewige Feuersbrunst	Eternal Conflagration
+Passiv: +1 Wucht auf die Fernkampfwaffen befreundeter Feuerdämonen des Tzeentch.	Passive: +1 Rend on the ranged weapons of friendly Flamers of Tzeentch.
+Schild des Schicksals	Shield of Fate
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18 Zoll; Zauberwurf 2W6, bei 6+ Rettung 6+ (hat sie schon eine: +1) bis zu deinem nächsten Zug.	Your Hero phase: visible friendly unit wholly within 18"; casting roll 2D6, on 6+ Ward 6+ (if it already has one: +1) until your next turn.
+Zukünftiges Erspähen	Glimpse the Future
+Wenn du weniger als 6 Schicksalswürfel hast: Zauberwurf 2W6, bei 7+ wirf einen Würfel und füge ihn den Schicksalswürfeln hinzu.	If you have fewer than 6 Fate Dice: casting roll 2D6, on 7+ roll a die and add it to the Fate Dice.
+Dämonenherz	Daemon Heart
+Einmal pro Schlacht, beliebige Nahkampfphase: Feindliche Einheit innerhalb 1 Zoll um den General erleidet tödlichen Schaden in Höhe der Schlachtrunde.	Once per battle, any combat phase: enemy unit within 1" of the general suffers mortal damage equal to the battle round.
+Amulett der Zeitverschiebung	Amulet of Temporal Displacement
+Einmal pro Schlacht, beliebige Nahkampfphase: Feindliche Einheit innerhalb 9 Zoll hat in dieser Phase Kämpft zuerst.	Once per battle, any combat phase: enemy unit within 9" has Strike-first this phase.
+Meister des Schicksals	Master of Destiny
+Einmal pro Schlacht, Beginn Runde 1: Wirf 9 Würfel (Schicksalswürfel). Du kannst Zauber-, Renn-, Angriffs-, Treffer-, Verwundungs- und Schutzwürfe durch je einen Schicksalswürfel ersetzen.	Once per battle, start of round 1: roll 9 dice (Fate Dice). You may replace casting, run, charge, hit, wound and save rolls with one Fate Die each.
+Magister auf Flugdämon des Tzeentch	Magister on Discs of Tzeentch
+Runenstab des Tzeentch	Tzeentchian Runestaff
+Warpstahlschwert	Warpsteel Sword
+Zähne und Hörner des Flugdämons	Disc's Teeth and Horns
+Kairische Akolythen	Kairic Acolytes
+Zaubergeschosse	Sorcerous Bolts
+Verfluchte Klinge	Cursed Blade
+Hexenwerk	Witchcraft
+Deine Fernkampfphase: Zauberwurf 2W6, bei 6+ +1 Wucht auf die Zaubergeschosse in dieser Phase.	Your Shooting phase: casting roll 2D6, on 6+ +1 Rend on the Sorcerous Bolts this phase.
+Kreischer des Tzeentch	Screamers of Tzeentch
+Rundmaulbiss	Lamprey Bite
+Messerscharfe Finnen	Razor-sharp Fins
+Deine Bewegungsphase: Feindliche Einheit, über die sich Modelle bewegt haben; je Modell, das sich über sie bewegt hat, ein Würfel; je 4+ 1 tödlicher Schaden.	Your Movement phase: enemy unit that models moved across; one die per model that moved across it; each 4+ 1 mortal damage.
+Tzaangors	Tzaangors
+Bösartige Klinge und Schnabel	Vicious Blade and Beak
+Feuerdämonen des Tzeentch	Flamers of Tzeentch
+Wyrdflammen	Warpflames
+Flammende Mäuler	Flaming Maws

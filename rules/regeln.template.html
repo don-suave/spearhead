@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14171c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Regeln">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Spearhead Regeln</title>
+<style>
+:root{--bg:#f3eee2;--card:#fbf8f0;--card2:#ece5d3;--fg:#2a2218;--mut:#6d6250;--line:#d8cfb8;--acc:#8a2b2b;--gold:#a67c1f;--link:#8a2b2b;--chip:#e4dbc4;--mark:#f4d77a;--shadow:0 1px 2px rgba(60,40,10,.12);
+ --c-x:#8a8372;--c-v:#7a5c9e;--c-r:#a67c1f;--c-z:#5f7a8a;--c-h:#9a4a7a;--c-b:#3f8a5a;--c-f:#2f7aa3;--c-a:#c0702a;--c-k:#a8322d}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14171c;--card:#1d222a;--card2:#262c36;--fg:#ebe5d6;--mut:#a79f8c;--line:#343b47;--acc:#e0b04a;--gold:#e0b04a;--link:#e6bd62;--chip:#2c333f;--mark:#6b5513;--shadow:none;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#14171c;--card:#1d222a;--card2:#262c36;--fg:#ebe5d6;--mut:#a79f8c;--line:#343b47;--acc:#e0b04a;--gold:#e0b04a;--link:#e6bd62;--chip:#2c333f;--mark:#6b5513;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+h1,h2,h3,.ser{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;font-weight:700;letter-spacing:.01em;text-wrap:balance}
+button{font:inherit;color:inherit}
+a{color:var(--link)}
+.top{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line);padding:calc(8px + env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 8px max(12px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:8px}
+.top .ttl{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:17px}
+.ib{border:1px solid var(--line);background:var(--card);border-radius:10px;min-width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0 10px;box-shadow:var(--shadow)}
+.ib[disabled]{opacity:.35}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;height:40px}
+.lang button{border:0;background:var(--card);padding:0 12px;cursor:pointer;font-weight:700;color:var(--mut)}
+.lang button.on{background:var(--acc);color:var(--bg)}
+main{max-width:860px;margin:0 auto;padding:14px max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.crumb{font-size:13px;color:var(--mut);margin:2px 0 8px}
+.crumb a{color:var(--mut)}
+h2{font-size:22px;margin:22px 0 8px}
+h3{font-size:17px;margin:0}
+.hint{color:var(--mut);font-size:14px}
+.tiles{display:grid;gap:12px;grid-template-columns:1fr;margin-top:10px}
+@media(min-width:620px){.tiles{grid-template-columns:1fr 1fr}}
+.tile{display:flex;gap:14px;align-items:center;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.tile .no{font:700 30px/1 Georgia,serif;color:var(--acc);min-width:30px;text-align:center}
+.tile b{display:block;font-size:18px}
+.tile span{color:var(--mut);font-size:14px}
+.hero{padding:10px 0 4px}
+.hero h1{margin:6px 0 4px;font-size:30px;line-height:1.15}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:620px){.grid{grid-template-columns:1fr 1fr}}
+.army{display:block;text-decoration:none;color:inherit;padding:12px 14px}
+.army b{display:block;font-size:17px}
+.army span{color:var(--mut);font-size:13px}
+.fac{margin:20px 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.pg-h{display:flex;flex-direction:column;gap:2px;margin-bottom:6px}
+.pg-h h1{margin:0;font-size:27px;line-height:1.15}
+.sec{margin:20px 0 6px;display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:2px solid var(--gold);padding-bottom:4px}
+.sec h2{margin:0;font-size:18px;text-transform:uppercase;letter-spacing:.06em}
+.sec small{color:var(--mut)}
+details.ab{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;box-shadow:var(--shadow)}
+details.ab>summary{list-style:none;cursor:pointer;padding:10px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-height:44px}
+details.ab>summary::-webkit-details-marker{display:none}
+details.ab>summary::before{content:"▸";color:var(--gold);transition:transform .15s;display:inline-block;width:14px}
+details.ab[open]>summary::before{transform:rotate(90deg)}
+details.ab .nm{font-weight:700}
+.chip{font-size:12px;background:var(--chip);color:var(--mut);border-radius:999px;padding:2px 9px;white-space:normal}
+.body{padding:2px 14px 12px 34px}
+.body p{margin:4px 0}
+details.ab.hl,.hl{outline:2px solid var(--gold);outline-offset:2px}
+.unit{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:12px 0;padding:12px 12px 6px;box-shadow:var(--shadow)}
+.unit header{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.unit header h3{font-size:19px}
+.gen{background:var(--acc);color:var(--bg);font-size:11px;font-weight:700;letter-spacing:.06em;border-radius:6px;padding:1px 7px;text-transform:uppercase}
+.kws{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
+.kws .chip{background:transparent;border:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin:8px 0}
+.stats div{background:var(--card2);border-radius:10px;text-align:center;padding:5px 2px}
+.stats small{display:block;color:var(--mut);font-size:10px;text-transform:uppercase;letter-spacing:0}
+.stats b{font-size:17px}
+.sub{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin:10px 0 3px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.w{border-collapse:collapse;width:100%;font-size:14px}
+table.w th{font-size:10px;text-transform:uppercase;letter-spacing:0;color:var(--mut);text-align:center;padding:3px 2px;border-bottom:1px solid var(--line)}
+table.w th:first-child,table.w td:first-child{text-align:left}
+table.w td{font-size:13px;padding:5px 2px;text-align:center;border-bottom:1px solid var(--line)}
+table.w tr:last-child td{border-bottom:0}
+table.w td:first-child{font-weight:600;min-width:84px;padding-right:4px}
+.fl{display:block;font-weight:400;font-size:12px;color:var(--mut)}
+.note{font-size:14px;color:var(--mut);margin:6px 0}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;cursor:pointer;font-size:14px}
+.rule{position:relative}
+details.rl{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c-x);border-radius:12px;margin:9px 0;box-shadow:var(--shadow)}
+details.rl[data-ph=v]{border-left-color:var(--c-v)}details.rl[data-ph=r]{border-left-color:var(--c-r)}details.rl[data-ph=z]{border-left-color:var(--c-z)}details.rl[data-ph=h]{border-left-color:var(--c-h)}
+details.rl[data-ph=b]{border-left-color:var(--c-b)}details.rl[data-ph=f]{border-left-color:var(--c-f)}details.rl[data-ph=a]{border-left-color:var(--c-a)}details.rl[data-ph=k]{border-left-color:var(--c-k)}
+details.rl>summary{list-style:none;cursor:pointer;padding:11px 12px;display:block}
+details.rl>summary::-webkit-details-marker{display:none}
+details.rl>summary h3{display:flex;gap:8px;align-items:center}
+details.rl>summary h3::before{content:"▸";color:var(--gold);font-size:14px;transition:transform .15s}
+details.rl[open]>summary h3::before{transform:rotate(90deg)}
+details.rl .s{margin:3px 0 0 22px;color:var(--mut);font-size:15px}
+details.rl[open] .s{color:var(--fg)}
+details.rl ul{margin:2px 12px 10px 0;padding-left:38px}
+details.rl li{margin:6px 0}
+.spn{margin:6px 12px 12px 22px;padding:8px 10px;background:var(--card2);border-radius:8px;font-size:14px}
+.spn b{color:var(--acc)}
+.num{font:700 13px Georgia,serif;color:var(--mut);min-width:22px}
+.gl{padding:11px 12px;margin:9px 0}
+.gl h3{display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
+.gl .alt{font-weight:400;color:var(--mut);font-size:14px}
+.gl p{margin:4px 0}
+.gl a.rr{font-size:13px}
+.inp{width:100%;font:inherit;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.alpha{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0}
+.alpha a{padding:3px 9px;border:1px solid var(--line);border-radius:8px;text-decoration:none;background:var(--card)}
+.res{display:block;text-decoration:none;color:inherit;padding:10px 12px;margin:8px 0}
+.res small{color:var(--mut);display:block}
+.res b{display:block}
+mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
+a.lk{color:var(--link);text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}
+a.lk.ab{text-decoration:underline;font-weight:600}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);border-top:2px solid var(--gold);border-radius:18px 18px 0 0;padding:16px max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));box-shadow:0 -10px 30px rgba(0,0,0,.3);max-height:60vh;overflow:auto}
+.sheet .x{position:absolute;top:8px;right:12px}
+.sheet h3{margin:0 40px 4px 0;font-size:19px}
+.sheet .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.back{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.35)}
+.cnt{font-size:13px;color:var(--mut);margin:14px 0 2px;text-transform:uppercase;letter-spacing:.07em}
+footer{margin:28px 0 0;color:var(--mut);font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--mut);margin-top:8px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<div class="top" id="top"></div>
+<main id="main"></main>
+<div id="sheet"></div>
+<script>
+/*__DATA__*/
+(()=>{
+'use strict';
+const UI={
+ title:['Spearhead Regeln','Spearhead Rules'],
+ home:['Start','Home'],
+ back:['Zurück','Back'],
+ game:['Zum Spiel','Back to game'],
+ t1:['Spearhead on a Page','Spearhead on a Page'],d1:['Alle 31 Spearhead-Armeen, jeweils auf einer Seite','All 31 Spearhead armies, one page each'],
+ t2:['Regelübersicht','Rules overview'],d2:['Die wichtigsten Regeln in Spielreihenfolge','The key rules in the order of play'],
+ t3:['Glossar','Glossary'],d3:['Alle wichtigen Begriffe von A bis Z','All the key terms from A to Z'],
+ t4:['Suche','Search'],d4:['Volltext über Regeln, Glossar und Spearheads','Full text over rules, glossary and Spearheads'],
+ intro:['Nachschlagewerk für Warhammer Age of Sigmar: Spearhead. Antippen für Details, Fachbegriffe sind verlinkt, die Sprache lässt sich überall umschalten.','Quick reference for Warhammer Age of Sigmar: Spearhead. Tap for details, terms are linked, and you can switch language anywhere.'],
+ traits:['Kampfeigenschaften','Battle traits'],reg:['Regimentsfähigkeiten','Regiment abilities'],regh:['wähle 1 von 2','pick 1 of 2'],
+ enh:['Verbesserungen','Enhancements'],enhh:['wähle 1 für den General','pick 1 for the general'],units:['Einheiten','Units'],
+ mv:['Bew.','Move'],hp:['Ausd.','Health'],sv:['Schutz','Save'],cv:['Kontr.','Control'],wd:['Rett.','Ward'],mo:['Mod.','Models'],
+ rng:['Reichw.','Range'],att:['Att.','Atk'],hit:['Treff.','Hit'],wnd:['Verw.','Wnd'],rend:['Wucht','Rend'],dmg:['Schad.','Dmg'],
+ rw:['Fernkampf','Ranged'],mw:['Nahkampf','Melee'],ab:['Fähigkeiten','Abilities'],gen:['General','General'],
+ openall:['Alles ausklappen','Expand all'],closeall:['Alles einklappen','Collapse all'],
+ sp:['Spearhead-Hinweis','Spearhead note'],
+ search:['Suchbegriff eingeben …','Enter a search term …'],noRes:['Nichts gefunden.','Nothing found.'],
+ cRules:['Regeln','Rules'],cGloss:['Glossar','Glossary'],cSp:['Spearhead','Spearhead'],cUnit:['Einheit','Unit'],cAb:['Fähigkeit','Ability'],cWpn:['Waffe','Weapon'],
+ toRule:['Zur Regel','Go to rule'],toGloss:['Im Glossar','In glossary'],close:['Schließen','Close'],
+ filter:['Begriff filtern …','Filter terms …'],phases:['Farben: Phase des Zugs','Colours: phase of the turn'],
+ cmdhint:['Tipp: Begriffe mit gepunkteter Linie antippen für eine Kurzerklärung.','Tip: tap dotted terms for a short explanation.'],
+ army:['Armee','Army'],kw:['Schlüsselwörter','Keywords'],
+ ver:['Inoffizielles Fan-Nachschlagewerk. Texte sind zusammengefasst und übersetzt; maßgeblich sind die offiziellen Regeln von Games Workshop.','Unofficial fan reference. Texts are summarised and translated; the official Games Workshop rules are authoritative.']
+};
+const PH={x:['Allgemein','General'],v:['Vorbereitung','Pre-battle'],r:['Rundenbeginn','Round start'],z:['Zug','Turn'],h:['Heldenphase','Hero phase'],b:['Bewegung','Movement'],f:['Fernkampf','Shooting'],a:['Angriff','Charge'],k:['Kampf','Combat']};
+let L=(()=>{try{const s=localStorage.getItem('regeln.lang');if(s=='de'||s=='en')return s}catch(e){}return (navigator.language||'de').toLowerCase().startsWith('de')?'de':'en'})();
+const li=()=>L=='de'?0:1;
+const T=k=>UI[k][li()];
+const P=x=>Array.isArray(x)?x[li()]:x;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ß/g,'ss');
+const main=document.getElementById('main'),top=document.getElementById('top'),sheetEl=document.getElementById('sheet');
+const open=new Set();      // geöffnete Details (route|key)
+let route='',sheetId=null,searchQ='';
+const EMB=window.parent!==window;
+const A=DATA.A,R=DATA.R,G=DATA.G,FL=DATA.FL;
+const gById=Object.fromEntries(G.map(g=>[g.id,g])),rById=Object.fromEntries(R.map(r=>[r.id,r]));
+
+/* ---------- Verlinkung ---------- */
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const linkerCache={};
+function mkLinker(ai){
+ const ck=L+':'+ai;if(linkerCache[ck])return linkerCache[ck];
+ const items=[];
+ G.forEach(g=>g.k[li()].forEach(lab=>{if(lab.length>=2&&!lab.endsWith('-'))items.push({lab,t:'g',id:g.id})}));
+ if(ai>=0){const a=A[ai];
+  const add=(arr,pre)=>arr.forEach((x,j)=>items.push({lab:P(x.n),t:'a',id:pre+j}));
+  add(a.traits,'t');add(a.reg,'r');add(a.enh,'e');a.units.forEach((u,k)=>u.ab.forEach((x,j)=>items.push({lab:P(x.n),t:'a',id:'u'+k+'a'+j})));}
+ items.sort((x,y)=>(x.t=='a'?0:1)-(y.t=='a'?0:1)||y.lab.length-x.lab.length);
+ const map=new Map();items.forEach(it=>{const k=it.lab.toLowerCase();if(!map.has(k))map.set(k,it)});
+ const labs=[...map.values()].map(i=>i.lab).sort((a,b)=>b.length-a.length);
+ const re=new RegExp('(^|[^\\p{L}\\p{N}])('+labs.map(reEsc).join('|')+')(?![\\p{L}\\p{N}])','giu');
+ return linkerCache[ck]={re,map};
+}
+// text: Rohtext; ai: Armee-Index oder -1; self: Schlüssel der eigenen Fähigkeit (nicht verlinken)
+function linkify(text,ai,self){
+ const {re,map}=mkLinker(ai);const seen=new Set();let out='',last=0,m;
+ re.lastIndex=0;
+ while((m=re.exec(text))){
+  const pre=m[1],lab=m[2],at=m.index+pre.length;
+  const it=map.get(lab.toLowerCase());if(!it){continue}
+  if(lab.length<=3&&lab!==it.lab){continue}
+  if(it.t=='a'&&it.id===self)continue;
+  const sk=it.t+it.id;if(seen.has(sk))continue;seen.add(sk);
+  out+=esc(text.slice(last,at));
+  out+=it.t=='g'?`<a class="lk" data-g="${it.id}" role="button" tabindex="0">${esc(lab)}</a>`:`<a class="lk ab" data-a="${ai}|${it.id}" role="button" tabindex="0">${esc(lab)}</a>`;
+  last=at+lab.length;
+ }
+ return out+esc(text.slice(last));
+}
+
+/* ---------- Hilfsfunktionen für Anzeige ---------- */
+const plus=v=>v===0||v==null?'–':(typeof v=='number'?v+'+':v);
+const rend=v=>!v?'–':'−'+v;
+const sp=(txt)=>{const m=txt.match(/^([^:]{2,70}):\s*(.*)$/s);return m?[m[1],m[2]]:[null,txt]};
+const flagsOf=f=>String(f||'').split('').filter(c=>FL[c]).map(c=>FL[c][li()]);
+const fmtBase=b=>b?String(b).replace('x',' × ')+' mm':'';
+function abil(ai,key,ab,pre){
+ const [n,t]=[P(ab.n),P(ab.t)];const [chip,rest]=sp(t);
+ const k=`${ai}|${key}`;
+ return `<details class="ab" data-k="${key}" id="k-${key}" ${open.has(route+'|'+key)?'open':''}><summary><span class="nm">${esc(n)}</span>${chip?`<span class="chip">${esc(chip)}</span>`:''}</summary><div class="body"><p>${linkify(rest,ai,key)}</p></div></details>`;
+}
+function armyPage(ai){
+ const a=A[ai];
+ let h=`<div class="crumb"><a href="#/sp">${T('t1')}</a></div><div class="pg-h" data-k="head"><span class="fac" style="margin:0">${esc(P(a.f))}</span><h1>${esc(P(a.n))}</h1></div>`;
+ h+=`<div class="tools"><button class="btn" data-act="all">${T('openall')}</button><button class="btn" data-act="none">${T('closeall')}</button></div>`;
+ const sec=(k,title,hint)=>`<div class="sec" data-k="s-${k}"><h2>${title}</h2>${hint?`<small>${hint}</small>`:''}</div>`;
+ if(a.traits.length){h+=sec('t',T('traits'));a.traits.forEach((x,j)=>h+=abil(ai,'t'+j,x))}
+ h+=sec('r',T('reg'),T('regh'));a.reg.forEach((x,j)=>h+=abil(ai,'r'+j,x));
+ h+=sec('e',T('enh'),T('enhh'));a.enh.forEach((x,j)=>h+=abil(ai,'e'+j,x));
+ h+=sec('u',T('units'));
+ a.units.forEach((u,k)=>{
+  h+=`<article class="unit" data-k="u${k}" id="k-u${k}"><header><h3>${esc(P(u.n))}</h3>${u.g?`<span class="gen">${T('gen')}</span>`:''}</header>`;
+  h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}</div>`;
+  h+=`<div class="stats"><div><small>${T('mv')}</small><b>${u.mv}"</b></div><div><small>${T('hp')}</small><b>${u.hp}</b></div><div><small>${T('sv')}</small><b>${plus(u.sv)}</b></div><div><small>${T('cv')}</small><b>${u.cv}</b></div><div><small>${T('wd')}</small><b>${u.wd?u.wd+'+':'–'}</b></div><div><small>${T('mo')}</small><b>${u.m}</b></div></div>`;
+  if(u.b)h+=`<div class="hint">${fmtBase(u.b)}</div>`;
+  if(u.note)h+=`<p class="note">${linkify(P(u.note),ai,null)}</p>`;
+  const wt=(ws,ranged)=>{
+   let t=`<div class="tw"><table class="w"><tr><th></th>${ranged?`<th>${T('rng')}</th>`:''}<th>${T('att')}</th><th>${T('hit')}</th><th>${T('wnd')}</th><th>${T('rend')}</th><th>${T('dmg')}</th></tr>`;
+   ws.forEach(w=>{const fl=flagsOf(w.f);t+=`<tr><td>${esc(P(w.n))}${fl.length?`<span class="fl">${fl.map(esc).join(' · ')}</span>`:''}</td>${ranged?`<td>${w.r}"</td>`:''}<td>${esc(P(w.a))}</td><td>${plus(w.h)}</td><td>${plus(w.w)}</td><td>${rend(w.rd)}</td><td>${esc(P(w.d))}</td></tr>`});
+   return t+'</table></div>'};
+  if(u.rw.length)h+=`<div class="sub">${T('rw')}</div>`+wt(u.rw,true);
+  if(u.mw.length)h+=`<div class="sub">${T('mw')}</div>`+wt(u.mw,false);
+  if(u.ab.length){h+=`<div class="sub">${T('ab')}</div>`;u.ab.forEach((x,j)=>h+=abil(ai,'u'+k+'a'+j,x))}
+  h+='</article>';
+ });
+ return h+`<footer>${T('ver')}</footer>`;
+}
+function spOverview(){
+ let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t1')}</h1><p class="hint">${T('d1')}</p>`;
+ const by={};A.forEach(a=>{(by[a.f[li()]]=by[a.f[li()]]||[]).push(a)});
+ Object.keys(by).sort((x,y)=>x.localeCompare(y,L)).forEach(f=>{
+  h+=`<div class="fac" data-k="f-${esc(f)}">${esc(f)}</div><div class="grid">`;
+  by[f].forEach(a=>h+=`<a class="card army" href="#/sp/${a.i}" data-k="a${a.i}"><b>${esc(P(a.n))}</b><span>${a.units.length} ${T('units')} · ${esc(P(a.f))}</span></a>`);
+  h+='</div>';
+ });
+ return h;
+}
+function rulesPage(){
+ let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t2')}</h1><p class="hint">${T('d2')}</p>`;
+ h+=`<div class="tools"><button class="btn" data-act="all">${T('openall')}</button><button class="btn" data-act="none">${T('closeall')}</button></div>`;
+ h+=`<div class="legend">${Object.keys(PH).map(k=>`<span><i class="dot" style="background:var(--c-${k})"></i>${PH[k][li()]}</span>`).join('')}</div>`;
+ R.forEach((r,n)=>{
+  h+=`<details class="rl" data-ph="${r.ph}" data-k="${r.id}" id="k-${r.id}" ${open.has(route+'|'+r.id)?'open':''}><summary><h3><span class="num">${n+1}</span>${esc(P(r.t))}</h3><div class="s">${esc(P(r.s))}</div></summary><ul>${r.d.map(d=>`<li>${linkify(P(d),-1)}</li>`).join('')}</ul>${r.sp?`<div class="spn"><b>${T('sp')}:</b> ${linkify(P(r.sp),-1)}</div>`:''}</details>`;
+ });
+ return h+`<footer>${T('ver')}</footer>`;
+}
+function glossPage(){
+ let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t3')}</h1><p class="hint">${T('d3')}</p>`;
+ h+=`<input class="inp" id="gf" type="search" placeholder="${T('filter')}" autocomplete="off">`;
+ const list=[...G].sort((a,b)=>P(a.t).localeCompare(P(b.t),L));
+ const letters=[...new Set(list.map(g=>norm(P(g.t))[0].toUpperCase()))];
+ h+=`<div class="alpha">${letters.map(l=>`<a href="#" data-letter="${l}">${l}</a>`).join('')}</div><div id="gl">`;
+ list.forEach(g=>{
+  const other=g.t[1-li()];
+  h+=`<div class="card gl" data-k="${g.id}" id="k-${g.id}" data-l="${norm(P(g.t))[0].toUpperCase()}" data-h="${esc(norm(g.k[0].join(' ')+' '+g.k[1].join(' ')+' '+g.d.join(' ')))}"><h3>${esc(P(g.t))}<span class="alt">${esc(other)}</span></h3><p>${linkify(P(g.d),-1)}</p><a class="rr" href="#/rules/${g.s}">${T('toRule')} → ${esc(P(rById[g.s].t))}</a></div>`;
+ });
+ return h+'</div>';
+}
+/* ---------- Suche ---------- */
+let INDEX=null;
+function buildIndex(){
+ INDEX=[];
+ R.forEach(r=>INDEX.push({c:'R',href:'#/rules/'+r.id,t:r.t,x:[r.s,...r.d.map(d=>d),...(r.sp?[r.sp]:[])]}));
+ G.forEach(g=>INDEX.push({c:'G',href:'#/gloss/'+g.id,t:g.t,x:[g.d],alt:g.k}));
+ A.forEach(a=>{
+  INDEX.push({c:'S',href:'#/sp/'+a.i,t:a.n,x:[a.f]});
+  const ab=(arr,pre)=>arr.forEach((x,j)=>INDEX.push({c:'A',href:`#/sp/${a.i}/${pre}${j}`,t:x.n,x:[x.t],ctx:a.n}));
+  ab(a.traits,'t');ab(a.reg,'r');ab(a.enh,'e');
+  a.units.forEach((u,k)=>{
+   INDEX.push({c:'U',href:`#/sp/${a.i}/u${k}`,t:u.n,x:[u.kw.map(w=>w)].flat().map(w=>w),ctx:a.n});
+   [...u.rw,...u.mw].forEach(w=>INDEX.push({c:'W',href:`#/sp/${a.i}/u${k}`,t:w.n,x:[],ctx:[u.n[0]+' · '+a.n[0],u.n[1]+' · '+a.n[1]]}));
+   u.ab.forEach((x,j)=>INDEX.push({c:'A',href:`#/sp/${a.i}/u${k}a${j}`,t:x.n,x:[x.t],ctx:[u.n[0]+' · '+a.n[0],u.n[1]+' · '+a.n[1]]}));
+  });
+ });
+ INDEX.forEach(it=>{const parts=[it.t[0],it.t[1],...it.x.map(v=>Array.isArray(v)?v.join(' '):v)];if(it.alt)parts.push(...it.alt.flat());it.h=norm(parts.join(' '))});
+}
+const CAT={R:['cRules'],G:['cGloss'],S:['cSp'],U:['cUnit'],A:['cAb'],W:['cWpn']};
+function hlRe(q){const ws=q.trim().split(/\s+/).filter(w=>w.length>0).map(reEsc);return ws.length?new RegExp('('+ws.join('|')+')','gi'):null}
+function snippet(txt,q){
+ const re=hlRe(q);let s=txt;
+ if(re){const m=re.exec(txt);re.lastIndex=0;if(m){const st=Math.max(0,m.index-40);s=(st>0?'… ':'')+txt.slice(st,m.index+110)+(m.index+110<txt.length?' …':'')}else s=txt.slice(0,140)}
+ else s=txt.slice(0,140);
+ let o=esc(s);if(re)o=o.replace(new RegExp('('+q.trim().split(/\s+/).map(w=>reEsc(esc(w))).join('|')+')','gi'),'<mark>$1</mark>');
+ return o;
+}
+function runSearch(q){
+ if(!INDEX)buildIndex();
+ const ws=norm(q).split(/\s+/).filter(Boolean);if(!ws.length)return '';
+ const hits=[];
+ INDEX.forEach(it=>{if(ws.every(w=>it.h.includes(w))){const tn=norm(it.t.join(' '));hits.push({it,sc:(ws.every(w=>tn.includes(w))?0:1)+(tn.startsWith(ws[0])?0:.5)})}});
+ hits.sort((a,b)=>a.sc-b.sc);
+ if(!hits.length)return `<p class="hint">${T('noRes')}</p>`;
+ const order=['R','G','S','U','A','W'];let h='';
+ order.forEach(c=>{
+  const arr=hits.filter(x=>x.it.c==c);if(!arr.length)return;
+  h+=`<div class="cnt">${T(CAT[c][0])} · ${arr.length}</div>`;
+  arr.slice(0,40).forEach(({it})=>{
+   const body=it.x.map(v=>Array.isArray(v)?P(v):v).filter(Boolean).join(' · ');
+   const ctx=it.ctx?(Array.isArray(it.ctx)?P(it.ctx):P(it.ctx)):'';
+   h+=`<a class="card res" href="${it.href}"><b>${snippet(P(it.t),q)}</b>${ctx?`<small>${esc(ctx)}</small>`:''}${body?`<small>${snippet(body,q)}</small>`:''}</a>`;
+  });
+ });
+ return h;
+}
+function searchPage(){
+ return `<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t4')}</h1><p class="hint">${T('d4')}</p><input class="inp" id="q" type="search" placeholder="${T('search')}" value="${esc(searchQ)}" autocomplete="off" enterkeyhint="search"><div id="sr">${runSearch(searchQ)}</div>`;
+}
+function homePage(){
+ return `<div class="hero"><h1 class="ser">${T('title')}</h1><p class="hint">${T('intro')}</p></div>
+ <div class="tiles">
+ <a class="tile" href="#/sp"><span class="no">1</span><div><b>${T('t1')}</b><span>${T('d1')}</span></div></a>
+ <a class="tile" href="#/rules"><span class="no">2</span><div><b>${T('t2')}</b><span>${T('d2')}</span></div></a>
+ <a class="tile" href="#/gloss"><span class="no">3</span><div><b>${T('t3')}</b><span>${T('d3')}</span></div></a>
+ <a class="tile" href="#/search"><span class="no">4</span><div><b>${T('t4')}</b><span>${T('d4')}</span></div></a>
+ </div><p class="hint" style="margin-top:16px">${T('cmdhint')}</p><footer>${EMB?'':`<a href="./">${T('game')} →</a><br>`}${T('ver')}</footer>`;
+}
+
+/* ---------- Router ---------- */
+function parse(){const h=(location.hash||'#/').slice(1);const p=h.split('/').filter(Boolean).map(decodeURIComponent);return p}
+function title(p){
+ if(!p.length)return T('title');
+ if(p[0]=='sp'){return p[1]!=null&&A[p[1]]?P(A[p[1]].n):T('t1')}
+ return {rules:T('t2'),gloss:T('t3'),search:T('t4')}[p[0]]||T('title');
+}
+function topbar(p){
+ top.innerHTML=`<button class="ib" id="bk" aria-label="${T('back')}">←</button><button class="ib" id="hm" aria-label="${T('home')}">⌂</button><div class="ttl ser">${esc(title(p))}</div><div class="lang"><button data-l="de" class="${L=='de'?'on':''}">DE</button><button data-l="en" class="${L=='en'?'on':''}">EN</button></div>${EMB?`<button class="ib" id="cl" aria-label="${T('close')}">✕</button>`:''}`;
+ document.title=title(p)+' – '+T('title');document.documentElement.lang=L;
+}
+function captureAnchor(){
+ const els=[...main.querySelectorAll('[data-k]')];const y=top.getBoundingClientRect().bottom+4;
+ let best=null;
+ for(const e of els){const r=e.getBoundingClientRect();if(r.top<=y&&r.bottom>y)best=e;}
+ if(!best){for(const e of els){if(e.getBoundingClientRect().top>y){best=e;break}}}
+ if(!best)return null;
+ return {k:best.dataset.k,off:best.getBoundingClientRect().top,sy:window.scrollY};
+}
+function restoreAnchor(a){
+ if(!a)return;const e=main.querySelector(`[data-k="${CSS.escape(a.k)}"]`);
+ if(e){window.scrollBy(0,e.getBoundingClientRect().top-a.off)}else window.scrollTo(0,a.sy);
+}
+let lastRouteKey='';
+function render(opts={}){
+ const p=parse();const base='/'+p.slice(0,2).join('/');
+ const keepScroll=opts.keep;const anc=keepScroll?captureAnchor():null;
+ route=p[0]=='sp'&&p[1]!=null?'sp/'+p[1]:(p[0]||'home');
+ let html='';
+ const deep=p[0]=='sp'&&p[1]!=null?p[2]:(p[0]=='rules'||p[0]=='gloss'?p[1]:null);
+ if(!p.length)html=homePage();
+ else if(p[0]=='sp'){html=A[p[1]]?armyPage(+p[1]):spOverview()}
+ else if(p[0]=='rules')html=rulesPage();
+ else if(p[0]=='gloss')html=glossPage();
+ else if(p[0]=='search'){if(p[1]!=null)searchQ=p[1];html=searchPage()}
+ else html=homePage();
+ topbar(p);main.innerHTML=html;
+ wire();
+ if(keepScroll){restoreAnchor(anc)}
+ else if(deep)jumpTo(deep,true);
+ else window.scrollTo(0,0);
+ renderSheet();
+}
+function jumpTo(key,openIt){
+ const e=main.querySelector(`[data-k="${CSS.escape(key)}"]`)||document.getElementById('k-'+key);if(!e)return;
+ if(openIt){if(e.tagName=='DETAILS'){e.open=true;open.add(route+'|'+key)}
+  // Unit-Karte oder Fähigkeit in Einheit: übergeordnete Details öffnen
+  let q=e.parentElement;while(q&&q!==main){if(q.tagName=='DETAILS'){q.open=true;open.add(route+'|'+q.dataset.k)}q=q.parentElement}}
+ const y=e.getBoundingClientRect().top+window.scrollY-top.offsetHeight-8;
+ window.scrollTo({top:y,behavior:'smooth'});
+ e.classList.add('hl');setTimeout(()=>e.classList.remove('hl'),1800);
+}
+function wire(){
+ main.querySelectorAll('details[data-k]').forEach(d=>d.addEventListener('toggle',()=>{const k=route+'|'+d.dataset.k;d.open?open.add(k):open.delete(k)}));
+ main.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{const all=b.dataset.act=='all';main.querySelectorAll('details[data-k]').forEach(d=>{d.open=all;const k=route+'|'+d.dataset.k;all?open.add(k):open.delete(k)})});
+ const q=document.getElementById('q');
+ if(q){q.oninput=()=>{searchQ=q.value;document.getElementById('sr').innerHTML=runSearch(searchQ);history.replaceState(null,'','#/search/'+encodeURIComponent(searchQ))};if(!searchQ&&!opts_noFocus)setTimeout(()=>q.focus(),50)}
+ const gf=document.getElementById('gf');
+ if(gf){gf.oninput=()=>{const w=norm(gf.value).split(/\s+/).filter(Boolean);document.querySelectorAll('#gl .gl').forEach(e=>{e.hidden=!w.every(x=>e.dataset.h.includes(x))})}}
+ main.querySelectorAll('[data-letter]').forEach(a=>a.onclick=ev=>{ev.preventDefault();const t=main.querySelector(`.gl[data-l="${a.dataset.letter}"]`);if(t){window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-top.offsetHeight-8,behavior:'smooth'})}});
+}
+let opts_noFocus=false;
+document.addEventListener('click',ev=>{
+ const t=ev.target.closest('a.lk,.lang button,#bk,#hm,#cl,.sheet [data-s],.sheet .x,.back');if(!t)return;
+ if(t.matches('a.lk')){ev.preventDefault();
+  if(t.dataset.g){sheetId=t.dataset.g;renderSheet()}
+  else if(t.dataset.a){const [ai,key]=t.dataset.a.split('|');if(parse()[1]!=ai||parse()[0]!='sp'){location.hash='#/sp/'+ai+'/'+key}else jumpTo(key,true)}
+  return}
+ if(t.id=='bk'){if(history.length>1)history.back();else location.hash='#/';return}
+ if(t.id=='hm'){location.hash='#/';return}
+ if(t.id=='cl'){try{parent.postMessage('close-rules',location.origin)}catch(e){}return}
+ if(t.closest('.lang')){setLang(t.dataset.l);return}
+ if(t.matches('.x,.back')){sheetId=null;renderSheet();return}
+ if(t.dataset.s){sheetId=null;renderSheet();location.hash=t.dataset.s}
+});
+function renderSheet(){
+ if(!sheetId){sheetEl.innerHTML='';return}
+ const g=gById[sheetId];if(!g){sheetEl.innerHTML='';return}
+ sheetEl.innerHTML=`<div class="back"></div><div class="sheet" role="dialog" aria-label="${esc(P(g.t))}"><button class="ib x" aria-label="${T('close')}">✕</button><h3>${esc(P(g.t))}</h3><div class="hint">${esc(g.t[1-li()])}</div><p>${linkify(P(g.d),-1)}</p><div class="acts"><button class="btn" data-s="#/rules/${g.s}">${T('toRule')} → ${esc(P(rById[g.s].t))}</button><button class="btn" data-s="#/gloss/${g.id}">${T('toGloss')}</button></div></div>`;
+}
+function setLang(l){
+ if(l==L)return;L=l;try{localStorage.setItem('regeln.lang',L)}catch(e){}
+ opts_noFocus=true;INDEX=null;render({keep:true});opts_noFocus=false;
+}
+window.addEventListener('hashchange',()=>{sheetId=null;render()});
+render();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+})();
+</script>
+</body>
+</html>
