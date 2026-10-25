@@ -205,12 +205,27 @@ function adjPut(m,x,y){const S=G.S,u=m.u,N=m.P.map((p,i)=>({x:p[0],y:p[1],a:m.or
  else if(S.U.some(v=>v!==u&&v.x>=0&&abs(v).some(q=>mgap(c,q)<0)))er='Nicht auf andere Modelle stellen';
  if(er){note(er);return}
  m.P[i]=[c.x,c.y];N[i]=c;const bad=cohBad(N,m.u.coh);m.sel=null;note(bad.length?'Zusammenhalt noch verletzt ('+bad.length+' Modell'+(bad.length>1?'e':'')+')':'Zusammenhalt in Ordnung – weitere Modelle oder „Fertig“')}
+// ---- Einrasten: ungültige Ziel- oder Aufstellpunkte werden auf die nächste gültige Position gesetzt ----
+function zoneOf(m){if(!m.zone){const S=G.S;m.zone=[];const st=W<40?.5:1;for(let i=st;i<W;i+=st)for(let j=st;j<H;j+=st)if(!placeErr(S,m.q.kind,m.q.who,m.q.u,i,j,m.a))m.zone.push([i,j]);m.zst=st}return m.zone}
+// Aufstellen: nächster Punkt der gültigen Zone (bis 10"), dann per Halbierung so nah wie möglich an den angetippten Punkt
+function plSnap(m,x,y){const S=G.S,ok=(a,b)=>!placeErr(S,m.q.kind,m.q.who,m.q.u,a,b,m.a);if(ok(x,y))return [x,y];
+ const k=x.toFixed(2)+'/'+y.toFixed(2)+'/'+(m.a||0);if(m.ps&&m.ps.k==k)return m.ps.p;
+ const z=zoneOf(m).map(c=>[Math.hypot(c[0]-x,c[1]-y),c]).filter(c=>c[0]<=10).sort((a,b)=>a[0]-b[0]);let p=null;
+ for(const [,c] of z.slice(0,8)){if(!ok(c[0],c[1]))continue;let lo=0,hi=1;for(let i=0;i<8;i++){const t=(lo+hi)/2;ok(c[0]+(x-c[0])*t,c[1]+(y-c[1])*t)?lo=t:hi=t}const q=[c[0]+(x-c[0])*lo,c[1]+(y-c[1])*lo];if(!p||Math.hypot(q[0]-x,q[1]-y)<Math.hypot(p[0]-x,p[1]-y))p=q}
+ m.ps={k,p};return p}
+// Bewegen/Angriff/Nachrücken: Punkte auf der Linie vom Ausgangspunkt und Ringe um den Zielpunkt, nächster gültiger gewinnt
+function snapPos(f,x,y,ox,oy,full){const r=f(x,y);if(!r.err)return {r,x,y,snap:0};
+ const C=[];if(ox!=null)for(let t=.95;t>.02;t-=full?.05:.12)C.push([ox+(x-ox)*t,oy+(y-oy)*t]);
+ if(full)for(const d of [.25,.5,.8,1.2,1.7,2.3,3])for(let k=0;k<12;k++){const a=k*Math.PI/6;C.push([x+Math.cos(a)*d,y+Math.sin(a)*d])}
+ C.sort((p,q)=>Math.hypot(p[0]-x,p[1]-y)-Math.hypot(q[0]-x,q[1]-y));
+ for(const [a,b] of C){if(a<0||b<0||a>W||b>H)continue;const q=f(a,b);if(!q.err)return {r:q,x:a,y:b,snap:1}}return {r,x,y,snap:0}}
+const formF=(m,opt)=>(x,y)=>m.pile?pileForm(G.S,m.u,byId(G.S,m.tg),x,y,m.a||0):m.chg?chargeFormA(G.S,m.u,x,y,m.roll,m.a||0):moveForm(G.S,m.u,x,y,m.rng,m.a||0,opt);
 function tap(x,y){if(!G)return;const S=G.S,q=G.req;
  const dm=u=>Math.min(...abs(u).map(m=>mDistPt(m,x,y))),hit=S.U.filter(u=>u.x>=0&&dm(u)<=.9).sort((a,b)=>dm(a)-dm(b))[0];
  const m=mode;
  if(m){
-  if(m.t=='place'){const e=placeErr(S,m.q.kind,m.q.who,m.q.u,x,y,m.a);if(e){note(e);return}answer({x,y,a:m.a});return}
-  if(m.t=='move'||drg()){const r=m.pile?pileForm(S,m.u,byId(S,m.tg),x,y,m.a||0):m.chg?chargeFormA(S,m.u,x,y,m.roll,m.a||0):moveForm(S,m.u,x,y,m.rng,m.a||0);if(r.err){note(r.err);return}if(m.pile||m.chg){answer({P:r.P});return}answer(m.t=='move'?{a:'move',u:m.u.id,x,y,rot:m.a||0}:{x,y,rot:m.a||0});return}
+  if(m.t=='place'){const e=placeErr(S,m.q.kind,m.q.who,m.q.u,x,y,m.a);if(e){const p=plSnap(m,x,y);if(!p){note(e);return}[x,y]=p}answer({x,y,a:m.a});return}
+  if(m.t=='move'||drg()){const s=snapPos(formF(m,false),x,y,m.u.x,m.u.y,true),r=s.r;if(r.err){note(r.err);return}x=s.x;y=s.y;if(m.pile||m.chg){answer({P:r.P});return}answer(m.t=='move'?{a:'move',u:m.u.id,x,y,rot:m.a||0}:{x,y,rot:m.a||0});return}
   if(m.t=='dest'&&!m.chg&&!m.pile)return;
   if(m.t=='dest')return moveTo(m.u,x,y,m.rng,(tx,ty)=>({x:tx,y:ty}),m);
   if(m.t=='adj')return adjTap(m,x,y);
@@ -232,13 +247,13 @@ addEventListener('resize',resize);
 cv.onwheel=e=>{e.preventDefault();zoomAt(e.clientX,e.clientY,e.deltaY<0?1.15:1/1.15)};
 const ptr=new Map();let pd=0;
 const plc=()=>mode&&(mode.t=='place'||drg());
-function dragHint(m){const r=pvOf(m);hint(r.err||'Loslassen zum Bewegen · ↺↻ dreht die Formation')}
+function dragHint(m){const r=pvOf(m);hint(r.err?r.err+' – beim Loslassen wird die nächste gültige Position gesucht':r.snap?'Ziel ungültig – Einheit rastet an der nächsten gültigen Stelle ein':'Loslassen zum Bewegen · ↺↻ dreht die Formation')}
 // Angriff: ist die gezogene Formation regelwidrig (z. B. Zusammenhalt), berechnet die Automatik eine gültige Formation zum nächsten Gegner
 function chargeFormA(S,u,x,y,roll,rot){const r=chargeForm(S,u,x,y,roll,rot);if(!r.err)return r;
  const t=foes(S,u).filter(e=>e.x>=0).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y))[0];if(!t)return r;
  for(const k of ['reach','wrap']){const q=chargePlan(S,u,t,roll,k);if(q.P&&!chargeModelErr(S,u,q.P,roll))return {P:q.P,err:''}}return r}
-function pvOf(m){const k=m.gx.toFixed(2)+'/'+m.gy.toFixed(2)+'/'+(m.a||0).toFixed(3);if(!m.pv||m.pv.k!=k)m.pv={k,...(m.pile?pileForm(G.S,m.u,byId(G.S,m.tg),m.gx,m.gy,m.a||0):m.chg?chargeFormA(G.S,m.u,m.gx,m.gy,m.roll,m.a||0):moveForm(G.S,m.u,m.gx,m.gy,m.rng,m.a||0,true))};return m.pv}
-function gh(e){const m=mode;m.gx=(e.clientX-tx)/sc/SC;m.gy=(e.clientY-(e.pointerType=='touch'?70:0)-ty)/sc/SC;if(drg()){dragHint(m);return}hint(placeErr(G.S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a)||'Loslassen zum Platzieren')}
+function pvOf(m){const k=m.gx.toFixed(2)+'/'+m.gy.toFixed(2)+'/'+(m.a||0).toFixed(3);if(!m.pv||m.pv.k!=k){const s=snapPos(formF(m,true),m.gx,m.gy,m.u.x,m.u.y,false);m.pv={k,...s.r,snap:s.snap}}return m.pv}
+function gh(e){const m=mode;m.gx=(e.clientX-tx)/sc/SC;m.gy=(e.clientY-(e.pointerType=='touch'?70:0)-ty)/sc/SC;if(drg()){dragHint(m);return}const er=placeErr(G.S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a);hint(!er?'Loslassen zum Platzieren':plSnap(m,m.gx,m.gy)?'Rastet an der nächsten gültigen Stelle ein ('+er+')':er)}
 const adjXY=e=>[(e.clientX-tx)/sc/SC,(e.clientY-(e.pointerType=='touch'?60:0)-ty)/sc/SC];
 cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);if(mode&&mode.t=='adj'&&!ptr.size){const m=mode,[x,y]=adjXY(e),[ox,oy]=[(e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC],N=m.P.map((p,i)=>({x:p[0],y:p[1],a:m.orig[i].a,l:m.orig[i].l,w:m.orig[i].w})),near=N.map((p,i)=>[mDistPt(p,ox,oy),i]).sort((a,b)=>a[0]-b[0])[0];if(near[0]<=1.2){m.sel=near[1];m.drg=1;m.keep=m.P[near[1]].slice();m.P[near[1]]=adjClamp(m,x,y);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:true,adj:1});note('Ziehen und loslassen – bis '+m.allow.toFixed(1)+' Zoll');return}}
  if(plc())gh(e);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:false});if(ptr.size==2){const[a,b]=[...ptr.values()];pd=Math.hypot(a.x-b.x,a.y-b.y)}};
@@ -271,10 +286,12 @@ function draw(t){
   const c=Math.cos(m.a||0),s=Math.sin(m.a||0),P=pv.P||m.u.M.map(o=>[m.gx+o.dx*c-o.dy*s,m.gy+o.dx*s+o.dy*c]);
   cx.strokeStyle='#ffffff55';cx.lineWidth=.04;A0.forEach((q,i)=>{cx.beginPath();cx.moveTo(q.x,q.y);cx.lineTo(P[i][0],P[i][1]);cx.stroke()});cx.strokeStyle=col;cx.lineWidth=.1;
   P.forEach((p,i)=>{const q=A0[i];cx.save();cx.translate(p[0],p[1]);cx.rotate(q.a+(m.a||0));cx.beginPath();cx.ellipse(0,0,q.l/2,q.w/2,0,0,7);cx.restore();cx.fill();cx.stroke()})}
- if(plc()&&m.t=='place'){if(!m.zone){m.zone=[];const st=W<40?.5:1;for(let i=st;i<W;i+=st)for(let j=st;j<H;j+=st)if(!placeErr(S,m.q.kind,m.q.who,m.q.u,i,j,m.a))m.zone.push([i,j]);m.zst=st}
+ if(plc()&&m.t=='place'){zoneOf(m);
   cx.fillStyle='#6fcf6f26';m.zone.forEach(c=>cx.fillRect(c[0]-m.zst/2,c[1]-m.zst/2,m.zst,m.zst));
-  if(m.gx!=null){const er=placeErr(S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a),col=er?'#e0603c':'#6fcf6f';cx.fillStyle=col+'66';cx.strokeStyle=col;cx.lineWidth=.1;
-   if(m.q.kind=='terr'||m.q.kind=='icon'||m.q.kind=='relic'){const [w,h]=m.q.u.w?[m.q.u.w,m.q.u.h]:TERSZ[m.q.u.big?'big':'small'];rectPath({x:m.gx,y:m.gy,w,h,a:m.a});cx.fill();cx.stroke()}else{(m.q.kind=='rsv'&&rsvForm(m.q.u,m.gx,m.gy)||m.q.kind=='dep'&&depForm(G.S,m.q.who,m.q.u,m.gx,m.gy)||abs({...m.q.u,x:m.gx,y:m.gy})).forEach(q=>{cx.save();cx.translate(q.x,q.y);cx.rotate(q.a);cx.beginPath();cx.ellipse(0,0,q.l/2,q.w/2,0,0,7);cx.restore();cx.fill();cx.stroke()})}}}
+  if(m.gx!=null){const er0=placeErr(S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a),sp=er0?plSnap(m,m.gx,m.gy):null,er=er0&&!sp,gx=sp?sp[0]:m.gx,gy=sp?sp[1]:m.gy,col=er?'#e0603c':'#6fcf6f';
+   if(sp){cx.strokeStyle='#ffffff88';cx.lineWidth=.05;dash([.15,.15]);cx.beginPath();cx.moveTo(m.gx,m.gy);cx.lineTo(gx,gy);cx.stroke();solid()}
+   cx.fillStyle=col+'66';cx.strokeStyle=col;cx.lineWidth=.1;
+   if(m.q.kind=='terr'||m.q.kind=='icon'||m.q.kind=='relic'){const [w,h]=m.q.u.w?[m.q.u.w,m.q.u.h]:TERSZ[m.q.u.big?'big':'small'];rectPath({x:gx,y:gy,w,h,a:m.a});cx.fill();cx.stroke()}else{(m.q.kind=='rsv'&&rsvForm(m.q.u,gx,gy)||m.q.kind=='dep'&&depForm(G.S,m.q.who,m.q.u,gx,gy)||abs({...m.q.u,x:gx,y:gy})).forEach(q=>{cx.save();cx.translate(q.x,q.y);cx.rotate(q.a);cx.beginPath();cx.ellipse(0,0,q.l/2,q.w/2,0,0,7);cx.restore();cx.fill();cx.stroke()})}}}
  const ru=m&&m.u;
  if(m&&(m.t=='move'||m.t=='dest')){const ex=m.chg?.5:CR;cx.fillStyle='#e0603c1c';foes(S,ru).filter(e=>e.x>=0).forEach(e=>abs(e).forEach(q=>{cx.save();cx.translate(q.x,q.y);cx.rotate(q.a);cx.beginPath();cx.ellipse(0,0,q.l/2+ex,q.w/2+ex,0,0,7);cx.restore();cx.fill()}));
   cx.beginPath();cx.arc(ru.x,ru.y,m.rng,0,7);cx.fillStyle='#ffffff14';cx.fill();cx.strokeStyle='#fff';cx.lineWidth=.08;dash();cx.stroke();solid()}

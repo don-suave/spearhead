@@ -1,8 +1,8 @@
 // KI: beantwortet Anfragen wie ein Mensch. Rein lesend auf dem Zustand, Zufall injizierbar.
-import {W,H,CR,into,pathPts,plen,walk} from './geom.js';
+import {W,H,CR,OR,into,pathPts,plen,walk} from './geom.js';
 import {abAI,inRsv} from './abil.js';
-import {usedKey,fxL} from './fx.js';
-import {hasAb,updCtrl,ctrl,isHero,wnd,mx,nm,ct,wardOf,mvOf,byId,foes,dist,inCombat,nearest,eligF,sfOK,abilities,actCheck,moveErr,blk,hidden,rngOf,placeErr,pileIn,chargeDest,obs,pr,depForm} from './rules.js';
+import {usedKey,fxL,fxSum} from './fx.js';
+import {ONM,hasAb,updCtrl,ctrl,isHero,wnd,mx,nm,ct,wardOf,mvOf,byId,foes,dist,inCombat,nearest,eligF,sfOK,abilities,actCheck,moveErr,blk,hidden,rngOf,placeErr,pileIn,chargeDest,obs,pr,depForm} from './rules.js';
 import {setAbs as setAbsM} from './models.js';
 import {has,add} from './util.js';
 import {CH,twVP} from './cards.js';
@@ -34,15 +34,21 @@ export function plan(S,u,rng){const oc0=S.oc.slice(),o=u.o,fs=foes(S,u).filter(e
  const shooter=u.rw.length>0&&!u.rw.every(w=>(w[7]||'').includes('B')&&false);
  const tb=(x,y)=>{const g={...u,x,y};let t=0;const dn=Math.min(...unh.map(([p])=>Math.hypot(p[0]-x,p[1]-y)),99);t-=.03*dn;
   const fd=fs.length?Math.min(...fs.map(e=>dist(g,e))):0;if(shooter){const R=Math.max(...u.rw.map(w=>rngOf(S,u,w[1])||0));t-=.03*Math.abs(fd-Math.max(3,R-3))}else t-=.03*fd;
-  if(isHero(u)&&!/Monster|Kriegsmaschine/.test(u.kw)){const thr=fs.filter(e=>dist(g,e)<=9&&e.mw.length&&!isHero(e)).length;t-=.15*thr}return t};
+  if(isHero(u)&&!/Monster|Kriegsmaschine/.test(u.kw)){const thr=fs.filter(e=>dist(g,e)<=9&&e.mw.length&&!isHero(e)).length;t-=.15*thr}
+  // Gefahr: erwarteter Verlust durch Feinde, die diese Stelle mit Bewegung und Angriff erreichen können
+  let dg=0;for(const e of fs){if(!e.mw.length||inCombat(S,e))continue;const d=dist(g,e),reach=mvOf(S,e)+7;if(d>reach)continue;dg+=Math.min(evAtk(S,e,g,false),wnd(u))/Math.max(1,wnd(u))*(d<=reach-3?1:.5)}t-=DANG*dg;return t};
  const C=cands(S,u,rng).map(([x,y])=>({x,y,vp:evalPos(S,u,x,y,oc0)}));S.oc=oc0.slice();
  C.forEach(c=>c.sc=c.vp*10+tb(c.x,c.y));const stay=C[0];C.sort((a,b)=>b.sc-a.sc);
  for(const c of C){if(c.x==u.x&&c.y==u.y)return {sc:c.sc,vp:c.vp,stay:true,base:stay.sc};if(c.sc<=stay.sc+.01)return {sc:stay.sc,vp:stay.vp,stay:true,base:stay.sc};if(!moveErr(S,u,c.x,c.y,rng))return {sc:c.sc,vp:c.vp,x:c.x,y:c.y,base:stay.sc,stay:false}}
  return {sc:stay.sc,vp:stay.vp,stay:true,base:stay.sc}}
+const CFG=globalThis.__AI||{};const SMART=CFG.smart??1;export let DANG=CFG.dang??0,ORD=CFG.ord??0;const CN=CFG.cn??0,RUNK=CFG.run??10,SHK=CFG.sh??10;export const setOrd=v=>{ORD=v};export const setDang=v=>{DANG=v};
 function aiDest(S,u,rng){const p=plan(S,u,rng);return p.stay?null:{x:p.x,y:p.y}}
 // Angriffsziel: wo lohnt sich ein Angriff?
-function chargeTgt(S,u){const c=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=12);let b=null,bv=-1e9;
- c.forEach(e=>{const mine=evAtk(S,u,e,false),back=evAtk(S,e,u,false),v=Math.min(mine,wnd(e))-.6*Math.min(back,wnd(u))+(onObj(S,e)?2:0)+(mine>=wnd(e)*.9?wnd(e)*.5:0);if(v>bv){bv=v;b=e}});
+// Wahrscheinlichkeit, mit 2W6 (+Modifikator) mindestens n zu werfen
+const P2=[1,1,1,35/36,33/36,30/36,26/36,21/36,15/36,10/36,6/36,3/36,1/36,0];
+export const pChg=(n,mod=0)=>{const k=Math.ceil(n-mod-1e-9);return k<=2?1:k>12?0:P2[k]};
+function chargeTgt(S,u){const c=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=12);let b=null,bv=-1e9;const mod=fxSum(S,u,'chg')||0;
+ c.forEach(e=>{const mine=evAtk(S,u,e,false),back=evAtk(S,e,u,false),p=pChg(dist(u,e)-.5,mod),gain=Math.min(mine,wnd(e))-.6*Math.min(back,wnd(u))+(onObj(S,e)?2:0)+(mine>=wnd(e)*.9?wnd(e)*.5:0),v=p*gain-(1-p)*.4;if(v>bv){bv=v;b=e}});
  return b?{e:b,v:bv}:null}
 
 function aiAct(G,rnd){const S=G.S,o=S.act,ph=S.ph;
@@ -58,11 +64,15 @@ function aiAct(G,rnd){const S=G.S,o=S.act,ph=S.ph;
   let best=null;for(const u of mine){if(has(S.Ph.aiDone,u.id)||inCombat(S,u))continue;const t=chargeTgt(S,u);if(!t)continue;
    const shootier=u.rw.length&&evAtk(S,u,t.e,true)>evAtk(S,u,t.e,false)*1.2&&!(u.mw.length&&evAtk(S,u,t.e,false)>=wnd(t.e)*.5);
    const need=shootier?3:(u.gen||isHero(u)&&u.mw.length&&evAtk(S,u,t.e,false)<wnd(t.e)*.4?1.5:0);
-   if(t.v>need&&(!best||t.v>best.v))best={u,v:t.v}}
+   if(t.v>need+CN&&(!best||t.v>best.v))best={u,v:t.v}}
   for(const u of mine)if(!has(S.Ph.aiDone,u.id)&&!(best&&best.u===u))add(S.Ph.aiDone,u.id);
   if(best){add(S.Ph.aiDone,best.u.id);const a={a:'charge',u:best.u.id};if(!actCheck(S,o,a))return a}
   return {a:'next'}}
- for(const u of mine){
+ let ord=mine;
+ if(ph==2&&ORD){// wer am meisten gewinnt, zieht zuerst
+  const sc=new Map();for(const u of mine){if(has(S.Ph.aiDone,u.id)||inCombat(S,u))continue;const p=plan(S,u,mvOf(S,u));sc.set(u,p.stay?-1e9:p.sc-p.base)}
+  ord=[...mine].sort((a,b)=>(sc.has(b)?sc.get(b):-2e9)-(sc.has(a)?sc.get(a):-2e9))}
+ for(const u of ord){
   if(has(S.Ph.aiDone,u.id))continue;add(S.Ph.aiDone,u.id);
   const c=inCombat(S,u),fl=foes(S,u).filter(x=>x.x>=0),e=nearest(u,fl);if(!e)continue;let a=null;
   if(ph==5&&u.ab=='md'&&c)a={a:'md',u:u.id};
@@ -71,18 +81,34 @@ function aiAct(G,rnd){const S=G.S,o=S.act,ph=S.ph;
    const mv=mvOf(S,u),pm=plan(S,u,mv),inShoot=u.rw.length&&fl.some(f=>dist(u,f)<=rngOf(S,u,u.rw[0][1])-1&&!blk(S,u,f)&&!hidden(S,u,f));
    const goal=Math.min(...fl.map(f=>dist(u,f)),...S.obj.filter((p,k)=>S.oc[k]!==o).map(p=>Math.hypot(p[0]-u.x,p[1]-u.y)),99);
    if(!u.rw.length||!inShoot){const pr2=plan(S,u,mv+3.5);
-    if(pr2.sc>=pm.sc+10&&!u.rw.some(w=>!(w[7]||'').includes('B')&&dist(u,e)<=rngOf(S,u,w[1])+mv)||(!u.rw.length&&goal>mv+4&&!pm.stay&&pr2.sc>=pm.sc-.5))a={a:'run',u:u.id};
+    if(pr2.sc>=pm.sc+RUNK&&!u.rw.some(w=>!(w[7]||'').includes('B')&&dist(u,e)<=rngOf(S,u,w[1])+mv)||(!u.rw.length&&goal>mv+4&&!pm.stay&&pr2.sc>=pm.sc-.5))a={a:'run',u:u.id};
     else if(!pm.stay)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
-   else if(!pm.stay&&pm.vp*10>pm.base-1&&pm.sc>=pm.base+10)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
+   else if(!pm.stay&&pm.vp*10>pm.base-1&&pm.sc>=pm.base+SHK)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
   else if(ph==3&&u.rw.length){const R=Math.max(...u.rw.map(w=>rngOf(S,u,w[1])||0));const tg=fl.filter(f=>dist(u,f)<=R&&!blk(S,u,f)&&!hidden(S,u,f));const t=bestTgt(S,u,tg,true);if(t)a={a:'shoot',u:u.id,t:t.id}}
   if(a&&!actCheck(S,o,a))return a}
  return {a:'next'}}
 
+// Auswahl aus Einheiten oder Zielen (Fähigkeiten, Wendungskarten): sinnvoll statt zufällig
+function smartPick(S,req){const V=req.vals;if(!V||!V.length)return null;const who=req.who,N=ONM(S)||[],t=req.title||'';
+ const idx=req.opts.map((o,i)=>o.dis?-1:i).filter(i=>i>=0);if(!idx.length)return null;
+ const unitOf=i=>{const v=V[i];if(v&&typeof v=='object'&&v.u!=null)return byId(S,v.u);if(typeof v=='number'){const u=byId(S,v);if(u&&String(req.opts[i].t).startsWith(u.name))return u}return null};
+ const objOf=i=>{const v=V[i];return typeof v=='number'&&v>=0&&v<S.obj.length&&req.opts[i].t===N[v]?v:null};
+ if(idx.every(i=>unitOf(i))){const sc=i=>{const u=unitOf(i);if(u.x<0)return -1;const on=S.obj.some(p=>ct(u,p));
+   if(u.o!==who){const mine=S.U.filter(x=>x.o===who&&x.x>=0),dn=mine.length?Math.min(...mine.map(x=>dist(u,x))):99;
+    return (on?3:0)+(isHero(u)?1.5:0)+(dn<=12?1.5:0)+Math.min(4,Math.max(0,...mine.map(x=>evAtk(S,u,x,false)))/2)-dn*.03}
+   if(/Heil|heil|Jadeschauer/.test(t))return u.dmg;
+   const fl=foes(S,u).filter(e=>e.x>=0),dn=fl.length?Math.min(...fl.map(e=>dist(u,e))):99;
+   return (inCombat(S,u)?3:0)+(dn<=12?2:0)+(on?1:0)+Math.max(0,...fl.map(e=>evAtk(S,u,e,false)))/3};
+  return idx.reduce((b,i)=>sc(i)>sc(b)?i:b,idx[0])}
+ if(idx.every(i=>objOf(i)!=null)){const mg=k=>{const p=S.obj[k];let m=0;S.U.forEach(u=>{if(u.x<0)return;const d=Math.max(0,Math.hypot(u.x-p[0],u.y-p[1])-u.r-OR(p));if(d>8)return;m+=(u.o===who?1:-1)*(u.cv||1)*u.n**.5*(d<=0?1.5:1-d/10)});return m};
+  const tw=(S.TW||{}).id,neg=/Overpowering|Grief|Bombardment/.test(t)||(/Wendungskarte: Ziel/.test(t)&&tw=='rf');
+  return idx.reduce((b,i)=>{const v=neg?-mg(objOf(i)):mg(objOf(i)),w=neg?-mg(objOf(b)):mg(objOf(b));return v>w?i:b},idx[0])}
+ return null}
 export function aiAnswer(G,req,rnd=Math.random){const S=G.S,pick=n=>Math.floor(rnd()*n);
  switch(req.t){
   case 'info':return true;
-  case 'choice':{if(/Regimentsfähigkeit|Verbesserung des Generals/.test(req.title||'')){const ok=req.opts.map((x,i)=>/noch ohne Wirkung/.test(x.s||'')?-1:i).filter(i=>i>=0);if(ok.length)return ok[pick(ok.length)]}if(req.pref!=null&&!req.opts[req.pref].dis)return req.pref;const ok=req.opts.map((x,i)=>x.dis?-1:i).filter(i=>i>=0);return ok[pick(ok.length)]}
-  case 'place':{if(['rsv','repl','rep6','rein','rein9','repl13','shadow'].includes(req.kind)){const o=req.who,un=S.obj.map((p,k)=>[p,k]).filter(([p,k])=>S.oc[k]!==o).map(([p])=>p),tg=un.length?un:S.obj;let best=null,bv=-1e9;
+  case 'choice':{if(/Regimentsfähigkeit|Verbesserung des Generals/.test(req.title||'')){const ok=req.opts.map((x,i)=>/noch ohne Wirkung/.test(x.s||'')?-1:i).filter(i=>i>=0);if(ok.length)return ok[pick(ok.length)]}if(req.pref!=null&&!req.opts[req.pref].dis)return req.pref;if(SMART){const sp=smartPick(S,req);if(sp!=null)return sp}const ok=req.opts.map((x,i)=>x.dis?-1:i).filter(i=>i>=0);return ok[pick(ok.length)]}
+  case 'place':{if(['rsv','amb','repl','rep6','rein','rein9','repl13','shadow'].includes(req.kind)){const o=req.who,un=S.obj.map((p,k)=>[p,k]).filter(([p,k])=>S.oc[k]!==o).map(([p])=>p),tg=un.length?un:S.obj;let best=null,bv=-1e9;
    for(let x=1;x<W;x+=1)for(let y=1;y<H;y+=1){const r={x:x+rnd()*.4-.2,y:y+rnd()*.4-.2,a:0};if(req.check(r))continue;const v=-Math.min(...tg.map(p=>Math.hypot(p[0]-r.x,p[1]-r.y)))+rnd()*.5;if(v>bv){bv=v;best=r}}
    if(best)return best;if(req.cancel)return {cancel:true}}
   if(req.kind=='dep'){const o=req.who,u0=req.u,val=[];for(let x=.5;x<W;x+=.5)for(let y=.5;y<H;y+=.5){const r={x,y,a:0};if(!req.check(r))val.push(r)}

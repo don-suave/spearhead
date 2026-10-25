@@ -1,5 +1,10 @@
 # Changelog
 
+## v74
+- Platzieren und Bewegen: ungültige Punkte rasten auf die nächste gültige Position ein (Aufstellen bis 10", Bewegung/Angriff/Nachrücken entlang der Zuglinie und im Umkreis); Vorschau zeigt die eingerastete Position
+- Reserven und Hinterhalt: werden am Ende der passenden Phase automatisch angeboten (Abbrechen lässt die Einheit in Reserve)
+- KI: wählt Ziele von Fähigkeiten und Wendungskarten gezielt statt zufällig, berücksichtigt die Erfolgschance beim Angriff; Arena gegen v73: etwa +1,5 Siegpunkte pro Spiel
+
 ## v73
 - Abstände zu Kanten und Feldmitte (Raze, Take the Flanks, Hold the Centre, A Timely Exit) vom Basisrand gemessen
 - Staging Posts: beide gewählten Ziele zählen

@@ -82,7 +82,7 @@ with sync_playwright() as p:
             else:
                 # Einheit ohne Ziel: Fallback über Protokoll
                 u=pg.evaluate("""()=>{const S=window.__G.S,G=window.__G;const l=window.__elig;return null}""")
-                pg.evaluate("""()=>{const G=window.__G,S=G.S;const u=S.U.find(u=>u.o==0&&u.x>=0&&!S.T.fought.includes(u.id)&&true);G.submit({a:'fight',u:u.id,t:null})}""")
+                pg.evaluate("""()=>{const G=window.__G,S=G.S;const u=S.U.find(u=>u.o==0&&u.x>=0&&G.req&&G.req.check&&!G.req.check({a:'fight',u:u.id,t:null}));if(u)G.submit({a:'fight',u:u.id,t:null})}""")
             continue
         if s['mode']=='adj' and pg.evaluate("window.__V.mode.kind=='charge'"):
             ok=pg.evaluate("(()=>{const G=window.__G;return !!G.req&&G.req.t=='dest'})()")

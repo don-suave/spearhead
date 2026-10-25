@@ -177,12 +177,12 @@ function* turn(G){const S=G.S;
   if(ph==1||ph==2)yield* oppWindow(G,'start');
   if(ph==2)yield* oppMove(G);
   if(ph==2&&!S.over)yield* autoReinf(G);
-  if(!G.isAI(S.act)&&!S.over){const rg=rsvGlobals(S,S.act);if(rg.length)G.tray('Reserve: Einheit kann jetzt aufgestellt werden',rg.map(g=>({k:'txt',s:'<b>'+g.t+'</b> – '+(g.s||'')+'<br>(Menü ☰ → Eintrag antippen)'})))}
   const sk=ph>=1&&ph<=5&&!S.over?phaseSkip(S):'';
   if(sk)G.tray(S.P[S.act].n+': '+PHN[ph]+' übersprungen',[{k:'txt',s:sk}]);
   while(!S.over&&!sk){const a=yield {t:'act',who:S.act,check:a=>actCheck(S,S.act,a)};
    if(a.a=='next'){if(S.ph==5&&!S.Ph.fs.done){yield* preFight(G);yield* fights(G);continue}break}
    yield* doAction(G,a)}
+  if(!S.over)yield* autoLate(G);
   if(ph==3&&!S.over)yield* oppWindow(G,'end');
   G.phEv=null;G.phD=null}
  if(!S.over)yield* endTurn(G)}
@@ -225,6 +225,11 @@ export function* fights(G){const S=G.S,fs=S.Ph.fs;fs.on=true;fs.done=false;fs.wh
   else{fs.sec=0;fs.who=1-w}}}
 
 // Verstärkung: automatisch zu Beginn der eigenen Bewegungsphase für jede vollständig entfernte Einheit mit Verstärkung (einmalig je Einheit)
+// Spätere Aufstellungen (Reserven, Hinterhalt) werden am Ende der passenden Phase automatisch angeboten; Abbrechen lässt die Einheit in Reserve
+function* autoLate(G){const S=G.S,o=S.act,seen=new Set();
+ for(;;){if(S.over)return;const g=globals(S,o).find(g=>(g.k.startsWith('rsv:')||g.k=='amb')&&!seen.has(g.k));if(!g)return;seen.add(g.k);
+  if(!G.isAI(o)){const u=g.k=='amb'?S.U.find(x=>x.o==o&&x.amb&&x.x<0):byId(S,+g.k.slice(4));G.note((u?u.name:g.t)+' kann jetzt aufs Schlachtfeld – Position antippen oder „Abbrechen“ (bleibt in Reserve)')}
+  yield* doAction(G,{a:g.k})}}
 function* autoReinf(G){const S=G.S,o=S.act;
  for(const g of S.GY.filter(g=>g.o==o&&/Verstärkung/.test(g.kw)&&!g.rp&&!g.repl&&g.dr===S.round-1)){
   if(S.over)return;
