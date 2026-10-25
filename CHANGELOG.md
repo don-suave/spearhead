@@ -1,5 +1,8 @@
 # Changelog
 
+## v70
+- Regel-App: Spearhead-Übersicht nach Grand Alliance sortiert (Ordnung, Chaos, Tod, Zerstörung)
+
 ## v69
 - Regel-App: Spearhead-Seiten mit zwei Tabs (Armee-Regeln / Modelle), ohne Scrollen
 
