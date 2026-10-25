@@ -4,7 +4,7 @@ import {TAC,TWD} from './data.js';
 import {d6,d3,add,has} from './util.js';
 import {fxL,fxSum,addFx,usedKey,useKey} from './fx.js';
 import {mkUnit} from './state.js';
-import {setAbs,wholly,abs} from './models.js';
+import {setAbs,wholly,abs,edgeD} from './models.js';
 import {choice,ask,info} from './game.js';
 import {fdStage,rl,litIn,wgN,gnl,EN,ENI,byId,myU,foes,dist,inCombat,nm,wnd,mx,isHero,ONM,RG,ct,cvOf,lt,mm,ctrl,hurt,useCard,CMD,place,moveErr,cnm,chargeErr,RGI,hasAb,mvOf,mvRest,pr,obs,chargeModelErr,AN,cycOf,canHeal,applyMove,updCtrl} from './rules.js';
 
@@ -13,12 +13,12 @@ export const HK={};
 export const whollyT=(S,t,u)=>u.M?abs(u).every(m=>tcorners({x:m.x,y:m.y,a:m.a,w:m.l,h:m.w}).every(c=>into(S,t,c[0],c[1])>=0)):into(S,t,u.x,u.y)>=u.r;
 // Raze: nur die lange Spielfeldkante, die im gegnerischen Territorium liegt
 // Maßgeblich ist der Rand der Basen (nicht der Mittelpunkt): irgendein Modell der Einheit mit Basisrand höchstens 3" von der Kante
-export const razeOK=(S,o)=>{const top=into(S,1-o,W/2,0)>0;return myU(S,o).some(u=>(u.M&&u.M.length?abs(u):[{x:u.x,y:u.y,a:0,l:2*u.r,w:2*u.r}]).some(m=>{const h=(m.l-m.w)/2*Math.abs(Math.sin(m.a));return into(S,1-o,m.x,m.y)>=0&&(top?m.y-h-m.w/2<=3:H-m.y-h-m.w/2<=3)}))};
+export const razeOK=(S,o)=>{const top=into(S,1-o,W/2,0)>0;return myU(S,o).some(u=>edgeD(u,top?0:2)<=3)};
 const FW=(S,P,c)=>!S.K.pack&&P.hand.includes(c);
 export const CH={
  1:(S,o)=>S.D[1-o]>0&&S.D[1-o]>S.D[o],
  2:(S,o)=>myU(S,o).some(u=>whollyT(S,1-o,u)&&!inCombat(S,u)),
- 3:(S,o)=>myU(S,o).some(u=>u.x-u.r<=3)&&myU(S,o).some(u=>W-u.x-u.r<=3),
+ 3:(S,o)=>myU(S,o).some(u=>edgeD(u,3)<=3)&&myU(S,o).some(u=>edgeD(u,1)<=3),
  4:(S,o)=>S.obj.some((p,k)=>S.ocs[k]===1-o&&S.oc[k]===o&&!S.U.some(u=>ct(u,p)&&has(S.T.fought,u.id))),
  5:(S,o)=>{const t=lt(S,o);return !!t&&mm(S,o,t)>mm(S,1-o,t)},
  6:(S,o)=>S.G[1-o]===S.tn||(S.G[1-o]!=null&&S.G[1-o]<S.tn&&S.D[1-o]>0),

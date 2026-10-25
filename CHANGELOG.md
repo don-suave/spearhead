@@ -1,5 +1,9 @@
 # Changelog
 
+## v73
+- Abstände zu Kanten und Feldmitte (Raze, Take the Flanks, Hold the Centre, A Timely Exit) vom Basisrand gemessen
+- Staging Posts: beide gewählten Ziele zählen
+
 ## v72
 - Feld überall 30×22,4; Ziele nach Mattenmaßen (Aqshy, Ghyran, Dolorum, Ossia), alle mit 3" Radius um die Mitte
 - Ossia-Korrektur zurückgenommen (Radius wieder 3"); Crypt of Blood in der Feldmitte

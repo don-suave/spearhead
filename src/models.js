@@ -1,7 +1,7 @@
 // Modellebene: Basen (rund/oval als „Kapsel“), Formationen, Zusammenhalt, Verluste.
 // Ein Modell ist {dx,dy,a,l,w}: Offset zum Einheiten-Mittelpunkt (u.x,u.y = Schwerpunkt), Winkel, Länge, Breite (Zoll).
 // Dadurch bewegt sich jede Einheit mit u.x/u.y automatisch starr mit all ihren Modellen.
-import {into} from './geom.js';
+import {into,W,H} from './geom.js';
 export const MM=25.4,GAP=.15;
 export function parseBase(b){const p=String(b||'25').split('x'),a=parseFloat(p[0])||25,c=parseFloat(p[1]);const bb=isNaN(c)?a:c;return {l:Math.max(a,bb)/MM,w:Math.min(a,bb)/MM}}
 // Formation: Raster, letzte Reihe zentriert, erstes Modell (Anführer) vorne links/mitte
@@ -41,6 +41,8 @@ export const cohOK=(P,rg=1)=>cohBad(P,rg).length==0;
 export function wholly(u,v,rg){if(!u.M||!v.M)return Math.hypot(u.x-v.x,u.y-v.y)-v.r<=rg;const B=abs(v);return abs(u).every(p=>B.some(q=>mgap(p,q)<=rg))}
 // Modelle bis p von einem Punkt (Ziel) entfernt
 export const mDistPt=(m,x,y)=>{const h=(m.l-m.w)/2,ca=Math.cos(m.a),sa=Math.sin(m.a),x1=m.x-h*ca,y1=m.y-h*sa,x2=m.x+h*ca,y2=m.y+h*sa,vx=x2-x1,vy=y2-y1,L=vx*vx+vy*vy,t=L?Math.max(0,Math.min(1,((x-x1)*vx+(y-y1)*vy)/L)):0;return Math.hypot(x-x1-vx*t,y-y1-vy*t)-m.w/2};
+// Abstand der Einheit (Rand der nächsten Basis) zu einer Spielfeldkante: e 0 oben, 1 rechts, 2 unten, 3 links
+export const edgeD=(u,e)=>{const M=u.M&&u.M.length?abs(u):[{x:u.x,y:u.y,a:0,l:2*u.r,w:2*u.r}];return Math.min(...M.map(m=>{const h=(m.l-m.w)/2,dx=Math.abs(h*Math.cos(m.a)),dy=Math.abs(h*Math.sin(m.a));return e==0?m.y-dy-m.w/2:e==1?W-m.x-dx-m.w/2:e==2?H-m.y-dy-m.w/2:m.x-dx-m.w/2}))};
 export const inRangePt=(u,x,y,rg)=>u.M?abs(u).filter(m=>mDistPt(m,x,y)<=rg).length:u.n;
 // Schwerpunkt auf Mittelpunkt, Radius neu
 function recentre(u,P){ // P: absolute Positionen -> Offsets

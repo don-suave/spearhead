@@ -2,7 +2,7 @@
 import {W,H,CR,into,tdist,ptDist,rectDist,objR} from './geom.js';
 import {d6,d3,add,has} from './util.js';
 import {fxL,addFx,usedKey,useKey} from './fx.js';
-import {abs} from './models.js';
+import {abs,edgeD,inRangePt} from './models.js';
 import {ask,choice,info} from './game.js';
 import {myU,foes,inCombat,wnd,mx,isHero,cvOf,hurt,place,applyMove,dist,byId,lt,terrOwn} from './rules.js';
 import {destReq,doCharge,rolloff,razeOK,whollyT} from './cards.js';
@@ -50,11 +50,11 @@ export function manorOpts(S,o,len,th){const out=[];Object.entries(S.mr||{}).forE
 export const CACH={
  1:(S,o)=>rels(S).some(t=>into(S,1-o,t.x,t.y)>0&&terrCtl(S,t)===o),
  2:(S,o)=>Object.entries(S.T.mt||{}).some(([t,a])=>{const v=gu(S,+t);return v&&v.o!=o&&a.filter(id=>{const x=gu(S,id);return x&&x.o==o}).length>=2}),
- 3:(S,o)=>myU(S,o).some(u=>u.x-u.r<=3)&&myU(S,o).some(u=>W-u.x-u.r<=3),
+ 3:(S,o)=>myU(S,o).some(u=>edgeD(u,3)<=3)&&myU(S,o).some(u=>edgeD(u,1)<=3),
  4:(S,o)=>S.G[1-o]===S.tn||(S.G[1-o]!=null&&S.G[1-o]<S.tn&&S.D[1-o]>0),
  5:(S,o)=>myU(S,o).some(u=>whollyT(S,1-o,u)&&!inCombat(S,u)),
  6:(S,o)=>!!(S.T.ptl&&S.T.ptl[o]),
- 7:(S,o)=>myU(S,o).filter(u=>Math.hypot(u.x-W/2,u.y-H/2)-u.r<=3).length>=2,
+ 7:(S,o)=>myU(S,o).filter(u=>inRangePt(u,W/2,H/2,3)>0).length>=2,
  8:(S,o)=>razeOK(S,o),
  9:(S,o)=>S.oc[oi(S,'Twin-Tailed Comet')]===o,
  10:(S,o)=>S.oc[oi(S,'Ghal Maraz')]===o,
@@ -94,7 +94,7 @@ export function caCaltrops(G){const S=G.S,c=rels(S).find(t=>t.rel=='Ulguan Steel
 
 // ---------- Wendungskarten ----------
 const EDG=['oberer Rand','rechter Rand','unterer Rand','linker Rand'];
-const nearEdge=(u,e)=>e==0?u.y-u.r<=3:e==1?W-u.x-u.r<=3:e==2?H-u.y-u.r<=3:u.x-u.r<=3;
+const nearEdge=(u,e)=>edgeD(u,e)<=3;
 export function* caAp(G,u,key,{A,who,un,ob,lg}){const S=G.S,TW=S.TW,act=S.act;TW.ud=u;
  const placer=function*(name){if(rels(S).some(t=>t.rel==name)){lg.push(name+' liegt bereits auf dem Schlachtfeld');return}const p=who();yield* placeRelic(G,p,name);lg.push((p?'Computer':'Du')+' stellt '+name+' auf')};
  const force=function*(t,picked,again){if(u<0)return picked;const y=G.isAI(u)?0:yield* choice(G,u,t,'Als Außenseiter darfst du würfeln: Bei 3+ muss der Gegner neu wählen.',[{t:'Würfeln'},{t:'Nicht würfeln'}],{pref:0});if(y)return picked;const r=d6(S);G.tray(t+': Außenseiter würfelt',[{k:'row',l:'3+',v:[r],th:3}]);lg.push('Außenseiter würfelt '+r+(r>=3?' – Gegner muss neu wählen':''));return r>=3?yield* again(picked):picked};
@@ -114,7 +114,7 @@ export function* caAp(G,u,key,{A,who,un,ob,lg}){const S=G.S,TW=S.TW,act=S.act;TW
    S.cmb=o===u;try{const a=yield* destReq(G,v,3,{text:'Adrenaline Rush: bis 3 Zoll'+(o===u?' (darf im Nahkampf enden)':'')});if(!a.stay)applyMove(S,v,a,3)}finally{S.cmb=false}}}}
  else if(key=='rm'){if(u>=0){const id=yield* A(G,u,'Rapid Manoeuvres: Einheit mit Anti-charge (+1 Wucht)',[...un(u),['Keine',null]]);if(id!=null)addFx(S,{k:'antichg',u:id,v:1,...R(S)})}}}
 export function caVP(S,o){const k=S.TW.id,TW=S.TW;
- if(k=='sp')return TW.sp?(TW.sp[o]!=null&&S.oc[TW.sp[o]]===o?1:0):0;
+ if(k=='sp')return TW.sp?[...new Set(TW.sp)].filter(i=>i!=null&&S.oc[i]===o).length:0;
  if(k=='ee'){const m=(S.man||[])[1-o];return m&&featCtl(S,m)===o?1:0}
  if(k=='te')return [0,1,2,3].filter(e=>e!==TW.te&&!S.U.some(x=>x.o!=o&&x.x>=0&&nearEdge(x,e))).length;
  if(k=='wh'){const t=(S.rel0||[])[1-o];return t&&S.ter.includes(t)&&terrCtl(S,t)===o?1:0}
