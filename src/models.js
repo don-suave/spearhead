@@ -1,6 +1,7 @@
 // Modellebene: Basen (rund/oval als „Kapsel“), Formationen, Zusammenhalt, Verluste.
 // Ein Modell ist {dx,dy,a,l,w}: Offset zum Einheiten-Mittelpunkt (u.x,u.y = Schwerpunkt), Winkel, Länge, Breite (Zoll).
 // Dadurch bewegt sich jede Einheit mit u.x/u.y automatisch starr mit all ihren Modellen.
+import {into} from './geom.js';
 export const MM=25.4,GAP=.15;
 export function parseBase(b){const p=String(b||'25').split('x'),a=parseFloat(p[0])||25,c=parseFloat(p[1]);const bb=isNaN(c)?a:c;return {l:Math.max(a,bb)/MM,w:Math.min(a,bb)/MM}}
 // Formation: Raster, letzte Reihe zentriert, erstes Modell (Anführer) vorne links/mitte
@@ -51,7 +52,7 @@ export function removeModels(S,u,k,foes){for(let t=0;t<k&&u.M.length>1;t++){
   const score=p=>E.length?Math.min(...E.map(q=>mgap(p,q))):0;
   const idx=P.map((p,i)=>i).sort((i,j)=>(j==0)-(i==0)||score(P[j])-score(P[i]));
   let pick=idx.find(i=>cohOK(P.filter((p,j)=>j!=i)));if(pick==null)pick=idx[0];
-  P.splice(pick,1);u.M.splice(pick,1);recentre(u,P)}
+  if(S.T&&S.T.sl)S.T.sl[into(S,0,P[pick].x,P[pick].y)>0?0:1]++;P.splice(pick,1);u.M.splice(pick,1);recentre(u,P)}
  if(u.M.length==1&&k>0&&u.n<=0)u.M.length=0}
 export function addModel(S,u,occupied){ // neues Modell neben vorhandenen platzieren (Rückkehr getöteter Modelle)
  const P=abs(u),base=u._b||{l:P[0].l,w:P[0].w},tpl={l:base.l,w:base.w,a:0};

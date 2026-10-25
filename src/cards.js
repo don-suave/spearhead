@@ -12,7 +12,8 @@ export const HK={};
 // Eine Einheit liegt vollständig (alle Ecken aller Basen) im Territorium von Spieler t
 export const whollyT=(S,t,u)=>u.M?abs(u).every(m=>tcorners({x:m.x,y:m.y,a:m.a,w:m.l,h:m.w}).every(c=>into(S,t,c[0],c[1])>=0)):into(S,t,u.x,u.y)>=u.r;
 // Raze: nur die lange Spielfeldkante, die im gegnerischen Territorium liegt
-export const razeOK=(S,o)=>{const top=into(S,1-o,W/2,0)>0;return myU(S,o).some(u=>into(S,1-o,u.x,u.y)>=0&&(top?u.y-u.r<=3:H-u.y-u.r<=3))};
+// Maßgeblich ist der Rand der Basen (nicht der Mittelpunkt): irgendein Modell der Einheit mit Basisrand höchstens 3" von der Kante
+export const razeOK=(S,o)=>{const top=into(S,1-o,W/2,0)>0;return myU(S,o).some(u=>(u.M&&u.M.length?abs(u):[{x:u.x,y:u.y,a:0,l:2*u.r,w:2*u.r}]).some(m=>{const h=(m.l-m.w)/2*Math.abs(Math.sin(m.a));return into(S,1-o,m.x,m.y)>=0&&(top?m.y-h-m.w/2<=3:H-m.y-h-m.w/2<=3)}))};
 const FW=(S,P,c)=>!S.K.pack&&P.hand.includes(c);
 export const CH={
  1:(S,o)=>S.D[1-o]>0&&S.D[1-o]>S.D[o],

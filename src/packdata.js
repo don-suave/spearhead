@@ -1,12 +1,12 @@
 // Daten der Battlepacks (reine Daten, keine Regeln-Logik). Pack 0 = Fire and Jade (Grundspiel, 44x30), Pack 1 = Sand and Bone, Pack 2 = City of Ash.
 // Zielmarken: [x,y,Radius,Name]; Maße in Zoll, Feld 30x22.
 export const SB_DOL=[[7.5,2.5,3,'Delusion'],[27.5,5,3,'Necropolis'],[15,11,3,'Grief'],[2.5,17,3,'Blood'],[22.5,19.5,3,'Night']];
-export const SB_OSS=[[2.5,5,3,'Delusion'],[17.5,8.75,3,'Necropolis'],[12.5,13.25,3,'Blood'],[27.5,17,3,'Night']];
+export const SB_OSS=[[2.6,5,2.5,'Delusion'],[17.5,8.8,2.5,'Necropolis'],[12.5,13.2,2.5,'Blood'],[27.4,17,2.5,'Night']];
 // Geländeformen (Breite x Tiefe in Zoll, Höhe); k: obsc = Sichtblocker (Deckung, Sichtschutz, instabil), obst = Hindernis (Deckung, instabil), my = mystisch
 export const SB_TER={
  'Large Wall':{w:7,h:0.8,k:'obsc',ht:4,big:true},'Small Wall':{w:4,h:0.8,k:'obst',ht:3,big:false},
  'Large Fence':{w:7,h:0.8,k:'obsc',ht:3,big:true},'Small Fence':{w:4,h:0.8,k:'obst',ht:3,big:false},
- 'Crypt of Blood':{a:Math.atan2(5,4.5),w:5.5,h:2.5,k:'obst',ht:2,big:true,my:'crypt'},'Icon of Nulahmia':{w:2,h:2,k:'obst',ht:4,big:false,my:'icon'}};
+ 'Crypt of Blood':{a:Math.atan2(22,30),w:4.5,h:1.6,k:'obst',ht:2,big:true,my:'crypt'},'Icon of Nulahmia':{w:2,h:2,k:'obst',ht:4,big:false,my:'icon'}};
 export const SB_GROUP={A:['Large Wall','Small Fence'],B:['Small Wall','Large Fence']};
 
 // Wendungskarten [Schlüssel, Name, Text]
