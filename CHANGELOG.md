@@ -1,5 +1,8 @@
 # Changelog
 
+
+## v78
+- Aqshy: neues Mattenbild (sauberes Produktbild ohne Logos), alle fünf Ziele liegen auf den gemessenen Positionen (Abweichung unter 0,1")
 ## v77
 - Ghyran: neues Mattenbild (sauberes Produktbild, Logos entfernt), so skaliert, dass alle Ziele exakt 6" Durchmesser haben und auf den Mattenmaßen liegen
 
