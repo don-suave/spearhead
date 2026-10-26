@@ -34,7 +34,19 @@ const beute=(S,o)=>{S.beute||(S.beute=[null,null]);const id=S.beute[o];if(id==nu
 const akkOf=(S,u)=>((S.akk||[0,0])[u.o]||0)+fxSum(S,u,'akkB');
 const nearB=(S,u)=>{const b=beute(S,u.o);return !!b&&b.x>=0&&u.x>=0&&dist(u,b)<=9};
 export function* beuteStart(G,o){const S=G.S;if(!(trOf(S,o,'sy_rache')||trOf(S,o,'kh_beute'))||beute(S,o))return;const c=S.U.filter(e=>e.o!=o);if(!c.length)return;const t=yield* pk(G,o,'Ziel der Rache: Beute wählen',c.map(x=>[lab(x),x]),scE);if(!t)return;S.beute[o]=t.id;G.note((o?'Computer':'Du')+': Beute ist '+t.name)}
+
+// ---- Sklaven der Finsternis: Bluthauchlegion (Auge der Götter) ----
+const AGN={2:'Schutz des Tzeentch (Rettung 6+)',3:'Anmut des Slaanesh (+1 auf Rennenwürfe)',4:'Segen des Nurgle (−1 auf Verwundungswürfe gegen die Einheit)',5:'Wut des Khorne (+1 Wucht der Nahkampfwaffen)'};
+const agL=(S,u)=>(S.ag&&S.ag[u.id])||[];
+const agH=(S,u,k)=>agL(S,u).includes(k);
+const isCK=u=>/^(Chaoskrieger|Chaosritter)/.test(u.dn||u.n||'');
+function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S.ag[u.id]=[]);const r=d6(S);let k=r;
+ if(r==6){const c=[2,3,4,5].filter(x=>!L.includes(x));k=c.length?yield* pk(G,o,'Champion des Chaos: Fähigkeit für '+u.name,c.map(x=>[AGN[x],x]),x=>({5:4,2:3,4:2,3:1})[x]):0}
+ let txt;if(r==1||!k)txt='Von den Göttern abgewiesen: kein Effekt';else if(L.includes(k))txt=u.name+' hat '+AGN[k]+' bereits (nicht kumulativ)';else{L.push(k);txt=u.name+' erhält dauerhaft: '+AGN[k]}
+ rep(G,'Auge der Götter'+(src?' ('+src+')':''),row('W6',[r]),txt)}
+const agOK=(S,o,x)=>x.x>=0&&((!inCombat(S,x)&&S.obj.some((p,k)=>claims(S,x,k)&&S.oc[k]!==1-o))||has(S.T.ds||[],x.id));
 export function* eot3(G,o,act){const S=G.S;
+ if(trOf(S,o,'sd_auge')&&!usedKey(S,o+':auge','turn')){const c=FL(S,o,x=>agOK(S,o,x));if(c.length){const t=yield* pk(G,o,'Auge der Götter: Einheit wählen',[...c,['Keine',null]],x=>x?10-agL(S,x).length*2+mx(x)*.01:-1e9);if(t){useKey(S,o+':auge','turn');yield* augeRoll(G,o,t)}}}
  {const g=genOf(S,o);if(g&&g.dmg>0&&canHealX(S,g)){const k=ENI(S,o);if(k=='fy_stur'||(k=='kh_blut'&&!usedKey(S,o+':kblut','turn'))){if(k=='kh_blut')useKey(S,o+':kblut','turn');const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note((k=='fy_stur'?'Zu stur zum Sterben':'Von Blut gestärkt')+': '+g.name+' heilt bis zu '+h)}}
   if(g&&ENI(S,o)=='kh_bisse'){const b=beute(S,o);if(b&&b.x>=0&&inCombat(S,g)&&dist(g,b)<=1){const h=d3(S);G.note('Wilde Bisse: '+b.name+' erleidet '+h+' tödlichen Schaden');mort(G,b,h,'Wilde Bisse')}}
   if(trOf(S,o,'kh_beute')&&!usedKey(S,o+':bltg','turn')){const c=FL(S,o,x=>has(S.T.kl||[],x.id));if(c.length){const t=yield* pk(G,o,'Blutgetränkt: Einheit',[...c,['Keine',null]],x=>x?mx(x):-1e9);if(t){useKey(S,o+':bltg','turn');addFx(S,{k:'critTA',u:t.id,exp:'battle'});G.note('Blutgetränkt: '+t.name+' hat bis Schlachtende Krit. (tödlich) im Nahkampf')}}}}
@@ -252,4 +264,34 @@ Object.assign(AB,{
   og_made:{n:'Fettmade',s:'Bewegungsphase, 1× pro Schlacht: Eisenspeier oder Trauerfangreiter in Nahkampfreichweite des Generals heilen W6',ph:2,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='og_made',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>(x.dn=='Eisenspeier'||x.dn=='Trauerfangreiter')&&dist(g,x)<=1&&x.dmg>0)},
    *run(G,o){const S=G.S,g=genOf(S,o);const t=yield* pk(G,o,'Fettmade: Einheit heilen',FL(S,o,x=>(x.dn=='Eisenspeier'||x.dn=='Trauerfangreiter')&&dist(g,x)<=1),x=>x.dmg||0);if(!t)return;const h=d6(S);t.dmg=Math.max(0,(t.dmg||0)-h);rep(G,'Fettmade',row('Heilung',[h]),t.name+' heilt '+h)},ai:()=>true}
  });
+ // ---- Sklaven der Finsternis: Bluthauchlegion ----
+ Object.assign(HK,{
+  sd_auge:{ward:(S,u)=>agH(S,u,2)?6:0,run:(S,u)=>agH(S,u,3)?1:0,wndT:(S,d,a,shoot)=>agH(S,d,4)?-1:0,rend:(S,u,e,shoot,w)=>!shoot&&agH(S,u,5)?1:0},
+  sd_erob:{ctl:(S,u)=>/^Chaoskrieger/.test(u.dn||u.n||'')?3:0},
+  sd_boten:{wnd:(S,u,e,shoot)=>!shoot&&e&&S.obj.some((p,k)=>claims(S,e,k)&&S.oc[k]!==u.o)?1:0},
+  sd_lanze:{rend:(S,u,e,shoot,w)=>!shoot&&w&&w[0]=='Verfluchte Lanze'&&has(S.T.charged,u.id)?1:0},
+  sd_khorne:{rend:(S,u,e,shoot,w)=>!shoot&&u.gen&&has(S.T.charged,u.id)?1:0},
+  sd_nurgle:{wndT:(S,d,a,shoot)=>!shoot&&d.gen?-1:0}
+ });
+ GL.place.sdm=(S,o,u,x,y,a)=>{const e=placeErr(S,'rein',o,u,x,y,a);if(e)return e;const g=gnl(S,o);return g&&wholly({...u,x,y},g,6)?'':'Ganz innerhalb von 6 Zoll um den General, mehr als 6 Zoll von Feinden'};
+ Object.assign(AB,{
+  sd_auge:{n:'Auge der Götter',s:'Zugende (jeder Zug), 1× pro Zug: Eigene Einheit, die ein nicht gegnerisch kontrolliertes Ziel beansprucht (nicht im Nahkampf) oder in diesem Zug eine Einheit zerstört hat, würfelt auf der Tabelle (2 Rettung 6+, 3 +1 Rennen, 4 −1 Verwundung gegen sie, 5 +1 Wucht, 6 freie Wahl) – dauerhaft (automatisch am Zugende)',army:1,src:(S,o)=>trOf(S,o,'sd_auge')},
+  sd_gunst:{n:'Günstling des Pantheons',s:'Heldenphase: W6 4+ → Wurf auf der „Auge der Götter“-Tabelle für diese Einheit',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_gunst'),can:()=>true,
+   *run(G,u){const S=G.S,r=d6(S);hdr(G,'Günstling des Pantheons',r,r>=4,4,'Wurf auf der „Auge der Götter“-Tabelle','Kein Effekt');if(r>=4)yield* augeRoll(G,u.o,u,'Günstling')},ai:()=>true},
+  sd_champ:{n:'Entschlossener Champion',s:'Nahkampfphase: Befreundete Einheit ganz innerhalb 12" (nicht der Champion): W6 2+ → +1 auf Trefferwürfe in dieser Phase',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_champ'),can:(S,u)=>fr(S,u.o).some(x=>x!==u&&wholly(x,u,12)),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Entschlossener Champion: Ziel',FL(S,u.o,x=>x!==u&&wholly(x,u,12)),x=>mx(x));if(!t)return;const r=d6(S);hdr(G,'Entschlossener Champion',r,r>=2,2,t.name+': +1 auf Trefferwürfe in dieser Phase','Kein Effekt');if(r>=2)addFx(S,{k:'hitA',u:t.id,v:1,exp:'ph'})},ai:()=>true},
+  sd_tod:{n:'Schneller Tod',s:'Angriffsphase: Hat die Einheit angegriffen: Feind innerhalb 1": W6 2+ → W3 tödlicher Schaden',ph:4,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_tod'),can:(S,u)=>has(S.T.charged,u.id)&&foes(S,u).some(x=>x.x>=0&&dist(u,x)<=1),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Schneller Tod: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S);hdr(G,'Schneller Tod',r,r>=2,2,t.name+': W3 tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,d3(S),'Schneller Tod')},ai:()=>true},
+  sd_boten:{n:'Boten der Vernichtung',s:'Passiv: +1 auf Verwundungswürfe im Nahkampf gegen Einheiten, die ein nicht von dir kontrolliertes Ziel beanspruchen',unit:1,src:(S,u)=>hasAb(u,'sd_boten')},
+  sd_lanze:{n:'Im Angriff aufgespießt',s:'Passiv: +1 Wucht der Verfluchten Lanzen, wenn die Einheit im selben Zug angegriffen hat',unit:1,src:(S,u)=>hasAb(u,'sd_lanze')},
+  sd_banner:{n:'Schreckensbanner',s:'Heldenphase, nur Runde 1, 1× pro Schlacht: Chaoskrieger- oder Chaosritter-Einheit würfelt auf der „Auge der Götter“-Tabelle',ph:1,freq:'battle',army:1,src:(S,o)=>RGI(S,o)=='sd_banner',can:(S,o)=>S.round==1&&fr(S,o).some(isCK),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Schreckensbanner: Einheit',FL(S,o,isCK),x=>10-agL(S,x).length*2);if(!t)return;yield* augeRoll(G,o,t,'Schreckensbanner')},ai:()=>true},
+  sd_erob:{n:'Dunkle Eroberer',s:'Passiv: +3 Kontrolle für befreundete Chaoskrieger-Einheiten',army:1,src:(S,o)=>RGI(S,o)=='sd_erob'},
+  sd_khorne:{n:'Mal des Khorne',s:'Passiv: +1 Wucht der Nahkampfwaffen des Generals, wenn er im selben Zug angegriffen hat',army:1,src:(S,o)=>ENI(S,o)=='sd_khorne'},
+  sd_nurgle:{n:'Mal des Nurgle',s:'Passiv: −1 auf Verwundungswürfe für Nahkampfattacken gegen den General',army:1,src:(S,o)=>ENI(S,o)=='sd_nurgle'},
+  sd_slaan:{n:'Mal des Slaanesh',s:'Passiv: Der General kämpft zuerst',army:1,src:(S,o)=>ENI(S,o)=='sd_slaan'},
+  sd_tzeentch:{n:'Mal des Tzeentch',s:'Bewegungsphase, 1× pro Schlacht: Befreundete Einheit (nicht der General) wird ganz innerhalb 6" um den General, >6" von Feinden neu aufgestellt; keine Bewegung-Fähigkeiten mehr in dieser Phase',ph:2,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='sd_tzeentch',can:(S,o)=>!!genOf(S,o)&&fr(S,o).some(x=>!x.gen),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Mal des Tzeentch: Einheit',FL(S,o,x=>!x.gen),x=>mx(x));if(!t)return;if(yield* relocate(G,o,t,'sdm','Mal des Tzeentch','Neu aufstellen: ganz innerhalb 6 Zoll um den General, mehr als 6 Zoll von allen Feinden'))addFx(S,{k:'nomove',u:t.id,exp:'ph'})},ai:()=>false}
+ });
+
 }

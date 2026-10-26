@@ -1,5 +1,8 @@
 # Changelog
 
+## v91
+- Neue Armee: Sklaven der Finsternis Bluthauchlegion (Auge der Götter mit dauerhaften Segen, Schreckensbanner, Dunkle Eroberer, vier Malen); neue Fraktion mit Kriegsherr des Chaos, Streitwagen des Chaos, Chaoskriegern und Chaosrittern
+
 ## v90
 - Geländeaufbau: Gibt es für ein Geländestück keinen Platz mit 6 Zoll Abstand (z. B. Sand and Bone diagonal), wird der Abstand automatisch gelockert
 - Kopfjäger blockiert den Kampf nicht mehr, wenn der gewählte Held tot oder außer Reichweite ist; KI-Notausgang bei abgelehnten Antworten

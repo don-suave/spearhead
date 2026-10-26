@@ -1268,3 +1268,40 @@ Kloppkeulen und Hacker	Clubs and Cleavers
 Trauerfanghauer	Mournfang Tusks
 Linienbrecher	Line Breakers
 Passiv: Subtrahiere 1 von Verwundungswürfen für Fernkampfattacken, deren Ziel diese Einheit ist.	Passive: subtract 1 from wound rolls for shooting attacks that target this unit.
+Sklaven der Finsternis	Slaves to Darkness
+Bluthauchlegion	Bloodbreath Legion
+Auge der Götter	Eye of the Gods
+Einmal pro Zug, Ende eines beliebigen Zuges: Wähle eine befreundete Einheit, die ein Ziel beansprucht, das dein Gegner nicht kontrolliert, und die nicht im Nahkampf ist, oder die in diesem Zug eine feindliche Einheit zerstört hat. Würfle auf der Tabelle: 1 Kein Effekt; 2 Schutz des Tzeentch (Rettung 6+); 3 Anmut des Slaanesh (+1 auf Rennenwürfe); 4 Segen des Nurgle (−1 auf Verwundungswürfe gegen die Einheit); 5 Wut des Khorne (+1 Wucht der Nahkampfwaffen); 6 Champion des Chaos (beliebige Fähigkeit). Die Einheit behält die Fähigkeiten dauerhaft, Effekte sind nicht kumulativ.	Once per turn, end of any turn: Pick a friendly unit that is contesting an objective your opponent does not control and is not in combat, or that destroyed an enemy unit this turn. Roll on the table: 1 No effect; 2 Protection of Tzeentch (Ward 6+); 3 Grace of Slaanesh (+1 to run rolls); 4 Blessing of Nurgle (−1 to wound rolls for attacks targeting the unit); 5 Wrath of Khorne (+1 Rend for the unit's melee weapons); 6 Champion of Chaos (choose any ability). The unit keeps its abilities for the rest of the battle; effects do not stack.
+Schreckensbanner	Banner of Terror
+Einmal pro Schlacht, Beginn der ersten Schlachtrunde: Wähle eine befreundete Chaoskrieger- oder Chaosritter-Einheit: Du kannst sofort einen Wurf auf der „Auge der Götter“-Tabelle für jene Einheit ausführen.	Once per battle, start of the first battle round: Pick a friendly Chaos Warriors or Chaos Knights unit: you can immediately roll on the Eye of the Gods table for that unit.
+Dunkle Eroberer	Dark Conquerors
+Passiv: Addiere 3 auf den Kontrollwert befreundeter Chaoskrieger-Einheiten.	Passive: Add 3 to the control score of friendly Chaos Warriors units.
+Mal des Khorne	Mark of Khorne
+Passiv: Addiere 1 auf den Wuchtwert der Nahkampfwaffen deines Generals, wenn er im selben Zug angegriffen hat.	Passive: Add 1 to the Rend of your general's melee weapons if it charged in the same turn.
+Mal des Tzeentch	Mark of Tzeentch
+Mal des Nurgle	Mark of Nurgle
+Mal des Slaanesh	Mark of Slaanesh
+Passiv: Subtrahiere 1 von Verwundungswürfen für Nahkampfattacken, deren Ziel dein General ist.	Passive: Subtract 1 from wound rolls for melee attacks that target your general.
+Passiv: Dein General hat Kämpft zuerst.	Passive: Your general has Strikes First.
+Kriegsherr des Chaos	Chaos Warlord
+Schnitterklinge	Reaper Blade
+Günstling des Pantheons	Favoured of the Pantheon
+Deine Heldenphase: Wirf einen Würfel. Bei 4+ kannst du für diese Einheit auf der „Auge der Götter“-Tabelle würfeln.	Your hero phase: Roll a dice. On a 4+, you can roll on the Eye of the Gods table for this unit.
+Entschlossener Champion	Determined Champion
+Beliebige Nahkampfphase: Wähle eine befreundete Einheit ganz innerhalb von 12 Zoll um diese Einheit (nicht diese Einheit) und wirf einen Würfel. Bei 2+ addiere in dieser Phase 1 auf Trefferwürfe für Attacken der Zieleinheit.	Any combat phase: Pick a friendly unit wholly within 12" of this unit (not this unit) and roll a dice. On a 2+, add 1 to hit rolls for attacks made by the target unit in this phase.
+Streitwagen des Chaos	Chaos Chariot
+Chaos-Kriegsflegel	Chaos War Flail
+Geißelnde Peitsche des Fahrers	Driver's Lashing Whip
+Trampelnde Hufe des Streitrosses	Trampling Hooves of the Steed
+Schneller Tod	Swift Death
+Deine Angriffsphase: Hat diese Einheit in dieser Phase angegriffen, wähle eine feindliche Einheit innerhalb von 1 Zoll als Ziel und wirf einen Würfel. Bei 2+ füge dem Ziel W3 tödlichen Schaden zu.	Your charge phase: If this unit charged in this phase, pick an enemy unit within 1" as the target and roll a dice. On a 2+, inflict D3 mortal damage on the target.
+Chaoskrieger	Chaos Warriors
+Runengravierte Hellebarde	Rune-etched Halberd
+Boten der Vernichtung	Heralds of Ruin
+Passiv: Addiere 1 auf Verwundungswürfe für Nahkampfattacken dieser Einheit gegen eine feindliche Einheit, die ein Ziel beansprucht, das du nicht kontrollierst.	Passive: Add 1 to wound rolls for melee attacks made by this unit against an enemy unit that is contesting an objective you do not control.
+Chaosritter	Chaos Knights
+Verfluchte Lanze	Cursed Lance
+Trampelnde Hufe des Chaosrosses	Trampling Hooves of the Chaos Steed
+Im Angriff aufgespießt	Impaled on the Charge
+Passiv: Addiere 1 auf den Wuchtwert der Verfluchten Lanzen dieser Einheit, wenn sie im selben Zug angegriffen hat.	Passive: Add 1 to the Rend of this unit's Cursed Lances if it charged in the same turn.
+Einmal pro Schlacht, deine Bewegungsphase: Wähle eine befreundete Einheit auf dem Schlachtfeld (nicht deinen General). Entferne sie vom Schlachtfeld und stelle sie vollständig innerhalb von 6 Zoll um deinen General und weiter als 6 Zoll von allen feindlichen Einheiten wieder auf. Sie kann für den Rest der Phase keine Bewegung-Fähigkeiten einsetzen.	Once per battle, your movement phase: Pick a friendly unit on the battlefield (not your general). Remove it from the battlefield and set it up again wholly within 6" of your general and more than 6" from all enemy units. It cannot use Move abilities for the rest of the phase.
