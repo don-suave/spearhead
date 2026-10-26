@@ -35,7 +35,13 @@ export function udist(a,b){const c=Math.hypot(a.x-b.x,a.y-b.y)-a.r-b.r;if(!a.M||
 // Modelle von u (absolut), die höchstens rg Zoll von der Einheit t entfernt sind
 export function inRange(u,t,rg){if(!u.M||!t.M)return u.n;const B=abs(t);return abs(u).filter(p=>B.some(q=>mgap(p,q)<=rg)).length}
 // Zusammenhalt: 1–6 Modelle brauchen 1 Nachbarn in 1", ab 7 Modellen 2 Nachbarn
-export function cohBad(P,rg=1){const need=P.length>=7?2:1;if(P.length<2)return [];return P.map((p,i)=>P.reduce((s,q,j)=>s+(i!=j&&mgap(p,q)<=rg?1:0),0)<need?i:-1).filter(i=>i>=0)}
+export function cohBad(P,rg=1){const n=P.length,need=n>=7?2:1;if(n<2)return [];
+ const adj=P.map(()=>[]);for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)if(mgap(P[i],P[j])<=rg){adj[i].push(j);adj[j].push(i)}
+ const bad=new Set();adj.forEach((a,i)=>{if(a.length<need)bad.add(i)});
+ // „eine Gruppe“: alle Modelle müssen zusammenhängen (größte Gruppe bleibt, der Rest ist ungültig)
+ const comp=Array(n).fill(-1);let best=-1,bs=0;for(let i=0;i<n;i++){if(comp[i]>=0)continue;const st=[i];comp[i]=i;let c=0;while(st.length){const x=st.pop();c++;for(const y of adj[x])if(comp[y]<0){comp[y]=i;st.push(y)}}if(c>bs){bs=c;best=i}}
+ for(let i=0;i<n;i++)if(comp[i]!==best)bad.add(i);
+ return [...bad].sort((a,b)=>a-b)}
 export const cohOK=(P,rg=1)=>cohBad(P,rg).length==0;
 // u vollständig innerhalb von rg Zoll um die Einheit v (jedes Modell von u nah an irgendeinem Modell von v)
 export function wholly(u,v,rg){if(!u.M||!v.M)return Math.hypot(u.x-v.x,u.y-v.y)-v.r<=rg;const B=abs(v);return abs(u).every(p=>B.some(q=>mgap(p,q)<=rg))}
@@ -53,14 +59,14 @@ export function removeModels(S,u,k,foes){for(let t=0;t<k&&u.M.length>1;t++){
   const P=abs(u),E=foes.flatMap(e=>e.x>=0&&e.M?abs(e):[]);
   const score=p=>E.length?Math.min(...E.map(q=>mgap(p,q))):0;
   const idx=P.map((p,i)=>i).sort((i,j)=>(j==0)-(i==0)||score(P[j])-score(P[i]));
-  let pick=idx.find(i=>cohOK(P.filter((p,j)=>j!=i),u.coh||1));if(pick==null)pick=idx[0];
+  let pick=idx.find(i=>cohOK(P.filter((p,j)=>j!=i),u.coh||1));if(pick==null){let bb=1e9;for(const i of idx){const b=cohBad(P.filter((p,j)=>j!=i),u.coh||1).length;if(b<bb){bb=b;pick=i}}}
   if(S.T&&S.T.sl)S.T.sl[into(S,0,P[pick].x,P[pick].y)>0?0:1]++;P.splice(pick,1);u.M.splice(pick,1);recentre(u,P)}
  if(u.M.length==1&&k>0&&u.n<=0)u.M.length=0}
 export function addModel(S,u,occupied){ // neues Modell neben vorhandenen platzieren (Rückkehr getöteter Modelle)
  const P=abs(u),base=u._b||{l:P[0].l,w:P[0].w},tpl={l:base.l,w:base.w,a:0};
  let best=null,bs=1e9;
  for(const p of P)for(let k=0;k<16;k++){const a=k*Math.PI/8,d=(p.l+tpl.l)/2+GAP,q={x:p.x+Math.cos(a)*d,y:p.y+Math.sin(a)*d,...tpl};
-  if(occupied.some(o=>mgap(q,o)<0))continue;const sc=Math.hypot(q.x-u.x,q.y-u.y);if(sc<bs){bs=sc;best=q}}
+  if(occupied.some(o=>mgap(q,o)<0))continue;const sc=Math.hypot(q.x-u.x,q.y-u.y)+100*cohBad([...P,q],u.coh||1).length;if(sc<bs){bs=sc;best=q}}
  if(!best)return false;u.M.push({dx:0,dy:0,a:0,l:tpl.l,w:tpl.w});P.push(best);recentre(u,P);return true}
 // Modellzahl an u.n angleichen
 export function syncM(S,u,foes){if(!u.M||u.x<0)return;

@@ -1,5 +1,8 @@
 # Changelog
 
+## v94
+- Zusammenhalt: Einheiten müssen jetzt eine zusammenhängende Gruppe bilden (zwei getrennte Paare galten bisher fälschlich als in Ordnung); Verluste und zurückkehrende Modelle erhalten den Zusammenhalt, wo möglich
+
 ## v93
 - Neue Armee: Sklaven der Finsternis Finsterschwur-Plünderer (Schwüre der Finsternis mit zur Seite gelegten Taktikkarten, Visionen des Ruhms mit Wiederholungen, Arkhars Wut, Furchtlose Invasoren, Glorreicher Tod, vier Verbesserungen)
 
