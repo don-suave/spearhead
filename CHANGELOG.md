@@ -1,5 +1,11 @@
 # Changelog
 
+## v96
+- Aufstellung von Gelände: Der Links-Drehen-Knopf hat bisher nicht funktioniert (falsches Element), jetzt drehen beide Knöpfe
+- Angriff: keine Drehung mehr beim Bewegen der Einheit
+- City of Ash (Shattered Crossroads): Hintergrundbild und Junction-Ziel sind deckungsgleich (Bild verschoben, Ziel-Radius 3,7")
+- Visionen des Ruhms (Finsterschwur-Zerreißer): Wiederholungswürfel werden wie die Schicksalswürfel angezeigt (Würfel, Verbleibende, Einsatz automatisch/mit Nachfrage/nie)
+
 ## v95
 - Neue Armee: Tiefenvolk der Idoneth Seelenraubgesellschaft (Tiden des Todes je Schlachtrunde, Ritual des schleichenden Nebels, Biovoltaischer Schlag, Blutrünstige Räuber, vier Verbesserungen)
 

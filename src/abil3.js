@@ -8,6 +8,7 @@ import {abs,wholly,udist} from './models.js';
 import {ARMY} from './data.js';
 import {d6,d3,add,has} from './util.js';
 import {TAC} from './data.js';
+import {choice} from './game.js';
 import {CH} from './cards.js';
 import {addFx,fxL,fxSum,usedKey,useKey} from './fx.js';
 const trOf=(S,o,k)=>{try{return ARMY[S.K.army[o]].tr.includes(k)}catch(e){return false}};
@@ -310,7 +311,7 @@ Object.assign(AB,{
   sd_ueberleg:{n:'Schwur der Überlegenheit',s:'Heldenphase: Befreundete Einheit ganz innerhalb 12" um die Generalin: +1 auf Trefferwürfe bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_ueberleg'),can:(S,u)=>fr(S,u.o).some(x=>x!==u&&wholly(x,u,12)),
    *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Schwur der Überlegenheit: Ziel',FL(S,u.o,x=>x!==u&&wholly(x,u,12)),x=>mx(x));if(!t)return;addFx(S,{k:'hitA',u:t.id,v:1,exp:'own'});rep(G,'Schwur der Überlegenheit',[],t.name+': +1 auf Trefferwürfe bis zu deinem nächsten Zug')},ai:()=>true},
   sd_vision:{n:'Visionen des Ruhms',s:'Heldenphase: 8 Würfel, je 4+ = 1 Wiederholung (Treffer, Verwundung oder Schutz) bis zu deinem nächsten Zug (automatisch bei misslungenen Würfen; Rennen ausgenommen)',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_vision'),can:()=>true,
-   *run(G,u){const S=G.S,rs=[];for(let i=0;i<8;i++)rs.push(d6(S));const n=rs.filter(x=>x>=4).length;if(n)addFx(S,{k:'rrt',u:u.id,v:n,exp:'own'});rep(G,'Visionen des Ruhms',row('8 Würfel (4+)',rs,4),n?u.name+': '+n+' Wiederholung(en) bis zu deinem nächsten Zug':'Keine Wiederholung')},ai:()=>true},
+   *run(G,u){const S=G.S,rs=[];for(let i=0;i<8;i++)rs.push(d6(S));const n=rs.filter(x=>x>=4).length;if(n)addFx(S,{k:'rrt',u:u.id,v:n,n0:n,dice:rs.slice(),exp:'own'});rep(G,'Visionen des Ruhms',row('8 Würfel (4+)',rs,4),n?u.name+': '+n+' Wiederholung(en) bis zu deinem nächsten Zug':'Keine Wiederholung');if(n&&!G.isAI(u.o)&&(S.rrpol||[])[u.o]==null){const c=yield* choice(G,u.o,'Visionen des Ruhms','Deine Wiederholungswürfel: '+rs.join(", ")+' ('+n+' Treffer). Sie wiederholen Treffer-, Verwundungs- und Schutzwürfe. Einsatz:',['Bei jedem Wurf nachfragen','Automatisch','Nicht einsetzen'].map(x=>({t:x})),{pref:1});(S.rrpol||(S.rrpol=[null,null]))[u.o]=[2,1,0][c]}},ai:()=>true},
   sd_reiter:{n:'Schnelle Angreifer',s:'Passiv: −1 auf Trefferwürfe für Fernkampfattacken gegen diese Einheit',unit:1,src:(S,u)=>hasAb(u,'sd_reiter')},
   sd_glor:{n:'Glorreicher Tod',s:'Passiv: Pro im Nahkampf getötetem Modell W6: 5+ → 1 tödlicher Schaden für den Angreifer (automatisch)',unit:1,src:(S,u)=>hasAb(u,'sd_glor')},
   sd_wut:{n:'Arkhars Wut',s:'Nahkampfphase, 1× pro Zug (Armee): Befreundete Einheit im Nahkampf: +1 Wucht und +1 Attacken der Nahkampfwaffen (nicht Begleiter) bis Zugende',ph:5,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='sd_wut',can:(S,o)=>fr(S,o).some(x=>inCombat(S,x)),

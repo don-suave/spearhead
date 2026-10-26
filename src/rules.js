@@ -426,7 +426,11 @@ export function* reactAtk(G,a,e,shoot){const S=G.S,P=S.P[e.o];
   if(i==opts.length-1)break;if(i==l.length&&ro){doRue();l=L();continue}const c=l[i];useCard(S,e.o,c);CR2[c](S,e);l=L()}}
 export const useCard=(S,o,c)=>{const p=S.P[o];p.hand.splice(p.hand.indexOf(c),1);if(p.aside){const i=p.aside.indexOf(c);if(i>=0)p.aside.splice(i,1)}p.disc.push(c)};
 // Wiederholungs-Marker (Visionen des Ruhms): jeder Marker wiederholt automatisch einen misslungenen Treffer-, Verwundungs- oder Schutzwurf der Einheit
-const rrt=(G,S,u,rolls,ok)=>{let n=0;for(let i=0;i<rolls.length;i++){if(ok(rolls[i]))continue;const f=fxL(S,u,'rrt').find(x=>x.v>0);if(!f)break;f.v--;rolls[i]=d6(S);n++}if(n)G.note('Wiederholung ('+u.name+'): '+n+' Wurf/Würfe wiederholt');return n};
+export function* rrt(G,S,u,rolls,ok,label){const o=u.o,pol=(S.rrpol||[])[o]==null?1:S.rrpol[o];let n=0;if(!pol)return 0;
+ for(;;){const f=fxL(S,u,'rrt').find(x=>x.v>0);if(!f)break;const bad=rolls.map((x,k)=>k).filter(k=>!ok(rolls[k]));if(!bad.length)break;let k=bad[0];
+  if(pol==2&&!G.isAI(o)){const bv=[...new Set(bad.map(q=>rolls[q]))].sort((a,b)=>a-b);const c=yield* choice(G,o,'Wiederholungswürfel einsetzen?',label+': '+rolls.join(', ')+' · Verbleibende Wiederholungen ('+u.name+'): '+f.v,[{t:'Keine (weiter)'},...bv.map(v=>({t:'Eine '+v+' wiederholen'}))]);if(!c)break;k=bad.find(q=>rolls[q]==bv[c-1])}
+  f.v--;const old=rolls[k];rolls[k]=d6(S);n++;G.note('Wiederholungswürfel ('+label+', '+u.name+'): '+old+' → '+rolls[k])}
+ return n}
 export const CMD={1:{ph:1,w:'opp'},2:{r:'atk'},3:{ph:2,w:'opp'},4:{r:'atk'},5:{ph:5,w:'any'},6:{ph:4,w:'opp'},7:{r:'chg'},8:{ph:1,w:'any'},9:{r:'shoot'},10:{ph:1,w:'any'},11:{ph:2,w:'any'},12:{r:'ret'}};
 import {TAC as TACN} from './data.js';
 export const CR2={2:(S,e)=>add(S.Ph.nr,e.id),4:(S,e)=>add(S.Ph.w5,e.id),9:(S,e)=>{add(S.Ph.g2g,e.id);add(S.T.SL,e.id)}};
@@ -464,7 +468,7 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
   const gyb=TW.id=='gy'&&S.U.some(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=3)?1:0;const sv0=-gyb+((TW.id=='wn'&&TW.wnU===e.id)?e.sv:e.sv-(aura?Math.max(0,fxSum(S,e,'svP')):fxSum(S,e,'svP'))-(hasAb(e,'fp_mauer')&&!has(T.charged,e.id)?1:0)-hk(S,'svT',e,u,shoot,w)-GL.sv.reduce((q,f)=>q+(+f(S,e)||0),0)-(e.dn=='Felsmagen-Troggoths'&&litIn(S,e)?1:0)-(hasAb(e,'sp_geord')&&S.obj.some((p,k)=>S.oc[k]===e.o&&ct(e,p))?1:0)+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:rd+(TW.rot==e.id?1:0))+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:1)*((()=>{const g=gnl(S,1-e.o);return g&&ENI(S,1-e.o)=='wam'&&dist(g,e)<=CR?1:0})()));const sv=(e.gen&&ENI(S,e.o)=='id_stahl')?e.sv:sv0;const th=fxL(S,u,'hit6').length?6:th0;let h=0,wn=0,un=0,m=0;
   const hf=[],hx=[];for(let i=0;i<n;i++)hf.push(d6(S));
   if(!shoot&&e.grd===u.o&&/Infanterie/.test(u.kw))for(let i=0;i<hf.length;i++)if(hf[i]==1){hx.push(1);hf[i]=d6(S)}
-  rrt(G,S,u,hf,x=>x!=1&&(x>=th||x==6));fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);
+  yield* rrt(G,S,u,hf,x=>x!=1&&(x>=th||x==6),'Trefferwürfe ('+th+'+)');fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);
   let nw=0,aw=0;
   for(const r of hf){if(r==1&&fy)ones++;if(r==1||(r<th&&r!=6)||(r<=4&&hasAb(e,'cj_att'))||(r<=3&&has(Ph.tfl,e.id)))continue;h++;if(r>=ck&&(F('D')||(hasAb(u,'ss_metz')&&!shoot&&/Zauberer|Priester/.test(e.kw))))h++;if(r>=ck&&u.gen&&ENI(S,o0)=='glk')crits++;
    if(F('M')){m++;continue}
@@ -472,9 +476,9 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
    if(r>=ck&&F('S')){const x=d6(S);h+=x-1;for(let k=0;k<x;k++){const q=d6(S);if(q==6||(q!=1&&q>=tw)){wn++;const s2=d6(S);if(!(s2==1||s2<sv))continue;un++}}continue}
    if(r>=ck&&F('V'))aw++;else nw++}
   const wrr=[];for(let i=0;i<nw;i++)wrr.push(d6(S));const wok=x=>(x==6||(x!=1&&x>=tw))&&!(x<=3&&has(Ph.tfl,e.id));
-  rrt(G,S,u,wrr,wok);fdN+=yield* fdStage(G,o0,wrr,wok,fc,'Verwundungswürfe ('+tw+'+)',noAsk);wr.push(...wrr);
+  yield* rrt(G,S,u,wrr,wok,'Verwundungswürfe ('+tw+'+)');fdN+=yield* fdStage(G,o0,wrr,wok,fc,'Verwundungswürfe ('+tw+'+)',noAsk);wr.push(...wrr);
   const ns=aw+wrr.filter(wok).length;wn+=ns;const srr=[];for(let i=0;i<ns;i++)srr.push(d6(S));const sok=x=>!(x==1||x<sv);
-  rrt(G,S,e,srr,sok);fdN+=yield* fdStage(G,e.o,srr,sok,fc,'Schutzwürfe ('+sv+'+)',noAsk);sr.push(...srr);
+  yield* rrt(G,S,e,srr,sok,'Schutzwürfe ('+sv+'+)');fdN+=yield* fdStage(G,e.o,srr,sok,fc,'Schutzwürfe ('+sv+'+)',noAsk);sr.push(...srr);
   for(const s of srr){if(s==1&&hasAb(e,'sp_ako'))ak1++;if(!shoot&&s>=5&&gdf)gdfN++;if(!sok(s))un++}
   let d=0;for(let i=0;i<un;i++)d+=Math.max(0,dv(S,w[6])+((ch&&TW.spear==u.id)||(ch&&F('C'))?1:0)+hk(S,'dmg',u,e,shoot,w)+hk(S,'dmgT',e,u,shoot,w));
   dmg+=d;mort+=m;

@@ -152,7 +152,7 @@ const cache={};
 const PH={};
 export const photoOf=K=>K.pack==2?'ca'+(K.realm?1:0):K.pack==1?'sb'+(K.realm?1:0):K.pack==0?'fj'+(K.realm?1:0):null;
 export function ground(K,W,H){
- const pk0=photoOf(K);if(pk0&&BOARDIMG[pk0]&&typeof Image!='undefined'){const e=PH[pk0]||(PH[pk0]={ready:false,im:new Image()});if(!e.started){e.started=1;e.im.onload=()=>{e.ready=true};e.im.src=BOARDIMG[pk0]}if(e.ready){const key='ph'+pk0+W+'x'+H;if(!cache[key]){const c=document.createElement('canvas');c.width=e.im.width;c.height=e.im.height;c.getContext('2d').drawImage(e.im,0,0);cache[key]=c}return cache[key]}}
+ const pk0=photoOf(K);if(pk0&&BOARDIMG[pk0]&&typeof Image!='undefined'){const e=PH[pk0]||(PH[pk0]={ready:false,im:new Image()});if(!e.started){e.started=1;e.im.onload=()=>{e.ready=true};e.im.src=BOARDIMG[pk0]}if(e.ready){const key='ph'+pk0+W+'x'+H;if(!cache[key]){const c=document.createElement('canvas');c.width=e.im.width;c.height=e.im.height;const g2=c.getContext('2d');g2.drawImage(e.im,0,0);if(pk0=='ca1'){const k=c.width/30;g2.drawImage(e.im,-0.30*k,-0.48*k)}cache[key]=c}return cache[key]}}
  const key=[K.pack|0,K.realm?1:0,W,H].join();if(cache[key])return cache[key];
  const P=40,c=document.createElement('canvas');c.width=Math.round(W*P);c.height=Math.round(H*P);const x=c.getContext('2d');x.scale(P,P);
  const pk=K.pack|0,rl=K.realm?1:0,pal=PAL[pk],r=rng(pk*977+rl*131+W*7+H),base=pal[0][rl],acc=pal[1][rl],dk=pal[2][rl];

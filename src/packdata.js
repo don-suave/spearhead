@@ -45,7 +45,7 @@ export const SB_TAC=[
 const CAY=v=>Math.round(v*22.4/22*100)/100,CAS=l=>l.map(p=>{const q=p.slice();q[1]=CAY(q[1]);return q});
 export const CA_BAS=CAS([[2.5,2.3,2.1,'Great Wheel'],[22.6,5.7,2.1,'Ghal Maraz'],[15,11,6.5,'The Ruin',11,7.2,0],[7.4,16.3,2.1,'Twin-Tailed Comet'],[27.5,19.7,2.1,'High Star']]);
 export const CA_CRO=CAS([[5.9,6.4,3.3,'Great Wheel',4,5.2,-0.3316],[19.8,3.1,3.3,'Ghal Maraz',4,5.2,1.2392],[15,11,3.5,'The Junction'],[10.2,18.9,3.3,'Twin-Tailed Comet',4,5.2,1.2392],[24.1,15.6,3.3,'High Star',4,5.2,-0.3316]]);
-export const CA_ROADS=[{x:15,y:11.2,w:44,h:4,a:-0.2793},{x:15,y:11.2,w:34,h:4,a:1.3614},{x:15,y:11.2,r:3.5}];
+export const CA_ROADS=[{x:15,y:11.2,w:44,h:4,a:-0.2793},{x:15,y:11.2,w:34,h:4,a:1.3614},{x:15,y:11.2,r:3.7}];
 export const CA_RS={'Barrel of Emberstone':[2.4,2],'Crate of Aqua Ghyranis':[2.6,1.6],'Ulguan Steel Caltrops':[3.5,1.2],'Battered Barricade':[4,1.2],'Inconspicuous Manhole':[2.2,2]};
 export const CA_MANOR={len:4,th:0.8,ht:5};
 export const CA_TW=[[
