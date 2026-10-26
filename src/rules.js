@@ -86,6 +86,7 @@ export function modW(S,u,w,e,shoot){const o=u.o;let x=hkW(S,u,w,e,shoot);const c
  if(fxL(S,u,'schuer').length&&w[0]=='Tosender Fŷratem'){c();x[2]='W3+4'}
  if(hasAb(u,'schwer')&&u.dmg>=10&&w[0]=='Magmadrothmaul'){c();x[2]=4}
  if(!shoot&&fxSum(S,u,'rendP')){c();x[5]=(x[5]||0)+fxSum(S,u,'rendP')}
+ if(!shoot&&!(w[7]||'').includes('G')&&(fxSum(S,u,'rendN')||fxSum(S,u,'attN'))){c();x[5]=(x[5]||0)+fxSum(S,u,'rendN');if(typeof w[2]=='number')x[2]=+x[2]+fxSum(S,u,'attN')}
  {const rs=fxL(S,u,'rendWS').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0);if(rs&&shoot){c();x[5]=(x[5]||0)+rs}}
  {const rw=fxL(S,u,'rendW').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0);if(rw&&!shoot){c();x[5]=(x[5]||0)+rw}}
  if(AN(S,o)=='Magma-Fyrd'&&typeof x[2]=='number'&&((/^(Vulkyn|Goldw)/.test(u.dn)&&u.n*2<=u.nmax)||(u.dn=='Goldrunenwerker'&&u.dmg>=3)||(u.gen&&u.dmg>=8))){c();x[2]=+x[2]+1}
@@ -423,7 +424,9 @@ export function* reactAtk(G,a,e,shoot){const S=G.S,P=S.P[e.o];
  while(l.length||rue()){const ro=rue(),opts=[...l.map(c=>({t:TACN[c-1][2],s:TACN[c-1][3]})),...(ro?[{t:'Warpsteinbeschlagene Rüstung',s:'Rettung 5+ bis Zugende (1× pro Schlacht)'}]:[]),{t:'Keine Reaktion'}];
   const i=yield* choice(G,e.o,'Reaktion?',`${a.name} greift ${e.name} an${shoot?' (Fernkampf)':''}. Möchtest du reagieren?`,opts,{pref:opts.length-1});
   if(i==opts.length-1)break;if(i==l.length&&ro){doRue();l=L();continue}const c=l[i];useCard(S,e.o,c);CR2[c](S,e);l=L()}}
-export const useCard=(S,o,c)=>{const p=S.P[o];p.hand.splice(p.hand.indexOf(c),1);p.disc.push(c)};
+export const useCard=(S,o,c)=>{const p=S.P[o];p.hand.splice(p.hand.indexOf(c),1);if(p.aside){const i=p.aside.indexOf(c);if(i>=0)p.aside.splice(i,1)}p.disc.push(c)};
+// Wiederholungs-Marker (Visionen des Ruhms): jeder Marker wiederholt automatisch einen misslungenen Treffer-, Verwundungs- oder Schutzwurf der Einheit
+const rrt=(G,S,u,rolls,ok)=>{let n=0;for(let i=0;i<rolls.length;i++){if(ok(rolls[i]))continue;const f=fxL(S,u,'rrt').find(x=>x.v>0);if(!f)break;f.v--;rolls[i]=d6(S);n++}if(n)G.note('Wiederholung ('+u.name+'): '+n+' Wurf/Würfe wiederholt');return n};
 export const CMD={1:{ph:1,w:'opp'},2:{r:'atk'},3:{ph:2,w:'opp'},4:{r:'atk'},5:{ph:5,w:'any'},6:{ph:4,w:'opp'},7:{r:'chg'},8:{ph:1,w:'any'},9:{r:'shoot'},10:{ph:1,w:'any'},11:{ph:2,w:'any'},12:{r:'ret'}};
 import {TAC as TACN} from './data.js';
 export const CR2={2:(S,e)=>add(S.Ph.nr,e.id),4:(S,e)=>add(S.Ph.w5,e.id),9:(S,e)=>{add(S.Ph.g2g,e.id);add(S.T.SL,e.id)}};
@@ -461,7 +464,7 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
   const gyb=TW.id=='gy'&&S.U.some(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=3)?1:0;const sv=-gyb+((TW.id=='wn'&&TW.wnU===e.id)?e.sv:e.sv-(aura?Math.max(0,fxSum(S,e,'svP')):fxSum(S,e,'svP'))-(hasAb(e,'fp_mauer')&&!has(T.charged,e.id)?1:0)-hk(S,'svT',e,u,shoot,w)-GL.sv.reduce((q,f)=>q+(+f(S,e)||0),0)-(e.dn=='Felsmagen-Troggoths'&&litIn(S,e)?1:0)-(hasAb(e,'sp_geord')&&S.obj.some((p,k)=>S.oc[k]===e.o&&ct(e,p))?1:0)+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:rd+(TW.rot==e.id?1:0))+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:1)*((()=>{const g=gnl(S,1-e.o);return g&&ENI(S,1-e.o)=='wam'&&dist(g,e)<=CR?1:0})()));let h=0,wn=0,un=0,m=0;
   const hf=[],hx=[];for(let i=0;i<n;i++)hf.push(d6(S));
   if(!shoot&&e.grd===u.o&&/Infanterie/.test(u.kw))for(let i=0;i<hf.length;i++)if(hf[i]==1){hx.push(1);hf[i]=d6(S)}
-  fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);
+  rrt(G,S,u,hf,x=>x!=1&&(x>=th||x==6));fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);
   let nw=0,aw=0;
   for(const r of hf){if(r==1&&fy)ones++;if(r==1||(r<th&&r!=6)||(r<=4&&hasAb(e,'cj_att'))||(r<=3&&has(Ph.tfl,e.id)))continue;h++;if(r>=ck&&(F('D')||(hasAb(u,'ss_metz')&&!shoot&&/Zauberer|Priester/.test(e.kw))))h++;if(r>=ck&&u.gen&&ENI(S,o0)=='glk')crits++;
    if(F('M')){m++;continue}
@@ -469,9 +472,9 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
    if(r>=ck&&F('S')){const x=d6(S);h+=x-1;for(let k=0;k<x;k++){const q=d6(S);if(q==6||(q!=1&&q>=tw)){wn++;const s2=d6(S);if(!(s2==1||s2<sv))continue;un++}}continue}
    if(r>=ck&&F('V'))aw++;else nw++}
   const wrr=[];for(let i=0;i<nw;i++)wrr.push(d6(S));const wok=x=>(x==6||(x!=1&&x>=tw))&&!(x<=3&&has(Ph.tfl,e.id));
-  fdN+=yield* fdStage(G,o0,wrr,wok,fc,'Verwundungswürfe ('+tw+'+)',noAsk);wr.push(...wrr);
+  rrt(G,S,u,wrr,wok);fdN+=yield* fdStage(G,o0,wrr,wok,fc,'Verwundungswürfe ('+tw+'+)',noAsk);wr.push(...wrr);
   const ns=aw+wrr.filter(wok).length;wn+=ns;const srr=[];for(let i=0;i<ns;i++)srr.push(d6(S));const sok=x=>!(x==1||x<sv);
-  fdN+=yield* fdStage(G,e.o,srr,sok,fc,'Schutzwürfe ('+sv+'+)',noAsk);sr.push(...srr);
+  rrt(G,S,e,srr,sok);fdN+=yield* fdStage(G,e.o,srr,sok,fc,'Schutzwürfe ('+sv+'+)',noAsk);sr.push(...srr);
   for(const s of srr){if(s==1&&hasAb(e,'sp_ako'))ak1++;if(!shoot&&s>=5&&gdf)gdfN++;if(!sok(s))un++}
   let d=0;for(let i=0;i<un;i++)d+=Math.max(0,dv(S,w[6])+((ch&&TW.spear==u.id)||(ch&&F('C'))?1:0)+hk(S,'dmg',u,e,shoot,w)+hk(S,'dmgT',e,u,shoot,w));
   dmg+=d;mort+=m;
@@ -481,6 +484,7 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
  const nwd=!shoot&&fxL(S,u,'nward').length>0,wb=fxSum(S,e,'wardB');if(wd<9&&!nwd)for(let i=0;i<tot;i++)wrd.push(d6(S));const sv2=wrd.filter(x=>x+wb>=wd).length;tot-=sv2;if(e.crow&&wrd.includes(1)){e.crow=0;G.note('Gryphkrähe von '+e.name+' wurde entfernt')}
  add(Ph.used,u.id);if(!shoot)add(T.fought,u.id);const nme=e.name;if(crits&&!shoot){u.dmg=Math.max(0,u.dmg-2*crits);G.note('Geraubte Lebenskraft: '+u.name+' heilt '+2*crits)}if(e.gen&&tot>0&&EN(S,e.o)=='Egomane'){const al=S.U.find(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=CR);if(al){let k=0;const rs=[];for(let i=0;i<tot;i++){const r=d6(S);rs.push(r);if(r>=4)k++}tot-=k;if(k){G.note('Egomane: '+k+' Schadenspunkt(e) auf '+al.name+' umgeleitet (Würfe '+rs.join(',')+')');hurt(G,al,k)}}}
  G.atk=u.id;hurt(G,e,tot);G.atk=null;if(ak1&&S.U.includes(e)&&akOf(e)>0){const k=Math.min(ak1,akOf(e));e.ak=akOf(e)-k;G.note('Sonnenakolythen: '+e.name+' verliert '+k+' Akolythen ('+e.ak+' übrig)')}if(fdN)R.push({k:'txt',s:'Schicksalswürfel eingesetzt: '+fdN});
+ {const kk=nb-(S.U.includes(e)?nm(e):0);if(!shoot&&kk>0)for(const f of GL.after)f(G,u,e,kk)}
  if(u.gen&&ENI(S,u.o)=='hz_blut'&&S.U.includes(u)&&nb-(S.U.includes(e)?nm(e):0)>0&&u.dmg>0&&canHeal(S,u)){u.dmg=Math.max(0,u.dmg-(nb-(S.U.includes(e)?nm(e):0)));G.note('In Blut gebadet: '+u.name+' heilt')}if(!shoot){const k2=nb-(S.U.includes(e)?nm(e):0);if(k2>0)add(T.kl||(T.kl=[]),u.id)}if(!S.U.includes(e))add(T.ds||(T.ds=[]),u.id);if(tot>0)add(T.dd||(T.dd=[]),e.id);if(!shoot&&hasAb(u,'ob_ernte')){const kk=nb-(S.U.includes(e)?nm(e):0);if(kk>0)u.kt=Math.min(6,(u.kt||0)+kk)}if(!shoot&&u.gen&&ENI(S,u.o)=='ob_mark'&&tot>0&&u.dmg>0&&S.U.includes(u)){const h0=u.dmg;u.dmg=Math.max(0,u.dmg-tot);G.note('Markpakt: '+u.name+' heilt '+(h0-u.dmg))}if(!shoot&&u.gen&&nb-(S.U.includes(e)?nm(e):0)>0)add(T.gk,u.id);if(shoot&&tot>0)(Ph.shd||(Ph.shd=[])).push(u.id+'>'+e.id);
  if(gdfN&&S.U.includes(u)){G.note('Go Down Fighting: '+gdfN+' tödlicher Schaden auf '+u.name);hurt(G,u,gdfN)}
  if(ones&&S.U.includes(u)){let q=0;for(let i=0;i<ones;i++)q+=d3(S);G.note('Das Feuer schüren: '+u.name+' erleidet '+q+' Schaden (keine Rettung)');hurt(G,u,q)}

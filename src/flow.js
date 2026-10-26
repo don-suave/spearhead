@@ -13,10 +13,10 @@ import {SB_TER,CA_MANOR,CA_START,CA_REL} from './packdata.js';
 import {manorOpts,placeRelic} from './ca.js';
 import {setPack,PACKN,PACKS} from './packs.js';
 import {HK} from './cards.js';
-import {destReq,endTac,twVP,twAfter,twRound,applyTw,cmdWindow,doCharge,doRun,doRetreat} from './cards.js';
+import {CH,destReq,endTac,twVP,twAfter,twRound,applyTw,cmdWindow,doCharge,doRun,doRetreat} from './cards.js';
 
 export function turnStart(S){S.tn++;S.D=[0,0];S.ocs=S.oc.slice();S.T=newT();S.Ph=newPh();if(RGI(S,S.act)=='bg_seg'&&d6(S)>=2)(S.bz||(S.bz=[0,0]))[S.act]++;S.U.forEach(u=>{if(u.x>=0&&hasAb(u,'ms_regen')&&u.dmg>0&&canHeal(S,u))u.dmg=Math.max(0,u.dmg-d3(S))});if(S.K.pack==2&&HK.ts)HK.ts(S)}
-const draw1=(S,p)=>{while(p.hand.length<3){if(!p.deck.length){p.deck=shuffle(S,p.disc);p.disc=[]}if(!p.deck.length)break;p.hand.push(p.deck.pop())}};
+const draw1=(S,p)=>{while(p.hand.length-(p.aside||[]).length<3){if(!p.deck.length){p.deck=shuffle(S,p.disc);p.disc=[]}if(!p.deck.length)break;p.hand.push(p.deck.pop())}};
 
 const GA={'Städte Sigmars':'Ordnung','Sturmgeschmiedete Ewige':'Ordnung','Khazalid':'Ordnung','Skaven':'Chaos','Maggotkin des Nurgle':'Chaos','Seelenbrand-Grabesfürsten':'Tod','Nachtspuk':'Tod','Orruk-Kriegsclans':'Zerstörung','Hedoniten des Slaanesh':'Chaos','Ogor-Schlundstämme':'Zerstörung','Behemats Söhne':'Zerstörung','Helschmiede des Hashut':'Chaos','Seraphon':'Ordnung','Klingen des Khorne':'Chaos','Töchter des Khaine':'Ordnung','Mondwahn-Gits':'Zerstörung','Himmelsherrscher der Kharadron':'Ordnung','Lichtfürsten der Lumineth':'Ordnung','Jünger des Tzeentch':'Chaos','Knochenlegionen der Ossiarch':'Tod','Sylvaneth':'Ordnung','Sklaven der Finsternis':'Chaos'};
 export function* flow(G){
@@ -121,6 +121,7 @@ function* startRound(G,f){const S=G.S,P=S.P,K=S.K;
  for(const i of [0,1]){if(f||!dr(i)||G.isAI(i))continue;
   while(P[i].hand.length){const h=P[i].hand;const k=yield* choice(G,i,'Taktikkarten ablegen?','Du darfst beliebig viele Karten offen ablegen, bevor du nachziehst.',[...h.map(c=>({t:'Ablegen: '+TAC[c-1][0]})),{t:'Fertig – nachziehen'}],{pref:h.length});if(k==h.length)break;const c=h[k];h.splice(k,1);P[i].disc.push(c)}}
  P.forEach((p,i)=>{if(dr(i))draw1(S,p)});
+ for(const i of [0,1]){if(!dr(i)||ENI(S,i)!='sd_ritual'||!gnl(S,i))continue;const p=P[i];if(!p.deck.length){p.deck=shuffle(S,p.disc);p.disc=[]}if(!p.deck.length)continue;p.hand.push(p.deck.pop());const h=p.hand.filter(c=>!(p.aside||[]).includes(c));let pr=0;h.forEach((c,j)=>{if(!CH[c]||!CH[c](S,i))pr=j});const k=G.isAI(i)?pr:yield* choice(G,i,'Grausamer Ritualist','Du hast 1 zusätzliche Taktikkarte gezogen. Lege 1 Karte deiner Hand unter dein Deck:',h.map(c=>({t:'Unter das Deck: '+TAC[c-1][0],s:TAC[c-1][1]})),{pref:pr});const c=h[k];p.hand.splice(p.hand.indexOf(c),1);p.deck.unshift(c);G.note('Grausamer Ritualist ('+(i?'Computer':'Du')+'): zusätzliche Karte gezogen, 1 Karte unter das Deck gelegt')}
  if(S.round==1)[0,1].forEach(o=>{if(ENI(S,o)=='ss_vorrat'){S.kes[o]=1;G.note('Gut bestückte Vorratskammer: Der Fleischerkessel ist voll')}});
  yield* infoR(G,0,'Schlachtrunde '+S.round,`1. ${t.replace(/<br>.*/,'')}<br>2. ${u>=0?(u?'Computer ist':'Du bist')+' Außenseiter (+1 BP)':'Kein Außenseiter'}<br>3. Wendungskarte: ${TWD[K.realm][K.tw-1][1]} (s. o.)<br>4. Taktikkarten gezogen${sz?' (Initiative an sich gerissen)':''}<br>5. Keine Fähigkeiten zu Beginn der Schlachtrunde<br>Kontrolle: du ${cnm(S,0)||'keins'}, Computer ${cnm(S,1)||'keins'}`,'Los');
  if(S.round==1)yield* mudCover(G)}

@@ -7,6 +7,8 @@ import {doRetreat,destReq} from './cards.js';
 import {abs,wholly,udist} from './models.js';
 import {ARMY} from './data.js';
 import {d6,d3,add,has} from './util.js';
+import {TAC} from './data.js';
+import {CH} from './cards.js';
 import {addFx,fxL,fxSum,usedKey,useKey} from './fx.js';
 const trOf=(S,o,k)=>{try{return ARMY[S.K.army[o]].tr.includes(k)}catch(e){return false}};
 const kw=(u,w)=>(u.kw||'').includes(w);
@@ -292,6 +294,33 @@ Object.assign(AB,{
   sd_slaan:{n:'Mal des Slaanesh',s:'Passiv: Der General kämpft zuerst',army:1,src:(S,o)=>ENI(S,o)=='sd_slaan'},
   sd_tzeentch:{n:'Mal des Tzeentch',s:'Bewegungsphase, 1× pro Schlacht: Befreundete Einheit (nicht der General) wird ganz innerhalb 6" um den General, >6" von Feinden neu aufgestellt; keine Bewegung-Fähigkeiten mehr in dieser Phase',ph:2,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='sd_tzeentch',can:(S,o)=>!!genOf(S,o)&&fr(S,o).some(x=>!x.gen),
    *run(G,o){const S=G.S,t=yield* pk(G,o,'Mal des Tzeentch: Einheit',FL(S,o,x=>!x.gen),x=>mx(x));if(!t)return;if(yield* relocate(G,o,t,'sdm','Mal des Tzeentch','Neu aufstellen: ganz innerhalb 6 Zoll um den General, mehr als 6 Zoll von allen Feinden'))addFx(S,{k:'nomove',u:t.id,exp:'ph'})},ai:()=>false}
+ });
+
+ // ---- Sklaven der Finsternis: Finsterschwur-Plünderer ----
+ Object.assign(HK,{
+  sd_klinge:{wpn:(S,u,w)=>w[0]=='Runengravierte Axt'?w.map((v,i)=>i==5?2:v):w},
+  sd_talis:{ward:()=>4},
+  sd_reiter:{hitT:(S,d,a,shoot)=>shoot?-1:0}
+ });
+ GL.after.push((G,u,e,k)=>{const S=G.S;if(!hasAb(e,'sd_glor')||!S.U.includes(u))return;let n=0;const rs=[];for(let i=0;i<k;i++){const r=d6(S);rs.push(r);if(r>=5)n++}rep(G,'Glorreicher Tod ('+e.name+')',row('Würfe (5+)',rs,5),n?u.name+': '+n+' tödlicher Schaden':'Kein Effekt');if(n)mort(G,u,n,'Glorreicher Tod')});
+ Object.assign(AB,{
+  sd_schwur:{n:'Schwüre der Finsternis',s:'Heldenphase, 1× pro Zug (Armee): Taktikkarte als Schwur zeigen. Wird ihr Vorhaben in diesem Zug erfüllt, wird sie zur Seite gelegt (zählt nicht zu den 3 Handkarten) und ihr Befehl bleibt einsetzbar',ph:1,freq:'turn',army:1,src:(S,o)=>trOf(S,o,'sd_schwur'),can:(S,o)=>S.P[o].hand.some(c=>!(S.P[o].aside||[]).includes(c)),
+   *run(G,o){const S=G.S,p=S.P[o],c0=p.hand.filter(c=>!(p.aside||[]).includes(c));const c=yield* pk(G,o,'Schwur: Taktikkarte zeigen',c0.map(c=>[TAC[c-1][0]+' – '+TAC[c-1][1],c]),c=>CH[c]&&CH[c](S,o)?2:1);if(!c)return;(S.oath||(S.oath=[null,null]))[o]=c;G.note((o?'Computer':'Du')+' schwört: '+TAC[c-1][0])},ai:()=>true},
+  sd_ueberleg:{n:'Schwur der Überlegenheit',s:'Heldenphase: Befreundete Einheit ganz innerhalb 12" um die Generalin: +1 auf Trefferwürfe bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_ueberleg'),can:(S,u)=>fr(S,u.o).some(x=>x!==u&&wholly(x,u,12)),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Schwur der Überlegenheit: Ziel',FL(S,u.o,x=>x!==u&&wholly(x,u,12)),x=>mx(x));if(!t)return;addFx(S,{k:'hitA',u:t.id,v:1,exp:'own'});rep(G,'Schwur der Überlegenheit',[],t.name+': +1 auf Trefferwürfe bis zu deinem nächsten Zug')},ai:()=>true},
+  sd_vision:{n:'Visionen des Ruhms',s:'Heldenphase: 8 Würfel, je 4+ = 1 Wiederholung (Treffer, Verwundung oder Schutz) bis zu deinem nächsten Zug (automatisch bei misslungenen Würfen; Rennen ausgenommen)',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sd_vision'),can:()=>true,
+   *run(G,u){const S=G.S,rs=[];for(let i=0;i<8;i++)rs.push(d6(S));const n=rs.filter(x=>x>=4).length;if(n)addFx(S,{k:'rrt',u:u.id,v:n,exp:'own'});rep(G,'Visionen des Ruhms',row('8 Würfel (4+)',rs,4),n?u.name+': '+n+' Wiederholung(en) bis zu deinem nächsten Zug':'Keine Wiederholung')},ai:()=>true},
+  sd_reiter:{n:'Schnelle Angreifer',s:'Passiv: −1 auf Trefferwürfe für Fernkampfattacken gegen diese Einheit',unit:1,src:(S,u)=>hasAb(u,'sd_reiter')},
+  sd_glor:{n:'Glorreicher Tod',s:'Passiv: Pro im Nahkampf getötetem Modell W6: 5+ → 1 tödlicher Schaden für den Angreifer (automatisch)',unit:1,src:(S,u)=>hasAb(u,'sd_glor')},
+  sd_wut:{n:'Arkhars Wut',s:'Nahkampfphase, 1× pro Zug (Armee): Befreundete Einheit im Nahkampf: +1 Wucht und +1 Attacken der Nahkampfwaffen (nicht Begleiter) bis Zugende',ph:5,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='sd_wut',can:(S,o)=>fr(S,o).some(x=>inCombat(S,x)),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Arkhars Wut: Einheit im Nahkampf',FL(S,o,x=>inCombat(S,x)),x=>mx(x));if(!t)return;addFx(S,{k:'rendN',u:t.id,v:1,exp:'turn'});addFx(S,{k:'attN',u:t.id,v:1,exp:'turn'});rep(G,'Arkhars Wut',[],t.name+': +1 Wucht und +1 Attacken im Nahkampf bis Zugende')},ai:()=>true},
+  sd_invasor:{n:'Furchtlose Invasoren',s:'Bewegungsphase, 1× pro Zug (Armee): Befreundete Einheit im Nahkampf: Rückzug ohne tödlichen Schaden, danach noch Angriff möglich',ph:2,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='sd_invasor',can:(S,o)=>fr(S,o).some(x=>inCombat(S,x)),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Furchtlose Invasoren: Einheit im Nahkampf',FL(S,o,x=>inCombat(S,x)),x=>mx(x));if(!t)return;addFx(S,{k:'klaev',u:t.id,exp:'turn'});rep(G,'Furchtlose Invasoren',[],t.name+': Rückzug ohne tödlichen Schaden, danach Angriff erlaubt')},ai:()=>true},
+  sd_klinge:{n:'Blutrünstige Klinge',s:'Passiv: Wucht der Runengravierten Axt der Generalin ist 2',army:1,src:(S,o)=>ENI(S,o)=='sd_klinge'},
+  sd_talis:{n:'Götterschattentalisman',s:'Passiv: Generalin hat Rettung 4+',army:1,src:(S,o)=>ENI(S,o)=='sd_talis'},
+  sd_ritual:{n:'Grausamer Ritualist',s:'Passiv: Beim Ziehen der Taktikkarten (Generalin auf dem Schlachtfeld): 1 zusätzliche Karte ziehen, dann 1 Handkarte unter das Deck legen',army:1,src:(S,o)=>ENI(S,o)=='sd_ritual'},
+  sd_ueber:{n:'Überfallchampion',s:'Angriffsphase: Andere befreundete Einheit ganz innerhalb 12" um die Generalin darf Angriffswürfe wiederholen (bis Zugende)',ph:4,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='sd_ueber',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>x!==g&&wholly(x,g,12))},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Überfallchampion: Ziel',FL(S,o,x=>x!==g&&wholly(x,g,12)),x=>mx(x));if(!t)return;addFx(S,{k:'rrc',u:t.id,v:1,exp:'turn'});rep(G,'Überfallchampion',[],t.name+' darf Angriffswürfe wiederholen')},ai:()=>true}
  });
 
 }

@@ -1305,3 +1305,35 @@ Trampelnde Hufe des Chaosrosses	Trampling Hooves of the Chaos Steed
 Im Angriff aufgespießt	Impaled on the Charge
 Passiv: Addiere 1 auf den Wuchtwert der Verfluchten Lanzen dieser Einheit, wenn sie im selben Zug angegriffen hat.	Passive: Add 1 to the Rend of this unit's Cursed Lances if it charged in the same turn.
 Einmal pro Schlacht, deine Bewegungsphase: Wähle eine befreundete Einheit auf dem Schlachtfeld (nicht deinen General). Entferne sie vom Schlachtfeld und stelle sie vollständig innerhalb von 6 Zoll um deinen General und weiter als 6 Zoll von allen feindlichen Einheiten wieder auf. Sie kann für den Rest der Phase keine Bewegung-Fähigkeiten einsetzen.	Once per battle, your movement phase: Pick a friendly unit on the battlefield (not your general). Remove it from the battlefield and set it up again wholly within 6" of your general and more than 6" from all enemy units. It cannot use Move abilities for the rest of the phase.
+Finsterschwur-Plünderer	Darkoath Raiders
+Schwüre der Finsternis	Oaths of Darkness
+Einmal pro Zug (Armee), deine Heldenphase: Du kannst deinem Gegner 1 Taktikkarte von deiner Hand zeigen. Dann wird sie dein Schwur für den Rest des Zugs. Schließt du ihr Taktisches Vorhaben in diesem Zug ab, ist dein Schwur erfüllt: Statt die Karte abzulegen, legst du sie zur Seite (zählt nicht gegen die 3 Karten auf der Hand) und kannst ihren Befehl weiterhin einsetzen; dann wird sie wie üblich abgelegt. Setzt du den Befehl vor dem Abschluss ein, wird die Karte wie üblich abgelegt.	Once per turn (army), your hero phase: You can show your opponent 1 tactic card from your hand. It becomes your oath for the rest of the turn. If you complete its tactic this turn, your oath is fulfilled: instead of discarding the card, set it aside (it does not count against the 3 cards in your hand) and you can still use its command; then it is discarded as usual. If you use the command before completing it, the card is discarded as usual.
+Arkhars Wut	Arkhar's Fury
+Einmal pro Zug (Armee), beliebige Nahkampfphase: Wähle eine befreundete Einheit im Nahkampf: Addiere für den Rest des Zugs 1 auf den Wuchtwert und den Attackenwert der Nahkampfwaffen des Ziels (nicht Begleiter-Waffen).	Once per turn (army), any combat phase: Pick a friendly unit in combat: add 1 to the Rend and 1 to the Attacks of the target's melee weapons for the rest of the turn (not Companion weapons).
+Furchtlose Invasoren	Fearless Invaders
+Einmal pro Zug (Armee), deine Bewegungsphase: Wähle eine befreundete Einheit im Nahkampf: Setzt das Ziel in diesem Zug eine Rückzug-Fähigkeit ein, wird ihm kein tödlicher Schaden zugefügt und es kann später in diesem Zug noch Angriff-Fähigkeiten einsetzen.	Once per turn (army), your movement phase: Pick a friendly unit in combat: if the target uses a Retreat ability this turn, no mortal damage is inflicted on it and it can use Charge abilities later this turn.
+Blutrünstige Klinge	Bloodthirsty Blade
+Passiv: Der Wuchtwert der Runengravierten Axt deiner Generalin ist 2.	Passive: The Rend of your general's Rune-etched Axe is 2.
+Götterschattentalisman	Godshadow Talisman
+Passiv: Deine Generalin hat Rettung (4+).	Passive: Your general has Ward (4+).
+Überfallchampion	Champion of the Raid
+Deine Angriffsphase: Wähle eine andere befreundete Einheit ganz innerhalb von 12 Zoll um deine Generalin: Das Ziel kann für den Rest des Zugs Angriffswürfe wiederholen.	Your charge phase: Pick another friendly unit wholly within 12" of your general: the target can re-roll charge rolls for the rest of the turn.
+Grausamer Ritualist	Cruel Ritualist
+Passiv: Jedes Mal, wenn du Taktikkarten ziehst, kannst du, sofern deine Generalin auf dem Schlachtfeld ist, 1 zusätzliche Taktikkarte ziehen und dann 1 Taktikkarte deiner Hand unter dein Taktikdeck legen.	Passive: Each time you draw tactic cards, if your general is on the battlefield, you can draw 1 additional tactic card and then put 1 tactic card from your hand on the bottom of your tactic deck.
+Finsterschwur-Kriegskönigin	Darkoath Warqueen
+Runengravierte Axt	Rune-etched Axe
+Schwur der Überlegenheit	Oath of Superiority
+Deine Heldenphase: Wähle eine befreundete Einheit ganz innerhalb von 12 Zoll um deine Generalin: Addiere bis zum Beginn deines nächsten Zuges 1 auf Trefferwürfe für Attacken des Ziels.	Your hero phase: Pick a friendly unit wholly within 12" of your general: add 1 to hit rolls for attacks made by the target until the start of your next turn.
+Finsterschwur-Zerreißer	Darkoath Wrathmongers
+Finsterschwur-Waffen	Darkoath Weapons
+Visionen des Ruhms	Visions of Glory
+Deine Heldenphase: 1 Modell dieser Einheit ist ein Gottessprecher. Wirf 8 Würfel. Für jede 4+ kannst du bis zum Beginn deines nächsten Zuges 1 Trefferwurf, 1 Verwundungswurf, 1 Rennenwurf oder 1 Schutzwurf für diese Einheit wiederholen.	Your hero phase: 1 model in this unit is a Soothsayer. Roll 8 dice. For each 4+, until the start of your next turn you can re-roll 1 hit roll, 1 wound roll, 1 run roll or 1 save roll for this unit.
+Finsterschwur-Grauensreiter	Darkoath Dreadriders
+Grauensreiter-Klingen	Dreadrider Blades
+Hufe des Kriegsrosses	Warhorse's Hooves
+Schnelle Angreifer	Swift Raiders
+Passiv: Subtrahiere 1 von Trefferwürfen für Fernkampfattacken, deren Ziel diese Einheit ist.	Passive: Subtract 1 from hit rolls for shooting attacks that target this unit.
+Finsterschwur-Barbaren	Darkoath Marauders
+Plündererwaffen	Raider Weapons
+Glorreicher Tod	Glorious Death
+Passiv: Wirf jedes Mal einen Würfel, wenn ein Modell dieser Einheit durch eine Nahkampfattacke getötet wird und im Nahkampf mit der attackierenden Einheit war. Bei 5+ füge der attackierenden Einheit 1 tödlichen Schaden zu, nachdem die Kämpfen-Fähigkeit abgehandelt wurde.	Passive: Roll a dice each time a model in this unit is slain by a melee attack and was in combat with the attacking unit. On a 5+, inflict 1 mortal damage on the attacking unit after the Fight ability has been resolved.

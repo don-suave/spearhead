@@ -1,5 +1,8 @@
 # Changelog
 
+## v93
+- Neue Armee: Sklaven der Finsternis Finsterschwur-Plünderer (Schwüre der Finsternis mit zur Seite gelegten Taktikkarten, Visionen des Ruhms mit Wiederholungen, Arkhars Wut, Furchtlose Invasoren, Glorreicher Tod, vier Verbesserungen)
+
 ## v92
 - City of Ash: Das Ruined Manor steht immer innerhalb des rechteckigen Ziels (Mauern nach innen, bei Platznot gekürzt), nie außerhalb
 

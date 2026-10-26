@@ -29,7 +29,7 @@ export const CH={
  10:(S,o)=>razeOK(S,o),
  11:(S,o)=>S.obj.filter((p,k)=>S.ocs[k]===1-o&&S.oc[k]===o).length>=2,
  12:(S,o)=>myU(S,o).some(u=>has(S.T.fought,u.id))&&S.D[o]==0};
-export function endTac(S,o){const p=S.P[o],r=[];p.hand.slice().forEach(c=>{if(CH[c]&&CH[c](S,o)){p.hand.splice(p.hand.indexOf(c),1);p.disc.push(c);r.push(TAC[c-1][0])}});return r}
+export function endTac(S,o){const p=S.P[o],r=[],as=p.aside||(p.aside=[]),oc=S.oath&&S.oath[o];p.hand.slice().forEach(c=>{if(as.includes(c))return;if(CH[c]&&CH[c](S,o)){if(c===oc)as.push(c);else{p.hand.splice(p.hand.indexOf(c),1);p.disc.push(c)}r.push(TAC[c-1][0]+(c===oc?' (Schwur erfüllt, Karte zur Seite gelegt)':''))}});if(S.oath)S.oath[o]=null;return r}
 
 // ---------- Würfelduell ----------
 export function rolloff(G){const S=G.S;let a,b;do{a=d6(S);b=d6(S)}while(a==b);G.rep('Würfelduell (Wendungskarte)',[{k:'txt',s:'Du'},{k:'row',l:'',v:[a]},{k:'txt',s:'Computer'},{k:'row',l:'',v:[b]},{k:'txt',s:'<b>'+(a>b?'Du entscheidest':'Computer entscheidet')+'</b>'}],0);S.TW=S.TW||{};S.TW.rl=[a,b];return a>b?0:1}
