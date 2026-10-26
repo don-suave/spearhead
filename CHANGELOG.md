@@ -1,5 +1,8 @@
 # Changelog
 
+## v76
+- Herkunft jeder Option sichtbar (⟡): Taktikkarte (als Befehl), Einheit, Kampfeigenschaft der Armee, Regimentsfähigkeit, Verbesserung des Generals, Gelände/Reliquie, Wendungskarte – in Einheiten-Menü, Hauptmenü, Reaktionen, Befehlen und Folgefragen
+
 ## v75
 - Einheiten-Details: Zeile „Fähigkeiten: …“ mit den internen Fähigkeitsnamen entfernt (die Fähigkeitstexte bleiben)
 

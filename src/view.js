@@ -5,7 +5,7 @@ import {abs,mDistPt,mgap,cohBad} from './models.js';
 import {PH,TWL,TERSZ,ARMY} from './data.js';
 import {chargePlan} from './plan.js';
 import {depForm,rsvForm,moveForm,pileForm,chargeForm,mvRest,chargeModelErr,CMD,rngOf,mvOf,byId,abilities,globals,stat,eligF,sfOK,dist,foes,wnd,mx,ONM,placeErr,moveErr,adjErr,adjAllow,pileModelErr,chargeErr,pileErr,chargeDest,pileDest,chargeSnap,actCheck,inCombat} from './rules.js';
-import {report,askName,home} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs} from './abil.js';
+import {report,askName,home} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs,abOrigin,originOf,srcTag} from './abil.js';
 
 const SC=24,$=id=>document.getElementById(id),COL=['#4aa3ff','#ff6a4a'];
 let G,seat=0,mode=null,busy=false,timer=0,nextDelay=600;
@@ -84,11 +84,11 @@ function present(q){const S=G.S;
   let x0=null;card.onpointerdown=e=>x0=e.clientX;card.onpointerup=e=>{if(x0!=null&&Math.abs(e.clientX-x0)>40){(e.clientX<x0?br:bl).onclick()}x0=null};
   sh.append(fr,card,nav,ok);show()}
  else if(q.t=='choice'&&q.bar)setMode({t:'bar',q,hint:q.bar})
- else if(q.t=='choice'&&q.sel){setMode(null);pop(q.title,(q.text||'')+(q.blocks?'<br>'+rb(q.blocks):''),[],false);
+ else if(q.t=='choice'&&q.sel){setMode(null);pop(q.title,titleSrc(q.who,q.title)+(q.text||'')+(q.blocks?'<br>'+rb(q.blocks):''),[],false);
   const sh=$('pop').firstChild,se=document.createElement('select');se.id='selpick';se.style.cssText='width:100%;padding:10px;margin:6px 0;font-size:15px;background:#1b1f26;color:inherit;border:1px solid var(--line);border-radius:8px';
   q.opts.forEach((o,i)=>{const op=document.createElement('option');op.value=i;op.textContent=o.t;op.disabled=!!o.dis;se.appendChild(op)});
   const ok=document.createElement('button');ok.textContent='Auswählen';ok.onclick=()=>{closePop(false);answer(+se.value)};sh.appendChild(se);sh.appendChild(ok)}
- else if(q.t=='choice'){setMode(null);pop(q.title,(q.text||'')+(q.blocks?'<br>'+rb(q.blocks):''),q.opts.map((o,i)=>({t:o.t,s:o.s,dis:o.dis,fn:()=>answer(i)})),false);if(q.bot)$('pop').className='bot'}
+ else if(q.t=='choice'){setMode(null);pop(q.title,titleSrc(q.who,q.title)+(q.text||'')+(q.blocks?'<br>'+rb(q.blocks):''),q.opts.map((o,i)=>({t:o.t,s:/^\d\. /.test(q.title||'')?o.s:withSrc(q.who,o),dis:o.dis,fn:()=>answer(i)})),false);if(q.bot)$('pop').className='bot'}
  else if(q.t=='info'){setMode(null);pop(q.title,q.text+(q.blocks?'<br>'+rb(q.blocks):''),[{t:q.btn||'Weiter',fn:()=>answer(true)}],false)}
  else if(q.t=='place'){const u=q.u;setMode({t:'place',q,a:(u&&u.a0)||0,zone:null,hint:q.text||'Platzieren'})}
  else if(q.t=='dest'&&!q.adjOnly)setMode({t:'dest',q,u:byId(S,q.u),rng:q.rng,roll:q.roll,chg:q.chg,pile:q.pile,tg:q.tgt,hint:q.chg?'Angriff '+q.roll+' Zoll: Einheit ziehen, grün = möglich, ↺↻ dreht':q.pile?'Nachrücken (optional): Einheit ziehen (bis 3 Zoll), grün = möglich, ↺↻ dreht':(q.text?q.text+' – ':'')+'Einheit ziehen: grün = möglich, ↺↻ dreht (jedes Modell bis '+q.rng+' Zoll)',a:0});
@@ -127,7 +127,7 @@ $('menu').onclick=()=>{const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
  pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small>`,
  [{t:'Ansicht zurücksetzen',fn:resetView},...(S.stage?[{t:'Meine Taktikkarten ('+S.P[seat].hand.length+')',fn:hand}]:[]),...(can?[{t:'Befehle jetzt',fn:()=>answer({a:'cmdwin'})}]:[]),
-  ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,fn:()=>answer({a:g.k})})):[]),{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}])};
+  ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,s:withSrc(seat,g),fn:()=>answer({a:g.k})})):[]),{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}])};
 const KC=['⚔️','💰','💥','👑','🏃','💀','🎯','🔥','☄️','🔨','🔍','⚖️'],KS=['⚡','💀','⛰️','🏴','🕯️','👻','🦴','🗿','⚰️','↩️','😱','🩸'],KG0=['⚔️','🏴','↔️','⚡','⛰️','👑','🔥','🗿','🐉','🏹','⚔️','🛡️'];
 function cardsUi(){const S=G.S,h=S.P[seat].hand,d=$('cards');d.innerHTML='';
  h.forEach(c=>{const b=document.createElement('button');b.className='kc'+(CMD[c]&&CMD[c].ph==S.ph?' on':'');b.textContent=(G.S.K.pack==2?KC:G.S.K.pack==1?KS:KG0)[c-1]||'🂠';b.setAttribute('aria-label',TAC[c-1][0]);
@@ -140,8 +140,11 @@ function onceUi(){const S=G.S,d=$('once');d.innerHTML='';if(!S.stage){document.d
  document.documentElement.style.setProperty('--oh',d.offsetHeight+'px')}
 function hand(){const h=G.S.P[seat].hand;pop('Meine Taktikkarten','Taktiken werden am Zugende automatisch geprüft. Befehle auf der Kartenrückseite erscheinen bei Beginn der passenden Phase.',h.map(c=>({t:TAC[c-1][0],s:TAC[c-1][1]+'<br><i>Befehl '+TAC[c-1][2]+': '+TAC[c-1][3]+'</i>',dis:true})))}
 /* ---------- Eingabe auf dem Feld ---------- */
+// Herkunft einer Option (Taktikkarte, Einheit, Kampfeigenschaft, Regiment, Verbesserung, Gelände …) vor den Kurztext setzen
+const withSrc=(o,x,u)=>{const S=G.S;let src='';try{src=x.k&&String(x.k).startsWith('ab:')?abOrigin(S,x.k.slice(3),o,u):originOf(S,o,x.t)}catch(e){}return src?srcTag(src)+(x.s||''):x.s};
+const titleSrc=(o,t)=>{let s='';try{s=originOf(G.S,o,t)||(G.src?originOf(G.S,G.co!=null?G.co:o,G.src):'')}catch(e){}return srcTag(s)};
 function pick(u){const S=G.S,a=abilities(S,u).filter(x=>x.k!='fight');
- pop(u.name,stat(u)+flagHtml(u),a.length?a.map(x=>({t:x.t,s:x.s,dis:x.dis,fn:()=>useAb(u,x.k)})):[{t:'Keine Fähigkeiten in dieser Phase',dis:true}])}
+ pop(u.name,stat(u)+flagHtml(u),a.length?a.map(x=>({t:x.t,s:withSrc(u.o,x,u),dis:x.dis,fn:()=>useAb(u,x.k)})):[{t:'Keine Fähigkeiten in dieser Phase',dis:true}])}
 function useAb(u,k){
  if(k=='move')setMode({t:'move',u,rng:mvRest(G.S,u),a:0,hint:'Einheit ziehen: grün = Zielformation möglich, ↺↻ dreht · jedes Modell läuft einzeln (bis '+mvRest(G.S,u).toFixed(1)+' Zoll)',back:null});
  else if(k=='shoot')setMode({t:'shoot',u,hint:'Ziel antippen ('+u.rw[0][1]+' Zoll)'});
@@ -188,7 +191,7 @@ function splitPop(u,inr,rolls){const rh=(rolls||[]).map(r=>`<small>${r.n}: ${r.a
 const flagHtml=u=>{const f=unitFlags(G.S,u);return f.length?'<br><br><b>Zeitweilige Modifikatoren</b>'+f.map(a=>`<br><span style="color:${a.c=='bad'?'#ff8a7a':'#8fe0a0'}">⚑ ${a.d}</span>`).join(''):''};
 function fightPick(u){const S=G.S,q=G.req,ok=q.who==seat&&eligF(S,seat).filter(x=>sfOK(S,x)).includes(u),inr=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR);
  pop(u.name,stat(u)+flagHtml(u),[{t:'Kämpfen',s:inr.length?'Nahkampfreichweite 3"':'Kein Gegner in Reichweite',dis:!ok||!inr.length,fn:()=>{if(inr.length>=2){answer({a:'fight',u:u.id,t:null,split:1});return}setMode({t:'fightT',u,hint:'Ziel im Nahkampf antippen',back:{t:'fightsel',q,hint:'Du bist dran: Einheit zum Kämpfen antippen'}})}},
-  ...abilities(S,u).filter(x=>String(x.k).startsWith('ab:')&&x.k!='ab:bd_leg').map(x=>({t:x.t,s:x.s,dis:x.dis,fn:()=>answer({a:x.k,u:u.id})})),
+  ...abilities(S,u).filter(x=>String(x.k).startsWith('ab:')&&x.k!='ab:bd_leg').map(x=>({t:x.t,s:withSrc(u.o,x,u),dis:x.dis,fn:()=>answer({a:x.k,u:u.id})})),
   ...(ok&&!inr.length?[{t:'Nicht kämpfen',fn:()=>answer({a:'fight',u:u.id,t:null})}]:[])])}
 function moveTo(u,x,y,rng,mk,m){if(m&&m.chg){const e=foes(G.S,u).filter(f=>f.x>=0).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-a.r-(Math.hypot(b.x-x,b.y-y)-b.r))[0];if(e&&Math.hypot(e.x-x,e.y-y)-e.r-u.r<=2){const q=chargeSnap(G.S,u,e,Math.atan2(y-e.y,x-e.x),m.q.roll);if(q){x=q.x;y=q.y}}}let dx=x-u.x,dy=y-u.y,d=Math.hypot(dx,dy);if(d>rng){dx*=rng/d;dy*=rng/d}
  const tx=Math.min(W-u.r,Math.max(u.r,u.x+dx)),ty=Math.min(H-u.r,Math.max(u.r,u.y+dy)),e=m&&m.chg?chargeErr(G.S,u,tx,ty,m.q.roll):m&&m.pile?pileErr(G.S,u,byId(G.S,m.tg),tx,ty):moveErr(G.S,u,tx,ty,rng);if(e){note(e);return}answer(mk(tx,ty))}

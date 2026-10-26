@@ -697,3 +697,38 @@ Object.assign(AB,{
 // Perfekter Streich (Vanari-Klingenmeister): je Attacke 2+ → 1 tödlicher Schaden
 export function perfStreich(G,u,e){const S=G.S,n=3*(u.M?inRange(u,e,CR):nm(u)),rs=[];let k=0;for(let i=0;i<n;i++){const r=d6(S);rs.push(r);if(r>=2)k++}
  add(S.Ph.used,u.id);(S.Ph.alc||(S.Ph.alc={}))[e.id]=((S.Ph.alc||{})[e.id]||0)+k;rep(G,'Perfekter Streich',row('Attacken (2+): '+u.name+' → '+e.name,rs,2),k?k+' tödlicher Schaden':'Kein Schaden');if(k)hurt(G,e,k)}
+
+// ---------- Herkunft einer Fähigkeit/Option (für die Anzeige „woher kommt das?“) ----------
+import {TAC as TACO,TWD as TWDO} from './data.js';
+const strip=s=>String(s||'').replace(/<[^>]*>/g,'').replace(/^(Reaktion|Befehl|Befehle)\s*[:–-]\s*/,'').replace(/\s*\((Kampfeigenschaft|Reaktion|Passiv|Befehl)[^)]*\)\s*$/,'').trim();
+export function abOrigin(S,id,o,u){const a=AB[id];if(!a||!S.K||!S.K.army)return '';const A=ARMY[S.K.army[o]];if(!A)return '';
+ const eq=x=>x&&strip(x)===strip(a.n);
+ const r=A.reg.find(x=>x[3]===id||eq(x[0]));if(r)return 'Regimentsfähigkeit „'+r[0]+'“';
+ const e=A.enh.find(x=>x[3]===id||eq(x[0]));if(e){const g=S.U.find(x=>x.o===o&&x.gen);return 'Verbesserung des Generals „'+e[0]+'“'+(g?' – '+g.name:'')}
+ if(u&&(u.abs||[]).includes(id))return 'Einheit: '+u.name;
+ for(const d of A.units){if((d.abs||[]).includes(id))return 'Einheit: '+d.n;for(const t of d.tx||[])if(eq(t[0]))return /Kampfeigenschaft/.test(t[0])?'Kampfeigenschaft der Armee „'+A.n+'“':'Einheit: '+d.n}
+ if(u&&a.unit)return 'Einheit: '+u.name;
+ return 'Kampfeigenschaft der Armee „'+A.n+'“'}
+// Herkunft anhand des angezeigten Namens (Titel oder Optionstext eines Dialogs)
+export function originOf(S,o,name){if(!S||!S.K||!S.K.army||o==null||o<0)return '';const n0=strip(name);if(!n0||n0.length<3)return '';
+ // erst der volle Name, dann der Teil vor „:“ bzw. vor einer Klammer (Folgefragen wie „Reinigendes Feuer: Ziel“)
+ const tries=[n0,n0.split(':')[0].trim(),n0.replace(/\s*\(.*$/,'').trim(),n0.split(':')[0].replace(/\s*\(.*$/,'').trim()].filter((v,i,a)=>v.length>=3&&a.indexOf(v)==i);
+ for(const n of tries){const r=origin1(S,o,n);if(r)return r}
+ // Fragen beim Ausspielen der aktuellen Wendungskarte
+ if(S.TW&&S.TW.id&&/^(Wendungskarte|Dein Ziel wählen|Ziel \d von \d|Speerspitze wählen|Blutmarkiert|Alarielles Segen|Segen des Großvaters|Rasende Einheit|Gegnerische Einheit markieren|Fesselnde Ranken|Dornenschild|Jadeschauer|Gegner wählen)/.test(n0)){const t=(TWDO[S.K.realm]||[]).find(x=>x&&x[0]==S.TW.id);if(t)return 'Wendungskarte „'+t[1]+'“'}
+ return ''}
+function origin1(S,o,n){
+ const P=S.P&&S.P[o];
+ const card=c=>TACO[c-1]&&(strip(TACO[c-1][2])===n?'Taktikkarte „'+TACO[c-1][0]+'“ (als Befehl)':strip(TACO[c-1][0])===n?'Taktikkarte „'+TACO[c-1][0]+'“':'');
+ for(const c of (P&&P.hand)||[]){const v=card(c);if(v)return v}
+ for(let c=1;c<=TACO.length;c++){const v=card(c);if(v)return v}
+ const A=ARMY[S.K.army[o]];
+ if(A){const r=A.reg.find(x=>strip(x[0])===n);if(r)return 'Regimentsfähigkeit „'+r[0]+'“';
+  const e=A.enh.find(x=>strip(x[0])===n);if(e){const g=S.U.find(x=>x.o===o&&x.gen);return 'Verbesserung des Generals „'+e[0]+'“'+(g?' – '+g.name:'')}
+  for(const d of A.units)for(const t of d.tx||[])if(strip(t[0])===n)return /Kampfeigenschaft/.test(t[0])?'Kampfeigenschaft der Armee „'+A.n+'“':'Einheit: '+d.n;
+  for(const d of A.units)for(const k of d.abs||[])if(ABT[k]&&strip(ABT[k][0])===n)return 'Einheit: '+d.n}
+ const id=Object.keys(AB).find(k=>strip(AB[k].n)===n)||(n.length>=6?Object.keys(AB).find(k=>strip(AB[k].n).startsWith(n)):null);if(id){const u=S.U.find(x=>x.o===o&&(x.abs||[]).includes(id));return abOrigin(S,id,o,u)}
+ const ter=(S.ter||[]).find(t=>(t.rel&&n.startsWith(t.rel))||(t.nm&&n.startsWith(t.nm)));if(ter)return ter.rel?'Reliquie „'+ter.rel+'“':'Gelände „'+ter.nm+'“';
+ for(const g of TWDO||[])for(const t of g||[])if(t&&strip(t[1])===n)return 'Wendungskarte „'+t[1]+'“';
+ return ''}
+export const srcTag=s=>s?'<span style="display:block;color:#e8c46a;font-weight:600;margin-bottom:2px">⟡ '+s+'</span>':'';
