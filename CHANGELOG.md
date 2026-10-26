@@ -1,5 +1,8 @@
 # Changelog
 
+## v75
+- Einheiten-Details: Zeile „Fähigkeiten: …“ mit den internen Fähigkeitsnamen entfernt (die Fähigkeitstexte bleiben)
+
 ## v74
 - Platzieren und Bewegen: ungültige Punkte rasten auf die nächste gültige Position ein (Aufstellen bis 10", Bewegung/Angriff/Nachrücken entlang der Zuglinie und im Umkreis); Vorschau zeigt die eingerastete Position
 - Reserven und Hinterhalt: werden am Ende der passenden Phase automatisch angeboten (Abbrechen lässt die Einheit in Reserve)
