@@ -38,8 +38,8 @@ export function manorOpts(S,o,len,th){const out=[];Object.entries(S.mr||{}).forE
  [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([i,j],ci)=>{const cx=R0.x+i*R0.w/2*c-j*R0.h/2*s,cy=R0.y+i*R0.w/2*s+j*R0.h/2*c;
   // zwei Mauern entlang der Zielkanten, von der Ecke nach innen
   const lr=(cx<p[0]?'links':'rechts'),tb=(cy<p[1]?'oben':'unten');
-  // Mauern entlang der Zielkanten; bevorzugt nach innen, sonst nach außen (damit das Gelände ganz im eigenen Gebiet bleibt)
-  for(const [sx,sy] of [[1,1],[1,-1],[-1,1],[-1,-1]]){const ax=[-i*c*sx,-i*s*sx],ay=[j*s*sy,-j*c*sy],L=len,M=len;
+  // Mauern entlang der Zielkanten; immer nach innen: das Gelände steht ganz innerhalb des rechteckigen Ziels
+  for(const [sx,sy,LL] of [[1,1,len],[1,1,3.5],[1,1,3],[1,1,2.5]]){const ax=[-i*c*sx,-i*s*sx],ay=[j*s*sy,-j*c*sy],L=LL,M=LL;
    const p1={x:cx+ax[0]*L/2+ay[0]*th/2*(sx==sy?1:-1)*0+ay[0]*th/2,y:cy+ax[1]*L/2+ay[1]*th/2,w:L,h:th,a:R0.a},p2={x:cx+ay[0]*M/2+ax[0]*th/2,y:cy+ay[1]*M/2+ax[1]*th/2,w:th,h:M,a:R0.a};
    const P=[p1,p2],cs=P.flatMap(q=>{const C=Math.cos(q.a),Sn=Math.sin(q.a);return [[-1,-1],[1,-1],[1,1],[-1,1]].map(([u,v])=>[q.x+u*q.w/2*C-v*q.h/2*Sn,q.y+u*q.w/2*Sn+v*q.h/2*C])});
    if(cs.some(q=>q[0]<0||q[0]>W||q[1]<0||q[1]>H||into(S,o,q[0],q[1])<0))continue;

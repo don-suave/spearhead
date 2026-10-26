@@ -1,5 +1,8 @@
 # Changelog
 
+## v92
+- City of Ash: Das Ruined Manor steht immer innerhalb des rechteckigen Ziels (Mauern nach innen, bei Platznot gekürzt), nie außerhalb
+
 ## v91
 - Neue Armee: Sklaven der Finsternis Bluthauchlegion (Auge der Götter mit dauerhaften Segen, Schreckensbanner, Dunkle Eroberer, vier Malen); neue Fraktion mit Kriegsherr des Chaos, Streitwagen des Chaos, Chaoskriegern und Chaosrittern
 
