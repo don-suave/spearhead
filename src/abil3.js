@@ -1,5 +1,5 @@
 // Fähigkeiten der dritten Armeenwelle (Hooks siehe hooks.js).
-import {scE,mort,AB,abUsed,en,roll2,fr,lab,hdr,pk,FL,vis,genOf,nmove,pickF,rep,row,relocate,claims,pickE} from './abil.js';
+import {yn,scE,mort,AB,abUsed,en,roll2,fr,lab,hdr,pk,FL,vis,genOf,nmove,pickF,rep,row,relocate,claims,pickE} from './abil.js';
 import {HK,GL} from './hooks.js';
 import {placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
 import {ptDist} from './geom.js';
@@ -10,6 +10,7 @@ import {d6,d3,add,has} from './util.js';
 import {addFx,fxL,fxSum,usedKey,useKey} from './fx.js';
 const trOf=(S,o,k)=>{try{return ARMY[S.K.army[o]].tr.includes(k)}catch(e){return false}};
 const kw=(u,w)=>(u.kw||'').includes(w);
+const canHealX=(S,u)=>{try{return !fxL(S,u,'sense').length}catch(e){return true}};
 const gOK=(S,o)=>!!genOf(S,o);
 
 // --- Ossiarch-Befehle: 2 Punkte pro Schlachtrunde, je Einheit höchstens 1 Einsatz pro Phase
@@ -32,8 +33,11 @@ const unitNearT=(S,u)=>u.x>=0&&u.M&&abs(u).some(m=>nearT(S,m,3));
 const beute=(S,o)=>{S.beute||(S.beute=[null,null]);const id=S.beute[o];if(id==null)return null;const t=S.U.find(x=>x.id==id);if(!t){S.beute[o]=null;(S.akk||(S.akk=[0,0]))[o]++;return null}return t};
 const akkOf=(S,u)=>((S.akk||[0,0])[u.o]||0)+fxSum(S,u,'akkB');
 const nearB=(S,u)=>{const b=beute(S,u.o);return !!b&&b.x>=0&&u.x>=0&&dist(u,b)<=9};
-export function* beuteStart(G,o){const S=G.S;if(!trOf(S,o,'sy_rache')||beute(S,o))return;const c=S.U.filter(e=>e.o!=o);if(!c.length)return;const t=yield* pk(G,o,'Ziel der Rache: Beute wählen',c.map(x=>[lab(x),x]),scE);if(!t)return;S.beute[o]=t.id;G.note((o?'Computer':'Du')+': Beute ist '+t.name)}
+export function* beuteStart(G,o){const S=G.S;if(!(trOf(S,o,'sy_rache')||trOf(S,o,'kh_beute'))||beute(S,o))return;const c=S.U.filter(e=>e.o!=o);if(!c.length)return;const t=yield* pk(G,o,'Ziel der Rache: Beute wählen',c.map(x=>[lab(x),x]),scE);if(!t)return;S.beute[o]=t.id;G.note((o?'Computer':'Du')+': Beute ist '+t.name)}
 export function* eot3(G,o,act){const S=G.S;
+ {const g=genOf(S,o);if(g&&g.dmg>0&&canHealX(S,g)){const k=ENI(S,o);if(k=='fy_stur'||(k=='kh_blut'&&!usedKey(S,o+':kblut','turn'))){if(k=='kh_blut')useKey(S,o+':kblut','turn');const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note((k=='fy_stur'?'Zu stur zum Sterben':'Von Blut gestärkt')+': '+g.name+' heilt bis zu '+h)}}
+  if(g&&ENI(S,o)=='kh_bisse'){const b=beute(S,o);if(b&&b.x>=0&&inCombat(S,g)&&dist(g,b)<=1){const h=d3(S);G.note('Wilde Bisse: '+b.name+' erleidet '+h+' tödlichen Schaden');mort(G,b,h,'Wilde Bisse')}}
+  if(trOf(S,o,'kh_beute')&&!usedKey(S,o+':bltg','turn')){const c=FL(S,o,x=>has(S.T.kl||[],x.id));if(c.length){const t=yield* pk(G,o,'Blutgetränkt: Einheit',[...c,['Keine',null]],x=>x?mx(x):-1e9);if(t){useKey(S,o+':bltg','turn');addFx(S,{k:'critTA',u:t.id,exp:'battle'});G.note('Blutgetränkt: '+t.name+' hat bis Schlachtende Krit. (tödlich) im Nahkampf')}}}}
  if(trOf(S,o,'sy_ley')&&!usedKey(S,o+':ley','turn')){useKey(S,o+':ley','turn');const hs=fr(S,o).filter(u=>u.dmg>0&&unitNearT(S,u));hs.forEach(u=>{u.dmg=Math.max(0,u.dmg-1)});if(hs.length)G.note('Leylinien: '+hs.map(u=>u.name).join(', ')+' heilen 1')}
  if(trOf(S,o,'sy_ley')&&!usedKey(S,o+':zusch','turn')){const c=FL(S,o,x=>unitNearT(S,x)&&has(S.T.fought,x.id));if(c.length){const t=yield* pk(G,o,'Zuschlagen und Verschwinden: Einheit',[...c,['Keine',null]],x=>x?mx(x):-1e9);if(t){useKey(S,o+':zusch','turn');const r=d6(S);hdr(G,'Zuschlagen und Verschwinden',r,r>=2,2,t.name+' wird neu aufgestellt','Kein Effekt');if(r>=2)yield* relocate(G,o,t,'ter3','Zuschlagen und Verschwinden','Neu aufstellen: jedes Modell innerhalb 3 Zoll um ein Geländestück, mehr als 6 Zoll von Feinden')}}}
  if(RGI(S,o)=='sy_rach'&&!usedKey(S,o+':rach','turn')){const c=S.U.filter(e=>e.o!=o&&e.x>=0&&S.obj.some((p,i)=>claims(S,e,i)));if(c.length){const t=yield* pk(G,o,'Rachsüchtige Geister des Landes: Ziel',[...c.map(x=>[lab(x),x]),['Keins',null]],x=>x?scE(x):-1e9);if(t){useKey(S,o+':rach','turn');const r=d6(S);hdr(G,'Rachsüchtige Geister des Landes',r,r>=4,4,t.name+': W3 tödlicher Schaden','Kein Effekt');if(r>=4)mort(G,t,d3(S),'Rachsüchtige Geister')}}}
@@ -42,6 +46,22 @@ export function* eot3(G,o,act){const S=G.S;
 
  for(const k of fr(S,o).filter(x=>hasAb(x,'ob_ernte')&&(x.kt||0)>0)){const t=yield* pk(G,o,'Konstrukt reparieren: Mortek-Garde',FL(S,o,x=>x.dn=='Mortek-Garde'&&dist(k,x)<=6&&x.n<x.nmax),x=>x.nmax-x.n);if(!t)continue;let h=0;const rs=[];for(let i=0;i<k.kt;i++){const r=d6(S);rs.push(r);if(r>=4)h++}h=Math.min(h,t.nmax-t.n);t.n+=h;G.rep('Konstrukt reparieren',[row('Würfe (4+) – '+k.kt+' Knochentribut',rs,4),{k:'txt',s:h+' Modell(e) kehren zurück zu '+t.name}]);k.kt=0}}
 export function install3(){
+
+const rl_=(S,o,i)=>(S.rn&&S.rn[o]&&S.tn<S.rn[o].t0+2)?(S.rn[o].lv[i]||0):0;
+Object.assign(HK,{
+ fy_rune:{hit:(S,u,e,shoot)=>!shoot&&rl_(S,u.o,0)>=1?1:0,att:(S,u,w,e,shoot)=>!shoot&&rl_(S,u.o,0)>=2&&typeof w[2]=='number'?1:0,
+  rend:(S,u,e,shoot,w)=>!shoot&&rl_(S,u.o,1)>=1?1:0,dmg:(S,u,e,shoot,w)=>!shoot&&rl_(S,u.o,1)>=2?1:0,
+  ward:(S,u)=>rl_(S,u.o,2)>=1?5:0,svT:(S,d)=>rl_(S,d.o,2)>=2?1:0,mv:(S,u)=>rl_(S,u.o,3)>=1?2:0,chg:(S,u)=>rl_(S,u.o,3)>=2?2:0},
+ fy_aura:{ctl:(S,u)=>u.gen?3:0},
+ fy_wirb:{att:(S,u,w,e,shoot)=>!shoot&&has(S.T.charged,u.id)&&typeof w[2]=='number'?1:0},
+ bw_fels:{att:(S,u,w)=>fxL(S,u,'rockA').length&&w[0]=='Felsbrocken werfen'&&typeof w[2]=='number'?1:0},
+ bw_rev:{hit:(S,u,e,shoot)=>u.gen&&e&&S.obj.some((p,i)=>claims(S,e,i)&&S.oc[i]!=u.o)?1:0},
+ kh_hunde:{chg:()=>1},
+ kh_geruch:{hit:(S,u,e,shoot)=>!shoot&&e&&has(S.T.dd||[],e.id)?1:0,wnd:(S,u,e,shoot)=>!shoot&&e&&has(S.T.dd||[],e.id)?1:0},
+ kh_fass:{hitT:(S,d,a,shoot)=>shoot&&d.gen?-1:0,wndT:(S,d,a,shoot)=>shoot&&d.gen?-1:0}
+});
+GL.sv.push((S,e)=>e.x>=0&&S.U.some(x=>x.o==e.o&&x.x>=0&&hasAb(x,'fy_ikone')&&wholly(e,x,12))?1:0);
+GL.ward.push((S,e)=>{const g=gnl(S,e.o);if(!g||g.x<0)return 0;if(e!==g&&!hasAb(e,'fy_wacht'))return 0;const w=S.U.find(x=>x.o==e.o&&x.x>=0&&hasAb(x,'fy_wacht')&&wholly(g,x,1));return w&&(e===g||e===w)?5:0});
 GL.ward.push((S,e)=>S.U.some(k=>k.o==e.o&&k.x>=0&&hasAb(k,'sy_gesandte')&&e.x>=0&&S.obj.some((p,i)=>claims(S,k,i)&&claims(S,e,i)))?6:0);
 GL.chg.push((S,u)=>{if(u.x<0||!S.K||!S.K.army)return 0;const g=gnl(S,u.o);if(!g||ENI(S,u.o)!='sy_ger'||!wholly(u,g,12)||!inCombat(S,g))return 0;const b=beute(S,u.o);return b&&dist(g,b)<=1?2:1});
 GL.place.ter3=(S,o,u,x,y,a)=>{const e=placeErr(S,'rein',o,u,x,y,a);if(e)return e;return abs({...u,x,y}).every(m=>nearT(S,m,3))?'':'Jedes Modell innerhalb von 3 Zoll um ein Geländestück, mehr als 6 Zoll von Feinden'};
@@ -158,5 +178,54 @@ Object.assign(AB,{
  sy_rach:{n:'Rachsüchtige Geister des Landes',s:'Passiv: Ende jedes Zugs: Feind auf einem Ziel: 4+ → W3 tödlicher Schaden (Abfrage am Zugende)',army:1,src:(S,o)=>RGI(S,o)=='sy_rach'},
  sy_zusch:{n:'Zuschlagen und Verschwinden',s:'Passiv: Ende jedes Zugs (Abfrage)',army:1,src:(S,o)=>trOf(S,o,'sy_zusch')},
  sy_jagdlied:{n:'Jagdlied',s:'Passiv: Akkorde (je zerstörter Beute): 1 → +1 auf Rennen/Angriff, 2 → +1 auf Treffer, 3+ → +1 auf Verwundung für Einheiten innerhalb 9" um die Beute',army:1,src:(S,o)=>trOf(S,o,'sy_jagd')},
+});
+
+Object.assign(AB,{
+ fy_runen:{n:'Die Runen erwecken',s:'Heldenphase (Beginn deines Zuges), 1× pro Schlachtrunde: Wähle eine noch nicht aktivierte Ur-Gold-Rune, wirf einen W6: 1–5 gewöhnlicher Effekt, 6 zusätzlich der verstärkte Effekt (bis zu deinem nächsten Zug)',ph:1,freq:'turn',army:1,src:(S,o)=>trOf(S,o,'fy_rune'),can:(S,o)=>((S.rnu&&S.rnu[o])||[]).length<4,
+  *run(G,o){const S=G.S;S.rnu||(S.rnu=[[],[]]);const nm_=['Rune der Wut','Rune der sengenden Hitze','Rune der feurigen Entschlossenheit','Rune des unerbittlichen Eifers'],l=[0,1,2,3].filter(i=>!S.rnu[o].includes(i));
+   const i=yield* pk(G,o,'Die Runen erwecken: Rune wählen',l.map(x=>[nm_[x],x]),x=>[2,1,0,3][x]);if(i==null)return;let r=d6(S);
+   if(ENI(S,o)=='fy_geist'&&r<6){const ok=G.isAI(o)||(yield* yn(G,o,'Grimnirs Geist','Aktivierungswurf '+r+' wiederholen?',true));if(ok){const r2=d6(S);G.note('Grimnirs Geist: Wurf '+r+' wiederholt → '+r2);r=r2}}
+   S.rnu[o].push(i);const lv=[0,0,0,0];lv[i]=r==6?2:1;S.rn||(S.rn=[null,null]);S.rn[o]={lv,t0:S.tn};hdr(G,nm_[i],r,true,1,nm_[i]+(r==6?': gewöhnlicher + verstärkter Effekt':': gewöhnlicher Effekt')+' bis zu deinem nächsten Zug','')},ai:()=>true},
+ fy_tunnel:{n:'Magmatunnel',s:'Heldenphase, nur Runde 1, 1× pro Schlacht: Bis zu 2 befreundete Einheiten werden >6" von Feinden neu aufgestellt',ph:1,freq:'battle',army:1,src:(S,o)=>RGI(S,o)=='fy_tunnel',can:(S,o)=>S.round==1,
+  *run(G,o){const S=G.S,done=[];for(let i=0;i<2;i++){const c=FL(S,o,x=>!done.includes(x)&&!inCombat(S,x)),t=c.length?yield* pk(G,o,'Magmatunnel ('+(i+1)+'/2): Einheit',[...c,['Keine weitere',null]],x=>x?mx(x):-1e9):null;if(!t)break;done.push(t);yield* relocate(G,o,t,'rein','Magmatunnel','Neu aufstellen: mehr als 6 Zoll von allen Feinden')}},ai:()=>false},
+ fy_wurf:{n:'Fyrstahl-Wurfaxt',s:'Fernkampfphase, 1× pro Zug (Armee): Beliebig viele befreundete Einheiten (nicht im Nahkampf) wählen je einen sichtbaren Feind innerhalb 10": 4+ → W3 tödlicher Schaden',ph:3,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='fy_wurf',can:(S,o)=>fr(S,o).some(x=>!inCombat(S,x)&&en(S,o).some(e=>dist(x,e)<=10)),
+  *run(G,o){const S=G.S;for(const u of fr(S,o).filter(x=>!inCombat(S,x))){const c=en(S,o).filter(e=>e.x>=0&&dist(u,e)<=10&&vis(S,u,e));if(!c.length)continue;const t=yield* pk(G,o,'Fyrstahl-Wurfaxt: Ziel für '+u.name,[...c.map(x=>[lab(x),x]),['Kein Wurf',null]],x=>x?scE(x):-1e9);if(!t)continue;const r=d6(S);hdr(G,'Fyrstahl-Wurfaxt ('+u.name+')',r,r>=4,4,t.name+': W3 tödlicher Schaden','Kein Effekt');if(r>=4)mort(G,t,d3(S),'Fyrstahl-Wurfaxt')}},ai:()=>true},
+ fy_horn:{n:'Grimnirhorn',s:'Heldenphase: Der General (nicht im Nahkampf): Je befreundeter Einheit mit zerstörten Modellen W6: 3+ → 1 Modell kehrt zurück',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='fy_horn',can:(S,o)=>{const g=genOf(S,o);return !!g&&!inCombat(S,g)},
+  *run(G,o){const S=G.S;for(const u of fr(S,o).filter(x=>x.n<x.nmax)){const r=d6(S);if(r>=3){u.n++;G.note('Grimnirhorn: Wurf '+r+' – 1 Modell kehrt zu '+u.name+' zurück')}else G.note('Grimnirhorn: Wurf '+r+' – '+u.name+' kein Effekt')}},ai:()=>true},
+ fy_stur:{n:'Zu stur zum Sterben',s:'Passiv: Zugende: General heilt W3 (automatisch)',army:1,src:(S,o)=>ENI(S,o)=='fy_stur'},
+ fy_aura:{n:'Aura der Macht',s:'Passiv: +3 auf den Kontrollwert des Generals',army:1,src:(S,o)=>ENI(S,o)=='fy_aura'},
+ fy_geist:{n:'Grimnirs Geist',s:'Passiv: Aktivierungswürfe der Ur-Gold-Runen dürfen wiederholt werden',army:1,src:(S,o)=>ENI(S,o)=='fy_geist'},
+ fy_rune:{n:'Ur-Gold-Runen',s:'Passiv: Effekte der Runen wirken automatisch bis zum nächsten eigenen Zug',army:1,src:(S,o)=>trOf(S,o,'fy_rune')},
+ fy_ikone:{n:'Ikone des Grimnir',s:'Passiv: +1 auf Schutzwürfe befreundeter Einheiten ganz innerhalb 12"',unit:1,src:(S,u)=>hasAb(u,'fy_ikone')},
+ fy_pflanz:{n:'Die Ikone aufpflanzen',s:'Heldenphase, 1× pro Schlacht: Befreundete Einheiten ganz innerhalb 12" haben bis Zugende Rettung 5+',ph:1,freq:'battle',unit:1,src:(S,u)=>hasAb(u,'fy_pflanz'),
+  *run(G,u){const S=G.S;const l=fr(S,u.o).filter(x=>wholly(x,u,12));l.forEach(x=>addFx(S,{k:'ward',u:x.id,v:5,exp:'turn'}));G.note('Die Ikone aufpflanzen: '+l.map(x=>x.name).join(', ')+' haben Rettung 5+')},ai:()=>true},
+ fy_wacht:{n:'Pflichterfüllung bis in den Tod',s:'Passiv: Solange der General vollständig in Nahkampfreichweite ist, haben Wacht und General Rettung 5+',unit:1,src:(S,u)=>hasAb(u,'fy_wacht')},
+ fy_wirb:{n:'Wirbelwind der Zerstörung',s:'Passiv: +1 Attacke, wenn die Einheit in diesem Zug angegriffen hat',unit:1,src:(S,u)=>hasAb(u,'fy_wirb')},
+ bw_tasche:{n:'Inne Tasche stopf’n',s:'Nahkampfphase: Feind im Nahkampf: W6 ≥ 2× Ausdauer → 1 Modell wird getötet',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'bw_tasche'),can:(S,u)=>inCombat(S,u),
+  *run(G,u){const S=G.S,k=ENI(S,u.o)=='bw_grosse'&&u.gen?2:1,done=[];for(let i=0;i<k;i++){const t=yield* pk(G,u.o,'Inne Tasche stopf’n ('+(i+1)+'/'+k+'): Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1&&!done.includes(x)).map(x=>[lab(x),x]),scE);if(!t)break;done.push(t);const r=d6(S),need=2*t.wm;hdr(G,'Inne Tasche stopf’n',r,r>=need,need,t.name+': 1 Modell wird getötet','Kein Effekt (Ausdauer '+t.wm+')');if(r>=need){hurt(G,t,Math.max(1,t.wm-t.dmg));if(RGI(S,u.o)=='bw_fein'&&u.dmg>0){const h=d3(S);u.dmg=Math.max(0,u.dmg-h);G.note('Feindfresser: '+u.name+' heilt bis zu '+h)}}}},ai:()=>true},
+ bw_gebr:{n:'Lautes Gebrüll',s:'Nahkampfphase: Feind im Nahkampf: 2+ → −1 auf Trefferwürfe seiner Attacken (Phase)',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'bw_gebr'),can:(S,u)=>inCombat(S,u),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Lautes Gebrüll: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S);hdr(G,'Lautes Gebrüll',r,r>=2,2,t.name+': −1 auf Trefferwürfe','Kein Effekt');if(r>=2)addFx(S,{k:'hitA',u:t.id,v:-1,exp:'ph'})},ai:()=>true},
+ bw_steine:{n:'Nehmt euch die Steine un’ werft se!',s:'Heldenphase: Befreundete Einheit ganz innerhalb 12" um den General: +1 Attacke bei Felsbrocken werfen (Zug)',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'bw_steine'),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Nehmt euch die Steine: Einheit',FL(S,u.o,x=>x!==u&&wholly(x,u,12)),x=>mx(x));if(!t)return;addFx(S,{k:'rockA',u:t.id,exp:'turn'});G.note('Nehmt euch die Steine: '+t.name+' +1 Attacke bei Felsbrocken werfen')},ai:()=>true},
+ bw_erd:{n:'Erderschütternder Angriff',s:'Angriffsphase, 1× pro Phase (Armee): Einheit, die angegriffen hat: je Feind im Nahkampf 3+ → kämpft zuletzt',ph:4,freq:'phase',army:1,src:(S,o)=>RGI(S,o)=='bw_erd',can:(S,o)=>fr(S,o).some(x=>has(S.T.charged,x.id)),
+  *run(G,o){const S=G.S,t=yield* pickF(G,o,'Erderschütternder Angriff: Einheit',x=>has(S.T.charged,x.id));if(!t)return;for(const e of foes(S,t).filter(x=>x.x>=0&&dist(t,x)<=1)){const r=d6(S);hdr(G,'Erderschütternder Angriff ('+e.name+')',r,r>=3,3,e.name+' kämpft zuletzt','Kein Effekt');if(r>=3)add(S.T.SL,e.id)}},ai:()=>true},
+ bw_fein:{n:'Feindfresser',s:'Passiv: Wird durch „Inne Tasche stopf’n“ ein Modell getötet, heilt die Einheit W3',army:1,src:(S,o)=>RGI(S,o)=='bw_fein'},
+ bw_zaeh:{n:'Monstermäßig zäh',s:'Passiv: Ausdauer des Generals 15',army:1,src:(S,o)=>ENI(S,o)=='bw_zaeh'},
+ bw_grosse:{n:'Richtich grosse Tasche',s:'Passiv: „Inne Tasche stopf’n“ des Generals darf 2 Einheiten wählen',army:1,src:(S,o)=>ENI(S,o)=='bw_grosse'},
+ bw_lul:{n:'Langer Lulatsch',s:'Passiv: Angriffswurf des Generals 3W6',army:1,src:(S,o)=>ENI(S,o)=='bw_lul'},
+ bw_rev:{n:'Aggressives Revierverhalten',s:'Passiv: +1 auf Trefferwürfe des Generals gegen Einheiten auf einem Ziel, das du nicht kontrollierst',army:1,src:(S,o)=>ENI(S,o)=='bw_rev'},
+ bw_baum:{n:'Baum fällt!',s:'Passiv: Stirbt ein Gargant: Wettwurf; Gewinner wählt Punkt, Feinde in 2" erleiden W3 tödlichen Schaden',unit:1,src:(S,u)=>hasAb(u,'bw_baum')},
+ kh_verfolg:{n:'Die Beute verfolgen',s:'Heldenphase: Karanak bewegt sich W6" (nicht im Nahkampf enden, außer er stand darin; näher an die Beute)',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'kh_verfolg'),
+  *run(G,u){const S=G.S,r=d6(S),b=beute(S,u.o),inC=inCombat(S,u),d0=b&&b.x>=0?dist(u,b):0;const a=yield* destReq(G,u,r,{text:'Die Beute verfolgen: bis '+r+' Zoll',chk:a=>{if(!inC&&S.U.some(e=>e.o!=u.o&&e.x>=0&&Math.hypot(a.x-e.x,a.y-e.y)-u.r-e.r<=1))return 'Darf nicht im Nahkampf enden';if(b&&b.x>=0&&Math.hypot(a.x-b.x,a.y-b.y)-u.r-b.r>=d0)return 'Muss näher an die Beute heran';return ''}});if(!a.stay){applyMove(S,u,a,r);add(S.T.moved,u.id);G.note('Die Beute verfolgen: '+u.name+' bewegt sich')}},ai:()=>true},
+ kh_jaeger:{n:'Rudeljäger',s:'Nahkampfphase: Feind im Nahkampf mit dieser Einheit und einer Bluthunde-Einheit: Krit. bei unmodifiziert 5+ gegen ihn (Zug)',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'kh_jaeger'),can:(S,u)=>inCombat(S,u),
+  *run(G,u){const S=G.S;const c=foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1&&S.U.some(h=>h.o==u.o&&h.dn=='Bluthunde'&&h.x>=0&&dist(h,x)<=1));const t=yield* pk(G,u.o,'Rudeljäger: Ziel',c.map(x=>[lab(x),x]),scE);if(!t)return;addFx(S,{k:'crit5',u:u.id,exp:'turn'});G.note('Rudeljäger: '+u.name+' Krit. bei 5+ (Zug)')},ai:()=>true},
+ kh_tod:{n:'Todessprung',s:'Angriffsphase, 1× pro Schlacht: Angriffswurf des Generals mit zusätzlichem Würfel (Zug)',ph:4,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='kh_tod',can:(S,o)=>gOK(S,o),
+  *run(G,o){const S=G.S,g=genOf(S,o);addFx(S,{k:'tod',u:g.id,exp:'turn'});G.note('Todessprung: '+g.name+' würfelt beim Angriff 3W6 (muss im Nahkampf mit der Beute enden)')},ai:()=>true},
+ kh_wild:{n:'Wilder und Wilder',s:'Nahkampfphase, 1× pro Schlacht: Einheit im Nahkampf: +1 Attacke (Held: +W3) auf Nahkampfwaffen (Zug)',ph:5,freq:'battle',army:1,src:(S,o)=>RGI(S,o)=='kh_wild',can:(S,o)=>fr(S,o).some(x=>inCombat(S,x)),
+  *run(G,o){const S=G.S,t=yield* pickF(G,o,'Wilder und Wilder: Einheit',x=>inCombat(S,x));if(!t)return;const v=foes(S,t).some(e=>e.x>=0&&dist(t,e)<=1&&isHero(e))?d3(S):1;addFx(S,{k:'att',u:t.id,v,exp:'turn'});G.note('Wilder und Wilder: '+t.name+' +'+v+' Attacken')},ai:()=>true},
+ kh_geruch:{n:'Der Geruch von Blut',s:'Passiv: +1 auf Treffer- und Verwundungswürfe im Nahkampf gegen Einheiten, denen in diesem Zug Schaden zugewiesen wurde',army:1,src:(S,o)=>RGI(S,o)=='kh_geruch'},
+ kh_blut:{n:'Von Blut gestärkt',s:'Passiv: Zugende: General heilt W3 (automatisch)',army:1,src:(S,o)=>ENI(S,o)=='kh_blut'},
+ kh_fass:{n:'Schwer zu fassender Jäger',s:'Passiv: −1 auf Treffer- und Verwundungswürfe für Fernkampfattacken gegen den General',army:1,src:(S,o)=>ENI(S,o)=='kh_fass'},
+ kh_bisse:{n:'Wilde Bisse',s:'Passiv: Zugende: General im Nahkampf mit der Beute → Beute erleidet W3 tödlichen Schaden (automatisch)',army:1,src:(S,o)=>ENI(S,o)=='kh_bisse'},
 });
 }

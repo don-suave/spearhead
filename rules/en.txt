@@ -1144,3 +1144,86 @@ Sucher-Waldgeister	Seeker Spirits
 Sichel der Sucher	Seeker's Sickle
 Ohrenbetäubendes Brummen	Deafening Drone
 Beliebige Nahkampfphase: Hat die Einheit in diesem Zug nicht angegriffen: Wähle eine feindliche Einheit im Nahkampf; wirf einen Würfel: Übersteigt das Ergebnis den Kontrollwert des Ziels, −1 auf den Attackenwert seiner Nahkampfwaffen für den Rest des Zuges.	Any Combat phase: if the unit did not charge this turn: pick an enemy unit in combat; roll a dice: if the result exceeds the target's Control, −1 to the Attacks of its melee weapons for the rest of the turn.
+Sagenträchtige Axtschar	Legendary Axe Host
+Einmal pro Schlachtrunde, Beginn deines Zuges: Wähle 1 der Ur-Gold-Runen (jede nur einmal pro Schlacht) und wirf einen W6: Bei 1–5 gewöhnlicher Effekt, bei 6 zusätzlich der verstärkte Effekt, bis zu deinem nächsten Zug. Rune der Wut: +1 auf Trefferwürfe im Nahkampf (verstärkt: +1 Attacke). Rune der sengenden Hitze: +1 Wucht (verstärkt: +1 Schaden). Rune der feurigen Entschlossenheit: Rettung 5+ (verstärkt: +1 auf Schutzwürfe). Rune des unerbittlichen Eifers: +2 Zoll Bewegung (verstärkt: +2 auf Angriffswürfe).	Once per battle round, start of your turn: pick 1 of the Ur-Gold runes (each only once per battle) and roll a D6: on 1–5 the normal effect, on a 6 also the enhanced effect, until your next turn. Rune of Fury: +1 to hit in combat (enhanced: +1 Attacks). Rune of Searing Heat: +1 Rend (enhanced: +1 Damage). Rune of Fiery Determination: Ward 5+ (enhanced: +1 to save rolls). Rune of Relentless Zeal: +2" Move (enhanced: +2 to charge rolls).
+Magmatunnel	Magma Tunnel
+Einmal pro Schlacht, Beginn der ersten Schlachtrunde: Wähle bis zu 2 befreundete Einheiten. Entferne sie vom Schlachtfeld und stelle sie weiter als 6 Zoll von allen feindlichen Einheiten wieder auf.	Once per battle, start of the first battle round: pick up to 2 friendly units. Remove them from the battlefield and set them up again more than 6" from all enemy units.
+Fŷrstahl-Wurfaxt	Fyrsteel Throwing Axe
+Einmal pro Zug (Armee), deine Fernkampfphase: Wähle beliebig viele befreundete Einheiten, die nicht im Nahkampf und innerhalb von 10 Zoll um mindestens eine feindliche Einheit sind: Wähle je eine sichtbare feindliche Einheit innerhalb von 10 Zoll und wirf einen Würfel; bei 4+ erleidet sie W3 tödlichen Schaden.	Once per turn (Army), your Shooting phase: pick any number of friendly units not in combat and within 10" of an enemy unit: pick a visible enemy unit within 10" for each and roll a dice; on a 4+ it suffers D3 mortal damage.
+Zu stur zum Sterben	Too Stubborn to Die
+Beginn eines beliebigen Zuges: Heile (W3) deinen General.	Start of any turn: heal (D3) your general.
+Aura der Macht	Aura of Power
+Passiv: Addiere 3 zum Kontrollwert deines Generals.	Passive: add 3 to your general's Control.
+Grimnirhorn	Grimnir's Horn
+Deine Heldenphase: Dein General (nicht im Nahkampf): Wirf einen Würfel für jede befreundete Einheit, aus der Modelle zerstört sind; bei 3+ kannst du 1 zerstörtes Modell in die Einheit zurückbringen.	Your Hero phase: your general (not in combat): roll a dice for each friendly unit that has lost models; on a 3+ you can return 1 slain model to the unit.
+Grimnirs Geist	Spirit of Grimnir
+Passiv: Du kannst Aktivierungswürfe für „Die Runen erwecken“ wiederholen.	Passive: you can re-roll activation rolls for "Awaken the Runes".
+Schlachtenschmied	Battlesmith
+Streitaxt der Ahnen	Ancestral Waraxe
+Ikone des Grimnir	Icon of Grimnir
+Passiv: +1 auf Schutzwürfe für befreundete Einheiten ganz innerhalb von 12 Zoll um diese Einheit.	Passive: +1 to save rolls for friendly units wholly within 12" of this unit.
+Die Ikone aufpflanzen	Plant the Icon
+Einmal pro Schlacht, beliebige Heldenphase: Befreundete Einheiten ganz innerhalb von 12 Zoll haben für den Rest des Zuges Rettung 5+.	Once per battle, any Hero phase: friendly units wholly within 12" have Ward 5+ for the rest of the turn.
+Berserkerwächter	Berserker Warders
+Flammenschlag-Kriegsaxt	Flamestrike War-axe
+Pflichterfüllung bis in den Tod	Duty Unto Death
+Passiv: Solange sich dein General vollständig innerhalb der Nahkampfreichweite dieser Einheit befindet, haben diese Einheit und dein General Rettung 5+.	Passive: while your general is wholly within this unit's combat range, this unit and your general have Ward 5+.
+Vulkit-Berserker	Vulkite Berzerkers
+Fŷrstahl-Handäxte	Fyrsteel Handaxes
+Wirbelwind der Zerstörung	Whirlwind of Destruction
+Passiv: +1 auf den Attackenwert der Nahkampfwaffen dieser Einheit, wenn sie im selben Zug angegriffen hat.	Passive: +1 to the Attacks of this unit's melee weapons if it charged in the same turn.
+Oberquetscher	Top Squasher
+Dein General hat das Schlüsselwort Held (zusätzlich zum Schlüsselwort Monster), aber weder das Schlüsselwort Verstärkung noch das Verstärkungssymbol.	Your general has the Hero keyword (in addition to Monster), but neither the Reinforcement keyword nor the Reinforcement symbol.
+Feindfresser	Foe Eater
+Passiv: Jedes Mal, wenn ein feindliches Modell durch „Inne Tasche stopf’n“ einer befreundeten Einheit getötet wird, heile (W3) jene Einheit.	Passive: each time an enemy model is slain by a friendly unit's "Stuff 'Em in the Bag", heal (D3) that unit.
+Erderschütternder Angriff	Earth-shaking Charge
+Einmal pro Phase (Armee), beliebige Angriffsphase: Wähle eine befreundete Einheit, die in dieser Phase angegriffen hat; wirf einen Würfel für jede feindliche Einheit im Nahkampf mit ihr; bei 3+ kämpft sie in diesem Zug zuletzt.	Once per phase (Army), any Charge phase: pick a friendly unit that charged this phase; roll a dice for each enemy unit in combat with it; on a 3+ that unit fights last this turn.
+Monstermäßig zäh	Monstrously Tough
+Passiv: Der Ausdauerwert deines Generals ist 15 statt 12.	Passive: your general's Health is 15 instead of 12.
+Richtich grosse Tasche	Really Big Bag
+Passiv: Setzt dein General „Inne Tasche stopf’n“ ein, kannst du 2 feindliche Einheiten statt 1 wählen (würfle für jede).	Passive: when your general uses "Stuff 'Em in the Bag", you can pick 2 enemy units instead of 1 (roll for each).
+Langer Lulatsch	Long Lanky Legs
+Passiv: Für einen Angriffswurf deines Generals würfelst du 3W6 statt 2W6.	Passive: for a charge roll of your general you roll 3D6 instead of 2D6.
+Aggressives Revierverhalten	Aggressive Territoriality
+Passiv: +1 auf Trefferwürfe für Attacken deines Generals, deren Ziel eine feindliche Einheit ist, die ein Ziel beansprucht, das du nicht kontrollierst.	Passive: +1 to hit for attacks of your general that target an enemy unit claiming an objective you do not control.
+Menschenquetscher-Gargant	Mancrusher Gargant
+Felsbrocken werfen	Hurl Boulder
+Riesenkeule	Giant Club
+Mächtiger Tritt	Mighty Kick
+Inne Tasche stopf’n	Stuff 'Em in the Bag
+Beliebige Nahkampfphase: Wähle eine feindliche Einheit im Nahkampf mit dieser Einheit und wirf einen Würfel; ist das Ergebnis mindestens doppelt so hoch wie der Ausdauerwert der Zieleinheit, wird 1 Modell jener Einheit getötet.	Any Combat phase: pick an enemy unit in combat with this unit and roll a dice; if the result is at least double the target's Health, 1 model of that unit is slain.
+Baum fällt!	Timber!
+Passiv: Wird dieses Modell getötet, würfeln die Spieler gegeneinander; der Gewinner wählt einen Punkt innerhalb von 3 Zoll um das Modell. Jede feindliche Einheit innerhalb von 2 Zoll um den Punkt erleidet W3 tödlichen Schaden.	Passive: when this model is slain, the players roll off; the winner picks a point within 3" of the model. Each enemy unit within 2" of the point suffers D3 mortal damage.
+Lautes Gebrüll	Loud Roar
+Beliebige Nahkampfphase: Wähle eine feindliche Einheit im Nahkampf mit dieser Einheit und wirf einen Würfel; bei 2+ −1 auf Trefferwürfe für Attacken der Zieleinheit in dieser Phase.	Any Combat phase: pick an enemy unit in combat with this unit and roll a dice; on a 2+ −1 to hit for the target's attacks this phase.
+Nehmt euch die Steine un’ werft se!	Grab Some Rocks and Chuck 'Em!
+Deine Heldenphase: Wähle eine andere befreundete Einheit ganz innerhalb von 12 Zoll um den General: +1 auf den Attackenwert von „Felsbrocken werfen“ in diesem Zug.	Your Hero phase: pick another friendly unit wholly within 12" of the general: +1 to the Attacks of "Hurl Boulder" this turn.
+Menschenquetscher-Gargant (Verstärkung)	Mancrusher Gargant (Reinforcement)
+Reißzähne des Blutgottes	Fangs of the Blood God
+Die Beute	The Prey
+Beginn der Schlachtrunde: Wenn keine feindlichen Einheiten die Beute sind, wähle eine feindliche Einheit als die Beute (du kannst eine feindliche Einheit in Reserve wählen).	Start of the battle round: if no enemy units are the Prey, pick an enemy unit to be the Prey (you can pick an enemy unit in reserve).
+Blutgetränkt	Blood-soaked
+Einmal pro Zug, Ende eines beliebigen Zuges: Wähle eine befreundete Einheit, die in diesem Zug mindestens ein feindliches Modell mit einer Kämpfen-Fähigkeit getötet hat: Für den Rest der Schlacht haben ihre Nahkampfwaffen Krit. (tödlich).	Once per turn, end of any turn: pick a friendly unit that slew at least one enemy model with a Fight ability this turn: for the rest of the battle its melee weapons have Crit (Mortal).
+Der Geruch von Blut	Scent of Blood
+Passiv: Addiere 1 zu Trefferwürfen und Verwundungswürfen für Nahkampfattacken, deren Ziel eine feindliche Einheit ist, der in diesem Zug mindestens 1 Schadenspunkt zugewiesen wurde.	Passive: add 1 to hit and wound rolls for melee attacks that target an enemy unit that was allocated at least 1 damage point this turn.
+Wilder und Wilder	Wilder and Wilder
+Einmal pro Schlacht, beliebige Nahkampfphase: Wähle eine befreundete Einheit im Nahkampf: +1 auf den Attackenwert ihrer Nahkampfwaffen für den Rest des Zuges; ist das Ziel ein Held, stattdessen +W3.	Once per battle, any Combat phase: pick a friendly unit in combat: +1 to the Attacks of its melee weapons for the rest of the turn; if the target is a Hero, +D3 instead.
+Von Blut gestärkt	Empowered by Blood
+Ende eines beliebigen Zuges: Heile (W3) deinen General.	End of any turn: heal (D3) your general.
+Schwer zu fassender Jäger	Elusive Hunter
+Passiv: −1 auf Trefferwürfe und Verwundungswürfe für Fernkampfattacken, deren Ziel dein General ist.	Passive: −1 to hit and wound rolls for shooting attacks that target your general.
+Todessprung	Death Leap
+Einmal pro Schlacht, beliebige Angriffsphase: Für den Rest des Zuges kannst du bei Angriffswürfen für deinen General einen zusätzlichen Würfel werfen, bis zu einem Maximum von 3; er muss jenen Angriff im Nahkampf mit der Beute beenden.	Once per battle, any Charge phase: for the rest of the turn you can roll an extra dice on your general's charge rolls, up to a maximum of 3; it must end that charge in combat with the Prey.
+Wilde Bisse	Savage Bites
+Ende eines beliebigen Zuges: Ist dein General im Nahkampf mit der Beute, füge der Beute W3 tödlichen Schaden zu.	End of any turn: if your general is in combat with the Prey, inflict D3 mortal damage on the Prey.
+Karanak	Karanak
+Grausame Mäuler und blutriefende Klauen	Cruel Maws and Blood-drenched Claws
+Die Beute verfolgen	Hunt the Prey
+Beliebige Heldenphase: Diese Einheit kann sich W6 Zoll bewegen. Sie kann die Bewegung nicht im Nahkampf beenden, es sei denn, sie war zu Beginn im Nahkampf, und sie muss sie näher an der Beute beenden.	Any Hero phase: this unit can move D6". It cannot end the move in combat unless it started in combat, and it must end closer to the Prey.
+Bluthunde	Bloodhounds
+Blutgeschwärzte Klauen	Blood-blackened Claws
+Unermüdliche Jagdbestien	Tireless Hunting Beasts
+Passiv: Addiere 1 zu Angriffswürfen für diese Einheit.	Passive: add 1 to charge rolls for this unit.
+Karanaks Krallen	Karanak's Talons
+Rudeljäger	Pack Hunters
+Beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit im Nahkampf mit dieser Einheit und einer befreundeten Bluthunde-Einheit: Für den Rest des Zuges erzielen die Nahkampfattacken dieser Einheit gegen jene Einheit kritische Treffer bei einem unmodifizierten Trefferwurf von 5+.	Any Combat phase: pick an enemy unit in combat with this unit and a friendly Bloodhounds unit: for the rest of the turn this unit's melee attacks against it score critical hits on an unmodified hit roll of 5+.

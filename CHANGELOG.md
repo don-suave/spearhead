@@ -1,5 +1,8 @@
 # Changelog
 
+## v86
+- Neue Armeen: Fyreslayers Sagenträchtige Axtschar (Ur-Gold-Runen), Behemat Wallbrecher (Menschenquetscher-Gargant) und Khorne Reißzähne des Blutgottes (Die Beute)
+
 
 ## v85
 - Neue Armeen: Sylvaneth Bitterborkengesträuch (Geländeregeln) und Geisterschwingenschwarm (Beute und Akkorde)
