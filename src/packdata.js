@@ -1,8 +1,8 @@
 // Daten der Battlepacks (reine Daten, keine Regeln-Logik). Pack 0 = Fire and Jade (Grundspiel, 44x30), Pack 1 = Sand and Bone, Pack 2 = City of Ash.
 // Zielmarken: [x,y,Radius,Name]; Maße in Zoll, Feld 30x22.
-// Maße von den Matten (Abstand der Zielmitte vom Mattenrand), Feld 30×22,4, alle Ziele mit 3" Radius um die Mitte
-export const SB_DOL=[[7.5,2.5,3,'Delusion'],[27.5,5,3,'Necropolis'],[15,11.2,3,'Grief'],[2.5,17.4,3,'Blood'],[22.5,19.9,3,'Night']];
-export const SB_OSS=[[2.5,5,3,'Delusion'],[17.5,8.75,3,'Necropolis'],[12.5,13.65,3,'Blood'],[27.5,17.4,3,'Night']];
+// Maße von den Matten (Abstand der Zielmitte vom Mattenrand), Feld 30×22,4, Aqshy/Ghyran/City of Ash Ziele 6" Durchmesser (Radius 3), Ossia alle 5" (Radius 2,5), Dolorum Mitte 7" (Radius 3,5), Ecken 5"
+export const SB_DOL=[[7.5,2.5,2.5,'Delusion'],[27.5,5,2.5,'Necropolis'],[15,11.2,3.5,'Grief'],[2.5,17.4,2.5,'Blood'],[22.5,19.9,2.5,'Night']];
+export const SB_OSS=[[2.5,5,2.5,'Delusion'],[17.5,8.75,2.5,'Necropolis'],[12.5,13.65,2.5,'Blood'],[27.5,17.4,2.5,'Night']];
 // Geländeformen (Breite x Tiefe in Zoll, Höhe); k: obsc = Sichtblocker (Deckung, Sichtschutz, instabil), obst = Hindernis (Deckung, instabil), my = mystisch
 export const SB_TER={
  'Large Wall':{w:7,h:0.8,k:'obsc',ht:4,big:true},'Small Wall':{w:4,h:0.8,k:'obst',ht:3,big:false},

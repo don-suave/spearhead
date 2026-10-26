@@ -12,6 +12,7 @@ export const RC=[
  d:[['Ein Modell, das ein Ziel ganz oder teilweise berührt, beansprucht (contests) es.','A model that is wholly or partly on an objective contests it.'],
     ['Zähle die Kontrolle-Werte aller beanspruchenden Modelle je Spieler; der höhere Wert gewinnt das Ziel. Bei Gleichstand ändert sich nichts.','Add up the Control values of all contesting models per player; the higher total takes the objective. On a tie nothing changes.'],
     ['Prüfung: zu Beginn der ersten Schlachtrunde und am Ende jedes Zugs. Ein Ziel bleibt in deiner Kontrolle, bis der Gegner es gewinnt.','Check: at the start of the first battle round and at the end of each turn. An objective stays yours until the opponent gains it.'],
+    ['Größe der Ziele: Aqshy, Ghyran und City of Ash 6" Durchmesser; Ossia alle vier Ziele 5"; Dolorum Eckziele 5", Zentrum 7". Beansprucht wird, sobald die Base die gedruckte Fläche berührt.','Objective sizes: Aqshy, Ghyran and City of Ash 6" across; Ossia all four objectives 5"; Dolorum corner objectives 5", centre 7". A unit contests as soon as its base touches the printed area.'],
     ['Standartenträger: +1 auf den Kontrollwert der Einheit.','Standard Bearer: +1 to the unit\'s control score.']],
  sp:['Auf jedem Reichs-Schlachtfeld sind die Ziele namentlich bekannt (z. B. Draconithion, Ignax, Behemat, Vulcatrix, Nagendra).','On each realm battlefield objectives have names (e.g. Draconithion, Ignax, Behemat, Vulcatrix, Nagendra).']},
 {id:'heilen',ph:'x',t:['Heilen und Zurückbringen','Healing and returning models'],
