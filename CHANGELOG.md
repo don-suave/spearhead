@@ -1,6 +1,9 @@
 # Changelog
 
 
+## v84
+- Basisgrößen mit den offiziellen Schlachtprofilen (Sept. 2026) abgeglichen: 27 Einheiten korrigiert
+
 ## v83
 - Neue Armeen: Ossiarch Zwangsvollstrecker-Echelon (mit Ossiarch-Befehlspunkten) und Mortisan-Elite (mit Disziplin-Würfen)
 

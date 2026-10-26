@@ -205,7 +205,7 @@ export const ARMY=[{f:'Städte Sigmars',n:'Zenestras Zeloten',
  units:[
  {n:'Meisterassassine Crixxit',l:'C',kw:'Held, Infanterie',mv:7,wm:6,nm:1,sv:5,cv:2,wr:5,r:.63,b:'40',gen:1,abs:['cj_losl','cj_schatten'],mw:[['Klingen der dreizehn Schnitte',0,13,2,4,1,1,'T']]},
  {n:'Meisterassassine',l:'A',kw:'Held, Infanterie',mv:7,wm:5,nm:1,sv:5,cv:2,wr:6,r:.63,b:'32',abs:['cj_att'],mw:[['Tränenklinge',0,5,3,4,1,'W3','TH']]},
- {n:'Gossenläufer',l:'G',kw:'Infanterie, Verstärkung',mv:7,wm:1,nm:5,sv:6,cv:1,wr:6,r:1.6,b:'32',bs:['32','28.5','28.5','28.5','28.5'],c:2,mk1:1,abs:['cj_spreng'],mw:[['Eshin-Spezialistenklingen',0,3,3,4,1,1,'T']]},
+ {n:'Gossenläufer',l:'G',kw:'Infanterie, Verstärkung',mv:7,wm:1,nm:5,sv:6,cv:1,wr:6,r:1.6,b:'25',bs:['32','28.5','28.5','28.5','28.5'],c:2,mk1:1,abs:['cj_spreng'],mw:[['Eshin-Spezialistenklingen',0,3,3,4,1,1,'T']]},
  {n:'Schattenläufer',l:'S',kw:'Infanterie, Verstärkung',mv:7,wm:1,nm:10,sv:6,cv:1,wr:6,r:2.3,b:'25',abs:['cj_rauch'],rw:[['Schleudern und vergiftete Wurfsterne',10,2,4,4,0,1,'VB']],mw:[['Vergiftete Klingen',0,2,4,5,0,1,'T']]}]}
 
 ];
