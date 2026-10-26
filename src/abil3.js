@@ -48,6 +48,7 @@ function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S
  rep(G,'Auge der Götter'+(src?' ('+src+')':''),row('W6',[r]),txt)}
 const agOK=(S,o,x)=>x.x>=0&&((!inCombat(S,x)&&S.obj.some((p,k)=>claims(S,x,k)&&S.oc[k]!==1-o))||has(S.T.ds||[],x.id));
 export function* eot3(G,o,act){const S=G.S;
+ if(RGI(S,o)=='id_raub'&&!usedKey(S,o+':raub','turn')){const c=FL(S,o,x=>x.x>=0&&kw(x,'Kavallerie')&&has(S.T.fought,x.id)&&x.dmg>0&&canHealX(S,x));if(c.length){const t=yield* pk(G,o,'Schleiersee-Raubfische: Einheit heilen',[...c,['Keine',null]],x=>x?x.dmg:-1e9);if(t){useKey(S,o+':raub','turn');const h=d3(S);t.dmg=Math.max(0,t.dmg-h);G.note('Schleiersee-Raubfische: '+t.name+' heilt '+h)}}}
  if(trOf(S,o,'sd_auge')&&!usedKey(S,o+':auge','turn')){const c=FL(S,o,x=>agOK(S,o,x));if(c.length){const t=yield* pk(G,o,'Auge der Götter: Einheit wählen',[...c,['Keine',null]],x=>x?10-agL(S,x).length*2+mx(x)*.01:-1e9);if(t){useKey(S,o+':auge','turn');yield* augeRoll(G,o,t)}}}
  {const g=genOf(S,o);if(g&&g.dmg>0&&canHealX(S,g)){const k=ENI(S,o);if(k=='fy_stur'||(k=='kh_blut'&&!usedKey(S,o+':kblut','turn'))){if(k=='kh_blut')useKey(S,o+':kblut','turn');const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note((k=='fy_stur'?'Zu stur zum Sterben':'Von Blut gestärkt')+': '+g.name+' heilt bis zu '+h)}}
   if(g&&ENI(S,o)=='kh_bisse'){const b=beute(S,o);if(b&&b.x>=0&&inCombat(S,g)&&dist(g,b)<=1){const h=d3(S);G.note('Wilde Bisse: '+b.name+' erleidet '+h+' tödlichen Schaden');mort(G,b,h,'Wilde Bisse')}}
@@ -321,6 +322,30 @@ Object.assign(AB,{
   sd_ritual:{n:'Grausamer Ritualist',s:'Passiv: Beim Ziehen der Taktikkarten (Generalin auf dem Schlachtfeld): 1 zusätzliche Karte ziehen, dann 1 Handkarte unter das Deck legen',army:1,src:(S,o)=>ENI(S,o)=='sd_ritual'},
   sd_ueber:{n:'Überfallchampion',s:'Angriffsphase: Andere befreundete Einheit ganz innerhalb 12" um die Generalin darf Angriffswürfe wiederholen (bis Zugende)',ph:4,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='sd_ueber',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>x!==g&&wholly(x,g,12))},
    *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Überfallchampion: Ziel',FL(S,o,x=>x!==g&&wholly(x,g,12)),x=>mx(x));if(!t)return;addFx(S,{k:'rrc',u:t.id,v:1,exp:'turn'});rep(G,'Überfallchampion',[],t.name+' darf Angriffswürfe wiederholen')},ai:()=>true}
+ });
+
+ // ---- Tiefenvolk der Idoneth: Seelenraubgesellschaft ----
+ Object.assign(HK,{
+  id_tiden:{hitT:(S,d,a,shoot)=>shoot&&S.round==1?-1:0,ranOK:(S,u)=>S.round==2?(has(S.T.rtr||[],u.id)?0:1):S.round==4?(has(S.T.rtr||[],u.id)?1:0):0,first:(S,u)=>S.round==3?1:0},
+  id_welle:{rend:(S,u,e,shoot,w)=>!shoot&&/^Namarti-Schwertknechte/.test(u.dn||u.n||'')&&has(S.T.charged,u.id)?1:0},
+  id_raeuber:{att:(S,u,w)=>w&&w[0]=='Wilder Biss des Allopexes'&&foes(S,u).some(e=>e.x>=0&&dist(u,e)<=6&&(e.dmg>0||has(S.T.sm||[],e.id)))?1:0}
+ });
+ Object.assign(AB,{
+  id_tiden:{n:'Tiden des Todes',s:'Passiv, nach Schlachtrunde: R1 −1 auf Fernkampf-Treffer gegen die Einheit · R2 Rennen, danach Fernkampf/Angriff erlaubt · R3 kämpft zuerst · R4 Rückzug, danach Fernkampf/Angriff erlaubt',army:1,src:(S,o)=>trOf(S,o,'id_tiden')},
+  id_nebel:{n:'Ritual des schleichenden Nebels',s:'Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12": W6 3+ → −1 auf Verwundungswürfe gegen sie bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'id_nebel'),can:(S,u)=>fr(S,u.o).some(x=>wholly(x,u,12)&&vis(S,u,x)),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Ritual des schleichenden Nebels: Ziel',FL(S,u.o,x=>wholly(x,u,12)&&vis(S,u,x)),x=>mx(x));if(!t)return;const b=u.gen&&ENI(S,u.o)=='id_erz'?1:0,r=d6(S);hdr(G,'Ritual des schleichenden Nebels',r+b,r+b>=3,3,t.name+': −1 auf Verwundungswürfe gegen die Einheit bis zu deinem nächsten Zug','Kein Effekt');if(r+b>=3)addFx(S,{k:'wndT',u:t.id,v:-1,exp:'own'})},ai:()=>true},
+  id_bio:{n:'Biovoltaischer Schlag',s:'Angriffsphase, 1× pro Schlacht: Hat die Einheit angegriffen: Feind innerhalb 1" – 1 Würfel pro Modell: 4-5 → 1, 6+ → W3 tödlicher Schaden (+1 auf jeden Wurf, wenn das Ziel mehr Modelle hat)',ph:4,freq:'battle',unit:1,src:(S,u)=>hasAb(u,'id_bio'),can:(S,u)=>has(S.T.charged,u.id)&&foes(S,u).some(x=>x.x>=0&&dist(u,x)<=1),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Biovoltaischer Schlag: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const b=t.n>u.n?1:0,rs=[];let dm=0;for(let i=0;i<u.n;i++){const r=d6(S);rs.push(r);const v=r+b;if(v>=6)dm+=d3(S);else if(v>=4)dm+=1}rep(G,'Biovoltaischer Schlag',row('Würfe'+(b?' (+1)':''),rs),dm?t.name+': '+dm+' tödlicher Schaden':'Kein Effekt');if(dm)mort(G,t,dm,'Biovoltaischer Schlag')},ai:()=>true},
+  id_raeuber:{n:'Blutrünstige Räuber',s:'Passiv: +1 Attacke des Wilden Bisses, solange ein Feind innerhalb 6" angeschlagen ist oder in diesem Zug ein Modell verloren hat',unit:1,src:(S,u)=>hasAb(u,'id_raeuber')},
+  id_hiebe:{n:'Geschwungene Hiebe',s:'Passiv: +1 Wucht der Lanmari gegen Monster',unit:1,src:(S,u)=>hasAb(u,'id_hiebe')},
+  id_welle:{n:'Weg der hereinbrechenden Welle',s:'Passiv: +1 Wucht der Nahkampfwaffen befreundeter Namarti-Schwertknechte, die im selben Zug angegriffen haben',army:1,src:(S,o)=>RGI(S,o)=='id_welle'},
+  id_raub:{n:'Schleiersee-Raubfische',s:'Zugende (jeder Zug), 1× pro Zug: Kavallerie-Einheit, die in diesem Zug gekämpft hat, heilt W3 (am Zugende angeboten)',army:1,src:(S,o)=>RGI(S,o)=='id_raub'},
+  id_erz:{n:'Erzritualist',s:'Passiv: +1 auf Würfe für das Ritual des schleichenden Nebels',army:1,src:(S,o)=>ENI(S,o)=='id_erz'},
+  id_stahl:{n:'Stahlausterpanzer',s:'Passiv: Modifikatoren auf Schutzwürfe des Generals (positiv wie negativ, auch Wucht) werden ignoriert',army:1,src:(S,o)=>ENI(S,o)=='id_stahl'},
+  id_geist:{n:'Geistesfeuer',s:'Nahkampfphase, 1× pro Schlacht: Feind im Nahkampf mit dem General trifft bis Phasenende nur bei unmodifiziertem 6',ph:5,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='id_geist',can:(S,o)=>{const g=genOf(S,o);return !!g&&foes(S,g).some(e=>e.x>=0&&dist(g,e)<=1)},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Geistesfeuer: Feind im Nahkampf',foes(S,g).filter(e=>e.x>=0&&dist(g,e)<=1).map(x=>[lab(x),x]),scE);if(!t)return;addFx(S,{k:'hit6',u:t.id,exp:'ph'});rep(G,'Geistesfeuer',[],t.name+' trifft bis zum Phasenende nur bei einem unmodifizierten Trefferwurf von 6')},ai:()=>true},
+  id_leck:{n:'Köstliche Leckerbissen',s:'Heldenphase: Jede befreundete Kavallerie-Einheit in Nahkampfreichweite des Generals heilt 1',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='id_leck',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>kw(x,'Kavallerie')&&dist(g,x)<=1&&x.dmg>0)},
+   *run(G,o){const S=G.S,g=genOf(S,o);const l=fr(S,o).filter(x=>kw(x,'Kavallerie')&&dist(g,x)<=1&&x.dmg>0&&canHealX(S,x));l.forEach(x=>{x.dmg=Math.max(0,x.dmg-1)});rep(G,'Köstliche Leckerbissen',[],l.length?l.map(x=>x.name).join(', ')+' heilt je 1':'Keine Einheit geheilt')},ai:()=>true}
  });
 
 }

@@ -1337,3 +1337,39 @@ Finsterschwur-Barbaren	Darkoath Marauders
 Plündererwaffen	Raider Weapons
 Glorreicher Tod	Glorious Death
 Passiv: Wirf jedes Mal einen Würfel, wenn ein Modell dieser Einheit durch eine Nahkampfattacke getötet wird und im Nahkampf mit der attackierenden Einheit war. Bei 5+ füge der attackierenden Einheit 1 tödlichen Schaden zu, nachdem die Kämpfen-Fähigkeit abgehandelt wurde.	Passive: Roll a dice each time a model in this unit is slain by a melee attack and was in combat with the attacking unit. On a 5+, inflict 1 mortal damage on the attacking unit after the Fight ability has been resolved.
+Tiefenvolk der Idoneth	Idoneth Deepkin
+Seelenraubgesellschaft	Soulraid Hunt
+Tiden des Todes	Tides of Death
+In jeder Schlachtrunde haben alle befreundeten Einheiten die passive Fähigkeit, die der Rundennummer zugeordnet ist: Runde 1 Das Wasser steigt: −1 auf Trefferwürfe für Fernkampfattacken, deren Ziel die Einheit ist. Runde 2 Die Flut bricht herein: Die Einheit kann eine Rennen-Fähigkeit einsetzen und trotzdem später noch Fernkampf- und/oder Angriff-Fähigkeiten einsetzen. Runde 3 Macht der Sturmflut: Die Einheit hat Kämpft zuerst. Runde 4 Die Flut ebbt ab: Die Einheit kann eine Rückzug-Fähigkeit einsetzen und trotzdem später noch Fernkampf- und/oder Angriff-Fähigkeiten einsetzen.	In each battle round, all friendly units have the passive ability matching the round number: Round 1 The Waters Rise: subtract 1 from hit rolls for shooting attacks that target the unit. Round 2 The Flood Breaks: the unit can use a Run ability and still use Shoot and/or Charge abilities later this turn. Round 3 Power of the Storm Surge: the unit has Strikes First. Round 4 The Tide Ebbs: the unit can use a Retreat ability and still use Shoot and/or Charge abilities later this turn.
+Weg der hereinbrechenden Welle	Way of the Crashing Wave
+Passiv: Addiere 1 auf den Wuchtwert der Nahkampfwaffen befreundeter Namarti-Schwertknechte-Einheiten, die im selben Zug angegriffen haben.	Passive: Add 1 to the Rend of the melee weapons of friendly Namarti Thralls units that charged in the same turn.
+Schleiersee-Raubfische	Veilsea Raiders
+Einmal pro Zug (Armee), Ende eines beliebigen Zuges: Wähle eine befreundete Kavallerie-Einheit, die in diesem Zug eine Kämpfen-Fähigkeit eingesetzt hat: Heile (W3) jene Einheit.	Once per turn (army), end of any turn: Pick a friendly Cavalry unit that used a Fight ability this turn: heal (D3) that unit.
+Erzritualist	Arch-ritualist
+Passiv: Addiere 1 auf Würfe für die Fähigkeit „Ritual des schleichenden Nebels“ deines Generals.	Passive: Add 1 to rolls for your general's Ritual of the Creeping Mist ability.
+Stahlausterpanzer	Steel Oyster Armour
+Passiv: Ignoriere alle Modifikatoren auf Schutzwürfe deines Generals (positive und negative).	Passive: Ignore all modifiers to your general's save rolls (positive and negative).
+Geistesfeuer	Spirit Fire
+Einmal pro Schlacht, beliebige Nahkampfphase: Wähle eine feindliche Einheit im Nahkampf mit deinem General: Bis zum Ende der Phase erzielen Attacken jener Einheit Treffer nur bei einem unmodifizierten Trefferwurf von 6.	Once per battle, any combat phase: Pick an enemy unit in combat with your general: until the end of the phase, attacks made by that unit only hit on an unmodified hit roll of 6.
+Köstliche Leckerbissen	Delicious Morsels
+Deine Heldenphase: Heile (1) jede befreundete Kavallerie-Einheit in Nahkampfreichweite deines Generals.	Your hero phase: Heal (1) each friendly Cavalry unit within combat range of your general.
+Isharann-Seelenfinder	Isharann Soulscryer
+Orakelfischschwarm	Oracle Fish Swarm
+Berührung des Abgrunds	Touch of the Abyss
+Ritual des schleichenden Nebels	Ritual of the Creeping Mist
+Deine Heldenphase: Wähle eine sichtbare befreundete Einheit ganz innerhalb von 12 Zoll um diese Einheit und wirf einen Würfel. Bei 3+ subtrahiere bis zum Beginn deines nächsten Zuges 1 von Verwundungswürfen für Attacken, deren Ziel jene Einheit ist.	Your hero phase: Pick a visible friendly unit wholly within 12" of this unit and roll a dice. On a 3+, until the start of your next turn subtract 1 from wound rolls for attacks that target that unit.
+Akhelianer-Morrsarrgarde	Akhelian Morrsarr Guard
+Voltspeer	Voltspear
+Zähne und Schwanz des Fangmoras	Fangmora's Teeth and Tail
+Biovoltaischer Schlag	Biovoltaic Blast
+Einmal pro Schlacht, beliebige Angriffsphase: Hat diese Einheit in dieser Phase angegriffen, wähle eine feindliche Einheit innerhalb von 1 Zoll als Ziel und wirf eine Anzahl Würfel gleich der Anzahl Modelle dieser Einheit. Für jede 4-5 füge dem Ziel 1 tödlichen Schaden zu, für jede 6+ W3 tödlichen Schaden. Addiere 1 zu jedem Wurf, wenn die Zieleinheit aus mehr Modellen besteht als diese Einheit.	Once per battle, any charge phase: If this unit charged in this phase, pick an enemy unit within 1" as the target and roll a number of dice equal to the number of models in this unit. For each 4-5, inflict 1 mortal damage on the target. For each 6+, inflict D3 mortal damage. Add 1 to each roll if the target unit has more models than this unit.
+Akhelianer-Allopex	Akhelian Allopex
+Klingenmuschel-Harpunenwerfer	Bladeclam Harpoon Launcher
+Haken und Klingen	Hooks and Blades
+Wilder Biss des Allopexes	Allopex's Savage Bite
+Blutrünstige Räuber	Bloodthirsty Predators
+Passiv: Addiere 1 auf den Attackenwert des Wilden Bisses des Allopexes dieser Einheit, solange sie sich innerhalb von 6 Zoll um mindestens eine feindliche Einheit befindet, die angeschlagen ist oder aus der im selben Zug mindestens ein Modell getötet wurde.	Passive: Add 1 to the Attacks of this unit's Allopex's Savage Bite while it is within 6" of at least one enemy unit that is battle-damaged or had at least one model slain this turn.
+Namarti-Schwertknechte	Namarti Thralls
+Lanmari	Lanmari
+Geschwungene Hiebe	Sweeping Blows
+Passiv: Addiere bei Attacken dieser Einheit, deren Ziel ein feindliches Monster ist, 1 auf den Wuchtwert der Lanmari dieser Einheit.	Passive: Add 1 to the Rend of this unit's Lanmari for attacks that target an enemy Monster.

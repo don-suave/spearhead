@@ -114,7 +114,7 @@ const FP={
  'Skaven':['#6a5a2c','#8fe35e','jag'],'Sturmgeschmiedete Ewige':['#27508f','#f4cf55','ring'],'Nachtspuk':['#3a7b78','#c8fff6','wave'],
  'Maggotkin des Nurgle':['#6a7a2a','#d4dc78','dots'],'Khazalid':['#a24a1a','#ffcf5a','jag'],'Hedoniten des Slaanesh':['#a02c6c','#f6a9d8','wave'],
  'Ogor-Schlundstämme':['#8a5a3a','#ecc794','jag'],'Behemats Söhne':['#7b6b52','#d9c9a8','ring'],'Helschmiede des Hashut':['#5e2a22','#e8832e','jag'],
- 'Sklaven der Finsternis':['#4a2323','#d8b27a','jag'],'Seraphon':['#1f7c7c','#eac24c','ring'],'Klingen des Khorne':['#8c1a1a','#e6c783','jag'],'Töchter des Khaine':['#6c1e4c','#ee4a68','wave'],
+ 'Sklaven der Finsternis':['#4a2323','#d8b27a','jag'],'Tiefenvolk der Idoneth':['#1d4e66','#9fe0d8','ring'],'Seraphon':['#1f7c7c','#eac24c','ring'],'Klingen des Khorne':['#8c1a1a','#e6c783','jag'],'Töchter des Khaine':['#6c1e4c','#ee4a68','wave'],
  'Mondwahn-Gits':['#57724a','#f3e463','dots'],'Himmelsherrscher der Kharadron':['#27496c','#d9a143','ring'],'Lichtfürsten der Lumineth':['#4b7cb4','#f6f0d2','wave'],
  'Jünger des Tzeentch':['#37379e','#43d6e6','wave'],'Knochenlegionen der Ossiarch':['#7a6a42','#efe6c8','ring'],'Sylvaneth':['#2f6b3a','#e3d79a','wave']};
 export const palOf=f=>FP[f]||['#5a5a5a','#e0e0e0','ring'];

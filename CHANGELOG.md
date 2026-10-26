@@ -1,5 +1,8 @@
 # Changelog
 
+## v95
+- Neue Armee: Tiefenvolk der Idoneth Seelenraubgesellschaft (Tiden des Todes je Schlachtrunde, Ritual des schleichenden Nebels, Biovoltaischer Schlag, Blutrünstige Räuber, vier Verbesserungen)
+
 ## v94
 - Zusammenhalt: Einheiten müssen jetzt eine zusammenhängende Gruppe bilden (zwei getrennte Paare galten bisher fälschlich als in Ordnung); Verluste und zurückkehrende Modelle erhalten den Zusammenhalt, wo möglich
 
