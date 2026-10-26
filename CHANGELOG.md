@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v81
+- Menü: Version und Upload-Zeit; Name wird zusätzlich als Cookie gemerkt
+- Statistik: Tabelle wird automatisch angelegt, klare Fehlermeldung wenn die D1-Datenbank „DB“ fehlt
+
 ## v80
 - Fähigkeiten „1× pro Schlacht“ (unten links): immer sichtbar, leicht ausgegraut; nur in der passenden Phase bzw. zum passenden Zeitpunkt hell und hervorgehoben
 

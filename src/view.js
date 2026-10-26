@@ -5,7 +5,7 @@ import {abs,mDistPt,mgap,cohBad} from './models.js';
 import {PH,TWL,TERSZ,ARMY} from './data.js';
 import {chargePlan} from './plan.js';
 import {depForm,rsvForm,moveForm,pileForm,chargeForm,mvRest,chargeModelErr,CMD,rngOf,mvOf,byId,abilities,globals,stat,eligF,sfOK,dist,foes,wnd,mx,ONM,placeErr,moveErr,adjErr,adjAllow,pileModelErr,chargeErr,pileErr,chargeDest,pileDest,chargeSnap,actCheck,inCombat} from './rules.js';
-import {report,askName,home} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs,abOrigin,originOf,srcTag} from './abil.js';
+import {report,askName,home,relInfo,myName} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs,abOrigin,originOf,srcTag} from './abil.js';
 
 const SC=24,$=id=>document.getElementById(id),COL=['#4aa3ff','#ff6a4a'];
 let G,seat=0,mode=null,busy=false,timer=0,nextDelay=600;
@@ -125,7 +125,7 @@ $('info').onclick=rulesApp;
 addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
 $('menu').onclick=()=>{const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
- pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small>`,
+ pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small><br><small>Spieler: ${(myName()||'Gast').replace(/[<>&"]/g,'')} · Version: ${relInfo()}</small>`,
  [{t:'Ansicht zurücksetzen',fn:resetView},...(S.stage?[{t:'Meine Taktikkarten ('+S.P[seat].hand.length+')',fn:hand}]:[]),...(can?[{t:'Befehle jetzt',fn:()=>answer({a:'cmdwin'})}]:[]),
   ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,s:withSrc(seat,g),fn:()=>answer({a:g.k})})):[]),{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}])};
 const KC=['⚔️','💰','💥','👑','🏃','💀','🎯','🔥','☄️','🔨','🔍','⚖️'],KS=['⚡','💀','⛰️','🏴','🕯️','👻','🦴','🗿','⚰️','↩️','😱','🩸'],KG0=['⚔️','🏴','↔️','⚡','⛰️','👑','🔥','🗿','🐉','🏹','⚔️','🛡️'];
