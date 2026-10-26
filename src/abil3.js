@@ -1,17 +1,13 @@
 // Fähigkeiten der dritten Armeenwelle (Hooks siehe hooks.js).
-import {scE,mort,AB,abUsed,en,roll2,fr,lab,hdr,pk,FL,vis,genOf,nmove,pickF,rep,row} from './abil.js';
-import {HK} from './hooks.js';
+import {scE,mort,AB,abUsed,en,roll2,fr,lab,hdr,pk,FL,vis,genOf,nmove,pickF,rep,row,relocate,claims,pickE} from './abil.js';
+import {HK,GL} from './hooks.js';
+import {placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
+import {ptDist} from './geom.js';
+import {doRetreat,destReq} from './cards.js';
+import {abs,wholly,udist} from './models.js';
 import {ARMY} from './data.js';
-import {d6,d3} from './util.js';
-import {addFx,fxL} from './fx.js';
-import {wholly} from './models.js';
-import {inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm} from './rules.js';
-import {usedKey,useKey} from './fx.js';
-import {udist} from './models.js';
-import {destReq} from './cards.js';
-import {applyMove} from './rules.js';
-import {add,has} from './util.js';
-
+import {d6,d3,add,has} from './util.js';
+import {addFx,fxL,fxSum,usedKey,useKey} from './fx.js';
 const trOf=(S,o,k)=>{try{return ARMY[S.K.army[o]].tr.includes(k)}catch(e){return false}};
 const kw=(u,w)=>(u.kw||'').includes(w);
 const gOK=(S,o)=>!!genOf(S,o);
@@ -30,9 +26,26 @@ function* disz(G,o,ph,second){const S=G.S,g=genOf(S,o),done=S.T.dzT||(S.T.dzT=[]
  else if(ph==4){addFx(S,{k:'chg',u:t.id,v:1,exp:'ph'});G.note('Disziplin: '+t.name+' +1 auf Angriffswürfe')}
  else{const c=G.isAI(o)?'w':yield* pk(G,o,'Disziplin: Effekt',[['+1 auf Verwundungswürfe im Nahkampf','w'],['Rettung 5+','r']],()=>0);if(c=='w'){addFx(S,{k:'wndM',u:t.id,v:1,exp:'ph'});G.note('Disziplin: '+t.name+' +1 auf Verwundungswürfe im Nahkampf')}else{addFx(S,{k:'ward',u:t.id,v:5,exp:'ph'});G.note('Disziplin: '+t.name+' hat Rettung 5+')}}}
 const dzAB=(id,ph,nmx,second)=>({n:second?'Unvergleichlicher Zusammenhalt ('+nmx+')':'Unerbittliche Disziplin ('+nmx+')',s:(['Bewegungsphase','Angriffsphase','Nahkampfphase'][[2,4,5].indexOf(ph)])+', 1× pro Phase (Armee): Disziplin-Wurf (W6, 4+) für eine befreundete Einheit'+(second?' – zweiter Einsatz, anderes Ziel':''),ph,freq:'phase',army:1,src:(S,o)=>trOf(S,o,'kb_disz')&&(!second||RGI(S,o)=='kb_zus'),can:(S,o)=>fr(S,o).length>0&&(!second||(abUsed(S,null,'kb_d'+(ph==2?'m':ph==4?'a':'f'),o)&&!usedKey(S,o+':dz2','turn'))),*run(G,o){if(second)useKey(G.S,o+':dz2','turn');yield* disz(G,o,ph,second)},ai:()=>true});
+// --- Sylvaneth
+const nearT=(S,m,d)=>S.ter.some(t=>!t.rel&&ptDist(t,m.x,m.y)-m.l/2<=d);
+const unitNearT=(S,u)=>u.x>=0&&u.M&&abs(u).some(m=>nearT(S,m,3));
+const beute=(S,o)=>{S.beute||(S.beute=[null,null]);const id=S.beute[o];if(id==null)return null;const t=S.U.find(x=>x.id==id);if(!t){S.beute[o]=null;(S.akk||(S.akk=[0,0]))[o]++;return null}return t};
+const akkOf=(S,u)=>((S.akk||[0,0])[u.o]||0)+fxSum(S,u,'akkB');
+const nearB=(S,u)=>{const b=beute(S,u.o);return !!b&&b.x>=0&&u.x>=0&&dist(u,b)<=9};
+export function* beuteStart(G,o){const S=G.S;if(!trOf(S,o,'sy_rache')||beute(S,o))return;const c=S.U.filter(e=>e.o!=o);if(!c.length)return;const t=yield* pk(G,o,'Ziel der Rache: Beute wählen',c.map(x=>[lab(x),x]),scE);if(!t)return;S.beute[o]=t.id;G.note((o?'Computer':'Du')+': Beute ist '+t.name)}
 export function* eot3(G,o,act){const S=G.S;
+ if(trOf(S,o,'sy_ley')&&!usedKey(S,o+':ley','turn')){useKey(S,o+':ley','turn');const hs=fr(S,o).filter(u=>u.dmg>0&&unitNearT(S,u));hs.forEach(u=>{u.dmg=Math.max(0,u.dmg-1)});if(hs.length)G.note('Leylinien: '+hs.map(u=>u.name).join(', ')+' heilen 1')}
+ if(trOf(S,o,'sy_ley')&&!usedKey(S,o+':zusch','turn')){const c=FL(S,o,x=>unitNearT(S,x)&&has(S.T.fought,x.id));if(c.length){const t=yield* pk(G,o,'Zuschlagen und Verschwinden: Einheit',[...c,['Keine',null]],x=>x?mx(x):-1e9);if(t){useKey(S,o+':zusch','turn');const r=d6(S);hdr(G,'Zuschlagen und Verschwinden',r,r>=2,2,t.name+' wird neu aufgestellt','Kein Effekt');if(r>=2)yield* relocate(G,o,t,'ter3','Zuschlagen und Verschwinden','Neu aufstellen: jedes Modell innerhalb 3 Zoll um ein Geländestück, mehr als 6 Zoll von Feinden')}}}
+ if(RGI(S,o)=='sy_rach'&&!usedKey(S,o+':rach','turn')){const c=S.U.filter(e=>e.o!=o&&e.x>=0&&S.obj.some((p,i)=>claims(S,e,i)));if(c.length){const t=yield* pk(G,o,'Rachsüchtige Geister des Landes: Ziel',[...c.map(x=>[lab(x),x]),['Keins',null]],x=>x?scE(x):-1e9);if(t){useKey(S,o+':rach','turn');const r=d6(S);hdr(G,'Rachsüchtige Geister des Landes',r,r>=4,4,t.name+': W3 tödlicher Schaden','Kein Effekt');if(r>=4)mort(G,t,d3(S),'Rachsüchtige Geister')}}}
+ if(RGI(S,o)=='sy_leben'&&!usedKey(S,o+':leben','turn')){useKey(S,o+':leben','turn');const hs=fr(S,o).filter(u=>u.dmg>0);hs.forEach(u=>{u.dmg=Math.max(0,u.dmg-3)});if(hs.length)G.note('Lebensspender: '+hs.map(u=>u.name).join(', ')+' heilen 3')}
+ if(RGI(S,o)=='sy_blatt'&&!usedKey(S,o+':blatt','battle')){const c=FL(S,o,x=>inCombat(S,x));if(c.length){const t=yield* pk(G,o,'Blätter im Wind: Einheit',[...c,['Nicht einsetzen',null]],x=>x?mx(x):-1e9);if(t){useKey(S,o+':blatt','battle');yield* doRetreat(G,t,{free:true})}}}
+
  for(const k of fr(S,o).filter(x=>hasAb(x,'ob_ernte')&&(x.kt||0)>0)){const t=yield* pk(G,o,'Konstrukt reparieren: Mortek-Garde',FL(S,o,x=>x.dn=='Mortek-Garde'&&dist(k,x)<=6&&x.n<x.nmax),x=>x.nmax-x.n);if(!t)continue;let h=0;const rs=[];for(let i=0;i<k.kt;i++){const r=d6(S);rs.push(r);if(r>=4)h++}h=Math.min(h,t.nmax-t.n);t.n+=h;G.rep('Konstrukt reparieren',[row('Würfe (4+) – '+k.kt+' Knochentribut',rs,4),{k:'txt',s:h+' Modell(e) kehren zurück zu '+t.name}]);k.kt=0}}
 export function install3(){
+GL.ward.push((S,e)=>S.U.some(k=>k.o==e.o&&k.x>=0&&hasAb(k,'sy_gesandte')&&e.x>=0&&S.obj.some((p,i)=>claims(S,k,i)&&claims(S,e,i)))?6:0);
+GL.chg.push((S,u)=>{if(u.x<0||!S.K||!S.K.army)return 0;const g=gnl(S,u.o);if(!g||ENI(S,u.o)!='sy_ger'||!wholly(u,g,12)||!inCombat(S,g))return 0;const b=beute(S,u.o);return b&&dist(g,b)<=1?2:1});
+GL.place.ter3=(S,o,u,x,y,a)=>{const e=placeErr(S,'rein',o,u,x,y,a);if(e)return e;return abs({...u,x,y}).every(m=>nearT(S,m,3))?'':'Jedes Modell innerhalb von 3 Zoll um ein Geländestück, mehr als 6 Zoll von Feinden'};
+
 Object.assign(HK,{
  kv_finte:{nort:(S,u)=>kw(u,'Kavallerie')?1:0},
  kv_schein:{chgRtr:(S,u)=>S.T.kvs&&S.act==u.o?1:0},
@@ -100,5 +113,50 @@ Object.assign(AB,{ kv_arch:{n:'Mächtiger Archaeossianer',s:'Passiv: General hat
   *run(G,u){const S=G.S,r=d6(S);hdr(G,'Kehrtwende',r,r>=3,3,u.name+' darf sich bewegen','Kein Effekt');if(r<3)return;const mv=mvOf(S,u),a=yield* destReq(G,u,mv,{text:'Kehrtwende: bis '+mv+' Zoll (nicht im Nahkampf enden)',chk:a=>S.U.some(e=>e.o!=u.o&&e.x>=0&&(e.M||[]).some&&0)?'':''});if(!a.stay){applyMove(S,u,a,mv);add(S.T.moved,u.id);G.note('Kehrtwende: '+u.name+' bewegt sich')}},ai:()=>false},
  kv_wild:{n:'Wild bis in die Knochen',s:'Bewegungsphase: Die Einheit darf sich 3" bewegen, auch in den Nahkampf',ph:2,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'kv_wild'),
   *run(G,u){const S=G.S;S.cmb=true;try{const a=yield* destReq(G,u,3,{text:'Wild bis in die Knochen: bis 3 Zoll (darf im Nahkampf enden)'});if(!a.stay){applyMove(S,u,a,3);add(S.T.moved,u.id);G.note('Wild bis in die Knochen: '+u.name+' bewegt sich')}}finally{S.cmb=false}},ai:()=>true},
+});
+
+Object.assign(HK,{
+ sy_jagd:{hit:(S,u)=>nearB(S,u)&&akkOf(S,u)>=2?1:0,wnd:(S,u)=>nearB(S,u)&&akkOf(S,u)>=3?1:0,chg:(S,u)=>nearB(S,u)&&akkOf(S,u)>=1?1:0,run:(S,u)=>nearB(S,u)&&akkOf(S,u)>=1?1:0},
+ sy_jv:{rend:(S,u,e,shoot,w)=>!shoot&&u.gen&&(()=>{const b=beute(S,u.o);return b&&b.x>=0&&dist(u,b)<=9&&vis(S,u,b)})()?1:0},
+ sy_knorr:{rendT:(S,d,a,shoot,w)=>d.gen?-99:0},
+ sy_schwer:{att:(S,u,w)=>w[0]=='Gewaltige pfählende Krallen'&&u.dmg>=10&&typeof w[2]=='number'?1-w[2]:0}
+});
+Object.assign(AB,{
+ sy_besch:{n:'Beschreiter der verborgenen Pfade',s:'Bewegungsphase, 1× pro Zug (Armee): Einheit innerhalb 3" um ein Geländestück (nicht im Nahkampf) wird >6" von Feinden neu aufgestellt, danach keine Bewegung-Fähigkeiten in dieser Phase',ph:2,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='sy_besch',can:(S,o)=>fr(S,o).some(x=>unitNearT(S,x)&&!inCombat(S,x)),
+  *run(G,o){const S=G.S,t=yield* pk(G,o,'Beschreiter der verborgenen Pfade: Einheit',FL(S,o,x=>unitNearT(S,x)&&!inCombat(S,x)),x=>mx(x));if(!t)return;if(yield* relocate(G,o,t,'rein','Beschreiter der verborgenen Pfade','Neu aufstellen: mehr als 6 Zoll von allen Feinden'))addFx(S,{k:'nomove',u:t.id,exp:'ph'})},ai:()=>false},
+ sy_ley:{n:'Leylinien',s:'Passiv: Ende jedes Zugs heilt jede befreundete Einheit innerhalb 3" um ein Geländestück 1 (automatisch)',army:1,src:(S,o)=>trOf(S,o,'sy_ley')},
+ sy_nach:{n:'Nachwachsen',s:'Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18" um die Generalin: 2W6 5+ → heile W6',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='sy_nach',can:(S,o)=>gOK(S,o),
+  *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Nachwachsen: Ziel',FL(S,o,x=>wholly(x,g,18)&&vis(S,g,x)&&x.dmg>0),x=>x.dmg);if(!t)return;if(!spell(G,'Nachwachsen',5))return;const h=d6(S);t.dmg=Math.max(0,t.dmg-h);G.note('Nachwachsen: '+t.name+' heilt bis zu '+h)},ai:()=>true},
+ sy_baum:{n:'Baumlied',s:'Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12" um die Generalin: 2W6 7+ → +1 Wucht im Nahkampf bis zum nächsten Zug',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='sy_baum',can:(S,o)=>gOK(S,o),
+  *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Baumlied: Ziel',FL(S,o,x=>wholly(x,g,12)&&vis(S,g,x)),x=>mx(x));if(!t)return;if(!spell(G,'Baumlied',7))return;addFx(S,{k:'rendP',u:t.id,v:1,exp:'own'});G.note('Baumlied: '+t.name+' +1 Wucht im Nahkampf')},ai:()=>true},
+ sy_knorr:{n:'Knorrige Kriegerin',s:'Passiv: Die Generalin ignoriert negative Modifikatoren auf Schutzwürfe',army:1,src:(S,o)=>ENI(S,o)=='sy_knorr'},
+ sy_samen:{n:'Samen der Wiedergeburt',s:'Passiv, 1× pro Schlacht: würde die Generalin zerstört, 3+ → bleibt mit 1 Ausdauer',army:1,src:(S,o)=>ENI(S,o)=='sy_samen'},
+ sy_gruen:{n:'Grünende Harmonie',s:'Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18": 2W6 7+ → 1 zerstörtes Modell kehrt zurück (W3 bei Wehrhaften Waldgeistern)',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_gruen'),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Grünende Harmonie: Ziel',FL(S,u.o,x=>wholly(x,u,18)&&vis(S,u,x)&&x.n<x.nmax),x=>x.nmax-x.n);if(!t)return;if(!spell(G,'Grünende Harmonie',7))return;const k=Math.min(t.nmax-t.n,t.dn=='Wehrhafte Waldgeister'?d3(S):1);t.n+=k;G.note('Grünende Harmonie: '+k+' Modell(e) kehren zu '+t.name+' zurück')},ai:()=>true},
+ sy_erd:{n:'Erderschütterer',s:'Nahkampfphase: Feind im Nahkampf mit dieser Einheit: 4+ → kämpft in dieser Phase zuletzt',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_erd'),can:(S,u)=>inCombat(S,u),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Erderschütterer: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S);hdr(G,'Erderschütterer',r,r>=4,4,t.name+' kämpft zuletzt','Kein Effekt');if(r>=4)add(S.T.SL,t.id)},ai:()=>true},
+ sy_schwer:{n:'Schwer angeschlagen',s:'Passiv: Ab 10 Schadenspunkten hat die Gewaltige pfählende Krallen nur noch 1 Attacke',unit:1,src:(S,u)=>hasAb(u,'sy_schwer')},
+ sy_gesandte:{n:'Gesandte der Immerkönigin',s:'Passiv: Befreundete Einheiten am selben Ziel wie diese Einheit haben Rettung 6+',unit:1,src:(S,u)=>hasAb(u,'sy_gesandte')},
+ sy_erinn:{n:'Krieger-Erinnerungen',s:'Nahkampfphase: Einheit wählt: Kriegerische Erinnerungen (+1 auf Trefferwürfe im Nahkampf) oder Friedliche Erinnerungen (+1 auf Schutzwürfe) bis Phasenende',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_erinn'),
+  *run(G,u){const S=G.S,c=G.isAI(u.o)?'k':yield* pk(G,u.o,'Krieger-Erinnerungen',[['Kriegerische Erinnerungen (+1 auf Treffer im Nahkampf)','k'],['Friedliche Erinnerungen (+1 auf Schutzwürfe)','f']],()=>0);if(c=='k'){addFx(S,{k:'hitA',u:u.id,v:1,exp:'ph'});G.note('Kriegerische Erinnerungen: +1 auf Treffer')}else{addFx(S,{k:'svP',u:u.id,v:1,exp:'ph'});G.note('Friedliche Erinnerungen: +1 auf Schutzwürfe')}},ai:()=>true},
+ sy_horn:{n:'Kernholzjagdhorn',s:'Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12": zählt bis zu deinem nächsten Zug als hätte sie 1 zusätzlichen Akkord (Jagdlied)',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_horn'),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Kernholzjagdhorn: Ziel',FL(S,u.o,x=>wholly(x,u,12)&&vis(S,u,x)),x=>mx(x));if(!t)return;addFx(S,{k:'akkB',u:t.id,v:1,exp:'own'});G.note('Kernholzjagdhorn: '+t.name+' +1 Akkord')},ai:()=>true},
+ sy_zeph:{n:'Zephirkäfer',s:'Fernkampfphase: Nachdem die Einheit eine Fernkampf-Fähigkeit eingesetzt hat: bewegt sich bis zu W6", ohne im Nahkampf zu enden',ph:3,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_zeph'),can:(S,u)=>!!(S.T.sh&&S.T.sh[u.id]),
+  *run(G,u){const S=G.S,r=d6(S);yield* nmove(G,u,'Zephirkäfer (W6 = '+r+')',r)},ai:()=>true},
+ sy_lanze:{n:'Lanzenreiter-Angriff',s:'Angriffsphase: Hat die Einheit angegriffen: Sichtbarer Feind innerhalb 1": W3 (+1 wenn Beute); bei 2+ tödlicher Schaden in Höhe des Ergebnisses',ph:4,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_lanze'),can:(S,u)=>has(S.T.charged,u.id),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Lanzenreiter-Angriff: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1&&vis(S,u,x)).map(x=>[lab(x),x]),scE);if(!t)return;const b=beute(S,u.o),r=d3(S)+(b&&b.id==t.id?1:0);hdr(G,'Lanzenreiter-Angriff',r,r>=2,2,t.name+': '+r+' tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,r,'Lanzenreiter-Angriff')},ai:()=>true},
+ sy_brumm:{n:'Ohrenbetäubendes Brummen',s:'Nahkampfphase: Hat die Einheit nicht angegriffen: Feind im Nahkampf: W6 > Kontrollwert → −1 Attacken seiner Nahkampfwaffen (Zug)',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sy_brumm'),can:(S,u)=>!has(S.T.charged,u.id)&&inCombat(S,u),
+  *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Ohrenbetäubendes Brummen: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S),cv=cvOf(S,t);hdr(G,'Ohrenbetäubendes Brummen',r,r>cv,cv+1,t.name+': −1 Attacken (Nahkampf)','Kein Effekt (Kontrollwert '+cv+')');if(r>cv)addFx(S,{k:'att',u:t.id,v:-1,exp:'turn'})},ai:()=>true},
+ sy_jv:{n:'Jagdvorsteher',s:'Passiv: +1 Wucht auf Nahkampfwaffen der Generalin, solange die Beute sichtbar und innerhalb 9" ist',army:1,src:(S,o)=>ENI(S,o)=='sy_jv'},
+ sy_ger:{n:'Gerissener Verfolger',s:'Passiv: +1 (mit Beute im Nahkampf +2) auf Angriffswürfe befreundeter Einheiten ganz innerhalb 12" um die Generalin, solange diese im Nahkampf ist',army:1,src:(S,o)=>ENI(S,o)=='sy_ger'},
+ sy_tapfer:{n:'Tapferer Geist',s:'Heldenphase, 1× pro Schlacht: +1 auf Verwundungswürfe im Nahkampf für befreundete Einheiten in Nahkampfreichweite der Generalin bis Zugende',ph:1,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='sy_tapfer',can:(S,o)=>gOK(S,o),
+  *run(G,o){const S=G.S,g=genOf(S,o),l=fr(S,o).filter(x=>dist(g,x)<=1);l.forEach(x=>addFx(S,{k:'wndM',u:x.id,v:1,exp:'turn'}));G.note('Tapferer Geist: +1 auf Verwundungswürfe für '+l.map(x=>x.name).join(', '))},ai:()=>true},
+ sy_zephb:{n:'Zephirbegleiter',s:'Nahkampfphase: Wurde die Generalin in diesem Zug angegriffen und hat gekämpft: bewegt sich bis zu 2W6", ohne im Nahkampf zu enden',ph:5,freq:'turn',army:1,src:(S,o)=>ENI(S,o)=='sy_zephb',can:(S,o)=>{const g=genOf(S,o);return !!g&&has(S.T.fought,g.id)},
+  *run(G,o){const S=G.S,g=genOf(S,o),[a,b]=roll2(S);yield* nmove(G,g,'Zephirbegleiter (2W6 = '+(a+b)+')',a+b)},ai:()=>true},
+ sy_blatt:{n:'Blätter im Wind',s:'Passiv, 1× pro Schlacht, Ende eines Zugs: Befreundete Einheit im Nahkampf zieht sich ohne tödlichen Schaden zurück',army:1,src:(S,o)=>RGI(S,o)=='sy_blatt'},
+ sy_leben:{n:'Lebensspender',s:'Passiv: Ende jedes Zugs heilen alle befreundeten Einheiten 3 (automatisch)',army:1,src:(S,o)=>RGI(S,o)=='sy_leben'},
+ sy_rach:{n:'Rachsüchtige Geister des Landes',s:'Passiv: Ende jedes Zugs: Feind auf einem Ziel: 4+ → W3 tödlicher Schaden (Abfrage am Zugende)',army:1,src:(S,o)=>RGI(S,o)=='sy_rach'},
+ sy_zusch:{n:'Zuschlagen und Verschwinden',s:'Passiv: Ende jedes Zugs (Abfrage)',army:1,src:(S,o)=>trOf(S,o,'sy_zusch')},
+ sy_jagdlied:{n:'Jagdlied',s:'Passiv: Akkorde (je zerstörter Beute): 1 → +1 auf Rennen/Angriff, 2 → +1 auf Treffer, 3+ → +1 auf Verwundung für Einheiten innerhalb 9" um die Beute',army:1,src:(S,o)=>trOf(S,o,'sy_jagd')},
 });
 }

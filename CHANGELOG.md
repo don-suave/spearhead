@@ -1,6 +1,9 @@
 # Changelog
 
 
+## v85
+- Neue Armeen: Sylvaneth Bitterborkengesträuch (Geländeregeln) und Geisterschwingenschwarm (Beute und Akkorde)
+
 ## v84
 - Basisgrößen mit den offiziellen Schlachtprofilen (Sept. 2026) abgeglichen: 27 Einheiten korrigiert
 

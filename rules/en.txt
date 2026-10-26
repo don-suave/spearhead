@@ -1068,3 +1068,79 @@ Aspekt wechseln	Change Aspect
 Beliebige Nahkampfphase: Wähle bis Zugende Antlitz der Parade (−1 auf Trefferwürfe für Nahkampfattacken gegen die Einheit) oder Antlitz des Zerstörers (gegen ihren Nahkampfschaden keine Rettungswürfe).	Any Combat phase: pick until end of turn: Visage of the Parry (−1 to hit rolls for melee attacks targeting this unit) or Visage of the Destroyer (no ward rolls against damage from its melee attacks).
 Morghast-Archai	Morghast Archai
 Geisterwaffen	Spirit Weapons
+Sylvaneth	Sylvaneth
+Bitterborkengesträuch	Bitterbark Thicket
+Leylinien	Ley Lines
+Einmal pro Zug, Ende eines beliebigen Zuges: Heile (1) jede befreundete Einheit innerhalb von 3 Zoll um mindestens ein Geländestück.	Once per turn, end of any turn: heal (1) each friendly unit within 3" of at least one terrain feature.
+Zuschlagen und Verschwinden	Strike and Vanish
+Einmal pro Zug, Ende eines beliebigen Zuges: Befreundete Einheit innerhalb von 3 Zoll um ein Geländestück, die in diesem Zug eine Kämpfen-Fähigkeit eingesetzt hat: W6 2+ → entferne sie und stelle sie wieder auf, sodass jedes Modell innerhalb von 3 Zoll um ein Geländestück und weiter als 6 Zoll von Feinden ist.	Once per turn, end of any turn: a friendly unit within 3" of a terrain feature that used a Fight ability this turn: D6 2+: remove it and set it up again so each model is within 3" of a terrain feature and more than 6" from enemy units.
+Rachsüchtige Geister des Landes	Vengeful Spirits of the Land
+Einmal pro Zug, Ende eines beliebigen Zuges: Feindliche Einheit, die ein Ziel beansprucht: W6 4+ → W3 tödlicher Schaden.	Once per turn, end of any turn: an enemy unit contesting an objective: D6 4+: D3 mortal damage.
+Beschreiter der verborgenen Pfade	Tread the Hidden Paths
+Einmal pro Zug, deine Bewegungsphase: Befreundete Einheit innerhalb von 3 Zoll um mindestens ein Geländestück und nicht im Nahkampf: Entferne sie vom Schlachtfeld und stelle sie weiter als 6 Zoll von allen Feinden wieder auf. Sie kann für den Rest der Phase keine Bewegung-Fähigkeiten einsetzen.	Once per turn, your Movement phase: a friendly unit within 3" of at least one terrain feature and not in combat: remove it and set it up again more than 6" from all enemy units. It cannot use Move abilities for the rest of the phase.
+Nachwachsen	Regrowth
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18 Zoll um die Generalin: 2W6-Zauberwurf; bei 5+ heile (W6) das Ziel.	Your Hero phase: a visible friendly unit wholly within 18" of your general: 2D6 casting roll; on 5+ heal (D6) the target.
+Knorrige Kriegerin	Gnarled Warrior
+Passiv: Ignoriere negative Modifikatoren auf Schutzwürfe für deine Generalin.	Passive: ignore negative modifiers to save rolls for your general.
+Baumlied	Treesong
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll um die Generalin: 2W6-Zauberwurf; bei 7+ +1 Wucht auf Nahkampfwaffen des Ziels bis zum Beginn deines nächsten Zuges.	Your Hero phase: a visible friendly unit wholly within 12" of your general: 2D6 casting roll; on 7+ add 1 to the Rend of the target's melee weapons until the start of your next turn.
+Samen der Wiedergeburt	Seed of Rebirth
+Passiv, 1× pro Schlacht: Würde deine Generalin zerstört, wirf einen Würfel: Bei 3+ wird sie nicht zerstört, alle verbleibenden Schadenspunkte verfallen und sie heilt (1).	Passive, once per battle: if your general would be destroyed, roll a dice: on 3+ she is not destroyed, all remaining damage points are removed and she heals (1).
+Zweighexe	Branchwych
+Grünholzsense und Bittermade	Greenwood Scythe and Bitterbug
+Grünende Harmonie	Verdant Harmony
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18 Zoll: 2W6-Zauberwurf; bei 7+ kehrt 1 zerstörtes Modell zurück (bei Wehrhaften Waldgeistern W3).	Your Hero phase: a visible friendly unit wholly within 18": 2D6 casting roll; on 7+ return 1 slain model (D3 for Spirit Warders).
+Baumfürst	Treelord
+Würgewurzeln	Strangling Roots
+Weite Schwünge	Sweeping Blows
+Gewaltige pfählende Krallen	Massive Impaling Talons
+Erderschütterer	Groundshaker
+Beliebige Nahkampfphase: Feindliche Einheit im Nahkampf mit dieser Einheit: W6 4+ → sie kämpft in dieser Phase zuletzt.	Any Combat phase: an enemy unit in combat with this unit: D6 4+: it fights last this phase.
+Schwer angeschlagen	Badly Wounded
+Passiv: Solange dieser Einheit mindestens 10 Schadenspunkte zugewiesen sind, ist der Attackenwert ihrer Gewaltigen pfählenden Krallen 1.	Passive: while this unit has 10 or more damage points allocated to it, the Attacks of its Massive Impaling Talons is 1.
+Kurnoth-Jäger	Kurnoth Hunters
+Kurnoth-Großbogen	Kurnoth Greatbow
+Bösartige Klauen	Wicked Claws
+Gesandte der Immerkönigin	Envoys of the Everqueen
+Passiv: Solange diese Einheit ein Ziel beansprucht, haben befreundete Einheiten, die jenes Ziel beanspruchen, Rettung (6+).	Passive: while this unit contests an objective, friendly units contesting that objective have Ward (6+).
+Wehrhafte Waldgeister	Spirit Warders
+Verzauberte Klinge	Enchanted Blade
+Krieger-Erinnerungen	Warrior Memories
+Beliebige Nahkampfphase: Wähle 1 Effekt für die Phase: Kriegerische Erinnerungen (+1 auf Trefferwürfe für Nahkampfattacken dieser Einheit) oder Friedliche Erinnerungen (+1 auf Schutzwürfe für diese Einheit).	Any Combat phase: pick 1 effect for the phase: Warlike Memories (+1 to hit rolls for this unit's melee attacks) or Peaceful Memories (+1 to save rolls for this unit).
+Geisterschwingenschwarm	Spiritwing Swarm
+Ziel der Rache	Target of Vengeance
+Einmal pro Schlachtrunde (Armee), Beginn der Schlachtrunde: Befindet sich keine feindliche Beute auf dem Schlachtfeld, wähle eine feindliche Einheit; sie ist für den Rest der Schlacht die Beute.	Once per battle round (army), start of the battle round: if there is no enemy Quarry on the battlefield, pick an enemy unit; it is the Quarry for the rest of the battle.
+Jagdlied	Hunting Song
+Passiv: Du erhältst jedes Mal, wenn eine feindliche Beute zerstört wird, 1 Akkord. 1 Akkord: +1 auf Rennen- und Angriffswürfe; 2 Akkorde: +1 auf Trefferwürfe; 3+ Akkorde: +1 auf Verwundungswürfe – für befreundete Einheiten innerhalb von 9 Zoll um die Beute.	Passive: you gain 1 Chord each time an enemy Quarry is destroyed. 1 Chord: +1 to run and charge rolls; 2 Chords: +1 to hit rolls; 3+ Chords: +1 to wound rolls – for friendly units within 9" of the Quarry.
+Fliegender Zusammenhalt	Flying Cohesion
+Passiv: Diese Krieger haben eine Formationsreichweite von 2 Zoll.	Passive: these warriors have a coherency range of 2".
+Blätter im Wind	Leaves on the Wind
+Einmal pro Schlacht, Ende eines beliebigen Zuges: Befreundete Einheit im Nahkampf kann sofort die Fähigkeit „Rückzug“ wie in deiner Bewegungsphase einsetzen; ihr wird dadurch kein tödlicher Schaden zugefügt.	Once per battle, end of any turn: a friendly unit in combat can immediately use the Retreat ability as in your Movement phase; it suffers no mortal damage from doing so.
+Lebensspender	Lifegiver
+Einmal pro Zug, Ende eines beliebigen Zuges: Heile (3) jede befreundete Einheit.	Once per turn, end of any turn: heal (3) each friendly unit.
+Jagdvorsteher	Master of the Hunt
+Passiv: +1 auf den Wuchtwert der Nahkampfwaffen deines Generals, solange die feindliche Beute für ihn sichtbar und innerhalb von 9 Zoll ist.	Passive: +1 Rend on your general's melee weapons while the enemy Quarry is visible to it and within 9".
+Zephirbegleiter	Zephyr Companion
+Reaktion: Du sagst für deinen General eine Kämpfen-Fähigkeit an: Hat dein General in diesem Zug angegriffen, kann er sich nach jener Fähigkeit bis zu 2W6 Zoll bewegen, aber nicht im Nahkampf enden.	Reaction: you declare a Fight ability for your general: if your general charged this turn, it can move up to 2D6" after that ability, but cannot end in combat.
+Tapferer Geist	Valiant Spirit
+Einmal pro Schlacht, beliebige Heldenphase: +1 auf Verwundungswürfe für Nahkampfattacken befreundeter Einheiten in Nahkampfreichweite deines Generals für den Rest des Zugs.	Once per battle, any Hero phase: +1 to wound rolls for melee attacks of friendly units within combat range of your general for the rest of the turn.
+Gerissener Verfolger	Cunning Pursuer
+Passiv: Solange dein General im Nahkampf ist, +1 auf Angriffswürfe befreundeter Einheiten ganz innerhalb von 12 Zoll um ihn; +2 stattdessen, solange er im Nahkampf mit der Beute ist.	Passive: while your general is in combat, +1 to charge rolls of friendly units wholly within 12" of it; +2 instead while it is in combat with the Quarry.
+Höherer Waldgeist	Greater Spirit
+Gleve des Höheren Waldgeists	Greater Spirit's Glaive
+Kernholzjagdhorn	Heartwood Hunting Horn
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll: Bis zum Beginn deines nächsten Zuges zählt sie bei „Jagdlied“ als hätte sie 1 zusätzlichen Akkord.	Your Hero phase: a visible friendly unit wholly within 12": until the start of your next turn it counts as having 1 additional Chord for "Hunting Song".
+Seidenschwingen-Schützen	Silkwing Shooters
+Seidenbogen	Silken Bow
+Grausame Krallen	Cruel Claws
+Zephirkäfer	Zephyr Beetle
+Reaktion, Fernkampfphase: Nachdem die Einheit eine Fernkampf-Fähigkeit eingesetzt hat, kann sie sich bis zu W6 Zoll bewegen, aber nicht im Nahkampf enden.	Reaction, Shooting phase: after the unit has used a Shoot ability, it can move up to D6" but cannot end in combat.
+Drachenkäfer-Lanzenreiter	Dragonfly Lancers
+Reiterlanze	Rider's Lance
+Drachenkäfer-Mandibel	Dragonfly Mandible
+Lanzenreiter-Angriff	Lancer Charge
+Beliebige Angriffsphase: Hat die Einheit angegriffen: Wähle eine sichtbare feindliche Einheit innerhalb 1 Zoll; wirf einen W3 (+1 wenn das Ziel die Beute ist); bei 2+ füge ihr tödlichen Schaden in Höhe des Ergebnisses zu.	Any Charge phase: if the unit charged: pick a visible enemy unit within 1"; roll a D3 (+1 if the target is the Quarry); on 2+ inflict mortal damage equal to the result.
+Sucher-Waldgeister	Seeker Spirits
+Sichel der Sucher	Seeker's Sickle
+Ohrenbetäubendes Brummen	Deafening Drone
+Beliebige Nahkampfphase: Hat die Einheit in diesem Zug nicht angegriffen: Wähle eine feindliche Einheit im Nahkampf; wirf einen Würfel: Übersteigt das Ergebnis den Kontrollwert des Ziels, −1 auf den Attackenwert seiner Nahkampfwaffen für den Rest des Zuges.	Any Combat phase: if the unit did not charge this turn: pick an enemy unit in combat; roll a dice: if the result exceeds the target's Control, −1 to the Attacks of its melee weapons for the rest of the turn.

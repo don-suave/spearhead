@@ -11,6 +11,7 @@ function mk(a0,a1='Zenestras Zeloten',reg=0,enh=0,o=0){const g=new Game(7,['ai',
  const gen=ARMY[S.K.army[0]].units.find(u=>u.gen);let G0=gen?add(gen.n,0,12,22):null;return {g,S,add,gen:G0}}
 function drive(g,it){let r=it.next(),n=0;while(!r.done&&n++<300){let a;const q=r.value;if(q&&q.t=='place'&&q.kind=='shadow'&&q.check){a={cancel:true};const t=g.S.U.find(x=>x.o==0&&x.dn=='Gossenläufer');if(t)for(let k=0;k<4000;k++){const c={x:t.x+(Math.random()*8-4),y:t.y+(Math.random()*8-4),a:0};if(!q.check(c)){a=c;break}}}else a=aiAnswer(g,q,()=>.37);r=it.next(a)}if(!r.done)throw new Error('Endlos');}
 const E=(S,add,x=26,y=22,dn='Freigilden-Stahlhelme',n)=>add(dn,1,x,y,n);
+import {modW,hitMod} from '../src/rules.js';
 import {eot3} from '../src/abil3.js';
 const KV='Kavalos-Speerspitze';
 T('Kavalos: General Rettung 5+ (Verbesserung), Klinge Krit. 2 Treffer',()=>{const {S,gen}=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_arch'));assert.equal(wardOf(S,gen),5);const m=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_klinge'));const w=abilities?0:0;assert.ok(m.gen)});
@@ -23,4 +24,9 @@ T('Ossiarch-Befehle: Punkte, Nadiritattacke, Lebenskraft absaugen',()=>{const {g
 T('Ossiarch: Neuformierung, Undurchdringliche Reihen, Knochenernte/Konstrukt reparieren',()=>{const {g,S,add}=mk(ZV,'Zenestras Zeloten',ri(ZV,'ob_reihen'));S.obp=[2,0];S.ph=5;const m=add('Mortek-Garde',0,20,22);E(S,add,22,22);drive(g,AB.ob_reihen.run(g,0));assert.equal(fxSum(S,m,'wardB'),1);const k=add('Gothizzar-Knochenernter',0,26,22);k.kt=6;const d=add('Mortek-Garde',0,30,22);d.n=5;let n=0;for(let i=0;i<20;i++){S.rng=i*3+1;k.kt=6;d.n=5;drive(g,eot3(g,0,0));n+=d.n-5}assert.ok(n>0&&k.kt==0)});
 T('Mortisan: Disziplin-Wurf, Immortis-Garde, Erz der Sättigung',()=>{const {g,S,add,gen}=mk(ME,'Zenestras Zeloten',0,ei(ME,'kb_erz'));S.ph=2;S.act=0;const t=add('Nekropolenjäger',0,16,22);assert.ok(AB.kb_dm.src(S,0));let ok=0;for(let i=0;i<20;i++){S.rng=i*11+2;S.Ph.au=[];drive(g,AB.kb_dm.run(g,0));ok+=S.U.reduce((a,u)=>a+fxSum(S,u,'mv'),0)}assert.ok(ok>0);const m=mk(ME);m.add('Immortis-Garde',0,13,22);assert.equal(wardOf(m.S,m.gen),5,'Immortis-Garde in Reichweite');assert.equal(wardOf(mk(ME).S,mk(ME).gen),6)});
 
+
+const BG='Bitterborkengesträuch',GS='Geisterschwingenschwarm';
+T('Sylvaneth: Samen der Wiedergeburt, Schwer angeschlagen',()=>{let ok=0;for(let i=0;i<30;i++){const m=mk(BG,'Zenestras Zeloten',0,ei(BG,'sy_samen'));m.S.rng=i*13+7;hurt(m.g,m.gen,99);if(m.S.U.includes(m.gen)&&m.gen.n>0)ok++}assert.ok(ok>0&&ok<30,'3+ rettet '+ok);const k=mk(BG);const b=k.add('Baumfürst',0,20,22);b.dmg=10;const mw=modW(k.S,b,b.mw[1],null,false);assert.equal(mw[2],1)});
+T('Sylvaneth: Leylinien/Lebensspender am Zugende, Jagdlied',()=>{const {g,S,add}=mk(BG);S.ter=[{x:20,y:22,w:6,h:6,a:0}];const u=add('Kurnoth-Jäger',0,20,22);u.dmg=3;drive(g,eot3(g,0,0));assert.equal(u.dmg,2);const m=mk(GS,'Zenestras Zeloten',ri(GS,'sy_leben'));m.add('Seidenschwingen-Schützen',0,10,10).dmg=5;drive(m.g,eot3(m.g,0,0));assert.ok(m.S.U.some(x=>x.o==0&&x.dn=='Seidenschwingen-Schützen'&&x.dmg==2));
+ const j=mk(GS);const e=j.add('Freigilden-Stahlhelme',1,26,22);j.S.beute=[e.id,null];j.S.akk=[3,0];const f=j.add('Sucher-Waldgeister',0,22,22);const h0=hitMod(j.S,f,e,false);j.S.akk=[0,0];assert.ok(h0>hitMod(j.S,f,e,false))});
 console.log(pass+' bestanden, '+fail+' fehlgeschlagen');process.exit(fail?1:0);

@@ -1,5 +1,5 @@
 // Taktikkarten, Befehle, Wendungskarten, Punkte
-import {hk} from './hooks.js';
+import {hk,GL} from './hooks.js';
 import {W,H,CR,into,onTer,route,tdist,pathPts,tcorners} from './geom.js';
 import {TAC,TWD} from './data.js';
 import {d6,d3,add,has} from './util.js';
@@ -83,7 +83,7 @@ function* tisch(G,u){const S=G.S,o=1-u.o,g=gnl(S,o);if(ENI(S,o)!='ss_tisch'||use
  if(i>=(full?2:1))return 0;useKey(S,o+':tisch','battle');if(i==1&&full){S.kes[o]=0;G.note('Widerliche Tischmanieren: −3 auf den Angriffswurf, der Kessel wird leer');return 3}const d=d3(S);G.note('Widerliche Tischmanieren: −'+d+' auf den Angriffswurf');return d}
 export function* doCharge(G,u){const S=G.S,P=S.P[u.o];const tp=yield* tisch(G,u);S.T.cs[u.id]=[u.x,u.y];
  const dice=()=>{const a=[d6(S),S.TW.ens==u.id?0:d6(S)];if(a[1]&&fxL(S,u,'cdlow').length){const m=Math.min(a[0],a[1]);a[0]=a[1]=m}if(hasAb(u,'bot'))a.push(d6(S));for(let k=fxSum(S,u,'cdie');k>0&&a.length>1;k--)a.pop();return a};
- const mod=()=>hk(S,'chg',u)-(cycOf(S,1-u.o)==4?1:0)+(u.gen&&ENI(S,u.o)=='fe_schritte'?1:0)+fxSum(S,u,'chg')+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'&&rl(S,u.o)>=2?1:0)-(AN(S,1-u.o)=='Grundstok-Wegbereiter'&&RGI(S,1-u.o)=='gw_prop'&&S.U.some(k=>k.o==1-u.o&&k.dn=='Grundstok-Kanonenboot'&&k.x>=0&&dist(u,k)<=9)?1:0)-tp;
+ const mod=()=>hk(S,'chg',u)+GL.chg.reduce((a,f)=>a+(+f(S,u)||0),0)-(cycOf(S,1-u.o)==4?1:0)+(u.gen&&ENI(S,u.o)=='fe_schritte'?1:0)+fxSum(S,u,'chg')+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'&&rl(S,u.o)>=2?1:0)-(AN(S,1-u.o)=='Grundstok-Wegbereiter'&&RGI(S,1-u.o)=='gw_prop'&&S.U.some(k=>k.o==1-u.o&&k.dn=='Grundstok-Kanonenboot'&&k.x>=0&&dist(u,k)<=9)?1:0)-tp;
  let rr=(fxL(S,u,'rrc').length>0||hasAb(u,'tr_ugesch'))&&!usedKey(S,u.id+':rrc','turn');
  let ds=dice();add(S.Ph.used,u.id);
  const sum=()=>ds.reduce((x,y)=>x+y,0),blk=()=>[{k:'row',l:hasAb(u,'bot')?'Angriffswurf (2W6 + 1 Würfel)':'Angriffswurf (2W6)',v:ds},{k:'txt',s:`Summe <b>${sum()}</b>${mod()?' ('+(mod()>0?'+':'')+mod()+' Modifikator)':''}`}];
@@ -99,7 +99,7 @@ export function* doCharge(G,u){const S=G.S,P=S.P[u.o];const tp=yield* tisch(G,u)
  if(ans.stay){G.rep('Angriff gescheitert',[{k:'txt',s:`${u.name} bleibt stehen (Wurf ${roll}").`}]);return}
  if(ans.P)setAbs(u,ans.P.map(p=>({x:+p[0],y:+p[1]})));else{u.x=ans.x;u.y=ans.y}add(S.T.charged,u.id);if(has(S.T.bers,u.id))addFx(S,{k:'first',u:u.id,exp:'own'});G.rep('Angriff erfolgreich',[{k:'txt',s:`${u.name} hat mit Wurf ${roll}" einen Feind erreicht.`}])}
 export function* doRun(G,u){const S=G.S;
- let vf=EN(S,u.o)=='Vorwärts!'&&!S.T.vw&&!isHero(u)&&S.U.some(g=>g.o==u.o&&g.gen&&g.x>=0&&dist(u,g)<=12),r=vf?6:(()=>{let q=d6(S);if(q<=3){const g=gnl(S,u.o);if(hasAb(u,'ep_wahn')||(ENI(S,u.o)=='fp_lunge'&&g&&u.x>=0&&wholly(u,g,9)))q=4}return Math.max(0,q+fxSum(S,u,'run')+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'?1:0))})();
+ let vf=EN(S,u.o)=='Vorwärts!'&&!S.T.vw&&!isHero(u)&&S.U.some(g=>g.o==u.o&&g.gen&&g.x>=0&&dist(u,g)<=12),r=vf?6:(()=>{let q=d6(S);if(q<=3){const g=gnl(S,u.o);if(hasAb(u,'ep_wahn')||(ENI(S,u.o)=='fp_lunge'&&g&&u.x>=0&&wholly(u,g,9)))q=4}return Math.max(0,q+fxSum(S,u,'run')+hk(S,'run',u)+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'?1:0))})();
  if(vf){S.T.vw=true;G.note('Vorwärts!: +6 Zoll statt Rennenwurf')}
  else if(S.fd&&S.fd[u.o]&&S.fd[u.o].length&&r<=3){const vs=[r],r0=r;yield* fdStage(G,u.o,vs,x=>x>r0+1,[1,1],'Rennenwurf: '+r0,false,true);r=vs[0]}
  add(S.Ph.used,u.id);add(S.T.ran,u.id);

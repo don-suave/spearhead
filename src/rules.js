@@ -1,6 +1,6 @@
 // Regeln: Abfragen, Bewegung, Angriff, Fähigkeiten, Platzierung. Alles arbeitet auf G.S.
 import {OR,objD,objR,rectDist,tcorners,W,H,CR,into,onTer,segHits,pathPts,plen,walk,route,tdist,terrErr,ptDist,setFly} from './geom.js';
-import {ARMY,HZN,DGN,TERSZ} from './data.js';import {hk,hkMin,hkW} from './hooks.js';
+import {ARMY,HZN,DGN,TERSZ} from './data.js';import {hk,hkMin,hkW,GL} from './hooks.js';
 import {d6,d3,dv,add,has} from './util.js';
 import {mkUnit} from './state.js';
 import {gridPos,radius,wholly,udist,abs,mgap,inRange,inRangePt,cohBad,syncM,removeModels,setAbs,mDistPt} from './models.js';
@@ -41,7 +41,7 @@ export const clmAll=(S,u,k)=>S.obj[k]&&u.M&&abs(u).every(m=>objD(S.obj[k],m.x,m.
 // Hart wie Stein: -1 Wucht gegen Clanschilde
 const hartWie=(S,e,shoot)=>{if(!hasAb(e,'hws'))return false;if((e.gm||0)>0)return abs(e).every(m=>into(S,1-e.o,m.x,m.y)>0);return !shoot&&S.obj.some((p,k)=>S.oc[k]===e.o&&clmAll(S,e,k))};
 // Rettungswurf: bester (niedrigster) Wert aus allen Quellen, 9 = keiner
-export function wardOf(S,e){const o=e.o,g=gnl(S,o);let w=e.wr||9;const m=v=>{w=Math.min(w,v)};m(hkMin(S,'ward',e));if(g&&e.gen&&e.x>=0&&S.U.some(x=>x.o==o&&x.x>=0&&hasAb(x,'kb_garde')&&dist(e,x)<=CR))m(5);
+export function wardOf(S,e){const o=e.o,g=gnl(S,o);let w=e.wr||9;const m=v=>{w=Math.min(w,v)};m(hkMin(S,'ward',e));for(const f of GL.ward){const v=f(S,e);if(v>0)m(v)}if(g&&e.gen&&e.x>=0&&S.U.some(x=>x.o==o&&x.x>=0&&hasAb(x,'kb_garde')&&dist(e,x)<=CR))m(5);
  if(e.M&&S.ter.some(t=>t.rel=='Crate of Aqua Ghyranis'&&abs(e).every(m=>ptDist(t,m.x,m.y)+m.l/2<=6)))m(5);
  if(S.TW.id=='ss'&&S.TW.ssU===e.id&&(S.TW.tf||[]).some(i=>S.ter[i]&&tdist(e,S.ter[i])<=3))m(5);
  if(hasAb(e,'fw')&&g&&dist(e,g)<=CR)m(5);
@@ -152,7 +152,7 @@ export function updCtrl(S){const cs=S.obj.map(()=>[0,0]),cu=[],rf=(S.TW.id=='rf'
  if(S.ent)S.ent.forEach((q,k)=>{if(q!=null&&q>=0&&S.oc[k]===1-q)S.ent[k]=-1})}
 
 // ---------- Schaden ----------
-export function hurt(G,u,d){const S=G.S,n0=u.n;if(d>0&&((hasAb(u,'sp_besch')||(u.gen&&ENI(S,u.o)=='hh_obs')||(hasAb(u,'hh_zaeh')&&dk(S,u)>=3)))&&!(S.Ph.ig||[]).includes(u.id)){(S.Ph.ig||(S.Ph.ig=[])).push(u.id);d--}u.dmg+=d;while(u.dmg>=u.wm&&u.n>0){u.dmg-=u.wm;u.n--};if(u.n<n0&&u.x>=0&&(!u.M||u.n<=0))(u.M&&u.M.length?abs(u).map(m=>[m.x,m.y]):Array.from({length:n0-u.n},()=>[u.x,u.y])).forEach(([x,y])=>{S.T.sl[into(S,0,x,y)>0?0:1]++});if(G.phD)G.phD.push({a:G.atk==null?null:G.atk,s:G.src||null,t:u.id,d,l:n0-u.n});
+export function hurt(G,u,d){const S=G.S,n0=u.n;if(d>0&&((hasAb(u,'sp_besch')||(u.gen&&ENI(S,u.o)=='hh_obs')||(hasAb(u,'hh_zaeh')&&dk(S,u)>=3)))&&!(S.Ph.ig||[]).includes(u.id)){(S.Ph.ig||(S.Ph.ig=[])).push(u.id);d--}u.dmg+=d;while(u.dmg>=u.wm&&u.n>0){u.dmg-=u.wm;u.n--};if(u.gen&&n0>0&&u.n<=0&&ENI(S,u.o)=='sy_samen'&&!usedKey(S,u.o+':samen','battle')){useKey(S,u.o+':samen','battle');const r=d6(S);if(r>=3){u.n=n0;u.dmg=Math.max(0,u.wm-1);G.note('Samen der Wiedergeburt: '+u.name+' wird nicht zerstört (Wurf '+r+')')}else G.note('Samen der Wiedergeburt: Wurf '+r+' – misslungen')};if(u.n<n0&&u.x>=0&&(!u.M||u.n<=0))(u.M&&u.M.length?abs(u).map(m=>[m.x,m.y]):Array.from({length:n0-u.n},()=>[u.x,u.y])).forEach(([x,y])=>{S.T.sl[into(S,0,x,y)>0?0:1]++});if(G.phD)G.phD.push({a:G.atk==null?null:G.atk,s:G.src||null,t:u.id,d,l:n0-u.n});
  if(u.n<n0&&fxL(S,u,'ruhm').length){const rs=[];let k=0;for(let i=0;i<n0-u.n;i++){const r=d6(S);rs.push(r);if(r>=4)k++}const t=S.U.filter(e=>e.o!=u.o&&e.x>=0&&dist(u,e)<=CR)[0];G.note('Ruhmreiches Gleißen: '+rs.join(',')+(k&&t?' → '+k+' tödlicher Schaden auf '+t.name:''));if(k&&t)hurt(G,t,k)}
  if(u.n<n0&&hasAb(u,'bg_atem')&&u.x>=0){const t=S.U.filter(e=>e.o!=u.o&&e.x>=0&&dist(u,e)<=CR).sort((a,b)=>dist(u,a)-dist(u,b))[0];if(t){let k=0;const rs=[];for(let i=0;i<n0-u.n;i++){const r=d6(S);rs.push(r);if(r>=4)k++}G.note('Keine Atempause: '+rs.join(',')+(k?' → '+k+' tödlicher Schaden auf '+t.name:' → kein Effekt'));if(k)hurt(G,t,k)}}
  if(u.n<=0&&RGI(S,u.o)=='rj_schimmer'&&/Kriegsmaschine/.test(u.kw)&&u.x>=0){const t=S.U.filter(e=>e.o!=u.o&&e.x>=0&&dist(u,e)<=3).sort((a,b)=>dist(u,a)-dist(u,b))[0];if(t){const r=d3(S);G.note('Schimmerexplosion: W3 = '+r+(r>=2?' → '+r+' tödlicher Schaden auf '+t.name:' → kein Effekt'));if(r>=2)hurt(G,t,r)}}
@@ -191,6 +191,7 @@ export function depForm(S,o,u,x,y){if(!u.M)return null;
  return best}
 export const PX={};
 export function placeErr(S,kind,o,u,x,y,a){
+ if(GL.place[kind])return GL.place[kind](S,o,u,x,y,a);
  if(PX[kind])return PX[kind](S,o,u,x,y,a);
  if(kind=='terr'){const [w,h]=u.w?[u.w,u.h]:TERSZ[u.big?'big':'small'];return terrErr(S,o,{x,y,w,h,a:a||0})}
  if(kind=='icon'){const r={x,y,w:u.w,h:u.h,a:a||0};if(Math.min(x,y,W-x,H-y)<1)return 'Auf dem Spielfeld';if(S.ter.some(t=>rectDist(r,t)<=3))return 'Mehr als 3 Zoll von allem Gelände';if(S.U.some(e=>e.x>=0&&abs(e).some(m=>ptDist(r,m.x,m.y)-m.l/2<=3)))return 'Mehr als 3 Zoll von allen Einheiten';if(S.obj.some(p=>ptDist(r,p[0],p[1])<OR(p)))return 'Nicht auf einem Ziel';return ''}
