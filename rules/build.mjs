@@ -3,6 +3,7 @@ import fs from 'fs';
 import {collect} from './collect.mjs';
 import {RULES} from './rules_all.mjs';
 import {GL} from './gloss.mjs';
+import {PK,missingDE} from './packs.mjs';
 const here=new URL('.',import.meta.url).pathname;
 const EN=new Map(fs.readFileSync(here+'en.txt','utf8').split('\n').filter(l=>l.includes('\t')).map(l=>{const i=l.indexOf('\t');return [l.slice(0,i),l.slice(i+1)]}));
 const miss=new Set();
@@ -22,10 +23,10 @@ const A=collect().map(a=>({i:a.i,f:P(a.f),n:P(a.n),
 const pr=a=>a; 
 const R=RULES.map(r=>({id:r.id,ph:r.ph,t:r.t,s:r.s,d:r.d,sp:r.sp||null}));
 const G=GL.map(g=>({id:g[0],k:[g[1].split('|'),g[2].split('|')],t:[g[1].split('|')[0],g[2].split('|')[0]],d:[g[3],g[4]],s:g[5]}));
-const data={A,R,G,FL};
+const data={A,R,G,FL,PK};
 const tpl=fs.readFileSync(here+'regeln.template.html','utf8');
 const out=tpl.replace('/*__DATA__*/',()=>'const DATA='+JSON.stringify(data)+';');
 fs.mkdirSync(here+'../dist',{recursive:true});
 fs.writeFileSync(here+'../dist/regeln.html',out);
 console.log('regeln.html',(out.length/1024|0)+'KB','missing EN:',miss.size,process.env.ALLMISS?[...miss]:[...miss].slice(0,5));
-if(process.argv.includes('--strict')&&(miss.size||A.length<31)){console.error('Übersetzungen fehlen oder Armeezahl falsch');process.exit(1)}
+if(process.argv.includes('--strict')&&(miss.size||missingDE.length||A.length<31)){console.error('Übersetzungen fehlen oder Armeezahl falsch');process.exit(1)}

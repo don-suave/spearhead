@@ -1,5 +1,8 @@
 # Changelog
 
+## v89
+- Regel-App: neuer Bereich „Battlepacks“ (Fire and Jade, Sand and Bone, City of Ash) mit Spielfeldkarten, Zielen, Geländestücken und Reliquien, allen Taktikkarten und Wendungen, deutsch und englisch, durchsuchbar
+
 ## v88
 - Neue Armee: Ogor-Schlundstämme Tyrannengebrüll (Auf dem Schlundweg, Schmetterwanst, Tyrann ersten Ranges); neues Waffenmerkmal Anti-Monster
 

@@ -1,0 +1,104 @@
+0	Erfüllt am Ende deines Zugs, wenn in diesem Zug feindliche Einheiten zerstört wurden UND mehr feindliche als befreundete Einheiten zerstört wurden.
+1	Gegnerische Heldenphase. Ansage: Wähle eine befreundete Einheit. Effekt: Sie kämpft in diesem Zug zuerst.
+2	Erfüllt am Ende deines Zugs, wenn sich befreundete Einheiten vollständig im Feindgebiet und nicht im Nahkampf befinden.
+3	Reaktion: Der Gegner hat eine Attacke-Fähigkeit angesagt. Eingesetzt von: der anvisierten befreundeten Einheit. Effekt: Ignoriere in dieser Phase die Wucht von Attacken, die diese Einheit als Ziel haben.
+4	Erfüllt am Ende deines Zugs, wenn sich befreundete Einheiten innerhalb von 3 Zoll um jede kurze Schlachtfeldkante befinden.
+5	Gegnerische Bewegungsphase. Ansage: Wähle eine befreundete Einheit, die nicht im Nahkampf ist. Effekt: Sie darf sich bis zu W6 Zoll bewegen (nicht in den Nahkampf).
+6	Erfüllt am Ende deines Zugs, wenn du die Kontrolle über ein Ziel erlangt hast, das dein Gegner zu Beginn des Zugs kontrolliert hat, UND keine der Einheiten, die es umkämpfen, in diesem Zug eine Kämpfen-Fähigkeit eingesetzt hat.
+7	Reaktion: Der Gegner hat eine Attacke-Fähigkeit angesagt. Eingesetzt von: der anvisierten befreundeten Einheit. Effekt: Sie hat in dieser Phase Rettung (5+).
+8	Erfüllt am Ende deines Zugs, wenn in dem großen Geländestück in deinem Gebiet mehr befreundete als feindliche Modelle um die Kontrolle kämpfen.
+9	Beliebige Nahkampfphase. Ansage: Wähle einen befreundeten HELDEN. Effekt: Heile (W6) diesen HELDEN.
+10	Erfüllt am Ende deines Zugs, wenn der feindliche General in diesem Zug erschlagen wurde ODER in einem früheren Zug erschlagen wurde und in diesem Zug feindliche Einheiten zerstört wurden.
+11	Gegnerische Angriffsphase. Ansage: Wähle eine befreundete Einheit, die nicht im Nahkampf ist. Effekt: Sie darf eine Angriff-Fähigkeit einsetzen, als wäre es deine Angriffsphase.
+12	Erfüllt, wenn du am Ende deines Zugs das Ziel Ignax kontrollierst.
+13	Reaktion: Du hast eine Angriff-Fähigkeit angesagt. Eingesetzt von: der Einheit, die sie einsetzt. Effekt: Du darfst den Angriffswurf wiederholen.
+14	Erfüllt, wenn du am Ende deines Zugs das Ziel Behemat kontrollierst.
+15	Beliebige Heldenphase. Ansage: Wähle einen befreundeten HELDEN und eine sichtbare feindliche Einheit innerhalb von 12 Zoll und wirf einen Würfel. Effekt: Bei 2+ erleidet jene Einheit W3 tödlichen Schaden.
+16	Erfüllt, wenn du am Ende deines Zugs das Ziel Dracothion kontrollierst.
+17	Reaktion: Der Gegner hat eine Schießen-Fähigkeit angesagt. Eingesetzt von: der anvisierten Einheit. Effekt: Bis zum Ende der Phase treffen sie nur unmodifizierte Trefferwürfe von 6; sie kämpft in diesem Zug zuletzt.
+18	Erfüllt am Ende deines Zugs, wenn sich befreundete Einheiten innerhalb von 3 Zoll um die lange Schlachtfeldkante im Feindgebiet befinden.
+19	Beliebige Heldenphase. Ansage: Wähle einen befreundeten HELDEN. Effekt: Wirf einen Würfel und addiere das Ergebnis für den Rest des Zugs zum Kontrollwert dieses HELDEN.
+20	Erfüllt am Ende deines Zugs, wenn du 2 Ziele kontrollierst, die dein Gegner zu Beginn des Zugs kontrolliert hat.
+21	Beliebige Bewegungsphase. Ansage: Wähle eine zerstörte befreundete INFANTERIE- oder KAVALLERIE-Einheit mit 5+ Modellen, die noch nicht ersetzt wurde. Effekt: Stelle W3 Modelle von ihr mehr als 6 Zoll von allen feindlichen Einheiten entfernt auf.
+22	Erfüllt am Ende deines Zugs, wenn befreundete Einheiten in diesem Zug eine Kämpfen-Fähigkeit eingesetzt haben UND keine befreundete Einheit zerstört wurde.
+23	Reaktion: Du hast eine Rückzug-Fähigkeit angesagt. Eingesetzt von: der Einheit, die sie einsetzt. Effekt: Kein tödlicher Schaden durch diesen Rückzug; wirf für jedes erschlagene Modell einen Würfel, bei 5+ kehrt 1 Modell zurück.
+24	Der Außenseiter wählt 1 Ziel (kein Außenseiter: Gewinner des Würfelduells). Dieses Ziel wird von keinem Spieler kontrolliert und kann in dieser Schlachtrunde weder umkämpft noch kontrolliert werden. Am Ende jedes Zugs dieser Runde, nachdem Siegpunkte vergeben wurden, erleidet jede Einheit mit Modellen darauf W3 tödlichen Schaden (für jede Einheit würfeln).
+25	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen Siegpunkt für jede in diesem Zug zerstörte feindliche Einheit. Der Außenseiter wählt 1 befreundete Einheit, die rasend wird: +1 auf Trefferwürfe ihrer Nahkampfattacken in dieser Schlachtrunde.
+26	Der Außenseiter wählt in jeder Armee 1 Einheit, die blutmarkiert wird (kein Außenseiter: Jeder Spieler wählt 1 feindliche Einheit, der aktive Spieler beginnt). Jeder Spieler erhält am Ende der Schlachtrunde 1 zusätzlichen Siegpunkt, wenn die feindliche blutmarkierte Einheit in dieser Runde zerstört wurde.
+27	Der Außenseiter wählt 2 Ziele (kein Außenseiter: Jeder Spieler wählt 1, der aktive Spieler beginnt). Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen Siegpunkt für jedes dieser Ziele, das er kontrolliert.
+28	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen Siegpunkt für jedes Ziel, das er kontrolliert und das sein Gegner zu Beginn des Zugs kontrolliert hat. Der Außenseiter wählt 1 befreundete Einheit als Speerspitze: Ihre Nahkampfwaffen haben in dieser Schlachtrunde Angriff (+1 Schaden).
+29	Der Außenseiter wählt 1 Ziel (kein Außenseiter: Gewinner des Würfelduells). Bis zum Ende der Schlachtrunde treffen bei Attacken gegen eine Einheit, die dieses Ziel umkämpft, nur unmodifizierte Trefferwürfe von 6.
+30	Der Außenseiter (kein Außenseiter: Gewinner des Würfelduells) wählt einen Effekt. Dornenschild: Eine befreundete Einheit hat in dieser Schlachtrunde Rettung (6+). Jaderegen: Bis zu 3 verschiedene befreundete Einheiten heilen je (W3) (für jede würfeln).
+31	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen Siegpunkt, wenn im großen Geländestück im Feindgebiet mehr befreundete als feindliche Modelle um die Kontrolle kämpfen. Der Außenseiter addiert 1 auf Verwundungswürfe für Attacken gegen eine Einheit, die ein großes Geländestück umkämpft.
+32	Der Außenseiter (kein Außenseiter: Gewinner des Würfelduells) wählt eine feindliche Einheit. Bis zum Ende der Schlachtrunde ist ihr Bewegungswert halbiert und sie würfelt bei Angriffswürfen 1 Würfel weniger.
+33	Der Außenseiter (kein Außenseiter: Gewinner des Würfelduells) wählt einen Effekt. Nurgles Fäule: Eine feindliche Einheit hat in dieser Schlachtrunde −1 auf Schutzwürfe. Zersetzender Dunst: Für eine feindliche Einheit können in dieser Schlachtrunde keine Rettungswürfe gemacht werden.
+34	Der Außenseiter (kein Außenseiter: Gewinner des Würfelduells) wählt 1 Ziel als Lebensquelle dieser Schlachtrunde. Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen Siegpunkt, wenn er sie kontrolliert. Am Ende jedes Zugs, nachdem Siegpunkte vergeben wurden, heilt jede Einheit, die sie umkämpft, (1).
+35	Erfüllt am Ende deines Zugs, wenn in diesem Zug sowohl im eigenen Gebiet als auch im Feindgebiet Modelle erschlagen wurden.
+36	Gegnerische Angriffsphase. Ansage: Wähle eine befreundete Einheit, die nicht im Nahkampf ist. Sie darf eine Angriff-Fähigkeit einsetzen, als wäre es deine Angriffsphase.
+37	Erfüllt am Ende deines Zugs, wenn in diesem Zug feindliche Einheiten zerstört wurden und mehr feindliche als befreundete Einheiten zerstört wurden.
+38	Ende eines beliebigen Zugs. Ansage: Wähle eine befreundete Einheit im Nahkampf. Nimm sie vom Schlachtfeld und stelle sie mehr als 6 Zoll von allen feindlichen Einheiten wieder auf.
+39	Erfüllt am Ende deines Zugs, wenn du das große Geländestück in deinem eigenen Gebiet kontrollierst.
+40	Beliebige Nahkampfphase. Ansage: Wähle eine befreundete Einheit im Nahkampf. Sie darf sich bis zu 3 Zoll bewegen und dabei in den Nahkampf ziehen.
+41	Beliebige Angriffsphase. Ansage: Wähle eine befreundete Einheit, die nicht im Nahkampf ist. Sie addiert für den Rest des Zugs W3 auf ihre Angriffswürfe.
+42	Erfüllt am Ende deines Zugs, wenn du ein Ziel kontrollierst, das nicht vollständig im eigenen Gebiet liegt (nicht das Podest des Blutes oder das Podest der Nekropole).
+43	Deine Heldenphase. Ansage: Wähle eine zerstörte befreundete Einheit, die noch nicht ersetzt wurde. Stelle einen Ersatz mit einem Ausdauerwert von insgesamt bis zu 4 (oder ein einzelnes Modell mit Schaden = Ausdauer minus 4) mehr als 6 Zoll von allen feindlichen Einheiten entfernt auf.
+44	Reaktion: Der Gegner hat eine Attacke-Fähigkeit angesagt. Eingesetzt von: der anvisierten Einheit. Effekt: Für den Rest der Phase scheitert eine Attacke gegen sie, wenn der unmodifizierte Trefferwurf oder Verwundungswurf 1–3 beträgt.
+45	Erfüllt am Ende deines Zugs, wenn eine befreundete Einheit in diesem Zug eine Kämpfen-Fähigkeit eingesetzt hat, sich auf dem Schlachtfeld befindet und kein Ziel umkämpft.
+46	Deine Heldenphase. Ansage: Wähle einen befreundeten HELDEN, der ein Ziel umkämpft. Wirf für jede feindliche Einheit, die es umkämpft, einen Würfel: Bei 4+ erleidet sie 2 tödlichen Schaden.
+47	Erfüllt am Ende deines Zugs, wenn du die Kontrolle über ein Ziel erlangt hast, das dein Gegner zu Beginn des Zugs kontrolliert hat, und keine der Einheiten, die es umkämpfen, in diesem Zug eine Kämpfen-Fähigkeit eingesetzt hat.
+48	Beliebige Heldenphase. Ansage: Wähle ein Geländestück im eigenen Gebiet. Es wird für den Rest des Zugs zusätzlich wie ein Ziel behandelt.
+49	Erfüllt am Ende deines Zugs, wenn du das Ziel Necropolis kontrollierst.
+50	Beliebige Nahkampfphase. Ansage: Wähle eine befreundete Einheit. Sie darf in dieser Phase 2 Kämpfen-Fähigkeiten einsetzen; nach der ersten erleidet sie W3 tödlichen Schaden und kämpft für den Rest des Zugs zuletzt.
+51	Erfüllt am Ende deines Zugs, wenn du 2 Ziele kontrollierst, die nicht vollständig im eigenen Gebiet liegen.
+52	Gegnerische Bewegungsphase. Ansage: Wähle eine befreundete Einheit. Im Nahkampf: Sie darf einen Rückzug einsetzen, als wäre es deine Bewegungsphase. Nicht im Nahkampf: Wirf für jedes erschlagene Modell einen Würfel (5+ bringt 1 Modell zurück) oder für jeden Schadenspunkt (5+ heilt 1).
+53	Beliebige Angriffsphase. Ansage: Wähle eine befreundete Einheit im Nahkampf und eine feindliche Einheit im Nahkampf mit ihr. Wirf einen Würfel und subtrahiere das Ergebnis für den Rest des Zugs vom Kontrollwert des Ziels.
+54	Erfüllt am Ende deines Zugs, wenn du das Ziel Blood kontrollierst.
+55	Gegnerische Nahkampfphase. Ansage: Wähle eine befreundete Einheit. Addiere für den Rest des Zugs 1 auf die Attacken ihrer Nahkampfwaffen; ihr Kontrollwert ist dafür für den Rest der Schlachtrunde höchstens 1.
+56	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen SP für jede befreundete Einheit, die mit einer feindlichen Einheit im Nahkampf ist. Hat der Außenseiter in dieser Schlachtrunde mehr Einheiten verloren als der Gegner, erhält er 1 zusätzlichen SP.
+57	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen SP für jede seiner im Verlauf der Schlacht zerstörten oder ersetzten Spearhead-Einheiten (Ersatzeinheiten zählen nicht). Der Außenseiter (sonst Gewinner des Würfelduells) wählt 1 befreundete Einheit: Sie darf in dieser Schlachtrunde auch nach einem Rennen oder Rückzug angreifen.
+58	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen SP für jedes Ziel, das er kontrolliert und das der Gegner zu Beginn des Zugs kontrolliert hat. Der Außenseiter wählt 1 befreundete Einheit: Ihre Nahkampfwaffen haben in dieser Schlachtrunde Anti-Angriff (+1 Wucht).
+59	Der Außenseiter (sonst Gewinner des Würfelduells) wählt 1 Ziel. Es wird von keinem Spieler kontrolliert und kann für den Rest der Schlachtrunde nicht kontrolliert werden.
+60	Der Außenseiter (sonst Gewinner des Würfelduells) stellt die Ikone der Nulahmia irgendwo auf dem Schlachtfeld auf: mehr als 3 Zoll von allen Geländestücken und Einheiten, ohne ein Ziel zu berühren. Sie bleibt bis zum Ende der Schlachtrunde.
+61	Der Außenseiter (sonst Gewinner des Würfelduells) wählt 1 Ziel. Für den Rest der Schlachtrunde gilt es als von einer befreundeten Einheit dieses Spielers mit einem nicht modifizierbaren Kontrollwert von 1 umkämpft.
+62	Der Außenseiter wählt 2 Ziele (kein Außenseiter: Jeder Spieler wählt 1, der aktive Spieler beginnt). Jeder Spieler erhält am Ende seines Zugs 2 zusätzliche SP, wenn er beide kontrolliert.
+63	Der Außenseiter (sonst Gewinner des Würfelduells) wählt: Präzisionsschlag (eine befreundete Einheit kämpft zuerst, solange sie vollständig im eigenen Gebiet ist) oder Zwietracht in den Reihen (eine feindliche Einheit kämpft zuletzt, solange sie vollständig im Gebiet des Außenseiters ist), jeweils für den Rest der Schlachtrunde.
+64	Der Außenseiter (sonst Gewinner des Würfelduells) wählt 1 Ziel. Für den Rest der Schlachtrunde subtrahieren feindliche Einheiten, die es umkämpfen, 1 von ihren Trefferwürfen.
+65	Der Außenseiter wählt 2 Geländestücke (kein Außenseiter: Jeder Spieler wählt ein anderes). Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen SP, wenn er beide kontrolliert. Der Außenseiter wählt außerdem 1 befreundete Einheit: Rettung (5+), solange sie eines der beiden Geländestücke umkämpft (diese Schlachtrunde).
+66	Der Außenseiter (sonst Gewinner des Würfelduells) wählt: Anpassungsfähige Verteidigung (eine befreundete Einheit ignoriert alle Modifikatoren auf ihre Schutzwürfe) oder Gebrochener Wille (eine feindliche Einheit hat einen Kontrollwert von höchstens 1), jeweils für den Rest der Schlachtrunde.
+67	Jeder Spieler erhält am Ende seines Zugs 1 zusätzlichen SP für jedes Ziel, das er kontrolliert, das nicht vollständig im eigenen Gebiet liegt und von keiner feindlichen Einheit umkämpft wird. Der Außenseiter wählt 1 befreundete Einheit und würfelt einen W6: Addiere das Ergebnis für den Rest der Schlachtrunde zu ihrem Kontrollwert.
+68	Erfüllt am Ende deines Zugs, wenn du eine Reliquie im Feindgebiet kontrollierst.
+69	Gegnerische Bewegungsphase. Ansage: Wähle eine befreundete Einheit. Bis zum Ende des Zugs kämpft sie zuerst, solange sie mit einer feindlichen Einheit im Nahkampf ist, die in diesem Zug angegriffen hat.
+70	Erfüllt am Ende deines Zugs, wenn eine feindliche Einheit in diesem Zug das gewählte Ziel von Nahkampfattacken zweier oder mehrerer verschiedener befreundeter Einheiten war.
+71	Beliebige Heldenphase. Ansage: Wähle eine befreundete Einheit innerhalb von 6 Zoll um eine Reliquie. Addiere bis zum Beginn deines nächsten Zugs W6 auf ihren Kontrollwert.
+72	Erfüllt am Ende deines Zugs, wenn sich eine befreundete Einheit innerhalb von 3 Zoll um jede kurze Schlachtfeldkante befindet.
+73	Ende eines beliebigen Zugs. Ansage: Wähle eine Reliquie. Wirf für jede befreundete und feindliche Einheit innerhalb von 3 Zoll um sie einen W3 und füge der Einheit entsprechend viel tödlichen Schaden zu.
+74	Erfüllt am Ende deines Zugs, wenn der feindliche General in diesem Zug erschlagen wurde oder früher erschlagen wurde und in diesem Zug feindliche Einheiten zerstört wurden.
+75	Beliebige Angriffsphase. Ansage: Wähle eine Reliquie. Für den Rest des Zugs dürfen befreundete Einheiten Angriffsbewegungen bis ½ Zoll an dieser Reliquie beenden, als wäre sie eine feindliche Einheit.
+76	Erfüllt am Ende deines Zugs, wenn eine feindliche Einheit von einer befreundeten Einheit zerstört wurde, die sich zu diesem Zeitpunkt innerhalb von 3 Zoll um eine Reliquie befand.
+77	Erfüllt am Ende deines Zugs, wenn sich 2 oder mehr befreundete Einheiten innerhalb von 3 Zoll um die Mitte des Schlachtfelds befinden.
+78	Beliebige Nahkampfphase. Ansage: Wähle eine befreundete Einheit im Nahkampf. Sie darf sich bis zu 5 Zoll bewegen, auch durch feindliche Kampfreichweiten, darf aber nicht im Nahkampf enden.
+79	Beliebige Nahkampfphase. Ansage: Wähle eine Reliquie. Für den Rest des Zugs addieren befreundete Einheiten innerhalb von 3 Zoll um sie 1 auf ihre Trefferwürfe.
+80	Erfüllt am Ende deines Zugs, wenn du das Ziel Twin-Tailed Comet kontrollierst.
+81	Beliebige Heldenphase. Ansage: Wähle eine befreundete Einheit. Für den Rest des Zugs gilt: Jedes Mal, wenn gegen eine Nahkampfattacke auf sie ein unmodifizierter Schutzwurf von 5+ gemacht wird, erleidet der Angreifer nach Abschluss seiner Kämpfen-Fähigkeit 1 tödlichen Schaden.
+82	Erfüllt am Ende deines Zugs, wenn du das Ziel Ghal Maraz kontrollierst.
+83	Ende eines beliebigen Zugs. Ansage: Wähle eine Reliquie. Nimm sie vom Schlachtfeld und stelle sie mehr als 3 Zoll von allen feindlichen Einheiten und mehr als 6 Zoll von anderen Reliquien wieder auf.
+84	Erfüllt am Ende deines Zugs, wenn sich alle befreundeten Einheiten innerhalb von 3 Zoll um eine Reliquie befinden (nicht zwingend dieselbe).
+85	Gegnerische Bewegungsphase. Ansage: Wähle eine befreundete Einheit, die nicht im Nahkampf ist. Sie darf sich W6 Zoll bewegen, aber nicht durch oder in eine feindliche Kampfreichweite.
+86	Erfüllt am Ende deines Zugs, wenn du mehr Reliquien kontrollierst als dein Gegner.
+87	Beginnend mit dem aktiven Spieler wählt jeder Spieler ein Ziel. Am Ende seines Zugs erhält jeder Spieler 1 zusätzlichen SP für jedes dieser Ziele, das er kontrolliert. Der Außenseiter darf würfeln: Bei 3+ muss der Gegner ein anderes Ziel wählen.
+88	Beginnend mit dem aktiven Spieler wählt jeder Spieler eine feindliche Einheit innerhalb von 3 Zoll um eine Reliquie. Ihr Kontrollwert ist für den Rest der Schlachtrunde höchstens 1. Der Außenseiter (sonst Gewinner des Würfelduells) stellt die Ulguan-Stahlfußangeln auf.
+89	Am Ende seines Zugs erhält jeder Spieler 1 zusätzlichen SP, wenn er das große Geländestück im Feindgebiet kontrolliert. Der Außenseiter (sonst Gewinner des Würfelduells) stellt das Fass Glutstein auf.
+90	Der Außenseiter darf eine Schlachtfeldkante wählen, die versperrt ist. Am Ende seines Zugs erhält jeder Spieler 1 zusätzlichen SP für jede nicht versperrte Schlachtfeldkante, an der sich innerhalb von 3 Zoll keine feindliche Einheit befindet.
+91	Für den Rest der Schlachtrunde addieren befreundete Einheiten 1 auf ihre Schutzwürfe, solange sie sich innerhalb von 3 Zoll um eine andere befreundete Einheit befinden. Der Außenseiter (sonst Gewinner des Würfelduells) stellt die Kiste Aqua Ghyranis auf.
+92	Am Ende seines Zugs erhält jeder Spieler 1 zusätzlichen SP, wenn er die Reliquie kontrolliert, die zu Beginn der Schlacht im Feindgebiet aufgestellt wurde. Der Außenseiter darf eine befreundete Einheit wählen: Sie addiert in dieser Schlachtrunde 2 auf ihre Angriffswürfe.
+93	Beginnend mit dem aktiven Spieler wählt jeder Spieler eine feindliche Einheit als Zielperson. Jeder Spieler erhält am Ende der Schlachtrunde 1 zusätzlichen SP, wenn seine Zielperson in dieser Runde zerstört wurde. Der Außenseiter (sonst Gewinner des Würfelduells) stellt das unauffällige Kanalloch auf.
+94	Beginnend mit dem aktiven Spieler wählt jeder Spieler eine befreundete Einheit, die die bewachte Beute trägt. Jeder Spieler erhält am Ende der Schlachtrunde 1 zusätzlichen SP, wenn die feindliche Einheit mit der Beute in dieser Runde zerstört wurde. Der Außenseiter darf würfeln: Bei 3+ muss der Gegner eine andere Einheit wählen.
+95	Am Ende seines Zugs erhält jeder Spieler 1 zusätzlichen SP für jede Reliquie, die er kontrolliert und zu Beginn seines Zugs nicht kontrolliert hat. Der Außenseiter (sonst Gewinner des Würfelduells) stellt die demolierte Barrikade auf.
+96	Am Ende seines Zugs erhält jeder Spieler 1 zusätzlichen SP, wenn er die Kreuzung kontrolliert. Der Außenseiter (sonst Gewinner des Würfelduells) stellt die Ulguan-Stahlfußangeln auf.
+97	Beginnend mit dem Außenseiter (sonst dem aktiven Spieler) darf jeder Spieler bis zu 2 befreundete Einheiten wählen, die nicht im Nahkampf sind, und jede sofort bis zu 3 Zoll bewegen. Die Einheiten des Außenseiters dürfen diese Bewegung im Nahkampf beenden.
+98	Solange eine Einheit vollständig auf den Straßen steht, darf sie auch angreifen, wenn sie im selben Zug gerannt ist. Der Außenseiter darf eine befreundete Einheit wählen: Ihre Nahkampfwaffen haben in dieser Schlachtrunde Anti-Angriff (+1 Wucht).
+99	Einmal pro Zug, deine Heldenphase: Wähle eine befreundete Einheit innerhalb von 3 Zoll: Sie addiert in diesem Zug 1 auf die Verwundungswürfe ihrer Attacken.
+100	Passiv: Einheiten vollständig innerhalb von 6 Zoll haben Rettung (5+).
+101	Einmal pro Zug, deine Nahkampfphase: Wirf für jede Einheit innerhalb von 3 Zoll, die in diesem Zug angegriffen hat, einen W3; bei 2+ erleidet sie entsprechend viel tödlichen Schaden.
+102	Passiv: Einheiten vollständig innerhalb von 3 Zoll können nicht beschossen werden, außer der Schütze ist innerhalb ihrer Kampfreichweite (3 Zoll).
+103	Einmal pro Zug, deine Bewegungsphase: Nimm eine befreundete Einheit vollständig innerhalb von 3 Zoll vom Schlachtfeld und stelle sie vollständig im eigenen Gebiet, mehr als 6 Zoll von feindlichen Einheiten, wieder auf.

@@ -121,6 +121,9 @@ a.lk.ab{text-decoration:underline;font-weight:600}
 .sheet h3{margin:0 40px 4px 0;font-size:19px}
 .sheet .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .back{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.35)}
+.pmap{width:100%;max-width:560px;display:block;margin:6px 0;border-radius:10px}
+.pseg{display:flex;gap:6px;margin:8px 0}.pseg button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px;font-weight:700;color:var(--mut);cursor:pointer}.pseg button.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.pkl{margin:6px 0;padding-left:20px;font-size:14px}.pkl li{margin:3px 0}.pbf{margin:12px 0}.pbf h3{margin:4px 0;font-size:17px}
 .cnt{font-size:13px;color:var(--mut);margin:14px 0 2px;text-transform:uppercase;letter-spacing:.07em}
 footer{margin:28px 0 0;color:var(--mut);font-size:13px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--mut);margin-top:8px}
@@ -188,7 +191,8 @@ const UI={
  t1:['Spearhead on a Page','Spearhead on a Page'],d1:['Alle 31 Spearhead-Armeen, jeweils auf einer Seite','All 31 Spearhead armies, one page each'],
  t2:['Regelübersicht','Rules overview'],d2:['Die wichtigsten Regeln in Spielreihenfolge','The key rules in the order of play'],
  t3:['Glossar','Glossary'],d3:['Alle wichtigen Begriffe von A bis Z','All the key terms from A to Z'],
- t4:['Suche','Search'],d4:['Volltext über Regeln, Glossar und Spearheads','Full text over rules, glossary and Spearheads'],
+ t5:['Battlepacks','Battlepacks'],d5:['Karten, Wendungen, Ziele und Gelände aller drei Packs','Cards, twists, objectives and terrain of all three packs'],
+ pkMap:['Spielfeld & Gelände','Board & terrain'],pkTac:['Taktikkarten','Battle tactics'],pkTw:['Wendungen','Twists'],pkSetup:['Ablauf des Aufbaus','Set-up sequence'],pkField:['Schlachtfelder & Ziele','Battlefields & objectives'],pkTerr:['Gelände','Terrain'],pkCond:['Bedingung','Condition'],pkCmd:['Befehl','Command'],pkHor:['Horizontal','Horizontal'],pkDia:['Diagonal','Diagonal'],pkTerrH:['Geländestücke und Reliquien','Terrain features and relics'],pkRoads:['Straßen','Roads'],pkStart:['Start-Reliquien','Starting relics'],pkSize:['Maße','Size'],pkTacH:['12 Karten – je Taktik (Bedingung) mit zugehörigem Befehl','12 cards – each a tactic (condition) with its command'],pkTwH:['6 pro Schlachtfeld, eine pro Schlachtrunde','6 per battlefield, one per battle round'],cPack:['Battlepack','Battlepack'],pkBoard:['Spielfeld 30 × 22,4 Zoll','Board 30 × 22.4 inches'],t4:['Suche','Search'],d4:['Volltext über Regeln, Glossar und Spearheads','Full text over rules, glossary and Spearheads'],
  intro:['Nachschlagewerk für Warhammer Age of Sigmar: Spearhead. Antippen für Details, Fachbegriffe sind verlinkt, die Sprache lässt sich überall umschalten.','Quick reference for Warhammer Age of Sigmar: Spearhead. Tap for details, terms are linked, and you can switch language anywhere.'],
  traits:['Kampfeigenschaften','Battle traits'],reg:['Regimentsfähigkeiten','Regiment abilities'],regh:['wähle 1 von 2','pick 1 of 2'],
  enh:['Verbesserungen','Enhancements'],enhh:['wähle 1 für den General','pick 1 for the general'],units:['Einheiten','Units'],
@@ -218,7 +222,7 @@ const main=document.getElementById('main'),top=document.getElementById('top'),sh
 const open=new Set();      // geöffnete Details (route|key)
 let route='',sheetId=null,searchQ='';
 const EMB=window.parent!==window;
-const A=DATA.A,R=DATA.R,G=DATA.G,FL=DATA.FL;
+const A=DATA.A,R=DATA.R,G=DATA.G,FL=DATA.FL,PK=DATA.PK;
 const gById=Object.fromEntries(G.map(g=>[g.id,g])),rById=Object.fromEntries(R.map(r=>[r.id,r]));
 
 /* ---------- Verlinkung ---------- */
@@ -356,9 +360,16 @@ function buildIndex(){
    u.ab.forEach((x,j)=>INDEX.push({c:'A',href:`#/sp/${a.i}/u${k}a${j}`,t:x.n,x:[x.t],ctx:[u.n[0]+' · '+a.n[0],u.n[1]+' · '+a.n[1]]}));
   });
  });
+ PK.forEach((k,i)=>{
+  INDEX.push({c:'P',href:'#/packs/'+i,t:k.n,x:[k.sub,k.intro]});
+  k.tac.forEach((c,j)=>INDEX.push({c:'P',href:`#/packs/${i}/tac${j}`,t:[c.n,c.n],x:[c.c,[c.k,c.k],c.t],ctx:k.n}));
+  k.tw.forEach((b,bi)=>b.l.forEach((w,j)=>INDEX.push({c:'P',href:`#/packs/${i}/tw${bi}_${j}`,t:[w.n,w.n],x:[w.t],ctx:[k.n[0]+' · '+b.n[0],k.n[1]+' · '+b.n[1]]})));
+  k.terr.forEach((w,j)=>INDEX.push({c:'P',href:`#/packs/${i}/terr${j}`,t:w.n,x:[w.k,w.t],ctx:k.n}));
+  k.bf.forEach((b,bi)=>b.obj.forEach(o=>INDEX.push({c:'P',href:`#/packs/${i}/bf${bi}`,t:[o.n,o.n],x:[],ctx:[k.n[0]+' · '+b.n[0],k.n[1]+' · '+b.n[1]]})));
+ });
  INDEX.forEach(it=>{const parts=[it.t[0],it.t[1],...it.x.map(v=>Array.isArray(v)?v.join(' '):v)];if(it.alt)parts.push(...it.alt.flat());it.h=norm(parts.join(' '))});
 }
-const CAT={R:['cRules'],G:['cGloss'],S:['cSp'],U:['cUnit'],A:['cAb'],W:['cWpn']};
+const CAT={P:['cPack'],R:['cRules'],G:['cGloss'],S:['cSp'],U:['cUnit'],A:['cAb'],W:['cWpn']};
 function hlRe(q){const ws=q.trim().split(/\s+/).filter(w=>w.length>0).map(reEsc);return ws.length?new RegExp('('+ws.join('|')+')','gi'):null}
 function snippet(txt,q){
  const re=hlRe(q);let s=txt;
@@ -367,6 +378,62 @@ function snippet(txt,q){
  let o=esc(s);if(re)o=o.replace(new RegExp('('+q.trim().split(/\s+/).map(w=>reEsc(esc(w))).join('|')+')','gi'),'<mark>$1</mark>');
  return o;
 }
+
+/* ---------- Battlepacks ---------- */
+let packTab='m',pmap=0;
+const ptabOf=k=>/^tac/.test(k)?'t':/^tw/.test(k)?'w':'m';
+function packsOverview(){
+ let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t5')}</h1><p class="hint">${T('d5')}</p><div class="grid">`;
+ PK.forEach((k,i)=>h+=`<a class="card army" href="#/packs/${i}" data-k="pk${i}"><b>${esc(P(k.n))}</b><span>${esc(P(k.sub))}</span></a>`);
+ return h+`</div><footer>${T('ver')}</footer>`;
+}
+function mapSvg(k,b){
+ const W=30,H=22.4,pk=PK.indexOf(k),dg=pk>=1?1:0;
+ const num=v=>Math.round(v*100)/100;
+ let s=`<svg class="pmap" viewBox="-0.3 -0.3 ${W+0.6} ${H+0.6}" role="img" aria-label="${esc(P(b.n))}"><rect x="0" y="0" width="${W}" height="${H}" fill="var(--card2)" stroke="var(--line)" stroke-width=".15"/>`;
+ (b.roads||[]).forEach(r=>{s+=r.r?`<circle cx="${r.x}" cy="${r.y}" r="${r.r}" fill="var(--line)" opacity=".7"/>`:`<rect x="${num(r.x-r.w/2)}" y="${num(r.y-r.h/2)}" width="${r.w}" height="${r.h}" transform="rotate(${num(r.a*180/Math.PI)} ${r.x} ${r.y})" fill="var(--line)" opacity=".7" clip-path="url(#cl)"/>`});
+ if(b.roads)s=s.replace('<rect x="0" y="0"',`<defs><clipPath id="cl"><rect x="0" y="0" width="${W}" height="${H}"/></clipPath></defs><rect x="0" y="0"`);
+ s+= pmap==0?`<line x1="0" y1="${H/2}" x2="${W}" y2="${H/2}" stroke="var(--acc)" stroke-width=".18" stroke-dasharray=".6 .4"/>`:(dg?`<line x1="0" y1="0" x2="${W}" y2="${H}"`:`<line x1="${W}" y1="0" x2="0" y2="${H}"`)+` stroke="var(--acc)" stroke-width=".18" stroke-dasharray=".6 .4"/>`;
+ if(b.my=='crypt')s+=`<rect x="${W/2-2.25}" y="${H/2-.8}" width="4.5" height="1.6" transform="rotate(${num(Math.atan2(H,W)*180/Math.PI)} ${W/2} ${H/2})" fill="var(--chip)" stroke="var(--mut)" stroke-width=".12"/>`;
+ b.obj.forEach((o,i)=>{
+  if(o.w)s+=`<rect x="${num(o.x-o.w/2)}" y="${num(o.y-o.h/2)}" width="${o.w}" height="${o.h}" transform="rotate(${num(o.a*180/Math.PI)} ${o.x} ${o.y})" fill="var(--acc)" fill-opacity=".18" stroke="var(--acc)" stroke-width=".18"/>`;
+  else s+=`<circle cx="${o.x}" cy="${o.y}" r="${o.r}" fill="var(--acc)" fill-opacity=".18" stroke="var(--acc)" stroke-width=".18"/>`;
+  s+=`<text x="${Math.min(W-1.5,Math.max(1.5,o.x))}" y="${o.y+.3}" text-anchor="middle" font-size=".95" fill="var(--fg)" stroke="var(--card2)" stroke-width=".25" paint-order="stroke" font-weight="700">${esc(P(o.n))}</text>`;
+ });
+ return s+'</svg>';
+}
+function packCard(key,title,inner,k){return `<details class="ab" data-k="${key}" id="k-${key}" ${open.has(route+'|'+key)?'open':''}><summary><span class="nm">${title}</span></summary><div class="body">${inner}</div></details>`}
+function packPage(i){
+ const k=PK[i];
+ let h=`<div class="crumb"><a href="#/packs">${T('t5')}</a></div>`;
+ h+=`<div class="tabs"><button data-ptab="m" class="${packTab=='m'?'on':''}">${T('pkMap')}</button><button data-ptab="t" class="${packTab=='t'?'on':''}">${T('pkTac')} <small>${k.tac.length}</small></button><button data-ptab="w" class="${packTab=='w'?'on':''}">${T('pkTw')} <small>${k.tw.reduce((a,b)=>a+b.l.length,0)}</small></button></div>`;
+ const sec=(kk,title,hint)=>`<div class="sec" data-k="s-${kk}"><h2>${title}</h2>${hint?`<small>${hint}</small>`:''}</div>`;
+ if(packTab=='m'){
+  h+=`<p class="hint">${linkify(P(k.intro),-1,null)}</p><p class="hint"><b>${T('pkBoard')}</b></p>`;
+  h+=sec('setup',T('pkSetup'));h+='<ol class="pkl">'+k.setup.map(x=>`<li>${linkify(P(x),-1,null)}</li>`).join('')+'</ol>';
+  h+=sec('field',T('pkField'));
+  h+=`<div class="pseg"><button data-pmap="0" class="${pmap==0?'on':''}">${T('pkHor')}</button><button data-pmap="1" class="${pmap==1?'on':''}">${T('pkDia')}</button></div><p class="hint">${linkify(P(k.maps[pmap]),-1,null)}</p>`;
+  k.bf.forEach((b,bi)=>{
+   h+=`<div class="pbf" data-k="bf${bi}" id="k-bf${bi}"><h3>${esc(P(b.n))}</h3>${mapSvg(k,b)}<ul class="pkl">`+b.obj.map(o=>`<li><b>${esc(P(o.n))}</b> · ${o.w?`${o.w}" × ${o.h}"`:`⌀ ${o.r*2}"`} · (${o.x}" / ${o.y}")</li>`).join('')+'</ul>';
+   if(b.start)h+=`<p class="hint"><b>${T('pkStart')}:</b> ${b.start.map(esc).join(' · ')}</p>`;
+   if(b.roads)h+=`<p class="hint">${T('pkRoads')}: ${P(B2('Zwei Straßen (4" breit) kreuzen sich in der Mitte; dort liegt ein runder Platz (⌀ 7").','Two roads (4" wide) cross in the centre with a round plaza (7" across).'))}</p>`;
+   h+='</div>';
+  });
+  h+=`<p class="hint">${linkify(P(k.objNote),-1,null)}</p>`;
+  h+=sec('terr',T('pkTerrH'));
+  if(k.groups)h+=`<p class="hint">`+k.groups.map(g=>`<b>${esc(P(g.n))}:</b> ${g.l.map(esc).join(' + ')}`).join(' · ')+'</p>';
+  k.terr.forEach((w,j)=>h+=packCard('terr'+j,`${esc(P(w.n))}<span class="chip">${esc(P(w.d))}</span>`,`<p><b>${esc(P(w.k))}</b></p><p>${linkify(P(w.t),-1,null)}</p>`));
+  h+=`<p class="hint">${linkify(P(k.terrNote),-1,null)}</p>`;
+ } else if(packTab=='t'){
+  h+=sec('tac',T('pkTac'),T('pkTacH'));
+  k.tac.forEach((c,j)=>h+=packCard('tac'+j,esc(c.n),`<p><b>${T('pkCond')}:</b> ${linkify(P(c.c),-1,null)}</p><p><b>${T('pkCmd')}: ${esc(c.k)}</b><br>${linkify(P(c.t),-1,null)}</p>`));
+ } else {
+  h+=sec('tw',T('pkTw'),T('pkTwH'));
+  k.tw.forEach((b,bi)=>{h+=`<div class="fac" style="margin:12px 0 4px">${esc(P(b.n))}</div>`;b.l.forEach((w,j)=>h+=packCard(`tw${bi}_${j}`,esc(w.n),`<p>${linkify(P(w.t),-1,null)}</p>`))});
+ }
+ return h+`<footer>${T('ver')}</footer>`;
+}
+const B2=(a,b)=>[a,b];
 function runSearch(q){
  if(!INDEX)buildIndex();
  const ws=norm(q).split(/\s+/).filter(Boolean);if(!ws.length)return '';
@@ -374,7 +441,7 @@ function runSearch(q){
  INDEX.forEach(it=>{if(ws.every(w=>it.h.includes(w))){const tn=norm(it.t.join(' '));hits.push({it,sc:(ws.every(w=>tn.includes(w))?0:1)+(tn.startsWith(ws[0])?0:.5)})}});
  hits.sort((a,b)=>a.sc-b.sc);
  if(!hits.length)return `<p class="hint">${T('noRes')}</p>`;
- const order=['R','G','S','U','A','W'];let h='';
+ const order=['R','G','P','S','U','A','W'];let h='';
  order.forEach(c=>{
   const arr=hits.filter(x=>x.it.c==c);if(!arr.length)return;
   h+=`<div class="cnt">${T(CAT[c][0])} · ${arr.length}</div>`;
@@ -395,6 +462,7 @@ function homePage(){
  <a class="tile" href="#/sp"><span class="no">1</span><div><b>${T('t1')}</b><span>${T('d1')}</span></div></a>
  <a class="tile" href="#/rules"><span class="no">2</span><div><b>${T('t2')}</b><span>${T('d2')}</span></div></a>
  <a class="tile" href="#/gloss"><span class="no">3</span><div><b>${T('t3')}</b><span>${T('d3')}</span></div></a>
+ <a class="tile" href="#/packs"><span class="no">5</span><div><b>${T('t5')}</b><span>${T('d5')}</span></div></a>
  <a class="tile" href="#/search"><span class="no">4</span><div><b>${T('t4')}</b><span>${T('d4')}</span></div></a>
  </div><p class="hint" style="margin-top:16px">${T('cmdhint')}</p><footer>${EMB?'':`<a href="./">${T('game')} →</a><br>`}${T('ver')}</footer>`;
 }
@@ -404,6 +472,7 @@ function parse(){const h=(location.hash||'#/').slice(1);const p=h.split('/').fil
 function title(p){
  if(!p.length)return T('title');
  if(p[0]=='sp'){return p[1]!=null&&A[p[1]]?P(A[p[1]].n):T('t1')}
+ if(p[0]=='packs')return p[1]!=null&&PK[p[1]]?P(PK[p[1]].n):T('t5');
  return {rules:T('t2'),gloss:T('t3'),search:T('t4')}[p[0]]||T('title');
 }
 function topbar(p){
@@ -422,15 +491,16 @@ function restoreAnchor(a){
  if(!a)return;const e=main.querySelector(`[data-k="${CSS.escape(a.k)}"]`);
  if(e){window.scrollBy(0,e.getBoundingClientRect().top-a.off)}else window.scrollTo(0,a.sy);
 }
-let lastRouteKey='',lastArmy=null;
+let lastRouteKey='',lastArmy=null,lastPack=null;
 function render(opts={}){
  const p=parse();const base='/'+p.slice(0,2).join('/');
  const keepScroll=opts.keep;const anc=keepScroll?captureAnchor():null;
- route=p[0]=='sp'&&p[1]!=null?'sp/'+p[1]:(p[0]||'home');
+ route=p[0]=='sp'&&p[1]!=null?'sp/'+p[1]:p[0]=='packs'&&p[1]!=null?'packs/'+p[1]:(p[0]||'home');
  let html='';
- const deep=p[0]=='sp'&&p[1]!=null?p[2]:(p[0]=='rules'||p[0]=='gloss'?p[1]:null);
+ const deep=(p[0]=='sp'||p[0]=='packs')&&p[1]!=null?p[2]:(p[0]=='rules'||p[0]=='gloss'?p[1]:null);
  if(!p.length)html=homePage();
  else if(p[0]=='sp'){if(A[p[1]]){if(p[2])armyTab=tabOf(p[2]);else if(!opts.keep&&lastArmy!=p[1])armyTab='a';lastArmy=p[1];html=armyPage(+p[1])}else html=spOverview()}
+ else if(p[0]=='packs'){if(PK[p[1]]){if(p[2])packTab=ptabOf(p[2]);else if(!opts.keep&&lastPack!=p[1])packTab='m';lastPack=p[1];html=packPage(+p[1])}else html=packsOverview()}
  else if(p[0]=='rules')html=rulesPage();
  else if(p[0]=='gloss')html=glossPage();
  else if(p[0]=='search'){if(p[1]!=null)searchQ=p[1];html=searchPage()}
@@ -463,6 +533,8 @@ function wire(){
 let opts_noFocus=false;
 document.addEventListener('click',ev=>{
  const dj=ev.target.closest('[data-j]');if(dj){ev.preventDefault();jumpTo(dj.dataset.j,dj.closest('.cheat')!=null);return}
+ const pt=ev.target.closest('[data-ptab]');if(pt){packTab=pt.dataset.ptab;window.scrollTo(0,0);render({keep:true});return}
+ const pm=ev.target.closest('[data-pmap]');if(pm){pmap=+pm.dataset.pmap;render({keep:true});return}
  const tb=ev.target.closest('[data-tab]');if(tb){armyTab=tb.dataset.tab;window.scrollTo(0,0);open.size;render({keep:true});return}
  const t=ev.target.closest('a.lk,.lang button,#bk,#hm,#cl,.sheet [data-s],.sheet .x,.back');if(!t)return;
  if(t.matches('a.lk')){ev.preventDefault();
