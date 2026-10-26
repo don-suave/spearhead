@@ -25,9 +25,9 @@ export function* flow(G){
  setPack(0);
  const st=yield* settings(G,'Spielstart','Voreinstellungen bestätigen oder ändern.',[
   {n:'Battlepack',def:0,opts:PACKN.map((t,i)=>({t,s:PACKS[i]}))},
-  {n:'Schlachtrunden-Infos',def:0,opts:[{t:'Nein',s:'Keine Meldungen beim Geländeaufbau, bei der Aufstellung und zu Rundenbeginn.'},{t:'Ja'}]},
+  // Option „Schlachtrunden-Infos“ (Nein/Ja) ist im Startmenü ausgeblendet, K.rinfo bleibt im Code erhalten (hier auf true setzen oder wieder ins Menü aufnehmen)
   {n:'Aufstellung',def:0,opts:[{t:'Manuell'},{t:'Zufällig',s:'Deine Einheiten werden nach allen Regeln zufällig aufgestellt.'}]}]);
- K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=st[1]==1;K.rdep=st[2]==1;
+ K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=false;K.rdep=st[1]==1;
  setPack(K.pack);
  const i=yield* choice(G,0,'Armee wählen','Dein Gegner (Computer) spielt eine andere Armee.',ARMY.map(a=>({t:a.n,f:a.f,ga:GA[a.f]||'Ordnung',s:a.units.map(d=>d.n).join(' · ')})),{car:1});
  K.army=[i,(i+1+Math.floor(rand(S)*(ARMY.length-1)))%ARMY.length];mkUnits(S);
@@ -114,7 +114,7 @@ function* startRound(G,f){const S=G.S,P=S.P,K=S.K;
  const first=i0==0?w:1-w;S.first=first;S.act=first;
  const sz=!f&&first!=pf,dv=Math.abs(P[0].vp-P[1].vp),dr=i=>!(sz&&i==first&&!(u==i&&dv>=5));
  turnStart(S);cycStep(G);K.tw=K.twist.pop();
- yield* infoR(G,0,'Wendungskarte – Schlachtrunde '+S.round,`Zu Beginn der Schlachtrunde wird die Wendungskarte aufgedeckt (vor dem Nachziehen der Taktikkarten):<br><b>${TWD[K.realm][K.tw-1][1]}</b><small>${TWD[K.realm][K.tw-1][2]}</small>`,'Weiter');
+ yield* info(G,0,'Wendungskarte – Schlachtrunde '+S.round,`Zu Beginn der Schlachtrunde wird die Wendungskarte aufgedeckt (vor dem Nachziehen der Taktikkarten):<br><b>${TWD[K.realm][K.tw-1][1]}</b><small>${TWD[K.realm][K.tw-1][2]}</small>`,'Weiter');
  yield* applyTw(G,u);yield* roundStartAb(G);
  for(const i of [0,1]){if(f||!dr(i)||G.isAI(i))continue;
   while(P[i].hand.length){const h=P[i].hand;const k=yield* choice(G,i,'Taktikkarten ablegen?','Du darfst beliebig viele Karten offen ablegen, bevor du nachziehst.',[...h.map(c=>({t:'Ablegen: '+TAC[c-1][0]})),{t:'Fertig – nachziehen'}],{pref:h.length});if(k==h.length)break;const c=h[k];h.splice(k,1);P[i].disc.push(c)}}

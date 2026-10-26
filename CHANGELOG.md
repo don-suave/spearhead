@@ -1,5 +1,8 @@
 # Changelog
 
+## v87
+- Option „Schlachtrunden-Infos“ aus dem Startmenü entfernt (im Code erhalten); die Wendungskarte mit Erklärung wird immer angezeigt
+
 ## v86
 - Neue Armeen: Fyreslayers Sagenträchtige Axtschar (Ur-Gold-Runen), Behemat Wallbrecher (Menschenquetscher-Gargant) und Khorne Reißzähne des Blutgottes (Die Beute)
 
