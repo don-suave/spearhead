@@ -1,5 +1,8 @@
 # Changelog
 
+## v77
+- Ghyran: neues Mattenbild (sauberes Produktbild, Logos entfernt), so skaliert, dass alle Ziele exakt 6" Durchmesser haben und auf den Mattenmaßen liegen
+
 ## v76
 - Herkunft jeder Option sichtbar (⟡): Taktikkarte (als Befehl), Einheit, Kampfeigenschaft der Armee, Regimentsfähigkeit, Verbesserung des Generals, Gelände/Reliquie, Wendungskarte – in Einheiten-Menü, Hauptmenü, Reaktionen, Befehlen und Folgefragen
 
