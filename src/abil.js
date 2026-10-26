@@ -611,10 +611,13 @@ export function unitFlags(S,u){const f=[];
  return f}
 // Fähigkeiten „1× pro Schlacht“ einer Armee (für die Leiste im Feld)
 const ICN=a=>{const t=a.s;return /zuerst/.test(t)?'⏩':/zuletzt/.test(t)?'⏪':/Rettung|Ward|Schild/.test(t)?'🛡️':/tödlich/.test(t)?'💀':/aufgestellt|aufstell|Aufstell/.test(t)?'📍':/zurück|kehrt|Modell/.test(t)?'↩️':/Kontroll/.test(t)?'🚩':/Bewegung|bewegt|rück/.test(t)?'🏃':/Treffer|Attacke|Wucht|Krit|Nahkampf|Fernkampf/.test(t)?'⚔️':'✨'};
+// Zeitpunkt einer Fähigkeit: aus dem Text („Nahkampfphase …“, „Gegnerische Bewegungsphase …“); true, wenn sie jetzt eingesetzt werden kann
+const PHN=['Aufstellungsphase','Heldenphase','Bewegungsphase','Fernkampfphase','Angriffsphase','Nahkampfphase'];
+const nowOK=(S,o,a)=>{const m=/^(Gegnerische )?(Aufstellungsphase|Heldenphase|Bewegungsphase|Fernkampfphase|Angriffsphase|Nahkampfphase)/.exec(a.s||'');if(!m)return true;const i=PHN.indexOf(m[2]);if(i==0)return S.ph==0;return S.ph==i&&(m[1]?S.act!=o:S.act==o)};
 export function battleAbs(S,o){const r=[];
  for(const [id,a] of Object.entries(AB)){if(a.freq!='battle')continue;
-  if(a.army){try{if(a.src(S,o))r.push({id,o,n:a.n,s:a.s,ic:ICN(a),used:abUsed(S,null,id,o)})}catch(e){}}
-  else if(a.unit){S.U.filter(u=>u.o==o&&u.x>=0).forEach(u=>{try{if(a.src(S,u))r.push({id,o,n:a.n,s:a.s,ic:ICN(a),u:u.name,used:abUsed(S,u,id)})}catch(e){}})}}
+  if(a.army){try{if(a.src(S,o))r.push({id,o,n:a.n,s:a.s,ic:ICN(a),used:abUsed(S,null,id,o),now:nowOK(S,o,a)})}catch(e){}}
+  else if(a.unit){S.U.filter(u=>u.o==o&&u.x>=0).forEach(u=>{try{if(a.src(S,u))r.push({id,o,n:a.n,s:a.s,ic:ICN(a),u:u.name,used:abUsed(S,u,id),now:nowOK(S,u.o,a)})}catch(e){}})}}
  if(S.fd0&&S.fd0[o]&&S.fd0[o].length){const rem=(S.fd&&S.fd[o]||[]).slice().sort((x,y)=>x-y),pol=(S.fdp||[0,0])[o];r.push({id:'fd',o,n:'Schicksalswürfel',ic:'🎲',s:'Meister des Schicksals: ersetzt Zauber-, Renn-, Angriffs-, Treffer-, Verwundungs- und Schutzwürfe.',st:rem.length?'<b>Verbleibende Würfel: '+rem.join(', ')+'</b><br>Einsatz: '+['nicht einsetzen','automatisch','bei jedem Wurf nachfragen'][pol]:'<b>Alle Schicksalswürfel sind verbraucht.</b>',used:!rem.length})}
  return r}
 

@@ -1,6 +1,9 @@
 # Changelog
 
 
+## v80
+- Fähigkeiten „1× pro Schlacht“ (unten links): immer sichtbar, leicht ausgegraut; nur in der passenden Phase bzw. zum passenden Zeitpunkt hell und hervorgehoben
+
 ## v79
 - Ossia: alle vier Ziele 5" (Radius 2,5); Dolorum: Eckziele 5", Mittelziel 7" (Radius 3,5) in Kontrolle, Anspruch und Anzeige
 - Neue Mattenbilder für Ossia und Dolorum, Ziele massgenau; Regel-App nennt die Zielgrößen
