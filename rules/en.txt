@@ -968,3 +968,34 @@ Bösartige Klinge und Schnabel	Vicious Blade and Beak
 Feuerdämonen des Tzeentch	Flamers of Tzeentch
 Wyrdflammen	Warpflames
 Flammende Mäuler	Flaming Maws
+Knochenlegionen der Ossiarch	Ossiarch Bonereapers
+Kavalos-Speerspitze	Kavalos Spearhead
+Scheinrückzug	Feigned Retreat
+Einmal pro Schlacht, deine Bewegungsphase: Befreundete Einheiten dürfen in diesem Zug auch nach einem Rückzug Angriff-Fähigkeiten einsetzen.	Once per battle, your Movement phase: friendly units can use Charge abilities this turn even after retreating.
+Verstärkte Konstrukte	Reinforced Constructs
+Einmal pro Schlacht, beliebige Nahkampfphase: Befreundete Einheit hat bis Zugende Rettung 5+.	Once per battle, any Combat phase: a friendly unit has Ward 5+ until the end of the turn.
+Mächtiger Archaeossianer	Mighty Archaeossian
+Mörderische Klinge	Murderous Blade
+Passiv: Die Klinge des Befehlshabers des Generals hat Krit. (2 Treffer).	Passive: the general's Commander's Blade has Crit (2 Hits).
+Herrischer Befehlshaber	Imperious Commander
+Deine Bewegungsphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll um den General: 3+ → +2 Zoll Bewegung bis Zugende.	Your Movement phase: a visible friendly unit wholly within 12" of the general: on 3+, +2" Move until the end of the turn.
+Kalte Grausamkeit	Cold Cruelty
+Beliebige Nahkampfphase: Hat der General in diesem Zug nicht angegriffen und ist im Nahkampf: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll: 3+ → +1 Wucht auf Nahkampfwaffen bis Zugende.	Any Combat phase: if the general did not charge this turn and is in combat, a visible friendly unit wholly within 12": on 3+, +1 Rend on its melee weapons until the end of the turn.
+Kavalos-Fürst	Kavalos Lord
+Klinge des Befehlshabers	Commander's Blade
+Hufe, Zähne und Stachelschwänze des Kavalos-Rosses	Kavalos Steed's Hooves, Teeth and Spiked Tails
+Signal zum Angriff	Signal to Charge
+Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll: 3+ → +1 auf Angriffswürfe bis Zugende.	Hero phase: a visible friendly unit wholly within 12": on 3+, +1 to charge rolls until the end of the turn.
+Kavalos-Todesreiter	Kavalos Deathriders
+Kavalos-Klinge	Kavalos Blade
+Hufe und Zähne	Hooves and Teeth
+Kehrtwende	About Face
+Nahkampfphase: Hat die Einheit in diesem Zug angegriffen: 3+ → sie bewegt sich bis zu ihrer Bewegung (auch durch feindliche Nahkampfreichweite), darf aber nicht im Nahkampf enden.	Combat phase: if the unit charged this turn, on 3+ it moves up to its Move, through enemy engagement range, but must not end in combat.
+Teratische Kohorte	Teratic Cohort
+Kohortenwaffen	Cohort Weapons
+Wild bis in die Knochen	Wild to the Bone
+Bewegungsphase: Die Einheit darf sich 3 Zoll bewegen, auch in den Nahkampf.	Movement phase: the unit may move 3", including into combat.
+Ausgeklügelte Finte	Cunning Feint
+Passiv: Befreundete Kavallerie-Einheiten erleiden durch Rückzug-Fähigkeiten keinen tödlichen Schaden.	Passive: friendly Cavalry units take no mortal damage from retreat abilities.
+Kavalos-Lanze	Kavalos Lance
+Einmal pro Zug (Armee), deine Heldenphase: Befreundete Einheit darf sich bis Zugende durch feindliche Modelle bewegen, als hätte sie Fliegen.	Once per turn (army), your Hero phase: a friendly unit can move through enemy models until the end of the turn as if it had Fly.

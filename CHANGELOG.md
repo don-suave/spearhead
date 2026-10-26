@@ -1,6 +1,11 @@
 # Changelog
 
 
+## v82
+- Neue Armee: Ossiarch Kavalos-Speerspitze (Knochenlegionen der Ossiarch)
+- Einheitenanzeige zeigt Schlüsselwörter; Zusammenhalt beim Entfernen von Modellen nutzt den Einheitenwert
+- Grundlage für weitere Armeen (Fähigkeiten-Hooks)
+
 ## v81
 - Menü: Version und Upload-Zeit; Name wird zusätzlich als Cookie gemerkt
 - Statistik: Tabelle wird automatisch angelegt, klare Fehlermeldung wenn die D1-Datenbank „DB“ fehlt

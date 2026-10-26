@@ -735,3 +735,8 @@ function origin1(S,o,n){
  for(const g of TWDO||[])for(const t of g||[])if(t&&strip(t[1])===n)return 'Wendungskarte „'+t[1]+'“';
  return ''}
 export const srcTag=s=>s?'<span style="display:block;color:#e8c46a;font-weight:600;margin-bottom:2px">⟡ '+s+'</span>':'';
+
+// ---------- Hilfen und neue Armeen (Etappe 5: abil3.js) ----------
+export {fr,en,lab,yn,rep,row,mort,pickF,pickE,genOf,nmove,roll2,claims,relocate,heroT,armyN,segD,pk,hdr,FL,vis,scE};
+import {install3} from './abil3.js';
+install3();

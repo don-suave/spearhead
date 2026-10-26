@@ -53,7 +53,7 @@ export function removeModels(S,u,k,foes){for(let t=0;t<k&&u.M.length>1;t++){
   const P=abs(u),E=foes.flatMap(e=>e.x>=0&&e.M?abs(e):[]);
   const score=p=>E.length?Math.min(...E.map(q=>mgap(p,q))):0;
   const idx=P.map((p,i)=>i).sort((i,j)=>(j==0)-(i==0)||score(P[j])-score(P[i]));
-  let pick=idx.find(i=>cohOK(P.filter((p,j)=>j!=i)));if(pick==null)pick=idx[0];
+  let pick=idx.find(i=>cohOK(P.filter((p,j)=>j!=i),u.coh||1));if(pick==null)pick=idx[0];
   if(S.T&&S.T.sl)S.T.sl[into(S,0,P[pick].x,P[pick].y)>0?0:1]++;P.splice(pick,1);u.M.splice(pick,1);recentre(u,P)}
  if(u.M.length==1&&k>0&&u.n<=0)u.M.length=0}
 export function addModel(S,u,occupied){ // neues Modell neben vorhandenen platzieren (Rückkehr getöteter Modelle)

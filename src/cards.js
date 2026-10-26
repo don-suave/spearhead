@@ -1,4 +1,5 @@
 // Taktikkarten, Befehle, Wendungskarten, Punkte
+import {hk} from './hooks.js';
 import {W,H,CR,into,onTer,route,tdist,pathPts,tcorners} from './geom.js';
 import {TAC,TWD} from './data.js';
 import {d6,d3,add,has} from './util.js';
@@ -75,14 +76,14 @@ export function twRound(G){const S=G.S,TW=S.TW;if(S.K.pack>=1&&HK.round)HK.round
  if(TW.ens!=null){const e=byId(S,TW.ens);if(e)e.mv=e.mv0}S.TW={}}
 
 // ---------- Bewegung/Angriff als Teilabläufe (auch für Befehle genutzt) ----------
-export function* destReq(G,u,rng,x={}){return yield {t:'dest',who:u.o,u:u.id,rng,...x,check:a=>a&&a.stay?'':(a&&Number.isFinite(a.x)&&Number.isFinite(a.y)?moveErr(G.S,u,a.x,a.y,rng,a.rot):'Ungültig')}}
+export function* destReq(G,u,rng,x={}){return yield {t:'dest',who:u.o,u:u.id,rng,...x,chk:x.chk,check:a=>a&&a.stay?(x.noStay&&!G.isAI(u.o)&&x.noStay()?x.noStayMsg||'Die Einheit muss sich bewegen':''):(a&&Number.isFinite(a.x)&&Number.isFinite(a.y)?(moveErr(G.S,u,a.x,a.y,rng,a.rot)||(x.chk&&!G.isAI(u.o)?x.chk(a)||'':'')):'Ungültig')}}
 function* tisch(G,u){const S=G.S,o=1-u.o,g=gnl(S,o);if(ENI(S,o)!='ss_tisch'||usedKey(S,o+':tisch','battle')||!g||dist(g,u)>12)return 0;
  const full=!!S.kes[o];let i;
  if(G.isAI(o))i=full?1:0;else i=yield* choice(G,o,'Reaktion: Widerliche Tischmanieren',u.name+' sagt Angriff an. Vom Angriffswurf abziehen:',[{t:'W3 abziehen'},...(full?[{t:'3 abziehen',s:'Der Kessel wird danach leer'}]:[]),{t:'Nicht einsetzen'}],{pref:0});
  if(i>=(full?2:1))return 0;useKey(S,o+':tisch','battle');if(i==1&&full){S.kes[o]=0;G.note('Widerliche Tischmanieren: −3 auf den Angriffswurf, der Kessel wird leer');return 3}const d=d3(S);G.note('Widerliche Tischmanieren: −'+d+' auf den Angriffswurf');return d}
 export function* doCharge(G,u){const S=G.S,P=S.P[u.o];const tp=yield* tisch(G,u);S.T.cs[u.id]=[u.x,u.y];
  const dice=()=>{const a=[d6(S),S.TW.ens==u.id?0:d6(S)];if(a[1]&&fxL(S,u,'cdlow').length){const m=Math.min(a[0],a[1]);a[0]=a[1]=m}if(hasAb(u,'bot'))a.push(d6(S));for(let k=fxSum(S,u,'cdie');k>0&&a.length>1;k--)a.pop();return a};
- const mod=()=>-(cycOf(S,1-u.o)==4?1:0)+(u.gen&&ENI(S,u.o)=='fe_schritte'?1:0)+fxSum(S,u,'chg')+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'&&rl(S,u.o)>=2?1:0)-(AN(S,1-u.o)=='Grundstok-Wegbereiter'&&RGI(S,1-u.o)=='gw_prop'&&S.U.some(k=>k.o==1-u.o&&k.dn=='Grundstok-Kanonenboot'&&k.x>=0&&dist(u,k)<=9)?1:0)-tp;
+ const mod=()=>hk(S,'chg',u)-(cycOf(S,1-u.o)==4?1:0)+(u.gen&&ENI(S,u.o)=='fe_schritte'?1:0)+fxSum(S,u,'chg')+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'&&rl(S,u.o)>=2?1:0)-(AN(S,1-u.o)=='Grundstok-Wegbereiter'&&RGI(S,1-u.o)=='gw_prop'&&S.U.some(k=>k.o==1-u.o&&k.dn=='Grundstok-Kanonenboot'&&k.x>=0&&dist(u,k)<=9)?1:0)-tp;
  let rr=(fxL(S,u,'rrc').length>0||hasAb(u,'tr_ugesch'))&&!usedKey(S,u.id+':rrc','turn');
  let ds=dice();add(S.Ph.used,u.id);
  const sum=()=>ds.reduce((x,y)=>x+y,0),blk=()=>[{k:'row',l:hasAb(u,'bot')?'Angriffswurf (2W6 + 1 Würfel)':'Angriffswurf (2W6)',v:ds},{k:'txt',s:`Summe <b>${sum()}</b>${mod()?' ('+(mod()>0?'+':'')+mod()+' Modifikator)':''}`}];
@@ -110,7 +111,7 @@ export function* doRetreat(G,u,opt={}){const S=G.S,P=S.P[u.o];add(S.Ph.used,u.id
   const i=yield* choice(G,u.o,'Rückzug','Möchtest du Fall Back and Rally einsetzen? (Karte wird abgelegt)',[{t:'Ja'},{t:'Nein'}],{pref:1});
   if(i==0){useCard(S,u.o,12);const s=canHeal(S,u)?u.nmax-u.n:0,rs=[];for(let k=0;k<s;k++)rs.push(d6(S));const b=rs.filter(x=>x>=5).length;u.n=Math.min(u.nmax,u.n+b);G.tray('Fall Back and Rally',[{k:'row',l:b+' Modelle zurück (5+)',v:rs,th:5}]);
    const a=yield* destReq(G,u,mvOf(S,u),{ret:1,text:'Kein tödlicher Schaden'});if(!a.stay){applyMove(S,u,a,mvOf(S,u));add(S.T.moved,u.id)}return}}
- const kl=fxL(S,u,'klaev').length>0;if(kl)add(S.T.FZ,u.id);const nod=opt.free||am||kl||RGI(S,u.o)=='zsz'||AN(S,u.o)=='Rudelfletscha-Jäga'||hasAb(u,'stelzen')||(u.dn=='Squighoppa'&&litIn(S,u))||(u.gen&&ENI(S,u.o)=='gw_blut');const d=nod?0:Math.max(0,d3(S)-(u.gen&&ENI(S,u.o)=='gw_rueck'?1:0));if(nod&&!am&&!opt.free)G.note('Zu schnell zum Treffen-Treffen: kein tödlicher Schaden');else{G.tray(G.isAI(u.o)?'Computer: Rückzug':'Rückzug: W3 tödlicher Schaden',[{k:'row',l:'',v:[d]}]);hurt(G,u,d)}
+ const kl=fxL(S,u,'klaev').length>0;if(kl)add(S.T.FZ,u.id);const nod=opt.free||am||kl||hk(S,'nort',u)>0||RGI(S,u.o)=='zsz'||AN(S,u.o)=='Rudelfletscha-Jäga'||hasAb(u,'stelzen')||(u.dn=='Squighoppa'&&litIn(S,u))||(u.gen&&ENI(S,u.o)=='gw_blut');const d=nod?0:Math.max(0,d3(S)-(u.gen&&ENI(S,u.o)=='gw_rueck'?1:0));if(nod&&!am&&!opt.free)G.note('Zu schnell zum Treffen-Treffen: kein tödlicher Schaden');else{G.tray(G.isAI(u.o)?'Computer: Rückzug':'Rückzug: W3 tödlicher Schaden',[{k:'row',l:'',v:[d]}]);hurt(G,u,d)}
  if(u.n>0&&S.U.includes(u)){const a=yield* destReq(G,u,mvOf(S,u),{ret:1,text:`${d} tödlicher Schaden`});if(!a.stay){applyMove(S,u,a,mvOf(S,u));add(S.T.moved,u.id)}}}
 
 // ---------- Befehle ----------
