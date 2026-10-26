@@ -41,7 +41,7 @@ export const clmAll=(S,u,k)=>S.obj[k]&&u.M&&abs(u).every(m=>objD(S.obj[k],m.x,m.
 // Hart wie Stein: -1 Wucht gegen Clanschilde
 const hartWie=(S,e,shoot)=>{if(!hasAb(e,'hws'))return false;if((e.gm||0)>0)return abs(e).every(m=>into(S,1-e.o,m.x,m.y)>0);return !shoot&&S.obj.some((p,k)=>S.oc[k]===e.o&&clmAll(S,e,k))};
 // Rettungswurf: bester (niedrigster) Wert aus allen Quellen, 9 = keiner
-export function wardOf(S,e){const o=e.o,g=gnl(S,o);let w=e.wr||9;const m=v=>{w=Math.min(w,v)};m(hkMin(S,'ward',e));
+export function wardOf(S,e){const o=e.o,g=gnl(S,o);let w=e.wr||9;const m=v=>{w=Math.min(w,v)};m(hkMin(S,'ward',e));if(g&&e.gen&&e.x>=0&&S.U.some(x=>x.o==o&&x.x>=0&&hasAb(x,'kb_garde')&&dist(e,x)<=CR))m(5);
  if(e.M&&S.ter.some(t=>t.rel=='Crate of Aqua Ghyranis'&&abs(e).every(m=>ptDist(t,m.x,m.y)+m.l/2<=6)))m(5);
  if(S.TW.id=='ss'&&S.TW.ssU===e.id&&(S.TW.tf||[]).some(i=>S.ter[i]&&tdist(e,S.ter[i])<=3))m(5);
  if(hasAb(e,'fw')&&g&&dist(e,g)<=CR)m(5);
@@ -476,10 +476,10 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
   R.push({k:'txt',s:`<b>${w[0]}</b> (${n} Attacken)`},...(ar?[{k:'row',l:'Attacken ('+a+' je Modell)'+(sh?' – zugeteilt: '+n+' ('+Math.round((sh[1]-sh[0])*100)+' %)':''),v:ar}]:[]),{k:'row',l:`Treffer (${th}+): ${h}`,v:hr,th},{k:'row',l:`Verwundung (${tw}+): ${wn}`,v:wr,th:tw},{k:'row',l:`Schutz (${sv}+): ${wn-un} gerettet`,v:sr,th:sv});
   if(m)R.push({k:'txt',s:`Krit. (tödlich): ${m} tödlicher Schaden`});R.push({k:'txt',s:`Schaden: ${d}`})}
  let tot=dmg+mort;(Ph.alc||(Ph.alc={}))[e.id]=((Ph.alc||{})[e.id]||0)+tot;if(shoot)(T.sh[u.id]||(T.sh[u.id]=[])).push(e.id);const wd=TW.nw==e.id?9:Math.min(wardOf(S,e),TW.wd==e.id?6:9,has(Ph.w5,e.id)?5:9),wrd=[];
- if(wd<9)for(let i=0;i<tot;i++)wrd.push(d6(S));const sv2=wrd.filter(x=>x>=wd).length;tot-=sv2;if(e.crow&&wrd.includes(1)){e.crow=0;G.note('Gryphkrähe von '+e.name+' wurde entfernt')}
+ const nwd=!shoot&&fxL(S,u,'nward').length>0,wb=fxSum(S,e,'wardB');if(wd<9&&!nwd)for(let i=0;i<tot;i++)wrd.push(d6(S));const sv2=wrd.filter(x=>x+wb>=wd).length;tot-=sv2;if(e.crow&&wrd.includes(1)){e.crow=0;G.note('Gryphkrähe von '+e.name+' wurde entfernt')}
  add(Ph.used,u.id);if(!shoot)add(T.fought,u.id);const nme=e.name;if(crits&&!shoot){u.dmg=Math.max(0,u.dmg-2*crits);G.note('Geraubte Lebenskraft: '+u.name+' heilt '+2*crits)}if(e.gen&&tot>0&&EN(S,e.o)=='Egomane'){const al=S.U.find(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=CR);if(al){let k=0;const rs=[];for(let i=0;i<tot;i++){const r=d6(S);rs.push(r);if(r>=4)k++}tot-=k;if(k){G.note('Egomane: '+k+' Schadenspunkt(e) auf '+al.name+' umgeleitet (Würfe '+rs.join(',')+')');hurt(G,al,k)}}}
  G.atk=u.id;hurt(G,e,tot);G.atk=null;if(ak1&&S.U.includes(e)&&akOf(e)>0){const k=Math.min(ak1,akOf(e));e.ak=akOf(e)-k;G.note('Sonnenakolythen: '+e.name+' verliert '+k+' Akolythen ('+e.ak+' übrig)')}if(fdN)R.push({k:'txt',s:'Schicksalswürfel eingesetzt: '+fdN});
- if(u.gen&&ENI(S,u.o)=='hz_blut'&&S.U.includes(u)&&nb-(S.U.includes(e)?nm(e):0)>0&&u.dmg>0&&canHeal(S,u)){u.dmg=Math.max(0,u.dmg-(nb-(S.U.includes(e)?nm(e):0)));G.note('In Blut gebadet: '+u.name+' heilt')}if(!shoot&&u.gen&&nb-(S.U.includes(e)?nm(e):0)>0)add(T.gk,u.id);if(shoot&&tot>0)(Ph.shd||(Ph.shd=[])).push(u.id+'>'+e.id);
+ if(u.gen&&ENI(S,u.o)=='hz_blut'&&S.U.includes(u)&&nb-(S.U.includes(e)?nm(e):0)>0&&u.dmg>0&&canHeal(S,u)){u.dmg=Math.max(0,u.dmg-(nb-(S.U.includes(e)?nm(e):0)));G.note('In Blut gebadet: '+u.name+' heilt')}if(!shoot&&hasAb(u,'ob_ernte')){const kk=nb-(S.U.includes(e)?nm(e):0);if(kk>0)u.kt=Math.min(6,(u.kt||0)+kk)}if(!shoot&&u.gen&&ENI(S,u.o)=='ob_mark'&&tot>0&&u.dmg>0&&S.U.includes(u)){const h0=u.dmg;u.dmg=Math.max(0,u.dmg-tot);G.note('Markpakt: '+u.name+' heilt '+(h0-u.dmg))}if(!shoot&&u.gen&&nb-(S.U.includes(e)?nm(e):0)>0)add(T.gk,u.id);if(shoot&&tot>0)(Ph.shd||(Ph.shd=[])).push(u.id+'>'+e.id);
  if(gdfN&&S.U.includes(u)){G.note('Go Down Fighting: '+gdfN+' tödlicher Schaden auf '+u.name);hurt(G,u,gdfN)}
  if(ones&&S.U.includes(u)){let q=0;for(let i=0;i<ones;i++)q+=d3(S);G.note('Das Feuer schüren: '+u.name+' erleidet '+q+' Schaden (keine Rettung)');hurt(G,u,q)}
  if(wd<9)R.push({k:'row',l:`Ward (${wd}+): ${sv2} verhindert`,v:wrd,th:wd});

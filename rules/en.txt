@@ -999,3 +999,72 @@ Ausgeklügelte Finte	Cunning Feint
 Passiv: Befreundete Kavallerie-Einheiten erleiden durch Rückzug-Fähigkeiten keinen tödlichen Schaden.	Passive: friendly Cavalry units take no mortal damage from retreat abilities.
 Kavalos-Lanze	Kavalos Lance
 Einmal pro Zug (Armee), deine Heldenphase: Befreundete Einheit darf sich bis Zugende durch feindliche Modelle bewegen, als hätte sie Fliegen.	Once per turn (army), your Hero phase: a friendly unit can move through enemy models until the end of the turn as if it had Fly.
+Zwangsvollstrecker-Echelon	Enforcer Echelon
+Ossiarch-Befehle	Ossiarch Commands
+Zu Beginn der Schlachtrunde erhältst du 2 Ossiarch-Befehlspunkte. Jeder Einsatz eines Ossiarch-Befehls kostet 1 Punkt; jede Einheit kann pro Phase höchstens einen Ossiarch-Befehl einsetzen. Am Ende der Schlachtrunde verfallen übrige Punkte.	At the start of the battle round you receive 2 Ossiarch Command points. Each use of an Ossiarch Command costs 1 point; each unit can use no more than one Ossiarch Command per phase. Unused points are lost at the end of the battle round.
+Reservekontingent	Reserve Contingent
+Eine deiner Mortek-Garde-Einheiten wird nicht aufgestellt. Ab der dritten Schlachtrunde: Deine Bewegungsphase, Ankunft des Kontingents: Stelle sie vollständig innerhalb von 3 Zoll um eine Schlachtfeldkante und weiter als 6 Zoll von allen Feinden auf.	One of your Mortek Guard units is not set up. From the third battle round, your Movement phase, Arrival of the Contingent: set it up wholly within 3" of a battlefield edge and more than 6" from all enemy units.
+Undurchdringliche Reihen	Impenetrable Ranks
+Einmal pro Schlacht, beliebige Nahkampfphase, Ossiarch-Befehl: Befreundete Einheit: Addiere bis zum Ende der Phase 1 zu Rettungswürfen jener Einheit.	Once per battle, any Combat phase, Ossiarch Command: a friendly unit: add 1 to its ward rolls until the end of the phase.
+Neuformierung	Reform
+Einmal pro Schlacht, deine Bewegungsphase, Ossiarch-Befehl: Eine befreundete Mortek-Garde-Einheit im Nahkampf kann in dieser Phase eine Rückzug-Fähigkeit einsetzen, ohne dass ihr tödlicher Schaden zugefügt wird.	Once per battle, your Movement phase, Ossiarch Command: a friendly Mortek Guard unit in combat can use a Retreat ability this phase without suffering mortal damage.
+Nadiritwaffen verstärken	Reinforce Nadirite Weapons
+Deine Heldenphase: Sichtbare befreundete Mortek-Garde-Einheit ganz innerhalb 12 Zoll um den General: 2W6-Zauberwurf; bei 5+ +1 Wucht auf Nahkampfwaffen bis zum Beginn deines nächsten Zuges.	Your Hero phase: a visible friendly Mortek Guard unit wholly within 12" of the general: 2D6 casting roll; on 5+, +1 Rend on its melee weapons until the start of your next turn.
+Unaufhaltbarer Befehlshaber	Unstoppable Commander
+Deine Bewegungsphase: Befreundete Mortek-Garde-Einheit ganz innerhalb 12 Zoll um den General: W6 2+ → +3 Zoll Bewegung in dieser Phase.	Your Movement phase: a friendly Mortek Guard unit wholly within 12" of the general: D6 2+: +3" Move this phase.
+Mörderischer Angriff	Murderous Charge
+Passiv: Die Seelenernter-Sense des Generals hat Krit. (2 Treffer).	Passive: the general's Soulreaper Scythe has Crit (2 Hits).
+Markpakt	Mark Pact
+Passiv: Heile (X) den General jedes Mal, wenn er eine Kämpfen-Fähigkeit einsetzt, nachdem alle seine Attacken abgehandelt wurden; X = zugewiesene Schadenspunkte.	Passive: heal (X) the general each time it uses a Fight ability after all its attacks are resolved; X = damage points allocated.
+Mortisan-Seelenernter	Mortisan Soulreaper
+Seelenernter-Sense	Soulreaper Scythe
+Lebenskraft absaugen (Ossiarch-Befehl)	Drain Life Force (Ossiarch Command)
+Heldenphase: Sichtbare feindliche Einheit innerhalb 18 Zoll: 2W6-Zauberwurf; bei 6+ −1 auf Trefferwürfe ihrer Attacken bis zum Beginn deines nächsten Zuges.	Hero phase: a visible enemy unit within 18": 2D6 casting roll; on 6+, −1 to hit rolls for its attacks until the start of your next turn.
+Knochen flicken (Ossiarch-Befehl)	Patch Bones (Ossiarch Command)
+Deine Bewegungsphase: Befreundete Einheit ganz innerhalb 12 Zoll, nicht im Nahkampf: Heile (W3) das Ziel; hat es keinen Schaden, kehren stattdessen getötete Modelle mit einem kombinierten Ausdauerwert von W3 oder weniger zurück.	Your Movement phase: a friendly unit wholly within 12" and not in combat: heal (D3) the target; if it has no damage, return slain models with a combined Health of D3 or less instead.
+Mortek-Garde	Mortek Guard
+Nadiritspeer	Nadirite Spear
+Nadiritattacke (Ossiarch-Befehl)	Nadirite Strike (Ossiarch Command)
+Beliebige Nahkampfphase: Bis zum Ende der Phase haben die Nahkampfwaffen dieser Einheit Krit. (2 Treffer).	Any Combat phase: until the end of the phase this unit's melee weapons have Crit (2 Hits).
+Hufe und Zähne des Kavalos-Rosses	Kavalos Steed's Hooves and Teeth
+Todesreiter-Keil (Ossiarch-Befehl)	Deathrider Wedge (Ossiarch Command)
+Deine Angriffsphase: Modelle dieser Einheit können sich über feindliche Infanterie-Modelle hinwegbewegen, als könnte die Einheit fliegen. Nach dem Angriff: Wähle eine feindliche Einheit, über die sie sich bewegt hat, und würfle: Bei 2+ füge ihr W3 tödlichen Schaden zu.	Your Charge phase: models in this unit can move over enemy Infantry models as if the unit could fly. After it charges: pick an enemy unit it moved over and roll a dice; on 2+ inflict D3 mortal damage on it.
+Gothizzar-Knochenernter	Gothizzar Harvester
+Totenschädelmaul	Death Skull Maw
+Seelenzerschmetterer-Keulen	Soul-smasher Clubs
+Knöcherne Hufe und Schwanz	Bony Hooves and Tail
+Knochenernte	Bone Harvest
+Passiv: Jedes Mal, wenn ein feindliches Modell im Nahkampf mit dieser Einheit getötet wird, erhält sie 1 Knochentribut-Punkt (höchstens 6).	Passive: each time an enemy model in combat with this unit is slain, it gains 1 Bone Tithe point (maximum 6).
+Konstrukt reparieren	Repair Construct
+Ende eines beliebigen Zugs: Wähle eine befreundete Mortek-Garde-Einheit innerhalb 6 Zoll; würfle je Knochentribut-Punkt: Für jede 4+ kehrt 1 getötetes Modell zurück. Setze dann die Knochentribut-Punkte auf 0.	End of any turn: pick a friendly Mortek Guard unit within 6"; roll a dice per Bone Tithe point: for each 4+, return 1 slain model. Then set the Bone Tithe points to 0.
+Mortisan-Elite	Mortisan Elite
+Unerbittliche Disziplin	Relentless Discipline
+Einmal pro Phase (Armee): Wähle eine befreundete Einheit; W6 (+1 wenn ganz innerhalb 12 Zoll um den General): bei 4+ ein Effekt – Bewegungsphase: +2 Zoll Bewegung; Angriffsphase: +1 auf Angriffswürfe; Nahkampfphase: +1 auf Verwundungswürfe im Nahkampf oder Rettung 5+ (für die Phase).	Once per phase (army): pick a friendly unit; D6 (+1 if wholly within 12" of the general): on 4+ one effect – Movement phase: +2" Move; Charge phase: +1 to charge rolls; Combat phase: +1 to melee wound rolls or Ward 5+ (for the phase).
+Herolde des Nagasch	Heralds of Nagash
+Passiv: Addiere 1 zu Disziplin-Würfen für diese Einheit, solange sie nicht ganz innerhalb 12 Zoll um deinen General ist. Die Einheit wird nicht aufgestellt; ab der zweiten Schlachtrunde, einmal pro Zug (Armee), deine Bewegungsphase (Schrecklicher Sinkflug): Stelle sie weiter als 6 Zoll von allen Feinden auf.	Passive: add 1 to Discipline rolls for this unit while it is not wholly within 12" of your general. The unit is not set up; from the second battle round, once per turn (army), your Movement phase (Terrible Swoop): set it up more than 6" from all enemy units.
+Unvergleichlicher Zusammenhalt	Peerless Cohesion
+Einmal pro Zug (Armee), Reaktion: Du sagst „Unerbittliche Disziplin“ an: Du kannst die Fähigkeit in dieser Phase ein zweites Mal einsetzen, musst aber ein anderes Ziel wählen.	Once per turn (army), reaction: you declare "Relentless Discipline": you can use that ability a second time this phase, but must pick a different target.
+Makellose Feldherrenkunst	Flawless Generalship
+Passiv: Addiere 1 auf Disziplin-Würfe, die du ausführst.	Passive: add 1 to Discipline rolls you make.
+Knochensplittersturm	Bone Splinter Storm
+Deine Heldenphase: Sichtbare feindliche Einheit innerhalb 12 Zoll um den General: 2W6-Zauberwurf; bei 7+ wirf je Modell der Zieleinheit einen Würfel; für jede 5+ 1 tödlicher Schaden.	Your Hero phase: a visible enemy unit within 12" of the general: 2D6 casting roll; on 7+ roll a dice per model in the target unit; for each 5+ inflict 1 mortal damage.
+Konstrukte ausbessern	Mend Constructs
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll um den General: 2W6-Zauberwurf; bei 6+ heile (W3) das Ziel.	Your Hero phase: a visible friendly unit wholly within 12" of the general: 2D6 casting roll; on 6+ heal (D3) the target.
+Erz der Sättigung	Ore of Saturation
+Passiv: Subtrahiere 1 vom Wuchtwert von Nahkampfwaffen, mit denen Nahkampfattacken gegen den General ausgeführt werden.	Passive: subtract 1 from the Rend of melee weapons used to make attacks against the general.
+Helm der Tyrannei	Helm of Tyranny
+Einmal pro Schlacht, Ende deines Zugs: Feindliche Einheit innerhalb 12 Zoll um den General: W6 3+ → −3 Kontrollwert bis Zugende.	Once per battle, end of your turn: an enemy unit within 12" of the general: D6 3+: −3 Control until the end of the turn.
+Mortisan-Knochenbildner	Mortisan Boneshaper
+Knöcherne Krallen	Bony Claws
+Verfeinerte Schöpfung	Refined Creation
+Deine Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 12 Zoll: 2W6-Zauberwurf; bei 5+ haben die Nahkampfwaffen des Ziels bis zum Beginn deines nächsten Zuges Krit. (2 Treffer).	Your Hero phase: a visible friendly unit wholly within 12": 2D6 casting roll; on 5+ the target's melee weapons have Crit (2 Hits) until the start of your next turn.
+Immortis-Garde	Immortis Guard
+Grauenshellebarde	Halberd of Dread
+Seelengebundene Beschützer	Soul-bound Protectors
+Passiv: Dein General hat Rettung 5+, solange er sich in Nahkampfreichweite dieser Einheit befindet.	Passive: your general has Ward 5+ while within combat range of this unit.
+Nekropolenjäger	Necropolis Stalkers
+Nekropolenjägerklingen	Necropolis Stalker Blades
+Aspekt wechseln	Change Aspect
+Beliebige Nahkampfphase: Wähle bis Zugende Antlitz der Parade (−1 auf Trefferwürfe für Nahkampfattacken gegen die Einheit) oder Antlitz des Zerstörers (gegen ihren Nahkampfschaden keine Rettungswürfe).	Any Combat phase: pick until end of turn: Visage of the Parry (−1 to hit rolls for melee attacks targeting this unit) or Visage of the Destroyer (no ward rolls against damage from its melee attacks).
+Morghast-Archai	Morghast Archai
+Geisterwaffen	Spirit Weapons

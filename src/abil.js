@@ -439,6 +439,7 @@ Object.assign(AB,{
 });
 // ---------- Etappe 3 ----------
 export function* roundStartAb(G){const S=G.S;
+ for(const o of [0,1]){try{if(ARMY[S.K.army[o]].tr.includes('ob_pool')){(S.obp||(S.obp=[0,0]))[o]=2;G.note((o?'Computer':'Du')+': 2 Ossiarch-Befehlspunkte')}}catch(e){}}
  for(const o of [0,1]){
   if(AN(S,o)=='Strahlende Phalanx'){const c=yield* selI(G,o,'Kriegsfacette – Runde '+S.round,'Wähle die Facette dieser Schlachtrunde; nur sie ist aktiv.',['Hyshs Macht (Heldenphase, Krit. bei 5+)','Strahlende Kompanie (−1 auf Trefferwürfe gegen dich)','Überlegene Reaktionen (2 Einheiten kämpfen nacheinander)'],1);
    (S.fac||(S.fac=[-1,-1]))[o]=c;G.note((o?'Computer':'Du')+': Kriegsfacette '+['Hyshs Macht','Strahlende Kompanie','Überlegene Reaktionen'][c])}}
@@ -554,7 +555,7 @@ export function abCheck(S,who,a){const id=a.a.slice(3),A=AB[id];if(!A)return 'Un
 export function* eot(G){const S=G.S,act=S.act;
  S.U.filter(u=>u.x>=0&&u.n<u.nmax&&(hasAb(u,'legion')||hasAb(u,'schwarm'))&&canHeal(S,u)).forEach(u=>{const big=hasAb(u,'schwarm')&&RGI(S,u.o)=='endl',x=big?d6(S):d3(S),n=Math.min(u.nmax-u.n,x);if(n>0){u.n+=n;G.note((hasAb(u,'legion')?'Skelettlegion':'Wimmelnder Schwarm')+': '+u.name+' erhält '+n+' Modell(e) zurück')}});
  for(const o of [act,1-act]){
-  yield* eot2(G,o,act);
+  yield* eot2(G,o,act);yield* eot3(G,o,act);
   if(AB.nm.src(S,o)&&!usedKey(S,o+':nm','battle')){const g=genOf(S,o);if(g){const ks=S.obj.map((p,k)=>k).filter(k=>claims(S,g,k));
    const es=S.U.filter(e=>e.o!=o&&e.x>=0&&ks.some(k=>claims(S,e,k)));if(es.length){useKey(S,o+':nm','battle');const rs=[];es.forEach(e=>{const r=d6(S);rs.push(r);if(r>=2)addFx(S,{k:'ctl',u:e.id,v:-r,exp:'turn'})});G.rep('Nullamulett',[row('Würfe (2+)',rs,2),{k:'txt',s:'Kontrollwerte der betroffenen Feinde sinken in diesem Zug.'}])}}}
   if(AB.sie.src(S,o)){fr(S,o).filter(u=>inCombat(S,u)&&claimsAny(S,u)).forEach(u=>{const t=foes(S,u).filter(e=>e.x>=0).sort((a,b)=>dist(u,a)-dist(u,b))[0];if(t&&dist(u,t)<=CR)pileIn(S,u,t);
@@ -738,5 +739,5 @@ export const srcTag=s=>s?'<span style="display:block;color:#e8c46a;font-weight:6
 
 // ---------- Hilfen und neue Armeen (Etappe 5: abil3.js) ----------
 export {fr,en,lab,yn,rep,row,mort,pickF,pickE,genOf,nmove,roll2,claims,relocate,heroT,armyN,segD,pk,hdr,FL,vis,scE};
-import {install3} from './abil3.js';
+import {install3,eot3} from './abil3.js';
 install3();

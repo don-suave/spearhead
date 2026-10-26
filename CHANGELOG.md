@@ -1,6 +1,9 @@
 # Changelog
 
 
+## v83
+- Neue Armeen: Ossiarch Zwangsvollstrecker-Echelon (mit Ossiarch-Befehlspunkten) und Mortisan-Elite (mit Disziplin-Würfen)
+
 ## v82
 - Neue Armee: Ossiarch Kavalos-Speerspitze (Knochenlegionen der Ossiarch)
 - Einheitenanzeige zeigt Schlüsselwörter; Zusammenhalt beim Entfernen von Modellen nutzt den Einheitenwert
