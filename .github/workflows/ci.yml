@@ -8,6 +8,6 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 20}
       - run: npm ci
-      - run: for t in rules sb_rules ca_rules abil_new etappe4 newarmies_rules newarmies3 replay undo autolate; do node test/$t.mjs | tail -1; done
+      - run: for t in rules sb_rules ca_rules abil_new etappe4 newarmies_rules newarmies3 terrain_room replay undo autolate; do node test/$t.mjs | tail -1; done
       - run: node rules/build.mjs --strict
       - run: sh scripts/release.sh && git diff --exit-code public || (echo "public/ ist nicht aktuell – scripts/release.sh ausführen" && exit 1)

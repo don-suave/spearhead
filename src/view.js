@@ -1,5 +1,5 @@
 // Ansicht: Canvas, Pop-ups, Eingabe. Kennt nur Game (Anfragen/Ereignisse), keine Regeln im Detail.
-import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer} from './ai.js';
+import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer,aiFallback} from './ai.js';
 import {W,H,CR,into,OR,objR} from './geom.js';
 import {abs,mDistPt,mgap,cohBad} from './models.js';
 import {PH,TWL,TERSZ,ARMY} from './data.js';
@@ -57,7 +57,7 @@ function pump(){clearTimeout(timer);if(busy||!G)return;report(G);
  present(q)}
 function aiStep(){if(busy||popOpen()){timer=setTimeout(aiStep,250);return}
  const q=G.req;if(!q||!G.isAI(q.who))return pump();
- const a=aiAnswer(G,q),err=G.submit(a);if(err){console.error('KI',err,a,q);note('KI-Fehler: '+err);return}
+ let a=aiAnswer(G,q),err=G.submit(a);if(err){console.error('KI',err,a,q);for(const c of aiFallback(G,q)){const e2=G.submit(c);if(!e2){a=c;note('KI-Notausgang: '+err);err='';break}}if(err){note('KI-Fehler: '+err);return}}
  nextDelay=q.t=='act'?(a.a=='next'?500:(G.S.ph==2?1100:2600)):450;pump()}
 let offer=null,rings=null;
 function answer(a){const q0=G.req,err=G.submit(a);if(err){note(err);return false}rings=null;

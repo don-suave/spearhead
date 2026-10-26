@@ -1,5 +1,10 @@
 # Changelog
 
+## v90
+- Geländeaufbau: Gibt es für ein Geländestück keinen Platz mit 6 Zoll Abstand (z. B. Sand and Bone diagonal), wird der Abstand automatisch gelockert
+- Kopfjäger blockiert den Kampf nicht mehr, wenn der gewählte Held tot oder außer Reichweite ist; KI-Notausgang bei abgelehnten Antworten
+- Regel-App: Schlüsselwörter bei den Einheiten in Spearhead on a Page
+
 ## v89
 - Regel-App: neuer Bereich „Battlepacks“ (Fire and Jade, Sand and Bone, City of Ash) mit Spielfeldkarten, Zielen, Geländestücken und Reliquien, allen Taktikkarten und Wendungen, deutsch und englisch, durchsuchbar
 

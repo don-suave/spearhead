@@ -7,7 +7,7 @@ import {newT,newPh,mkUnit,mkUnits,setObj} from './state.js';
 import {roundStartAb,runAb,eot,dep2,AB,abUsed,CYC,rsvGlobals,crossAb,perfStreich} from './abil.js';
 import {unitFlags} from './abil.js';
 import {attackG,depForm,abilities,ONM,autoPile,modW,pileR,phaseSkip,hurt,inCombat,mvOf,ENI,gnl,pileModelErr,pr,obs,hasAb,byId,eligF,sfOK,pileIn,pileErr,reactAtk,attack,actCheck,skill,updCtrl,ctrl,cnm,place,foes,dist,globals,useCard,wnd,mx,AN,RG,RGI,canHeal,isHero,rsvForm,applyMove,mvRest} from './rules.js';
-import {CR,W,H,pathPts,plen} from './geom.js';
+import {CR,W,H,pathPts,plen,terrRoom} from './geom.js';
 import {setAbs,abs,inRange} from './models.js';
 import {SB_TER,CA_MANOR,CA_START,CA_REL} from './packdata.js';
 import {manorOpts,placeRelic} from './ca.js';
@@ -55,6 +55,7 @@ function* terrain(G){const S=G.S,K=S.K;
  if(K.pack==2)return yield* terrainCA(G);
  yield* infoR(G,0,'5. Gelände aufstellen',`Reich: ${REALM[K.realm]} · Karte: ${K.map?'diagonal':'horizontal'}<br>Verteidiger (${S.P[K.def].n}) beginnt: je 1 großes und 1 kleines Gelände, dann der Angreifer. Ganz im eigenen Gebiet, mehr als 6 Zoll zu anderem Gelände, mehr als 3 Zoll zu den langen Kanten und zum Feindgebiet, nicht auf Zielen. Gelände lässt sich frei drehen.`,'Los');
  for(const [o,big] of [[K.def,1],[K.def,0],[K.att,1],[K.att,0]]){
+  {const [w0,h0]=TERSZ[big?'big':'small'],g0=terrRoom(S,o,w0,h0);if(g0<6)G.note('Kein Platz mit 6 Zoll Abstand – Abstand zu anderem Gelände auf '+g0+' Zoll gelockert')}
   const a=yield* place(G,o,'terr',{big},'Gelände',`Gelände (${big?'groß':'klein'}): Mittelpunkt antippen, mit ↺ ↻ drehen`);
   const [w,h]=TERSZ[big?'big':'small'];S.ter.push({x:a.x,y:a.y,w,h,a:a.a||0,big:!!big,...TERK[big?'big':'small']})}}
 const SBG={A:['Large Wall','Small Fence'],B:['Small Wall','Large Fence']};
@@ -65,6 +66,7 @@ function* terrainSB(G){const S=G.S,K=S.K;
  yield* infoR(G,0,'5. Gelände aufstellen',`Schlachtfeld: ${K.realm?'Ossia':'Dolorum'} · Karte: ${K.map?'diagonal':'horizontal'}<br>Verteidiger (${S.P[K.def].n}) erhält ${grp[0].join(' + ')}, Angreifer (${S.P[K.att].n}) ${grp[1].join(' + ')}. Je 1 großes und 1 kleines Gelände ganz im eigenen Gebiet, mehr als 6 Zoll zu anderem Gelände, mehr als 3 Zoll zu den langen Kanten und zum Feindgebiet, nicht auf Zielen.${K.realm?'<br>In der Mitte steht die Crypt of Blood.':''}<br><small>Geländemaße geschätzt (Modellfotos).</small>`,'Los');
  for(const [o,gr,big] of [[K.def,0,1],[K.def,0,0],[K.att,1,1],[K.att,1,0]]){
   const nmT=grp[gr].find(n=>SB_TER[n].big==!!big),d=SB_TER[nmT];
+  {const g0=terrRoom(S,o,d.w,d.h);if(g0<6)G.note('Kein Platz mit 6 Zoll Abstand – Abstand zu anderem Gelände auf '+g0+' Zoll gelockert')}
   const a=yield* place(G,o,'terr',{big:!!big,w:d.w,h:d.h,name:nmT,a0:K.map?Math.atan2(H,W):0},'Gelände',`${nmT}: Mittelpunkt antippen, mit ↺ ↻ drehen`);
   S.ter.push({x:a.x,y:a.y,w:d.w,h:d.h,a:a.a||0,big:!!big,k:d.k,ht:d.ht,nm:nmT})}}
 function* terrainCA(G){const S=G.S,K=S.K,{len,th,ht}=CA_MANOR;S.man=[null,null];
@@ -196,7 +198,7 @@ export function* fights(G){const S=G.S,fs=S.Ph.fs;fs.on=true;fs.done=false;fs.wh
   const a=yield {t:'fight',who:w,check:a=>{if(!a)return 'Ungültig';if(a.a=='cmdwin')return '';if(a.a&&a.a.startsWith('ab:'))return a.a=='ab:bd_leg'&&!G.isAI(w)?'Nur vor dem ersten Kampf':actCheck(S,w,a);const u=byId(S,a.u);
    if(a.a!='fight'||!u||!pk(w).includes(u))return 'Diese Einheit kann jetzt nicht kämpfen';
    if(fs.bote&&u.dn!='Dämonetten')return 'Boten der Entehrung: Als zweite Einheit muss eine Dämonetten-Einheit kämpfen';
-   const inr=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR),only=fxL(S,u,'only');
+   const inr=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR),only=fxL(S,u,'only').filter(f=>inr.some(e=>e.id==f.v));
    if(only.length&&a.t!=null&&a.t!=only[0].v)return 'Kopfjäger: Alle Attacken müssen den gewählten Helden zum Ziel haben';if(only.length&&(a.d||a.split))return 'Kopfjäger: keine Verteilung möglich';
    if(a.d){const ks=Object.keys(a.d);if(!ks.length||ks.some(k=>!inr.includes(byId(S,+k))||!Number.isFinite(a.d[k])||a.d[k]<0)||ks.reduce((q,k)=>q+a.d[k],0)<=0)return 'Ungültige Verteilung'}
    if(a.split)return inr.length>=2?'':'Keine Verteilung möglich';
@@ -205,7 +207,7 @@ export function* fights(G){const S=G.S,fs=S.Ph.fs;fs.on=true;fs.done=false;fs.wh
   if(a.a.startsWith('ab:')){yield* runAb(G,a.a.slice(3),a.u!=null?byId(S,a.u):null,w);continue}
   const u=byId(S,a.u);let t=a.t!=null?byId(S,a.t):null;add(S.T.fought,u.id);let dmap=a.d||null,pre=null;
   if(fs.sec&&RGI(S,w)=='sp_reflex'){addFx(S,{k:'svP',u:u.id,v:1,exp:'ph'});G.note('Verbesserte Reflexe: '+u.name+' +1 auf Schutzwürfe bis Phasenende')}
-  if(!t&&fxL(S,u,'only').length)t=byId(S,fxL(S,u,'only')[0].v);
+  {const oz=fxL(S,u,'only').filter(f=>foes(S,u).some(e=>e.x>=0&&e.id==f.v&&dist(u,e)<=CR));if(!t&&oz.length)t=byId(S,oz[0].v)}
   let perf=false;if(t&&hasAb(u,'lu_besch')&&!dmap&&!a.split)perf=G.isAI(w)?(wnd(t)<=3*(u.M?inRange(u,t,CR):1)*1.2):(yield* choice(G,w,'Schwertmeister','Profil für '+u.name+' wählen:',[{t:'Schlaghagel',s:'Normales Waffenprofil'},{t:'Perfekter Streich',s:'Je Attacke 2+ → 1 tödlicher Schaden'}],{pref:0}))==1;
   if(u.gen&&ENI(S,w)=='ep_anm'&&has(S.T.charged,u.id)){const x=d6(S);(S.T.pex||(S.T.pex={}))[u.id]=x;G.note('Verzerrte Anmut: Nachrücken +'+x+' Zoll')}
   if(a.split){const inr=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR);pre={};const rolls=[];

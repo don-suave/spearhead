@@ -51,10 +51,13 @@ export function route(S,ax,ay,bx,by,r,rng,ob=[]){const P=pathPts(S,ax,ay,bx,by,r
 export const tdist=(u,t)=>ptDist(t,u.x,u.y)-u.r;
 
 // Geländeplatzierung (Fire and Jade): Rückgabe '' = gültig, sonst Grund
+// Prüft, ob für ein Geländestück (w×h) noch ein regelkonformer Platz existiert; sonst Abstand zu anderem Gelände lockern (6 → 3 → 1 Zoll), damit der Aufbau nie blockiert
+export function terrRoom(S,o,w,h){for(const g of [6,3,1]){S.terrGap=g;for(let x=1;x<=W-1;x+=.75)for(let y=3;y<=H-3;y+=.75)for(let k=0;k<12;k++)if(!terrErr(S,o,{x,y,w:w+1,h:h+1,a:k*Math.PI/12}))return g}S.terrGap=1;return 1}
 export function terrErr(S,o,r){
  const cs=tcorners(r);
  if(cs.some(c=>into(S,o,c[0],c[1])<3))return 'Ganz im eigenen Gebiet, mehr als 3 Zoll vom Feindgebiet';
  if(cs.some(c=>c[1]<3||c[1]>H-3||c[0]<0||c[0]>W))return 'Mehr als 3 Zoll von den langen Kanten';
  if(S.obj.some(p=>p.length>3?rectDist(r,objR(p))<=0:ptDist(r,p[0],p[1])<OR(p)))return 'Nicht auf einem Ziel';
- if(S.ter.some(t=>rectDist(r,t)<=6))return 'Mehr als 6 Zoll von anderem Gelände';
+ const gp=S.terrGap==null?6:S.terrGap;
+ if(S.ter.some(t=>rectDist(r,t)<=gp))return 'Mehr als '+gp+' Zoll von anderem Gelände';
  return ''}

@@ -121,6 +121,7 @@ a.lk.ab{text-decoration:underline;font-weight:600}
 .sheet h3{margin:0 40px 4px 0;font-size:19px}
 .sheet .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .back{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.35)}
+.kwl{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--gold);margin:2px 0 4px}
 .pmap{width:100%;max-width:560px;display:block;margin:6px 0;border-radius:10px}
 .pseg{display:flex;gap:6px;margin:8px 0}.pseg button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px;font-weight:700;color:var(--mut);cursor:pointer}.pseg button.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
 .pkl{margin:6px 0;padding-left:20px;font-size:14px}.pkl li{margin:3px 0}.pbf{margin:12px 0}.pbf h3{margin:4px 0;font-size:17px}
@@ -284,7 +285,7 @@ function armyPage(ai){
  }
  a.units.forEach((u,k)=>{
   const wl=(w,ranged)=>`<div class="wl"><span class="wn">${esc(P(w.n))}</span><span class="wv">${ranged?w.r+'" · ':''}${esc(P(w.a))}× · ${plus(w.h)}/${plus(w.w)} · ${rend(w.rd)} · ${esc(P(w.d))}</span></div>`;
-  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span></div>${u.rw.map(w=>wl(w,true)).join('')}${u.mw.map(w=>wl(w,false)).join('')}${u.ab.length?`<div class="abn">${u.ab.map(x=>esc(P(x.n))).join(' · ')}</div>`:''}</summary><div class="ub">`;
+  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span></div>${u.kw.length?`<div class="kwl">${u.kw.map(w=>esc(P(w))).join(' · ')}</div>`:''}${u.rw.map(w=>wl(w,true)).join('')}${u.mw.map(w=>wl(w,false)).join('')}${u.ab.length?`<div class="abn">${u.ab.map(x=>esc(P(x.n))).join(' · ')}</div>`:''}</summary><div class="ub">`;
   h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}${u.b?`<span class="chip">${fmtBase(u.b)}</span>`:''}</div>`;
   if(u.note)h+=`<p class="note">${linkify(P(u.note),ai,null)}</p>`;
   const wt=(ws,ranged)=>{

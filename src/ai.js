@@ -130,6 +130,17 @@ export function aiAnswer(G,req,rnd=Math.random){const S=G.S,pick=n=>Math.floor(r
   for(let k=0;k<6000;k++){let x=1+rnd()*(W-2),y=1+rnd()*(H-2);const md=k%3;if(md==1){const e=pick(4);if(e==0)x=rnd()*4;else if(e==1)x=W-rnd()*4;else if(e==2)y=rnd()*4;else y=H-rnd()*4}else if(md==2){x=rnd()<.5?rnd()*7:W-rnd()*7;y=rnd()<.5?rnd()*7:H-rnd()*7}const a=rnd()*Math.PI,r={x,y,a};if(!req.check(r))return r}for(let x=.5;x<W;x+=.5)for(let y=.5;y<H;y+=.5)for(const a of [0,Math.PI/2]){const r={x,y,a};if(!req.check(r))return r}return {cancel:true}}
   case 'dest':{const u=byId(S,req.u),q=u&&(req.chg?chargeDest(S,u,req.roll):req.pile?null:aiDest(S,u,req.rng));return q||{stay:true}}
   case 'tgt':{const u=byId(S,req.u),c=chargeTgt(S,u),e=c?c.e:nearest(u,foes(S,u).filter(x=>x.x>=0));return e?{t:e.id}:{cancel:true}}
-  case 'fight':{let bu=null,bt=null,bv=-1e9;for(const u of eligF(S,req.who).filter(x=>sfOK(S,x)&&(!S.Ph.fs.bote||x.dn=='Dämonetten'))){const only=fxL(S,u,'only'),inr=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR&&(!only.length||e.id==only[0].v)),t=bestTgt(S,u,inr,false),v=t?tgtValue(S,u,t,false)-.3*tgtValue(S,t,u,false):-1e8;if(!bu||v>bv){bu=u;bt=t;bv=v}}return {a:'fight',u:bu.id,t:bt?bt.id:null}}
+  case 'fight':{let bu=null,bt=null,bv=-1e9;for(const u of eligF(S,req.who).filter(x=>sfOK(S,x)&&(!S.Ph.fs.bote||x.dn=='Dämonetten'))){const all=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR),only=fxL(S,u,'only').filter(f=>all.some(e=>e.id==f.v)),inr=all.filter(e=>!only.length||e.id==only[0].v),t=bestTgt(S,u,inr,false),v=t?tgtValue(S,u,t,false)-.3*tgtValue(S,t,u,false):-1e8;if(!bu||v>bv){bu=u;bt=t;bv=v}}return {a:'fight',u:bu.id,t:bt?bt.id:null}}
   case 'act':return aiAct(G,rnd)}
  throw new Error('KI: unbekannte Anfrage '+req.t)}
+
+// Notausgang: falls die Antwort der KI abgelehnt wird (Voraussetzungen haben sich unerwartet geändert), werden einfache gültige Antworten durchprobiert,
+// damit das Spiel weiterläuft. Liefert eine Liste von Kandidaten.
+export function aiFallback(G,q){const S=G.S,L=[];
+ if(q.t=='act')L.push({a:'next'});
+ else if(q.t=='fight'){for(const u of eligF(S,q.who)){for(const e of foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR))L.push({a:'fight',u:u.id,t:e.id});L.push({a:'fight',u:u.id,t:null})}}
+ else if(q.t=='choice'){(q.opts||[]).forEach((o,i)=>{if(!o.dis)L.push(i)});L.push(0)}
+ else if(q.t=='info')L.push(true);
+ else if(q.t=='dest')L.push({stay:true});
+ else if(q.t=='place'||q.t=='tgt'||q.t=='split'){L.push({cancel:true});L.push({stay:true});L.push(null)}
+ return L}
