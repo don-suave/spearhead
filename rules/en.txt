@@ -1227,3 +1227,44 @@ Passiv: Addiere 1 zu Angriffswürfen für diese Einheit.	Passive: add 1 to charg
 Karanaks Krallen	Karanak's Talons
 Rudeljäger	Pack Hunters
 Beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit im Nahkampf mit dieser Einheit und einer befreundeten Bluthunde-Einheit: Für den Rest des Zuges erzielen die Nahkampfattacken dieser Einheit gegen jene Einheit kritische Treffer bei einem unmodifizierten Trefferwurf von 5+.	Any Combat phase: pick an enemy unit in combat with this unit and a friendly Bloodhounds unit: for the rest of the turn this unit's melee attacks against it score critical hits on an unmodified hit roll of 5+.
+Tyrannengebrüll	Tyrant's Bellow
+Einmal pro Phase (Armee), beliebige Angriffsphase: Wähle beliebig viele befreundete Einheiten, die in dieser Phase angegriffen haben. Wähle für jede 1 feindliche Einheit im Nahkampf mit ihr und wirf einen Würfel: Bei 4+ erleidet die feindliche Einheit 1 tödlichen Schaden.	Once per phase (Army), any Charge phase: pick any number of friendly units that charged this phase. For each, pick 1 enemy unit in combat with it and roll a dice: on a 4+ that enemy unit suffers 1 mortal damage.
+Schmetterwanst	Gutbuster Slam
+Zähe Zucht	Tough Breeding
+Passiv: Addiere 1 auf den Ausdauerwert deiner Eisenspeier-Einheit und deiner Trauerfangreiter-Einheit.	Passive: add 1 to the Health of your Ironblaster unit and your Mournfang unit.
+Sturmläufer	Stormrunner
+Passiv: Der Bewegungswert deines Generals ist 8 Zoll statt 6 Zoll.	Passive: your general's Move is 8" instead of 6".
+Donnerndes Brüllen	Thundering Bellow
+Beliebige Nahkampfphase: Wirf einen Würfel. Bei 4+ subtrahiere in dieser Phase 1 von Trefferwürfen für Attacken feindlicher Einheiten innerhalb von 9 Zoll um deinen General.	Any Combat phase: roll a dice. On a 4+ subtract 1 from hit rolls for attacks made by enemy units within 9" of your general this phase.
+Steinyakblut-Phiole	Stonehorn Blood Vial
+Einmal pro Schlacht, Reaktion: Gegner sagt eine Attacke-Fähigkeit mit deinem General als Ziel an: Dein General hat in dieser Phase Rettung 3+.	Once per battle, Reaction: opponent declares an Attack ability targeting your general: your general has Ward 3+ this phase.
+Fettmade	Fat Maggots
+Einmal pro Schlacht, beliebige Bewegungsphase: Wähle deine Eisenspeier- oder Trauerfangreiter-Einheit in Nahkampfreichweite deines Generals: Heile (W6) jene Einheit.	Once per battle, any Movement phase: pick your Ironblaster or Mournfang unit within combat range of your general: heal (D6) that unit.
+Tyrann des Gebrülls	Bellowing Tyrant
+Ogor-Pistolen	Ogor Pistols
+Donnerkeule	Thunderclub
+Bestienspießer-Gleve	Beast-Spearer Glaive
+Auf dem Schlundweg	On the Maw-Path
+Deine Eisenspeier-Einheit, deine Trauerfangreiter-Einheit und 1 deiner Einheiten Hungrige Ogors werden nicht in der Aufstellungsphase aufgestellt. Stattdessen kannst du sie ab der dritten Schlachtrunde in deiner Bewegungsphase (Donnernde Ankunft) innerhalb von 1 Zoll um eine Schlachtfeldkante und weiter als 6 Zoll von allen feindlichen Einheiten aufstellen.	Your Ironblaster unit, your Mournfang unit and 1 of your Hungry Ogors units are not set up in the deployment phase. Instead, from the third battle round you can set them up in your Movement phase (Thundering Arrival) within 1" of a battlefield edge and more than 6" from all enemy units.
+Tyrann ersten Ranges	Tyrant of the First Rank
+Deine Heldenphase: Wähle eine befreundete Einheit ganz innerhalb von 12 Zoll um diese Einheit (nicht diese Einheit): Addiere bis zum Beginn deines nächsten Zuges 3 auf den Kontrollwert der Zieleinheit.	Your Hero phase: pick a friendly unit wholly within 12" of this unit (not this unit): add 3 to the target's Control until the start of your next turn.
+Eisenspeier	Ironblaster
+Eisenspeier-Kanone	Ironblaster Cannon
+Schlagstock	Bludgeon
+Scharfe Rhinoxhörner	Sharp Rhinox Horns
+Rhinox-Angriff	Rhinox Charge
+Passiv: Der Schadenswert der Scharfen Rhinoxhörner dieser Einheit beträgt 3, wenn sie im selben Zug angegriffen hat.	Passive: the Damage of this unit's Sharp Rhinox Horns is 3 if it charged in the same turn.
+Bleispucker	Leadspitters
+Bleispucker-Kanone	Leadspitter Cannon
+Hämmernder Hieb	Hammering Blow
+Nach Bauchgefühl schießen	Shoot From the Gut
+Passiv: Addiere 1 auf Trefferwürfe für die Fernkampfattacken dieser Einheit, wenn sie in diesem Zug keine Bewegung-Fähigkeit eingesetzt hat.	Passive: add 1 to hit rolls for this unit's shooting attacks if it did not use a Move ability this turn.
+Hungrige Ogors (Gebrüll)	Hungry Ogors (Bellow)
+Ogorwaffen	Ogor Weapons
+Von Hunger getrieben	Driven by Hunger
+Passiv: Addiere 1 auf Angriffswürfe für diese Einheit.	Passive: add 1 to charge rolls for this unit.
+Trauerfangreiter	Mournfang Riders
+Kloppkeulen und Hacker	Clubs and Cleavers
+Trauerfanghauer	Mournfang Tusks
+Linienbrecher	Line Breakers
+Passiv: Subtrahiere 1 von Verwundungswürfen für Fernkampfattacken, deren Ziel diese Einheit ist.	Passive: subtract 1 from wound rolls for shooting attacks that target this unit.

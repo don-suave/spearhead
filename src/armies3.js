@@ -94,4 +94,19 @@ export const ARMY3=[
  {n:'Karanaks Krallen',abs:['kh_jaeger'],l:'R',kw:'Infanterie, Verstärkung',mv:6,wm:1,nm:8,sv:5,cv:1,r:2,b:'32',mw:[['Jagdwaffen',0,3,4,3,0,1,'D']],
   tx:[['Rudeljäger','Beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit im Nahkampf mit dieser Einheit und einer befreundeten Bluthunde-Einheit: Für den Rest des Zuges erzielen die Nahkampfattacken dieser Einheit gegen jene Einheit kritische Treffer bei einem unmodifizierten Trefferwurf von 5+.',1]]}
  ]}
+,{f:'Ogor-Schlundstämme',n:'Tyrannengebrüll',
+ reg:[['Schmetterwanst','Einmal pro Phase (Armee), beliebige Angriffsphase: Wähle beliebig viele befreundete Einheiten, die in dieser Phase angegriffen haben. Wähle für jede 1 feindliche Einheit im Nahkampf mit ihr und wirf einen Würfel: Bei 4+ erleidet die feindliche Einheit 1 tödlichen Schaden.',1,'og_schmetter'],['Zähe Zucht','Passiv: Addiere 1 auf den Ausdauerwert deiner Eisenspeier-Einheit und deiner Trauerfangreiter-Einheit.',1,'og_zaeh']],
+ enh:[['Sturmläufer','Passiv: Der Bewegungswert deines Generals ist 8 Zoll statt 6 Zoll.',1,'og_sturm'],['Donnerndes Brüllen','Beliebige Nahkampfphase: Wirf einen Würfel. Bei 4+ subtrahiere in dieser Phase 1 von Trefferwürfen für Attacken feindlicher Einheiten innerhalb von 9 Zoll um deinen General.',1,'og_bruell'],['Steinyakblut-Phiole','Einmal pro Schlacht, Reaktion: Gegner sagt eine Attacke-Fähigkeit mit deinem General als Ziel an: Dein General hat in dieser Phase Rettung 3+.',1,'og_phiole'],['Fettmade','Einmal pro Schlacht, beliebige Bewegungsphase: Wähle deine Eisenspeier- oder Trauerfangreiter-Einheit in Nahkampfreichweite deines Generals: Heile (W6) jene Einheit.',1,'og_made']],
+ units:[
+ {n:'Tyrann des Gebrülls',abs:['og_rang'],l:'T',kw:'Held, Infanterie',mv:6,wm:8,nm:1,sv:4,cv:5,r:1.3,b:'50',gen:1,rw:[['Ogor-Pistolen',10,2,4,3,1,'W3','B']],mw:[['Donnerkeule',0,3,4,2,2,3,''],['Bestienspießer-Gleve',0,2,4,2,1,2,'O']],
+  tx:[['Auf dem Schlundweg (Kampfeigenschaft)','Deine Eisenspeier-Einheit, deine Trauerfangreiter-Einheit und 1 deiner Einheiten Hungrige Ogors werden nicht in der Aufstellungsphase aufgestellt. Stattdessen kannst du sie ab der dritten Schlachtrunde in deiner Bewegungsphase (Donnernde Ankunft) innerhalb von 1 Zoll um eine Schlachtfeldkante und weiter als 6 Zoll von allen feindlichen Einheiten aufstellen.',1],['Tyrann ersten Ranges','Deine Heldenphase: Wähle eine befreundete Einheit ganz innerhalb von 12 Zoll um diese Einheit (nicht diese Einheit): Addiere bis zum Beginn deines nächsten Zuges 3 auf den Kontrollwert der Zieleinheit.',1]]},
+ {n:'Eisenspeier',abs:['og_rhinox'],l:'E',kw:'Kriegsmaschine',mv:9,wm:9,nm:1,sv:4,cv:2,r:2,b:'120x92',res:'edge1',rr:3,rph:2,rw:[['Eisenspeier-Kanone',18,2,4,2,2,'W3+3','']],mw:[['Schlagstock',0,2,4,2,0,2,''],['Scharfe Rhinoxhörner',0,2,4,2,1,'W3','G']],
+  tx:[['Rhinox-Angriff','Passiv: Der Schadenswert der Scharfen Rhinoxhörner dieser Einheit beträgt 3, wenn sie im selben Zug angegriffen hat.',1]]},
+ {n:'Bleispucker',abs:['og_bauch'],l:'B',kw:'Infanterie',mv:6,wm:4,nm:4,sv:5,cv:2,r:2,b:'40',rw:[['Bleispucker-Kanone',15,'W3',4,3,1,1,'']],mw:[['Hämmernder Hieb',0,2,4,2,0,2,'']],
+  tx:[['Nach Bauchgefühl schießen','Passiv: Addiere 1 auf Trefferwürfe für die Fernkampfattacken dieser Einheit, wenn sie in diesem Zug keine Bewegung-Fähigkeit eingesetzt hat.',1]]},
+ {n:'Hungrige Ogors (Gebrüll)',abs:['og_hunger'],l:'H',kw:'Infanterie',mv:6,wm:4,nm:3,sv:5,cv:2,r:1.7,b:'40',c:2,resLast:'edge1',rr:3,rph:2,mw:[['Ogorwaffen',0,4,4,2,1,2,'']],
+  tx:[['Von Hunger getrieben','Passiv: Addiere 1 auf Angriffswürfe für diese Einheit.',1]]},
+ {n:'Trauerfangreiter',abs:['og_linie'],l:'R',kw:'Kavallerie',mv:9,wm:6,nm:2,sv:4,cv:2,r:2,b:'90x52',res:'edge1',rr:3,rph:2,mw:[['Kloppkeulen und Hacker',0,3,4,2,1,2,''],['Trauerfanghauer',0,4,4,2,1,2,'G']],
+  tx:[['Linienbrecher','Passiv: Subtrahiere 1 von Verwundungswürfen für Fernkampfattacken, deren Ziel diese Einheit ist.',1]]}
+ ]}
 ];

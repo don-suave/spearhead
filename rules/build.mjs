@@ -11,7 +11,7 @@ const dice=x=>typeof x=='string'?[x,x.replace(/W(\d)/g,'D$1')]:x;
 const FL={T:['Krit. (tödlich)','Crit (Mortal)'],V:['Krit. (verwundet)','Crit (Auto-wound)'],B:['Nahbeschuss','Shoot in Combat'],G:['Begleiter','Companion'],
  S:['Schockfäuste: Krit. Treffer = W6 Treffer','Shock Gauntlets: critical hit = D6 hits'],M:['Jeder Treffer = 1 tödlicher Schaden','Each hit = 1 mortal damage'],
  Q:['Anti-Zauberer/Priester (+1 Wucht)','Anti-Wizard/Priest (+1 Rend)'],C:['Angriff (+1 Schaden)','Charge (+1 Damage)'],D:['Krit. (2 Treffer)','Crit (2 Hits)'],
- K:['Anti-Kavallerie (+1 Wucht)','Anti-Cavalry (+1 Rend)'],H:['Anti-Held (+1 Wucht)','Anti-Hero (+1 Rend)'],I:['Anti-Infanterie (+1 Wucht)','Anti-Infantry (+1 Rend)'],N:['Anti-Angriff (+1 Wucht)','Anti-charge (+1 Rend)']};
+ K:['Anti-Kavallerie (+1 Wucht)','Anti-Cavalry (+1 Rend)'],H:['Anti-Held (+1 Wucht)','Anti-Hero (+1 Rend)'],O:['Anti-Monster (+1 Wucht)','Anti-Monster (+1 Rend)'],I:['Anti-Infanterie (+1 Wucht)','Anti-Infantry (+1 Rend)'],N:['Anti-Angriff (+1 Wucht)','Anti-charge (+1 Rend)']};
 const dv=v=>{if(typeof v=='string'){return v}return v};
 const A=collect().map(a=>({i:a.i,f:P(a.f),n:P(a.n),
  traits:a.traits.map(x=>({n:P(x.n),t:P(x.t)})),reg:a.reg.map(x=>({n:P(x.n),t:P(x.t)})),enh:a.enh.map(x=>({n:P(x.n),t:P(x.t)})),

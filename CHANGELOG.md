@@ -1,5 +1,8 @@
 # Changelog
 
+## v88
+- Neue Armee: Ogor-Schlundstämme Tyrannengebrüll (Auf dem Schlundweg, Schmetterwanst, Tyrann ersten Ranges); neues Waffenmerkmal Anti-Monster
+
 ## v87
 - Option „Schlachtrunden-Infos“ aus dem Startmenü entfernt (im Code erhalten); die Wendungskarte mit Erklärung wird immer angezeigt
 

@@ -228,4 +228,28 @@ Object.assign(AB,{
  kh_fass:{n:'Schwer zu fassender Jäger',s:'Passiv: −1 auf Treffer- und Verwundungswürfe für Fernkampfattacken gegen den General',army:1,src:(S,o)=>ENI(S,o)=='kh_fass'},
  kh_bisse:{n:'Wilde Bisse',s:'Passiv: Zugende: General im Nahkampf mit der Beute → Beute erleidet W3 tödlichen Schaden (automatisch)',army:1,src:(S,o)=>ENI(S,o)=='kh_bisse'},
 });
+ // ---- Ogor-Schlundstämme: Tyrannengebrüll ----
+ Object.assign(HK,{
+  og_hunger:{chg:()=>1},
+  og_bauch:{hit:(S,u,e,shoot)=>shoot&&!has(S.T.moved,u.id)?1:0},
+  og_linie:{wndT:(S,d,a,shoot)=>shoot?-1:0},
+  og_rhinox:{wpn:(S,u,w)=>w[0]=='Scharfe Rhinoxhörner'&&has(S.T.charged,u.id)?w.map((v,i)=>i==6?3:v):w}
+ });
+ Object.assign(AB,{
+  og_rang:{n:'Tyrann ersten Ranges',s:'Heldenphase: Befreundete Einheit ganz innerhalb 12" (nicht der Tyrann selbst): +3 Kontrolle bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'og_rang'),can:(S,u)=>fr(S,u.o).some(x=>x!==u&&wholly(x,u,12)),
+   *run(G,u){const S=G.S;const t=yield* pk(G,u.o,'Tyrann ersten Ranges: Ziel',FL(S,u.o,x=>x!==u&&wholly(x,u,12)),x=>mx(x));if(!t)return;addFx(S,{k:'ctl',u:t.id,v:3,exp:'own'});rep(G,'Tyrann ersten Ranges',[],t.name+': +3 Kontrolle bis zu deinem nächsten Zug')},ai:()=>true},
+  og_hunger:{n:'Von Hunger getrieben',s:'Passiv: +1 auf Angriffswürfe der Einheit',unit:1,src:(S,u)=>hasAb(u,'og_hunger')},
+  og_bauch:{n:'Nach Bauchgefühl schießen',s:'Passiv: +1 auf Trefferwürfe im Fernkampf, wenn die Einheit sich in diesem Zug nicht bewegt hat',unit:1,src:(S,u)=>hasAb(u,'og_bauch')},
+  og_linie:{n:'Linienbrecher',s:'Passiv: −1 auf Verwundungswürfe für Fernkampfattacken gegen diese Einheit',unit:1,src:(S,u)=>hasAb(u,'og_linie')},
+  og_rhinox:{n:'Rhinox-Angriff',s:'Passiv: Schaden der Scharfen Rhinoxhörner ist 3, wenn die Einheit in diesem Zug angegriffen hat',unit:1,src:(S,u)=>hasAb(u,'og_rhinox')},
+  og_schmetter:{n:'Schmetterwanst',s:'Angriffsphase, 1× pro Phase (Armee): Jede befreundete Einheit, die angegriffen hat, wählt 1 Feind im Nahkampf: 4+ → 1 tödlicher Schaden',ph:4,freq:'phase',army:1,src:(S,o)=>RGI(S,o)=='og_schmetter',can:(S,o)=>fr(S,o).some(x=>has(S.T.charged,x.id)&&en(S,o).some(e=>inCombat(S,e)&&dist(x,e)<=1)),
+   *run(G,o){const S=G.S;for(const u of fr(S,o).filter(x=>has(S.T.charged,x.id))){const c=en(S,o).filter(e=>dist(u,e)<=1);if(!c.length)continue;const t=yield* pk(G,o,'Schmetterwanst: Ziel für '+u.name,[...c.map(x=>[lab(x),x]),['Kein Wurf',null]],x=>x?scE(x):-1e9);if(!t)continue;const r=d6(S);hdr(G,'Schmetterwanst ('+u.name+')',r,r>=4,4,t.name+': 1 tödlicher Schaden','Kein Effekt');if(r>=4)mort(G,t,1,'Schmetterwanst')}},ai:()=>true},
+  og_zaeh:{n:'Zähe Zucht',s:'Passiv: +1 Ausdauer für Eisenspeier und Trauerfangreiter',army:1,src:(S,o)=>RGI(S,o)=='og_zaeh'},
+  og_sturm:{n:'Sturmläufer',s:'Passiv: Bewegung des Generals 8"',army:1,src:(S,o)=>ENI(S,o)=='og_sturm'},
+  og_phiole:{n:'Steinyakblut-Phiole',s:'Passiv, 1× pro Schlacht: Wird der General erstmals von einer gegnerischen Attacke angesagt, hat er in dieser Phase Rettung 3+',army:1,src:(S,o)=>ENI(S,o)=='og_phiole'},
+  og_bruell:{n:'Donnerndes Brüllen',s:'Nahkampfphase: Würfle: 4+ → −1 auf Trefferwürfe feindlicher Einheiten innerhalb 9" um den General (Phase)',ph:5,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='og_bruell',can:(S,o)=>{const g=genOf(S,o);return !!g},
+   *run(G,o){const S=G.S,g=genOf(S,o);const r=d6(S);hdr(G,'Donnerndes Brüllen',r,r>=4,4,'Feinde innerhalb 9": −1 auf Trefferwürfe','Kein Effekt');if(r>=4)en(S,o).filter(e=>dist(g,e)<=9).forEach(e=>addFx(S,{k:'hit',u:e.id,v:-1,exp:'ph'}))},ai:()=>true},
+  og_made:{n:'Fettmade',s:'Bewegungsphase, 1× pro Schlacht: Eisenspeier oder Trauerfangreiter in Nahkampfreichweite des Generals heilen W6',ph:2,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='og_made',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>(x.dn=='Eisenspeier'||x.dn=='Trauerfangreiter')&&dist(g,x)<=1&&x.dmg>0)},
+   *run(G,o){const S=G.S,g=genOf(S,o);const t=yield* pk(G,o,'Fettmade: Einheit heilen',FL(S,o,x=>(x.dn=='Eisenspeier'||x.dn=='Trauerfangreiter')&&dist(g,x)<=1),x=>x.dmg||0);if(!t)return;const h=d6(S);t.dmg=Math.max(0,(t.dmg||0)-h);rep(G,'Fettmade',row('Heilung',[h]),t.name+' heilt '+h)},ai:()=>true}
+ });
 }
