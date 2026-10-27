@@ -148,7 +148,7 @@ export const ABT={lu_besch:['Schwertmeister',1],sp_ako:['Sonnenakolythen',1],bg_
 
 // ---------- Zielkontrolle ----------
 export function updCtrl(S){const cs=S.obj.map(()=>[0,0]),cu=[],rf=(S.TW.id=='rf'||S.TW.id=='og')&&S.TW.obj;
- S.U.forEach(u=>{if(u.x<0)return;let bi=-1,bd=1e9,bc=0;S.obj.forEach((p,k)=>{if(rf&&rf[0]==k)return;const c=cn(u,p);if(c>0){const d=Math.hypot(u.x-p[0],u.y-p[1]);if(d<bd){bd=d;bi=k;bc=c}}});if(bi>=0){const v=cvOf(S,u,bc,bi);cs[bi][u.o]+=v;(cu[bi]=cu[bi]||[]).push({n:u.name,o:u.o,v})}});if(S.TW.id=='ds'&&S.TW.dk!=null&&cs[S.TW.dk]){cs[S.TW.dk][S.TW.dkO]+=1;(cu[S.TW.dk]=cu[S.TW.dk]||[]).push({n:'Darkened Skies',o:S.TW.dkO,v:1})}S.cs=cs;S.cu=cu;
+ S.U.forEach(u=>{if(u.x<0)return;if(u.wm<=2&&S.U.some(e=>e.o!=u.o&&e.x>=0&&hasAb(e,'oz_glotz')&&dist(u,e)<=CR))return;let bi=-1,bd=1e9,bc=0;S.obj.forEach((p,k)=>{if(rf&&rf[0]==k)return;const c=cn(u,p);if(c>0){const d=Math.hypot(u.x-p[0],u.y-p[1]);if(d<bd){bd=d;bi=k;bc=c}}});if(bi>=0){const v=cvOf(S,u,bc,bi);cs[bi][u.o]+=v;(cu[bi]=cu[bi]||[]).push({n:u.name,o:u.o,v})}});if(S.TW.id=='ds'&&S.TW.dk!=null&&cs[S.TW.dk]){cs[S.TW.dk][S.TW.dkO]+=1;(cu[S.TW.dk]=cu[S.TW.dk]||[]).push({n:'Darkened Skies',o:S.TW.dkO,v:1})}S.cs=cs;S.cu=cu;
  S.obj.forEach((p,k)=>{if(rf&&rf[0]==k){S.oc[k]=-1;return}const a=cs[k][0],b=cs[k][1];if(a>b)S.oc[k]=0;else if(b>a)S.oc[k]=1});
  if(S.ent)S.ent.forEach((q,k)=>{if(q!=null&&q>=0&&S.oc[k]===1-q)S.ent[k]=-1})}
 

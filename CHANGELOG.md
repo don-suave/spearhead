@@ -1,5 +1,9 @@
 # Changelog
 
+## v100
+- Neue Armee: Eisenkiefa-Moschmob (Orruk-Kriegsclans): Megaboss, Platt’nhelme (2×), Wutprotze, Kraftprotze (Reserve ab Runde 3); Mächtige Zerstörer, Naturgewalt, Ordentlicher Radau, vier Verbesserungen.
+- Näherung: „Mächtige Zerstörer“ nur in der eigenen Heldenphase; „keine Ziele beanspruchen“ = zählt nicht für die Zielkontrolle.
+
 ## v99
 - Angriff per Ziehen deutlich schneller: die Ersatzplanung (Angriffsplan) wird pro Angriff nur einmal berechnet statt bei jeder Mausbewegung.
 - Hinweise zum Drehen beim Bewegen/Angriff entfernt.

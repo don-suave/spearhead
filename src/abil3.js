@@ -4,7 +4,7 @@ import {HK,GL} from './hooks.js';
 import {placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
 import {ptDist} from './geom.js';
 import {doRetreat,destReq} from './cards.js';
-import {abs,wholly,udist} from './models.js';
+import {abs,wholly,udist,mgap} from './models.js';
 import {ARMY} from './data.js';
 import {d6,d3,add,has} from './util.js';
 import {TAC} from './data.js';
@@ -377,6 +377,36 @@ Object.assign(AB,{
   id_amulett:{n:'Schimmerndes Amulett',s:'Passiv: General hat Rettung 5+',army:1,src:(S,o)=>ENI(S,o)=='id_amulett'},
   id_volt:{n:'Voltaischer Angriff',s:'Passiv: Königliche Akhelianer-Waffen des Generals haben Angriff (+1 Schaden)',army:1,src:(S,o)=>ENI(S,o)=='id_volt'},
   id_raubseele:{n:'Seelenräuber',s:'Zugende (jeder Zug): Ist der General im Nahkampf, heilt er W3 (automatisch)',army:1,src:(S,o)=>ENI(S,o)=='id_raubseele'}
+ });
+
+ // ---- Orruk-Kriegsclans: Eisenkiefa-Moschmob ----
+ Object.assign(HK,{
+  oz_natur:{att:(S,u,w,e,shoot)=>!shoot&&has(S.T.charged,u.id)&&(S.T.cr0[u.id]||0)>=8?1:0},
+  oz_stein:{wpn:(S,u,w)=>w[1]===0&&w[5]!==2?w.map((v,i)=>i==5?2:v):w},
+  oz_troph:{ctl:(S,u)=>u.gen?5-u.cv:0},
+  oz_ruest:{ward:()=>6},
+  oz_wut:{first:(S,u)=>has(S.T.charged,u.id)?1:0}
+ });
+ GL.chg.push((S,u)=>{try{if(ENI(S,u.o)!='oz_mega')return 0;const g=genOf(S,u.o);return g&&g!==u&&has(S.T.charged,g.id)&&wholly(u,g,12)?1:0}catch(e){return 0}});
+ const ozTargets=(S,o)=>fr(S,o).filter(x=>x.x>=0&&!has(S.T.arr,x.id));
+ function* ozMove(G,t){const S=G.S,was=inCombat(S,t);S.cmb=true;try{const a=yield* destReq(G,t,3,{text:'Mächtige Zerstörer: bis 3 Zoll (darf im Nahkampf enden'+(was?', muss im Nahkampf enden':'')+')',chk:was?(a=>{const g={...t,x:a.x,y:a.y};return foes(S,t).some(e=>e.x>=0&&dist(g,e)<=1)?'':'Die Einheit muss im Nahkampf enden'}):undefined});if(!a.stay){applyMove(S,t,a,3);add(S.T.moved,t.id);G.note('Mächtige Zerstörer: '+t.name+' bewegt sich')}}finally{S.cmb=false}}
+ Object.assign(AB,{
+  oz_zerst:{n:'Mächtige Zerstörer',s:'Heldenphase, 1× pro Zug (Armee): Befreundete Einheit (nicht in diesem Zug aufgestellt) bewegt sich bis 3", auch in den Nahkampf; war sie im Nahkampf, muss sie dort enden',ph:1,freq:'turn',army:1,src:(S,o)=>trOf(S,o,'oz_zerst'),can:(S,o)=>ozTargets(S,o).length>0,
+   *run(G,o){const S=G.S;let all=false;if(RGI(S,o)=='oz_radau'&&!usedKey(S,o+':radau','battle')&&ozTargets(S,o).length>1){const ok=G.isAI(o)?ozTargets(S,o).length>=3:yield* yn(G,o,'Ordentlicher Radau','Alle befreundeten Einheiten (nicht in diesem Zug aufgestellt) sind Ziele von Mächtige Zerstörer?',true);if(ok){useKey(S,o+':radau','battle');all=true}}
+    if(!all){const t=yield* pk(G,o,'Mächtige Zerstörer: Einheit',FL(S,o,x=>x.x>=0&&!has(S.T.arr,x.id)),x=>mx(x));if(!t)return;yield* ozMove(G,t);return}
+    const done=[];for(let i=0;i<9;i++){const c=ozTargets(S,o).filter(x=>!done.includes(x));if(!c.length)break;const t=yield* pk(G,o,'Ordentlicher Radau ('+(done.length+1)+'): Einheit',[...c.map(x=>[lab(x),x]),['Keine weitere',null]],x=>x?mx(x):-1e9);if(!t)break;done.push(t);yield* ozMove(G,t)}},ai:()=>true},
+  oz_natur:{n:'Naturgewalt',s:'Passiv: Unmodifizierter Angriffswurf 8+: +1 auf den Attackenwert der Nahkampfwaffen der Einheit bis Zugende',army:1,src:(S,o)=>RGI(S,o)=='oz_natur'},
+  oz_radau:{n:'Ordentlicher Radau',s:'Reaktion, 1× pro Schlacht: Bei „Mächtige Zerstörer“ sind alle befreundeten Einheiten (nicht in diesem Zug aufgestellt) Ziele',army:1,src:(S,o)=>RGI(S,o)=='oz_radau'},
+  oz_stein:{n:'Bernsteinknochen-Wetzstein',s:'Passiv: Wuchtwert der Nahkampfwaffen des Generals ist 2',army:1,src:(S,o)=>ENI(S,o)=='oz_stein'},
+  oz_troph:{n:'Trophäenschädel',s:'Passiv: Kontrollwert des Generals ist 5',army:1,src:(S,o)=>ENI(S,o)=='oz_troph'},
+  oz_ruest:{n:'Rüstung des Gork',s:'Passiv: General hat Rettung 6+',army:1,src:(S,o)=>ENI(S,o)=='oz_ruest'},
+  oz_mega:{n:'Megabossig',s:'Passiv: Hat der General angegriffen: +1 auf Angriffswürfe befreundeter Einheiten ganz innerhalb 12" (bis Zugende)',army:1,src:(S,o)=>ENI(S,o)=='oz_mega'},
+  oz_haut:{n:'Haut drauf, Jungs',s:'Heldenphase: Diese Einheit oder befreundete Kraftprotz-Einheit ganz innerhalb 12": W6 2+ → +1 Attacken (Nahkampf) bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'oz_haut'),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Haut drauf, Jungs: Ziel',FL(S,u.o,x=>x===u||(kw(x,'Kraftprotz')&&wholly(x,u,12))),x=>mx(x));if(!t)return;const r=d6(S);hdr(G,'Haut drauf, Jungs',r,r>=2,2,t.name+': +1 Attacken bis zu deinem nächsten Zug','Kein Effekt');if(r>=2)addFx(S,{k:'att',u:t.id,v:1,exp:'own'})},ai:()=>true},
+  oz_schild:{n:'Schildschlag',s:'Nahkampfphase: Feind innerhalb 1": 1 W6 je Modell der Einheit innerhalb 3" um das Ziel, je 6+ → 1 tödlicher Schaden',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'oz_schild'),can:(S,u)=>foes(S,u).some(x=>x.x>=0&&dist(u,x)<=1),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Schildschlag: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const T=abs(t),k=abs(u).filter(m=>T.some(q=>mgap(m,q)<=3)).length,rs=[];let dm=0;for(let i=0;i<k;i++){const r=d6(S);rs.push(r);if(r>=6)dm++}rep(G,'Schildschlag',row('Würfel (6+)',rs,6),dm?t.name+': '+dm+' tödlicher Schaden':'Kein Effekt');if(dm)mort(G,t,dm,'Schildschlag')},ai:()=>true},
+  oz_wut:{n:'Entfesselte Wut',s:'Passiv: Kämpft zuerst, wenn die Einheit im selben Zug angegriffen hat',unit:1,src:(S,u)=>hasAb(u,'oz_wut')},
+  oz_glotz:{n:'Was glotzt’n so?',s:'Passiv: Feindliche Einheiten mit Ausdauerwert 1 oder 2 können im Nahkampf mit dieser Einheit keine Ziele beanspruchen',unit:1,src:(S,u)=>hasAb(u,'oz_glotz')}
  });
 
 }

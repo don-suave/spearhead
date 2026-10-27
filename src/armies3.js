@@ -161,4 +161,17 @@ export const ARMY3=[
  {n:'Namarti-Bogenschützen',abs:['id_lauf'],l:'B',kw:'Infanterie, Verstärkungen',mv:7,wm:1,nm:10,sv:5,cv:1,r:2.5,b:'32',rw:[['Wisperbogen',12,2,3,4,1,1,'']],mw:[['Totenklageklinge',0,1,3,4,0,1,'']],
   tx:[['Im Laufen schießen','Passiv: Diese Einheit kann auch dann Fernkampf-Fähigkeiten einsetzen, wenn sie im selben Zug eine Rennen- oder Rückzug-Fähigkeit eingesetzt hat.',1]]}
  ]}
+,{f:'Orruk-Kriegsclans',n:'Eisenkiefa-Moschmob',tr:['oz_zerst'],
+ reg:[['Naturgewalt','Passiv: Addiere bei einem unmodifizierten Angriffswurf von 8+ für eine befreundete Einheit für den Rest des Zugs 1 auf den Attackenwert der Nahkampfwaffen jener Einheit.',1,'oz_natur'],['Ordentlicher Radau','Einmal pro Schlacht, Reaktion: Du sagst die Fähigkeit „Mächtige Zerstörer“ an. Alle befreundeten Einheiten auf dem Schlachtfeld, die nicht in diesem Zug aufgestellt wurden, sind stattdessen Ziele dieser Fähigkeit.',1,'oz_radau']],
+ enh:[['Bernsteinknochen-Wetzstein','Passiv: Der Wuchtwert der Nahkampfwaffen deines Generals ist 2.',1,'oz_stein'],['Trophäenschädel','Passiv: Der Kontrollwert deines Generals ist 5.',1,'oz_troph'],['Rüstung des Gork','Passiv: Dein General hat Rettung (6+).',1,'oz_ruest'],['Megabossig','Passiv: Wenn dein General in diesem Zug angegriffen hat, addiere für den Rest des Zugs 1 auf Angriffswürfe für befreundete Einheiten, solange sie sich vollständig innerhalb von 12 Zoll um deinen General befinden.',1,'oz_mega']],
+ units:[
+ {n:'Megaboss',abs:['oz_haut'],l:'M',kw:'Held, Infanterie',mv:4,wm:8,nm:1,sv:3,cv:2,r:1.2,b:'60',gen:1,mw:[['Boss-Spalta',0,8,4,2,1,2,'']],
+  tx:[['Haut drauf, Jungs','Deine Heldenphase: Wähle als Ziel diese Einheit oder eine befreundete Kraftprotz-Einheit vollständig innerhalb von 12 Zoll um diese Einheit und wirf einen Würfel. Bei 2+ addiere bis zum Beginn deines nächsten Zugs 1 auf den Attackenwert der Nahkampfwaffen des Ziels.',1]]},
+ {n:'Platt’nhelme',abs:['oz_schild'],l:'P',kw:'Infanterie',mv:4,wm:2,nm:5,sv:3,cv:1,r:1.6,b:'32',c:2,mw:[['Spalta oder Spießa',0,2,4,3,1,1,'N']],
+  tx:[['Schildschlag','Beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit innerhalb von 1 Zoll um diese Einheit. Führe einen Schildschlag-Wurf mit einem W6 für jedes Modell dieser Einheit innerhalb von 3 Zoll um das Ziel aus. Für jede 6+ füge dem Ziel 1 tödlichen Schaden zu.',1]]},
+ {n:'Wutprotze',abs:['oz_wut'],l:'W',kw:'Infanterie, Kraftprotz, Verstärkung',mv:4,wm:3,nm:3,sv:5,cv:1,r:1.4,b:'40',mw:[['Wutprotz-Waffen',0,3,4,2,1,2,'']],
+  tx:[['Entfesselte Wut','Passiv: Diese Einheit hat Kämpft zuerst, wenn sie im selben Zug angegriffen hat.',1]]},
+ {n:'Kraftprotze',abs:['oz_glotz'],l:'K',kw:'Infanterie, Kraftprotz',mv:4,wm:3,nm:5,sv:3,cv:1,r:1.8,b:'40',res:'any',rr:3,rph:2,mw:[['Kraftprotz-Waffen',0,3,4,3,1,2,'']],
+  tx:[['Jetz’ geht’s los','Deine Bewegungsphase (ab der dritten Schlachtrunde): Stelle diese Einheit weiter als 6 Zoll von allen feindlichen Einheiten entfernt irgendwo auf dem Schlachtfeld auf. Diese Einheit wird nicht in der Aufstellungsphase aufgestellt.',1],['Was glotzt’n so?','Passiv: Feindliche Einheiten mit Ausdauerwert 1 oder 2 können keine Ziele beanspruchen, solange sie im Nahkampf mit dieser Einheit sind.',1]]}
+ ]}
 ];

@@ -1408,3 +1408,34 @@ Wisperbogen	Whisperbow
 Totenklageklinge	Deathwail Blade
 Im Laufen schießen	Shoot on the Move
 Passiv: Diese Einheit kann auch dann Fernkampf-Fähigkeiten einsetzen, wenn sie im selben Zug eine Rennen- oder Rückzug-Fähigkeit eingesetzt hat.	Passive: This unit can use shooting abilities even if it used a run or retreat ability in the same turn.
+Eisenkiefa-Moschmob	Ironjaw Mosh Mob
+Naturgewalt	Force of Nature
+Passiv: Addiere bei einem unmodifizierten Angriffswurf von 8+ für eine befreundete Einheit für den Rest des Zugs 1 auf den Attackenwert der Nahkampfwaffen jener Einheit.	Passive: On an unmodified charge roll of 8+, add 1 to the Attacks characteristic of the melee weapons of that friendly unit for the rest of the turn.
+Ordentlicher Radau	Proper Ruckus
+Einmal pro Schlacht, Reaktion: Du sagst die Fähigkeit „Mächtige Zerstörer“ an. Alle befreundeten Einheiten auf dem Schlachtfeld, die nicht in diesem Zug aufgestellt wurden, sind stattdessen Ziele dieser Fähigkeit.	Once per battle, reaction: You declare the Mighty Destroyers ability. All friendly units on the battlefield that were not set up this turn are targets of that ability instead.
+Bernsteinknochen-Wetzstein	Amberbone Whetstone
+Passiv: Der Wuchtwert der Nahkampfwaffen deines Generals ist 2.	Passive: The Rend characteristic of your general's melee weapons is 2.
+Trophäenschädel	Trophy Skulls
+Passiv: Der Kontrollwert deines Generals ist 5.	Passive: The control score of your general is 5.
+Rüstung des Gork	Armour of Gork
+Passiv: Dein General hat Rettung (6+).	Passive: Your general has Ward (6+).
+Megabossig	Megabossy
+Passiv: Wenn dein General in diesem Zug angegriffen hat, addiere für den Rest des Zugs 1 auf Angriffswürfe für befreundete Einheiten, solange sie sich vollständig innerhalb von 12 Zoll um deinen General befinden.	Passive: If your general charged this turn, add 1 to charge rolls for friendly units wholly within 12" of your general for the rest of the turn.
+Megaboss	Megaboss
+Boss-Spalta	Boss Choppa
+Haut drauf, Jungs	Hit 'Em Hard, Boyz
+Deine Heldenphase: Wähle als Ziel diese Einheit oder eine befreundete Kraftprotz-Einheit vollständig innerhalb von 12 Zoll um diese Einheit und wirf einen Würfel. Bei 2+ addiere bis zum Beginn deines nächsten Zugs 1 auf den Attackenwert der Nahkampfwaffen des Ziels.	Your hero phase: Pick this unit or a friendly Brute unit wholly within 12" of this unit as the target and roll a die. On a 2+, add 1 to the Attacks characteristic of the target's melee weapons until the start of your next turn.
+Platt’nhelme	Brutes in Plate
+Spalta oder Spießa	Choppa or Spear
+Beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit innerhalb von 1 Zoll um diese Einheit. Führe einen Schildschlag-Wurf mit einem W6 für jedes Modell dieser Einheit innerhalb von 3 Zoll um das Ziel aus. Für jede 6+ füge dem Ziel 1 tödlichen Schaden zu.	Any combat phase: Pick an enemy unit within 1" of this unit as the target. Make a shield bash roll with a D6 for each model in this unit within 3" of the target. For each 6+, inflict 1 mortal damage on the target.
+Wutprotze	Raging Brutes
+Kraftprotz	Brute
+Wutprotz-Waffen	Raging Brute Weapons
+Entfesselte Wut	Unleashed Fury
+Passiv: Diese Einheit hat Kämpft zuerst, wenn sie im selben Zug angegriffen hat.	Passive: This unit fights first if it charged in the same turn.
+Kraftprotze	Brutes
+Kraftprotz-Waffen	Brute Weapons
+Jetz’ geht’s los	Here We Go
+Deine Bewegungsphase (ab der dritten Schlachtrunde): Stelle diese Einheit weiter als 6 Zoll von allen feindlichen Einheiten entfernt irgendwo auf dem Schlachtfeld auf. Diese Einheit wird nicht in der Aufstellungsphase aufgestellt.	Your movement phase (from the third battle round): Set up this unit anywhere on the battlefield more than 6" from all enemy units. This unit is not set up during the setup phase.
+Was glotzt’n so?	What You Lookin' At?
+Passiv: Feindliche Einheiten mit Ausdauerwert 1 oder 2 können keine Ziele beanspruchen, solange sie im Nahkampf mit dieser Einheit sind.	Passive: Enemy units with a Health characteristic of 1 or 2 cannot claim objectives while they are in combat with this unit.
