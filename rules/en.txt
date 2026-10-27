@@ -1373,3 +1373,38 @@ Namarti-Schwertknechte	Namarti Thralls
 Lanmari	Lanmari
 Geschwungene Hiebe	Sweeping Blows
 Passiv: Addiere bei Attacken dieser Einheit, deren Ziel ein feindliches Monster ist, 1 auf den Wuchtwert der Lanmari dieser Einheit.	Passive: Add 1 to the Rend of this unit's Lanmari for attacks that target an enemy Monster.
+Biovoltaischer Schlag (Seelenraubgesellschaft)	Biovoltaic Blast (Soulraid Company)
+Biovoltaischer Schlag (Akhelianer-Flutgarde)	Biovoltaic Blast (Akhelian Tidal Guard)
+Einmal pro Schlacht, beliebige Angriffsphase: Hat diese Einheit in dieser Phase angegriffen, wähle eine feindliche Einheit innerhalb von 1 Zoll als Ziel und wirf eine Anzahl Würfel gleich der Anzahl Modelle dieser Einheit. Addiere 1 zu jedem Ergebnis, wenn die Zieleinheit mehr Modelle hat als diese Einheit. Für jedes Ergebnis von 3+ füge dem Ziel 1 tödlichen Schaden zu.	Once per battle, any charge phase: If this unit charged this phase, pick an enemy unit within 1" as the target and roll a number of dice equal to the number of models in this unit. Add 1 to each roll if the target has more models than this unit. For each 3+, inflict 1 mortal damage on the target.
+Akhelianer-Flutgarde	Akhelian Tidal Guard
+Königlicher Imperativ	Royal Imperative
+Einmal pro Schlacht (Armee), beliebige Nahkampfphase, nur in der dritten Schlachtrunde: Wähle 1 Effekt, der für den Rest der Schlacht gilt: Auf sie!: Befreundete Einheiten haben Kämpft zuerst. Gezielter Schlag: Die Nahkampfwaffen befreundeter Einheiten haben Krit. (tödlich).	Once per battle (army), any combat phase, third battle round only: Pick 1 effect that lasts for the rest of the battle: Strike Them!: Friendly units fight first. Aimed Strike: Friendly melee weapons have Crit (Mortal).
+Der Speer von Asphoren	The Spear of Asphoren
+Einmal pro Zug (Armee), beliebige Angriffsphase: Wähle eine befreundete Einheit, die nicht im Nahkampf ist und eine Angriff-Fähigkeit einsetzt: Addiere für den Rest des Zuges 1 auf Angriffswürfe für jene Einheit.	Once per turn (army), any charge phase: Pick a friendly unit that is not in combat and uses a charge ability: Add 1 to its charge rolls for the rest of the turn.
+Der Schild von Ulchiss	The Shield of Ulchiss
+Einmal pro Zug (Armee), deine Bewegungsphase: Wähle eine befreundete Einheit im Nahkampf, die eine Rückzug-Fähigkeit einsetzt: Bis zum Ende des Zugs wird ihr bei jedem Rückzug kein tödlicher Schaden zugefügt.	Once per turn (army), your movement phase: Pick a friendly unit in combat that uses a retreat ability: until the end of the turn, no mortal damage is inflicted on it when it retreats.
+Pflichtbewusste Seelen	Dutiful Souls
+Einmal pro Schlacht, deine Heldenphase: Wähle eine befreundete Einheit ganz innerhalb von 12 Zoll um deinen General: Du kannst 1 getötetes Modell in die Zieleinheit zurückbringen. Ist das Ziel eine Infanterie-Einheit, kannst du stattdessen W3 getötete Modelle zurückbringen.	Once per battle, your hero phase: Pick a friendly unit wholly within 12" of your general: you can return 1 slain model to the target unit. If the target is an Infantry unit, you can return D3 slain models instead.
+Schimmerndes Amulett	Shimmering Amulet
+Passiv: Dein General hat Rettung (5+).	Passive: Your general has Ward (5+).
+Voltaischer Angriff	Voltaic Charge
+Passiv: Die Königlichen Akhelianer-Waffen deines Generals haben Angriff (+1 Schaden).	Passive: Your general's Royal Akhelian Weapons have Charge (+1 Damage).
+Seelenräuber	Soul Thief
+Ende eines beliebigen Zuges: Wenn dein General im Nahkampf ist, heile (W3) deinen General.	End of any turn: If your general is in combat, heal (D3) your general.
+Akhelianer-König	Akhelian King
+Königliche Akhelianer-Waffen	Royal Akhelian Weapons
+Fänge, Krallen und peitschende Schwänze des Tiefseerosses	Fangs, Claws and Lashing Tails of the Deepmare
+Zum Raub entschlossen	Bound for Plunder
+Deine Heldenphase: Wähle eine andere befreundete Einheit vollständig in Nahkampfreichweite dieser Einheit und wirf einen Würfel. Bei 3+ addiere bis zum Beginn deines nächsten Zugs 1 auf Schutzwürfe für das Ziel.	Your hero phase: Pick another friendly unit wholly within combat range of this unit and roll a die. On a 3+, add 1 to save rolls for the target until the start of your next turn.
+Wellenreiter	Wave Rider
+Beliebige Angriffsphase: Hat diese Einheit in dieser Phase angegriffen, wähle eine feindliche Einheit innerhalb von 1 Zoll als Ziel und wirf einen W3. Bei 2+ füge dem Ziel tödlichen Schaden in Höhe des Wurfergebnisses zu.	Any charge phase: If this unit charged this phase, pick an enemy unit within 1" as the target and roll a D3. On a 2+, inflict mortal damage on the target equal to the roll.
+Akhelianer-Ishlaengarde	Akhelian Ishlaen Guard
+Helsäbel	Helsabre
+Biovoltaisches Feld	Biovoltaic Field
+Einmal pro Schlacht, beliebige Nahkampfphase: Wähle eine feindliche Einheit im Nahkampf mit dieser Einheit und wirf einen Würfel. Bei 3+ subtrahiere für den Rest des Zuges 1 vom Attackenwert der Nahkampfwaffen des Ziels.	Once per battle, any combat phase: Pick an enemy unit in combat with this unit and roll a die. On a 3+, subtract 1 from the Attacks characteristic of the target's melee weapons for the rest of the turn.
+Namarti-Bogenschützen	Namarti Archers
+Verstärkungen	Reinforcements
+Wisperbogen	Whisperbow
+Totenklageklinge	Deathwail Blade
+Im Laufen schießen	Shoot on the Move
+Passiv: Diese Einheit kann auch dann Fernkampf-Fähigkeiten einsetzen, wenn sie im selben Zug eine Rennen- oder Rückzug-Fähigkeit eingesetzt hat.	Passive: This unit can use shooting abilities even if it used a run or retreat ability in the same turn.

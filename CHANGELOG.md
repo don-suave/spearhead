@@ -1,5 +1,10 @@
 # Changelog
 
+## v97
+- Neue Armee: Akhelianer-Flutgarde (Tiefenvolk der Idoneth): Akhelianer-König, Morrsarrgarde, Ishlaengarde, Namarti-Bogenschützen; Königlicher Imperativ, Regimenter, Verbesserungen.
+- Drehung beim Bewegen von Einheiten entfernt.
+- Gelände aufstellen: Drehen per Zwei-Finger-Geste (Buttons bleiben).
+
 ## v96
 - Aufstellung von Gelände: Der Links-Drehen-Knopf hat bisher nicht funktioniert (falsches Element), jetzt drehen beide Knöpfe
 - Angriff: keine Drehung mehr beim Bewegen der Einheit

@@ -76,7 +76,7 @@ export function modW(S,u,w,e,shoot){const o=u.o;let x=hkW(S,u,w,e,shoot);const c
  if(u.gen&&ENI(S,o)=='mk'&&w[0]=='Gesegnete Großaxt'){c();x[7]=(x[7]||'')+'T'}
  if(u.gen&&ENI(S,o)=='shy'&&w[0]=='Unheilvolle Gruftklinge'){c();x[5]=2}
  if(hasAb(u,'eng')&&u.dmg>0&&w[0]=='Warpgeschmiedete Hellebarde'){c();x[2]=+x[2]+3}
- if(!shoot&&fxSum(S,u,'att')&&typeof w[2]=='number'){c();x[2]=+x[2]+fxSum(S,u,'att')}
+ if(!shoot&&fxSum(S,u,'att')&&typeof w[2]=='number'){c();x[2]=Math.max(1,+x[2]+fxSum(S,u,'att'))}
  if(fxL(S,u,'crit').some(f=>f.v==w[0])){c();x[7]=(x[7]||'')+'T'}
  const dm=fxL(S,u,'dmgw').find(f=>f.v==w[0]);if(dm){c();x[6]=dm.n}
  if(!shoot&&fxSum(S,u,'rend')&&x[5]>0){c();x[5]=Math.max(0,x[5]-fxSum(S,u,'rend'))}
@@ -501,7 +501,7 @@ export function abilities(S,u){
  const c=inCombat(S,u),dn=has(S.Ph.used,u.id),a=[],ph=S.ph,T=S.T,Ph=S.Ph;
  const nmv=fxL(S,u,'nomove').length>0,mv=mvOf(S,u);
  if(ph==2){a.push({k:'move',t:'Normale Bewegung',s:`bis ${mvRest(S,u).toFixed(mvRest(S,u)%1?1:0)}"`,dis:dn||c||nmv},{k:'run',t:'Rennen',s:`${mv}" + W6`,dis:dn||c||nmv||fxL(S,u,'norun').length>0},{k:'retreat',t:'Rückzug',s:`${RGI(S,u.o)=='zsz'?'kein':'W3'} tödlicher Schaden, bis ${mv}"`,dis:dn||!c||nmv})}
- if(ph==3&&u.rw.length){const rn=has(T.ran,u.id)&&!fxL(S,u,'klaev').length&&!hasAb(u,'tr_leicht')&&!(hk(S,'ranOK',u)>0),cb=c&&!nahb(S,u)&&!u.rw.some(w=>w[7]=='B');a.push({k:'shoot',t:'Fernkampf',s:dn?'Schon eingesetzt in dieser Phase':rn?'Nicht möglich: gerannt oder zurückgezogen':cb?'Nicht möglich: im Nahkampf (nur Waffen mit „Nahkampf-Fernwaffe“)':`Reichweite ${u.rw[0][1]} Zoll`,dis:dn||rn||cb})}
+ if(ph==3&&u.rw.length){const rn=has(T.ran,u.id)&&!fxL(S,u,'klaev').length&&!hasAb(u,'tr_leicht')&&!hasAb(u,'id_lauf')&&!(hk(S,'ranOK',u)>0),cb=c&&!nahb(S,u)&&!u.rw.some(w=>w[7]=='B');a.push({k:'shoot',t:'Fernkampf',s:dn?'Schon eingesetzt in dieser Phase':rn?'Nicht möglich: gerannt oder zurückgezogen':cb?'Nicht möglich: im Nahkampf (nur Waffen mit „Nahkampf-Fernwaffe“)':`Reichweite ${u.rw[0][1]} Zoll`,dis:dn||rn||cb})}
  if(ph==4)a.push({k:'charge',t:'Angriff',s:'2W6',dis:dn||c||fxL(S,u,'nochg').length>0||(has(T.ran,u.id)&&!has(T.FZ,u.id)&&!fxL(S,u,'fz').length&&!(hk(S,'ranOK',u)>0)&&!((AN(S,u.o)=='Rudelfletscha-Jäga'||hk(S,'chgRtr',u)>0)&&has(T.rtr||[],u.id))&&!(S.TW.id=='rm'&&onRoad(S,u))&&!(u.gen&&ENI(S,u.o)=='gw_blut')&&!(S.vd&&S.vd[u.o]>=12))});
  if(ph==2&&RG(S,u.o)=='Inbrünstiger Ansturm')a.push({k:'ia',t:'Inbrünstiger Ansturm',s:'Angriff trotz Rennen (1× pro Zug)',dis:T.ia});
  if(ph==1&&u.ab=='gs')a.push({k:'gs',t:'Gefäß des Sigmar',s:'bis zu 3 Ziele, W3 je Ziel',dis:has(Ph.abu,u.id+'gs')});

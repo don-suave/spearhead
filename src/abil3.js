@@ -49,6 +49,7 @@ function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S
  rep(G,'Auge der Götter'+(src?' ('+src+')':''),row('W6',[r]),txt)}
 const agOK=(S,o,x)=>x.x>=0&&((!inCombat(S,x)&&S.obj.some((p,k)=>claims(S,x,k)&&S.oc[k]!==1-o))||has(S.T.ds||[],x.id));
 export function* eot3(G,o,act){const S=G.S;
+ if(ENI(S,o)=='id_raubseele'){const g=genOf(S,o);if(g&&g.dmg>0&&inCombat(S,g)&&canHealX(S,g)){const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note('Seelenräuber: '+g.name+' heilt '+h)}}
  if(RGI(S,o)=='id_raub'&&!usedKey(S,o+':raub','turn')){const c=FL(S,o,x=>x.x>=0&&kw(x,'Kavallerie')&&has(S.T.fought,x.id)&&x.dmg>0&&canHealX(S,x));if(c.length){const t=yield* pk(G,o,'Schleiersee-Raubfische: Einheit heilen',[...c,['Keine',null]],x=>x?x.dmg:-1e9);if(t){useKey(S,o+':raub','turn');const h=d3(S);t.dmg=Math.max(0,t.dmg-h);G.note('Schleiersee-Raubfische: '+t.name+' heilt '+h)}}}
  if(trOf(S,o,'sd_auge')&&!usedKey(S,o+':auge','turn')){const c=FL(S,o,x=>agOK(S,o,x));if(c.length){const t=yield* pk(G,o,'Auge der Götter: Einheit wählen',[...c,['Keine',null]],x=>x?10-agL(S,x).length*2+mx(x)*.01:-1e9);if(t){useKey(S,o+':auge','turn');yield* augeRoll(G,o,t)}}}
  {const g=genOf(S,o);if(g&&g.dmg>0&&canHealX(S,g)){const k=ENI(S,o);if(k=='fy_stur'||(k=='kh_blut'&&!usedKey(S,o+':kblut','turn'))){if(k=='kh_blut')useKey(S,o+':kblut','turn');const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note((k=='fy_stur'?'Zu stur zum Sterben':'Von Blut gestärkt')+': '+g.name+' heilt bis zu '+h)}}
@@ -347,6 +348,35 @@ Object.assign(AB,{
    *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Geistesfeuer: Feind im Nahkampf',foes(S,g).filter(e=>e.x>=0&&dist(g,e)<=1).map(x=>[lab(x),x]),scE);if(!t)return;addFx(S,{k:'hit6',u:t.id,exp:'ph'});rep(G,'Geistesfeuer',[],t.name+' trifft bis zum Phasenende nur bei einem unmodifizierten Trefferwurf von 6')},ai:()=>true},
   id_leck:{n:'Köstliche Leckerbissen',s:'Heldenphase: Jede befreundete Kavallerie-Einheit in Nahkampfreichweite des Generals heilt 1',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='id_leck',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>kw(x,'Kavallerie')&&dist(g,x)<=1&&x.dmg>0)},
    *run(G,o){const S=G.S,g=genOf(S,o);const l=fr(S,o).filter(x=>kw(x,'Kavallerie')&&dist(g,x)<=1&&x.dmg>0&&canHealX(S,x));l.forEach(x=>{x.dmg=Math.max(0,x.dmg-1)});rep(G,'Köstliche Leckerbissen',[],l.length?l.map(x=>x.name).join(', ')+' heilt je 1':'Keine Einheit geheilt')},ai:()=>true}
+ });
+
+ // ---- Tiefenvolk der Idoneth: Akhelianer-Flutgarde ----
+ Object.assign(HK,{
+  id_imp:{first:(S,u)=>S.imp&&S.imp[u.o]===0?1:0,wpn:(S,u,w)=>S.imp&&S.imp[u.o]===1&&w[1]===0&&!(w[7]||'').includes('T')?w.map((v,i)=>i==7?(v||'')+'T':v):w},
+  id_amulett:{ward:()=>5},
+  id_volt:{wpn:(S,u,w)=>w[0]=='Königliche Akhelianer-Waffen'&&!(w[7]||'').includes('C')?w.map((v,i)=>i==7?(v||'')+'C':v):w}
+ });
+ Object.assign(AB,{
+  id_imp:{n:'Königlicher Imperativ',s:'Nahkampfphase, nur Runde 3, 1× pro Schlacht (Armee): Auf sie! (befreundete Einheiten kämpfen zuerst) oder Gezielter Schlag (Nahkampfwaffen haben Krit. tödlich) – für den Rest der Schlacht',ph:5,freq:'battle',army:1,src:(S,o)=>trOf(S,o,'id_imp'),can:(S,o)=>S.round==3,
+   *run(G,o){const S=G.S;const c=yield* pk(G,o,'Königlicher Imperativ',[['Auf sie! – befreundete Einheiten kämpfen zuerst',0],['Gezielter Schlag – Nahkampfwaffen haben Krit. (tödlich)',1]],x=>x==1?2:1);if(c==null)return;(S.imp||(S.imp=[null,null]))[o]=c;rep(G,'Königlicher Imperativ',[],c==0?'Auf sie!: Befreundete Einheiten haben Kämpft zuerst (Rest der Schlacht)':'Gezielter Schlag: Nahkampfwaffen befreundeter Einheiten haben Krit. (tödlich) (Rest der Schlacht)')},ai:()=>true},
+  id_raub1:{n:'Zum Raub entschlossen',s:'Heldenphase: Andere befreundete Einheit vollständig in Nahkampfreichweite: W6 3+ → +1 auf Schutzwürfe bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'id_raub1'),can:(S,u)=>fr(S,u.o).some(x=>x!==u&&wholly(x,u,1)),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Zum Raub entschlossen: Ziel',FL(S,u.o,x=>x!==u&&wholly(x,u,1)),x=>mx(x));if(!t)return;const r=d6(S);hdr(G,'Zum Raub entschlossen',r,r>=3,3,t.name+': +1 auf Schutzwürfe bis zu deinem nächsten Zug','Kein Effekt');if(r>=3)addFx(S,{k:'svP',u:t.id,v:1,exp:'own'})},ai:()=>true},
+  id_wellen:{n:'Wellenreiter',s:'Angriffsphase: Hat die Einheit angegriffen: Feind innerhalb 1": W3, bei 2+ tödlicher Schaden in Höhe des Wurfs',ph:4,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'id_wellen'),can:(S,u)=>has(S.T.charged,u.id)&&foes(S,u).some(x=>x.x>=0&&dist(u,x)<=1),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Wellenreiter: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const r=d3(S);hdr(G,'Wellenreiter',r,r>=2,2,t.name+': '+r+' tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,r,'Wellenreiter')},ai:()=>true},
+  id_bio2:{n:'Biovoltaischer Schlag',s:'Angriffsphase, 1× pro Schlacht: Hat die Einheit angegriffen: Feind innerhalb 1" – 1 Würfel pro Modell, je 3+ (+1 wenn das Ziel mehr Modelle hat) → 1 tödlicher Schaden',ph:4,freq:'battle',unit:1,src:(S,u)=>hasAb(u,'id_bio2'),can:(S,u)=>has(S.T.charged,u.id)&&foes(S,u).some(x=>x.x>=0&&dist(u,x)<=1),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Biovoltaischer Schlag: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const b=t.n>u.n?1:0,rs=[];let dm=0;for(let i=0;i<u.n;i++){const r=d6(S);rs.push(r);if(r+b>=3)dm++}rep(G,'Biovoltaischer Schlag',row('Würfel (3+'+(b?', +1':'')+')',rs,3-b),dm?t.name+': '+dm+' tödlicher Schaden':'Kein Effekt');if(dm)mort(G,t,dm,'Biovoltaischer Schlag')},ai:()=>true},
+  id_feld:{n:'Biovoltaisches Feld',s:'Nahkampfphase, 1× pro Schlacht: Feind im Nahkampf mit der Einheit: W6 3+ → −1 auf den Attackenwert seiner Nahkampfwaffen bis Zugende',ph:5,freq:'battle',unit:1,src:(S,u)=>hasAb(u,'id_feld'),can:(S,u)=>foes(S,u).some(x=>x.x>=0&&dist(u,x)<=1),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Biovoltaisches Feld: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S);hdr(G,'Biovoltaisches Feld',r,r>=3,3,t.name+': −1 Attacken (Nahkampf) bis Zugende','Kein Effekt');if(r>=3)addFx(S,{k:'att',u:t.id,v:-1,exp:'turn'})},ai:()=>true},
+  id_lauf:{n:'Im Laufen schießen',s:'Passiv: Fernkampf auch nach Rennen oder Rückzug im selben Zug',unit:1,src:(S,u)=>hasAb(u,'id_lauf')},
+  id_speer:{n:'Der Speer von Asphoren',s:'Angriffsphase, 1× pro Zug (Armee): Einheit außerhalb des Nahkampfs: +1 auf Angriffswürfe bis Zugende',ph:4,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='id_speer',can:(S,o)=>fr(S,o).some(x=>!inCombat(S,x)&&!has(S.T.charged,x.id)),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Der Speer von Asphoren: Einheit',FL(S,o,x=>!inCombat(S,x)&&!has(S.T.charged,x.id)),x=>mx(x));if(!t)return;addFx(S,{k:'chg',u:t.id,v:1,exp:'turn'});rep(G,'Der Speer von Asphoren',[],t.name+': +1 auf Angriffswürfe bis Zugende')},ai:()=>true},
+  id_schild:{n:'Der Schild von Ulchiss',s:'Bewegungsphase, 1× pro Zug (Armee): Einheit im Nahkampf: Rückzüge verursachen bis Zugende keinen tödlichen Schaden',ph:2,freq:'turn',army:1,src:(S,o)=>RGI(S,o)=='id_schild',can:(S,o)=>fr(S,o).some(x=>inCombat(S,x)),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Der Schild von Ulchiss: Einheit im Nahkampf',FL(S,o,x=>inCombat(S,x)),x=>mx(x));if(!t)return;addFx(S,{k:'nort',u:t.id,exp:'turn'});rep(G,'Der Schild von Ulchiss',[],t.name+': Rückzug ohne tödlichen Schaden bis Zugende')},ai:()=>true},
+  id_seelen:{n:'Pflichtbewusste Seelen',s:'Heldenphase, 1× pro Schlacht: Einheit ganz innerhalb 12" um den General: 1 Modell (Infanterie: W3) zurückbringen',ph:1,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='id_seelen',can:(S,o)=>{const g=genOf(S,o);return !!g&&fr(S,o).some(x=>x.n<x.nmax&&wholly(x,g,12))},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Pflichtbewusste Seelen: Einheit',FL(S,o,x=>x.n<x.nmax&&wholly(x,g,12)),x=>x.nmax-x.n);if(!t)return;const k=kw(t,'Infanterie')?d3(S):1,b=Math.min(k,t.nmax-t.n);t.n+=b;rep(G,'Pflichtbewusste Seelen',[],t.name+': '+b+' Modell(e) zurück')},ai:()=>true},
+  id_amulett:{n:'Schimmerndes Amulett',s:'Passiv: General hat Rettung 5+',army:1,src:(S,o)=>ENI(S,o)=='id_amulett'},
+  id_volt:{n:'Voltaischer Angriff',s:'Passiv: Königliche Akhelianer-Waffen des Generals haben Angriff (+1 Schaden)',army:1,src:(S,o)=>ENI(S,o)=='id_volt'},
+  id_raubseele:{n:'Seelenräuber',s:'Zugende (jeder Zug): Ist der General im Nahkampf, heilt er W3 (automatisch)',army:1,src:(S,o)=>ENI(S,o)=='id_raubseele'}
  });
 
 }
