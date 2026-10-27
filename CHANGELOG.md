@@ -1,5 +1,10 @@
 # Changelog
 
+## v110
+- Gelände (und Reliquien) platzieren: neue Steuerung. Stück ziehen = verschieben (wird nicht sofort abgelegt), Stück antippen = um 45° drehen (↺ ↻ für Feinschritte, Zwei-Finger-Drehen bleibt), „✓ Fertig“ legt das Stück ab und bringt das nächste.
+- Regel-App: Kampfeigenschaften aller Armeen aus den PDFs ergänzt (inkl. Blutdrangjagd, Epikureische Feiernde, Ödschar, Füsilierzug, Felsenwerfer, Traumschnitter, Sternenpanzerheer, Wallbrecher, Eisenkiefa, Blutgeschworene Pilger, Mondsuchtmob).
+- Test: ui_smoke.py prüft jetzt den aktuellen Build (vorher fest auf einen alten Ordner verdrahtet) und das neue Gelände-Verhalten.
+
 ## v109
 - Zufalls-Aufstellung („Aufstellung: Zufällig“ im Startmenü) und der Knopf „Rest automatisch“ sind vorerst abgeschaltet (Schalter AUTODEP in flow.js), da die Funktion noch nicht zuverlässig läuft.
 - Regel-App: Kampfeigenschaften für weitere Spearheads ergänzt (Yndrastas Speerspitze, Wachsame Bruderschaft, Verfluchte Fesselhorde, Seuchenzelle, Drakkblud-Clangarde, Magma-Fyrd, Fresshorde-Plünderer, Schlundsucher-Mob, Wächter von Glutwacht, Crixxits Jagdrudel, Helfeuerheer) sowie die der vier neuen Armeen aus dem Spiel. Armeen-Seiten bleiben ohne Scrollen (Texte teils zusammengefasst).

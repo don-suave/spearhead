@@ -8,7 +8,7 @@ with sync_playwright() as p:
     pg=b.new_page(viewport={'width':1100,'height':760})
     pg.on('console',lambda m: errs.append(m.text) if m.type=='error' else None)
     pg.on('pageerror',lambda e: errs.append('PAGEERR '+str(e)))
-    pg.goto('file:///home/claude/sh/dist/spearhead.html')
+    pg.goto('file://'+__import__('os').path.abspath(__import__('os').path.join(__import__('os').path.dirname(__file__),'..','dist','spearhead.html'))+'')
     pg.wait_for_timeout(500)
     pg.evaluate("document.getElementById('hgo')&&document.getElementById('hgo').click()")
     def st():
@@ -67,7 +67,15 @@ with sync_playwright() as p:
                 sug=pg.evaluate("(()=>{const r=window.__V.ai(window.__G,window.__G.req,Math.random);return r&&r.x!=null?[r.x,r.y]:null})()")
                 if sug: zx,zy=sug
             x,y=screen(zx,zy)
-            pg.mouse.move(x,y);pg.mouse.down();pg.mouse.up();pg.wait_for_timeout(40);continue
+            pg.mouse.move(x,y);pg.mouse.down();pg.mouse.up();pg.wait_for_timeout(40)
+            if s['kind'] in ('terr','relic'):
+                if s['kind']=='terr' and not cnt.get('tapRot'):
+                    a0=pg.evaluate("window.__V.mode.a");pg.mouse.move(x,y);pg.mouse.down();pg.mouse.up();pg.wait_for_timeout(40);a1=pg.evaluate("window.__V.mode.a")
+                    d=((a1-a0)*180/3.14159265)%360;print('Drehung durch Antippen: %.0f°'%d);assert abs(d-45)<1,'Antippen dreht nicht um 45°';cnt['tapRot']=1
+                    pg.mouse.move(x,y);pg.mouse.down();pg.mouse.move(x+30,y);pg.mouse.up();pg.wait_for_timeout(40)
+                    assert pg.evaluate("window.__V.mode.t")=='place','Ziehen darf nicht platzieren'
+                pg.click('#hy');pg.wait_for_timeout(60)
+            continue
         if s['mode']=='fightsel':
             info=pg.evaluate("""()=>{const S=window.__G.S;const mine=S.U.filter(u=>u.o==0&&u.x>=0);for(const u of mine){const e=S.U.find(e=>e.o==1&&e.x>=0&&window.__V.dist(u,e)<=3);if(e&&!S.T.fought.includes(u.id))return [u.x,u.y,e.x,e.y]}return null}""")
             if info:

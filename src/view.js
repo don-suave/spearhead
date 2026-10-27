@@ -19,10 +19,12 @@ document.addEventListener('pointerdown',hideDice,true);document.addEventListener
 let ntm;
 function hint(t){$('hint').style.display=t?'flex':'none';$('ht').textContent=t||''}
 const drg=()=>mode&&(mode.t=='move'||mode.t=='dest');
+const stg=m=>m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic');
+const STH='Ziehen: verschieben · Antippen: drehen · dann „✓ Fertig“';
 function rehint(){const m=mode;hint(m?m.hint:'');const pl=m&&m.t=='place';const hb=$('hb');hb.innerHTML='';
  if(m&&m.t=='bar'){m.q.opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o.b||o.t;b.onclick=()=>answer(i);hb.appendChild(b)});['rl','rr','ho','hy','hx'].forEach(i=>$(i).style.display='none');return}
  $('rl').style.display=$('rr').style.display=(pl&&(m.q.kind=='terr'||m.q.kind=='relic'))?'':'none';
- $('ho').style.display=pl&&m.q.auto?'':'none';if(pl&&m.q.auto)$('ho').textContent='Rest automatisch';$('hy').style.display=m&&m.t=='adj'?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
+ $('ho').style.display=pl&&m.q.auto?'':'none';if(pl&&m.q.auto)$('ho').textContent='Rest automatisch';$('hy').style.display=m&&(m.t=='adj'||stg(m))?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
  $('hx').style.display=m&&m.t!='fightsel'&&((m.t=='place'&&m.q.cancel)||m.t!='place')?'':'none';
  $('hx').textContent=m&&m.t=='dest'?(m.chg?'Angriff abbrechen':m.pile?'Nicht nachrücken':'Stehen bleiben'):m&&(m.t=='place'||m.t=='tgt')?'✕ Abbrechen':'✕';
  const ra=!m&&G&&rsvAvail();if(ra&&ra.length){hint('Reserve bereit: '+ra.map(g=>g.t).join(' · '));$('ho').style.display='';$('ho').textContent='Aufstellen';$('hx').style.display='none';$('rl').style.display=$('rr').style.display='none'}}
@@ -110,6 +112,7 @@ function ui(){if(!G)return;const S=G.S,q=G.req;$('undo').disabled=G.undoIdx()<0;
  $('next').textContent=S.ph==6?'Zug beenden ▸':(S.ph==5&&!S.Ph.fs.done?'Kämpfen beginnen ▸':'Weiter ▸')}
 $('next').onclick=()=>{const q=G.req;if(q&&q.t=='act')answer({a:'next'})};
 $('hy').onclick=()=>{const m=mode;if(!m)return;
+ if(stg(m)){if(m.gx==null){note('Erst das Gelände auf dem Spielfeld ablegen');return}tap(m.gx,m.gy);return}
  if(m.t=='dest'&&m.chg){const u=m.u;setMode({t:'adj',kind:'charge',u,allow:m.roll,roll:m.roll,P:abs(u).map(q=>[q.x,q.y]),orig:abs(u),sel:null,tg:null,hint:'Modell mit dem Finger ziehen (bis '+m.roll+' Zoll) – am Ende „Fertig“',back:m});return}
  if(m.t=='dest'&&m.pile){const u=m.u;setMode({t:'adj',kind:'pile',u,allow:m.rng||3,P:abs(u).map(q=>[q.x,q.y]),orig:abs(u),sel:null,tg:m.tg,hint:'Modell mit dem Finger ziehen (bis '+(m.rng||3).toFixed(0)+' Zoll) – am Ende „Fertig“',back:m});return}
  if(m.t!='adj')return;const e=m.kind=='pile'?pileModelErr(G.S,m.u,byId(G.S,m.tg),m.P):m.kind=='charge'?chargeModelErr(G.S,m.u,m.P,m.roll):adjErr(G.S,m.u,m.P,m.allow);if(e){note(e);return}answer(m.kind=='pile'||m.kind=='charge'?{P:m.P}:{a:'adj',u:m.u.id,P:m.P})};
@@ -118,7 +121,7 @@ $('hx').onclick=()=>{const m=mode;if(!m)return;
  if(m.t=='dest'){answer({stay:true});return}
  if(m.t=='tgt'){answer({cancel:true});return}
  setMode(m.back||null)};
-const rot=d=>{const m=mode;if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic')){m.a=(m.a+d+2*Math.PI)%(2*Math.PI);m.zone=null;if(m.gx!=null)hint(placeErr(G.S,'terr',m.q.who,m.q.u,m.gx,m.gy,m.a)||'Gedreht: '+Math.round(m.a*180/Math.PI)+'° – loslassen zum Platzieren')}};
+const rot=d=>{const m=mode;if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic')){m.a=(m.a+d+2*Math.PI)%(2*Math.PI);m.zone=null;if(m.gx!=null)hint(placeErr(G.S,'terr',m.q.who,m.q.u,m.gx,m.gy,m.a)||'Gedreht: '+Math.round(m.a*180/Math.PI)+'° – '+STH)}};
 $('rl').onclick=()=>rot(-Math.PI/12);$('rr').onclick=()=>rot(Math.PI/12);
 addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/12);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/12)});
 // Regel-App als Overlay (Spielstand bleibt erhalten)
@@ -261,15 +264,16 @@ function chargeFormA(S,u,x,y,roll,rot){const r=chargeForm(S,u,x,y,roll,rot);if(!
  const ck=u.id+'|'+t.id+'|'+roll;if(!pcache.has(ck)){let P=null;for(const k of ['reach','wrap']){const q=chargePlan(S,u,t,roll,k);if(q.P&&!chargeModelErr(S,u,q.P,roll)){P=q.P;break}}pcache.set(ck,P)}
  const P=pcache.get(ck);return P?{P,err:''}:r}
 function pvOf(m){const k=m.gx.toFixed(2)+'/'+m.gy.toFixed(2)+'/'+(m.a||0).toFixed(3);if(!m.pv||m.pv.k!=k){const s=snapPos(formF(m,true),m.gx,m.gy,m.u.x,m.u.y,false);m.pv={k,...s.r,snap:s.snap}}return m.pv}
-function gh(e){const m=mode;m.gx=(e.clientX-tx)/sc/SC;m.gy=(e.clientY-(e.pointerType=='touch'?70:0)-ty)/sc/SC;if(drg()){dragHint(m);return}const er=placeErr(G.S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a);hint(!er?'Loslassen zum Platzieren':plSnap(m,m.gx,m.gy)?'Rastet an der nächsten gültigen Stelle ein ('+er+')':er)}
+function gh(e){const m=mode;m.gx=(e.clientX-tx)/sc/SC;m.gy=(e.clientY-(e.pointerType=='touch'?70:0)-ty)/sc/SC;if(drg()){dragHint(m);return}const er=placeErr(G.S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a);hint(stg(m)?(!er||plSnap(m,m.gx,m.gy)?STH:er):!er?'Loslassen zum Platzieren':plSnap(m,m.gx,m.gy)?'Rastet an der nächsten gültigen Stelle ein ('+er+')':er)}
 const adjXY=e=>[(e.clientX-tx)/sc/SC,(e.clientY-(e.pointerType=='touch'?60:0)-ty)/sc/SC];
 cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);if(mode&&mode.t=='adj'&&!ptr.size){const m=mode,[x,y]=adjXY(e),[ox,oy]=[(e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC],N=m.P.map((p,i)=>({x:p[0],y:p[1],a:m.orig[i].a,l:m.orig[i].l,w:m.orig[i].w})),near=N.map((p,i)=>[mDistPt(p,ox,oy),i]).sort((a,b)=>a[0]-b[0])[0];if(near[0]<=1.2){m.sel=near[1];m.drg=1;m.keep=m.P[near[1]].slice();m.P[near[1]]=adjClamp(m,x,y);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:true,adj:1});note('Ziehen und loslassen – bis '+m.allow.toFixed(1)+' Zoll');return}}
- if(plc())gh(e);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:false});if(ptr.size==2){const[a,b]=[...ptr.values()];pd=Math.hypot(a.x-b.x,a.y-b.y);pa=Math.atan2(b.y-a.y,b.x-a.x)}};
-cv.onpointermove=e=>{const p=ptr.get(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const[x,y]=adjXY(e);mode.P[mode.sel]=adjClamp(mode,x,y);return}if(plc()&&ptr.size<2){gh(e);if(p){p.x=e.clientX;p.y=e.clientY}return}if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.sx,p.y-p.sy)>8)p.m=true;
+ let onG=false;if(stg(mode)&&mode.gx!=null&&ptr.size==0){const fx=(e.clientX-tx)/sc/SC,fy=(e.clientY-ty)/sc/SC,[w,h]=mode.q.u.w?[mode.q.u.w,mode.q.u.h]:TERSZ[mode.q.u.big?'big':'small'],c=Math.cos(-mode.a),sn=Math.sin(-mode.a),lx=(fx-mode.gx)*c-(fy-mode.gy)*sn,ly=(fx-mode.gx)*sn+(fy-mode.gy)*c;onG=Math.abs(lx)<=w/2+1&&Math.abs(ly)<=h/2+1}
+ if(plc()&&!onG)gh(e);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:false,gh:onG});if(ptr.size==2){const[a,b]=[...ptr.values()];pd=Math.hypot(a.x-b.x,a.y-b.y);pa=Math.atan2(b.y-a.y,b.x-a.x)}};
+cv.onpointermove=e=>{const p=ptr.get(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const[x,y]=adjXY(e);mode.P[mode.sel]=adjClamp(mode,x,y);return}if(plc()&&ptr.size<2){if(p&&p.gh){const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.sx,p.y-p.sy)>8)p.m=true;if(p.m){mode.gx+=dx/sc/SC;mode.gy+=dy/sc/SC;hint(STH)}return}gh(e);if(p){p.x=e.clientX;p.y=e.clientY}return}if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.sx,p.y-p.sy)>8)p.m=true;
  if(ptr.size==1&&p.m){tx+=dx;ty+=dy;clampV()}
  else if(ptr.size==2&&mode&&mode.t=='place'&&(mode.q.kind=='terr'||mode.q.kind=='relic')){const[a,b]=[...ptr.values()],an=Math.atan2(b.y-a.y,b.x-a.x);let da=an-pa;if(da>Math.PI)da-=2*Math.PI;if(da<-Math.PI)da+=2*Math.PI;pa=an;rot(da);a.m=b.m=true}
  else if(ptr.size==2){const[a,b]=[...ptr.values()],d=Math.hypot(a.x-b.x,a.y-b.y);zoomAt((a.x+b.x)/2,(a.y+b.y)/2,d/pd);pd=d;a.m=b.m=true}};
-cv.onpointerup=e=>{const p=ptr.get(e.pointerId);ptr.delete(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const m=mode,[x,y]=adjXY(e),k=m.keep;m.drg=0;m.P[m.sel]=k;adjPut(m,x,y);return}if(p&&!p.m&&!ptr.size){if(plc()&&mode.gx!=null)tap(mode.gx,mode.gy);else tap((e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC)}};
+cv.onpointerup=e=>{const p=ptr.get(e.pointerId);ptr.delete(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const m=mode,[x,y]=adjXY(e),k=m.keep;m.drg=0;m.P[m.sel]=k;adjPut(m,x,y);return}if(p&&!p.m&&!ptr.size){if(stg(mode)){if(p.gh)rot(Math.PI/4)}else if(plc()&&mode.gx!=null)tap(mode.gx,mode.gy);else tap((e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC)}};
 cv.onpointercancel=e=>ptr.delete(e.pointerId);
 /* ---------- Zeichnen ---------- */
 function txt(t,x,y,sz,col,al='center'){cx.save();cx.scale(1/SC,1/SC);cx.font=`bold ${sz}px Georgia`;cx.fillStyle=col;cx.textAlign=al;cx.textBaseline='middle';cx.fillText(t,x*SC,y*SC);cx.restore()}

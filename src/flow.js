@@ -58,7 +58,7 @@ function* terrain(G){const S=G.S,K=S.K;
  yield* infoR(G,0,'5. Gelände aufstellen',`Reich: ${REALM[K.realm]} · Karte: ${K.map?'diagonal':'horizontal'}<br>Verteidiger (${S.P[K.def].n}) beginnt: je 1 großes und 1 kleines Gelände, dann der Angreifer. Ganz im eigenen Gebiet, mehr als 6 Zoll zu anderem Gelände, mehr als 3 Zoll zu den langen Kanten und zum Feindgebiet, nicht auf Zielen. Gelände lässt sich frei drehen.`,'Los');
  for(const [o,big] of [[K.def,1],[K.def,0],[K.att,1],[K.att,0]]){
   {const [w0,h0]=TERSZ[big?'big':'small'],g0=terrRoom(S,o,w0,h0);if(g0<6)G.note('Kein Platz mit 6 Zoll Abstand – Abstand zu anderem Gelände auf '+g0+' Zoll gelockert')}
-  const a=yield* place(G,o,'terr',{big},'Gelände',`Gelände (${big?'groß':'klein'}): Mittelpunkt antippen, mit ↺ ↻ drehen`);
+  const a=yield* place(G,o,'terr',{big},'Gelände',`Gelände (${big?'groß':'klein'}): ziehen, Stück antippen = drehen, dann „✓ Fertig“`);
   const [w,h]=TERSZ[big?'big':'small'];S.ter.push({x:a.x,y:a.y,w,h,a:a.a||0,big:!!big,...TERK[big?'big':'small']})}}
 const SBG={A:['Large Wall','Small Fence'],B:['Small Wall','Large Fence']};
 function* terrainSB(G){const S=G.S,K=S.K;
@@ -69,7 +69,7 @@ function* terrainSB(G){const S=G.S,K=S.K;
  for(const [o,gr,big] of [[K.def,0,1],[K.def,0,0],[K.att,1,1],[K.att,1,0]]){
   const nmT=grp[gr].find(n=>SB_TER[n].big==!!big),d=SB_TER[nmT];
   {const g0=terrRoom(S,o,d.w,d.h);if(g0<6)G.note('Kein Platz mit 6 Zoll Abstand – Abstand zu anderem Gelände auf '+g0+' Zoll gelockert')}
-  const a=yield* place(G,o,'terr',{big:!!big,w:d.w,h:d.h,name:nmT,a0:K.map?Math.atan2(H,W):0},'Gelände',`${nmT}: Mittelpunkt antippen, mit ↺ ↻ drehen`);
+  const a=yield* place(G,o,'terr',{big:!!big,w:d.w,h:d.h,name:nmT,a0:K.map?Math.atan2(H,W):0},'Gelände',`${nmT}: ziehen, Stück antippen = drehen, dann „✓ Fertig“`);
   S.ter.push({x:a.x,y:a.y,w:d.w,h:d.h,a:a.a||0,big:!!big,k:d.k,ht:d.ht,nm:nmT})}}
 function* terrainCA(G){const S=G.S,K=S.K,{len,th,ht}=CA_MANOR;S.man=[null,null];
  yield* infoR(G,0,'5. Gelände aufstellen',`Schlachtfeld: ${K.realm?'Shattered Crossroads':'Ashen Bastion'} · Karte: ${K.map?'diagonal':'horizontal'}<br>Verteidiger (${S.P[K.def].n}) beginnt: je ein Ruined Manor (großes Gelände: Deckung, instabil) ganz im eigenen Gebiet auf eine Ecke eines rechteckigen Ziels. Ziele mit Gelände darauf sind befestigt: Einheiten, deren Modelle alle darauf stehen, haben Deckung.<br>Danach stellt jeder eine Start-Reliquie im eigenen Gebiet auf.<br><small>Manor-Grundriss geschätzt (L-Form, je 4" Mauer, immer innerhalb des Ziels; bei Platznot gekürzt).</small>`,'Los');

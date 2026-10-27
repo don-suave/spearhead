@@ -135,6 +135,100 @@
     "n": "Dämonenkraft nutzen",
     "t": "Einmal pro Zug (Armee), Beginn deiner Heldenphase: Entferne alle DKP von befreundeten Einheiten. Dann erhältst du DKP in Höhe der aktuellen Schlachtrundenzahl + 1 und verteilst sie auf befreundete Einheiten (höchstens 3 je Einheit). Nicht verteilte DKP verfallen."
    }
+  ],
+  "11": [
+   {
+    "n": "Der Tod steigt herab",
+    "t": "Aufstellung: Deine Vargheister-Einheit wird nicht aufgestellt. Ab Runde 3 kann sie Sturzflug einsetzen – deine Bewegungsphase: Stelle sie weiter als 6\" von allen feindlichen Einheiten entfernt auf dem Schlachtfeld auf."
+   },
+   {
+    "n": "Der Hunger",
+    "t": "Passiv: Heile (X) jedes Mal, wenn eine befreundete Vampir-Einheit eine Kämpfen-Fähigkeit einsetzt, jene Einheit nach allen Attacken, wobei X die dadurch zugewiesenen Schadenspunkte sind."
+   }
+  ],
+  "12": [
+   {
+    "n": "Wankelmütige Gunst",
+    "t": "Passiv: Je nach Zahl befreundeter Einheiten auf dem Schlachtfeld gilt (nicht kumulativ): 5+ Einheiten: +2 Kontrollwert. 4: +1 auf Trefferwürfe und Verwundungswürfe im Nahkampf (auch Begleiter-Waffen). 3: +1 auf Rennen- und Angriffswürfe. 2: Rettung (5+). 1: +2 Attackenwert der Nahkampfwaffen (auch Begleiter-Waffen)."
+   }
+  ],
+  "15": [
+   {
+    "n": "Ansteckende Scharen",
+    "t": "Aufstellung: Einer deiner Eitrigen Fliegenfürsten und eine deiner Seuchenhüter-Einheiten werden nicht aufgestellt. Ab Runde 3 können sie Dämonenbeschwörung einsetzen – deine Bewegungsphase: Stelle die Einheit weiter als 6\" von allen feindlichen Einheiten entfernt auf."
+   },
+   {
+    "n": "Verseucht",
+    "t": "Passiv: Jedes Mal, wenn eine Attacke eines befreundeten Modells einen kritischen Treffer erzielt, erhältst du 1 Seuchenpunkt (höchstens 7)."
+   },
+   {
+    "n": "Nurgles Umarmung",
+    "t": "Ende eines beliebigen Zuges: Gib beliebig viele Seuchenpunkte aus. Wähle für jeden Punkt eine feindliche Einheit im Nahkampf mit einer deiner Einheiten (auch mehrfach dieselbe) und wirf einen Würfel: Bei 5+ erleidet sie 1 tödlichen Schaden."
+   }
+  ],
+  "16": [
+   {
+    "n": "Stellung befestigen",
+    "t": "Passiv: Subtrahiere 1 vom Wuchtwert von Waffen, mit denen befreundete Kasteliten-Einheiten attackiert werden, sofern die angreifende Einheit im gleichen Zug keine Bewegung-Fähigkeit eingesetzt hat."
+   }
+  ],
+  "17": [
+   {
+    "n": "Steinkloppa",
+    "t": "Aufstellung: Dein General erhält das Schlüsselwort Held und verliert das Schlüsselwort Verstärkungen."
+   },
+   {
+    "n": "Umgekegelt",
+    "t": "Deine Fernkampfphase: Ziel ist eine feindliche Einheit, der in diesem Zug durch Fernkampfattacken einer befreundeten Einheit mindestens 1 Schadenspunkt zugewiesen wurde. Wirf einen Würfel: Bei 3+ muss dein Gegner bis zu deinem nächsten Zug bei Angriffswürfen für das Ziel den höchsten W6 auf das Ergebnis des niedrigsten W6 drehen."
+   },
+   {
+    "n": "Mach ein Auge zu!",
+    "t": "Deine Heldenphase: Dein General wählt eine andere befreundete Einheit vollständig innerhalb von 12\" um ihn. Für den Rest des Zugs: +1 auf Trefferwürfe für Fernkampfattacken des Ziels."
+   }
+  ],
+  "18": [
+   {
+    "n": "Verlockungen des Slaanesh",
+    "t": "Zu Beginn jeder Schlachtrunde erhältst du 6 Verlockungswürfel. Misslingt deinem Gegner ein Treffer-, Verwundungs- oder Schutzwurf, kannst du ihm einen Verlockungswürfel anbieten (höchstens 1× pro Phase je feindlicher Einheit): Nimmt er an, wird der Wurf zu einer 6 und du erhältst W6 Verderbtheitspunkte; lehnt er ab, erleidet die Einheit W3 tödlichen Schaden. Übrige Würfel verfallen am Rundenende."
+   },
+   {
+    "n": "Verderbtheitspunkte",
+    "t": "Passiv, kumulativ: 12+: Rennen-Fähigkeit und später im Zug noch Angriff möglich. 18+: Nahkampfwaffen haben Krit. (tödlich). 24+: Rettung (5+)."
+   }
+  ],
+  "27": [
+   {
+    "n": "Bestie der dunklen Dschungel",
+    "t": "Beliebige Nahkampfphase: Dein General (im Nahkampf) wählt 1 Effekt. Gigantische Kiefer: Feindliche Einheit im Nahkampf mit ihm; Würfel höher als ihr Ausdauerwert → 1 Modell getötet. Brüllen: Feindliche Einheit im Nahkampf mit ihm: −W6 Kontrollwert in diesem Zug."
+   }
+  ],
+  "23": [
+   {
+    "n": "Köpfe müssen rollen",
+    "t": "Einmal pro Zug, beliebige Heldenphase: Gib 3 Blutzehnt-Punkte aus und wähle bis zu 3 befreundete Einheiten. Bis zum Beginn deines nächsten Zuges: +1 auf den Wuchtwert ihrer Nahkampfwaffen."
+   }
+  ],
+  "37": [
+   {
+    "n": "Lautes Gebrüll",
+    "t": "Beliebige Nahkampfphase: Wähle eine befreundete Einheit, die diese Fähigkeit einsetzt, dann eine feindliche Einheit im Nahkampf mit ihr als Ziel und wirf einen Würfel. Bei 2+: −1 auf Trefferwürfe für Attacken der Zieleinheit in dieser Phase."
+   },
+   {
+    "n": "Nehmt euch die Steine un’ werft se!",
+    "t": "Deine Heldenphase: Dein General wählt eine andere befreundete Einheit vollständig innerhalb von 12\". In diesem Zug: +1 auf den Attackenwert der Waffe Felsbrocken werfen jener Einheit."
+   }
+  ],
+  "44": [
+   {
+    "n": "Jetz’ geht’s los",
+    "t": "Aufstellung: Deine Kraftprotze werden nicht aufgestellt. Ab Runde 3 – deine Bewegungsphase: Stelle die Einheit weiter als 6\" von allen feindlichen Einheiten entfernt irgendwo auf dem Schlachtfeld auf."
+   }
+  ],
+  "26": [
+   {
+    "n": "Squiglawine",
+    "t": "Aufstellung: Eine deiner Squighoppa-Einheiten wird nicht aufgestellt. Ab Runde 3 kann sie Squiglawine einsetzen – deine Bewegungsphase: Stelle sie vollständig innerhalb deines Territoriums, vollständig innerhalb von 3\" um eine Schlachtfeldkante und weiter als 6\" von allen feindlichen Einheiten entfernt auf."
+   }
   ]
  },
  "abil": {
