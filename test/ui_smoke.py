@@ -52,15 +52,12 @@ with sync_playwright() as p:
         if s['who']==1 or s['req'] is None: pg.wait_for_timeout(80);continue
         if s['mode']=='place':
             if s['zone']<0: pg.wait_for_timeout(60);continue
-            if s['kind']=='terr' and not did_rot:
-                a0=s['ang'];pg.click('#rr');pg.click('#rr');pg.click('#rl');pg.click('#rr');a1=pg.evaluate("window.__V.mode.a")
-                print('Drehung über Schaltfläche: %.1f° -> %.1f°'%(a0*180/3.14159,a1*180/3.14159));did_rot=True;pg.click('#rl');pg.click('#rl');pg.wait_for_timeout(250);continue
             z=pg.evaluate("window.__V.mode.zone")
             if z is None and cnt.get('zw',0)<200:
                 cnt['zw']=cnt.get('zw',0)+1;pg.wait_for_timeout(60);continue
             if not z:
                 if s['kind']=='terr' and cnt.get('rotz',0)<40:
-                    cnt['rotz']=cnt.get('rotz',0)+1;pg.click('#rr');pg.wait_for_timeout(120);continue
+                    cnt['rotz']=cnt.get('rotz',0)+1;pg.evaluate('window.__V.rot(Math.PI/12)');pg.wait_for_timeout(120);continue
                 print('keine gültige Zone',s);pg.screenshot(path='/tmp/nozone.png');break
             zx,zy=random.choice(z)
             if s['kind']=='dep':

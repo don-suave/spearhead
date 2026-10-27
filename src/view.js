@@ -23,7 +23,7 @@ const stg=m=>m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic');
 const STH='Ziehen: verschieben · Antippen: drehen · dann „✓ Fertig“';
 function rehint(){const m=mode;hint(m?m.hint:'');const pl=m&&m.t=='place';const hb=$('hb');hb.innerHTML='';
  if(m&&m.t=='bar'){m.q.opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o.b||o.t;b.onclick=()=>answer(i);hb.appendChild(b)});['rl','rr','ho','hy','hx'].forEach(i=>$(i).style.display='none');return}
- $('rl').style.display=$('rr').style.display=(pl&&(m.q.kind=='terr'||m.q.kind=='relic'))?'':'none';
+ $('rl').style.display=$('rr').style.display='none';
  $('ho').style.display=pl&&m.q.auto?'':'none';if(pl&&m.q.auto)$('ho').textContent='Rest automatisch';$('hy').style.display=m&&(m.t=='adj'||stg(m))?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
  $('hx').style.display=m&&m.t!='fightsel'&&((m.t=='place'&&m.q.cancel)||m.t!='place')?'':'none';
  $('hx').textContent=m&&m.t=='dest'?(m.chg?'Angriff abbrechen':m.pile?'Nicht nachrücken':'Stehen bleiben'):m&&(m.t=='place'||m.t=='tgt')?'✕ Abbrechen':'✕';
@@ -246,7 +246,7 @@ function tap(x,y){if(!G)return;const S=G.S,q=G.req;
   if(m.t=='tgt'){answer({t:hit.id});return}
   return}
  if(hit){if(hit.o==seat&&q&&q.t=='act'&&q.who==seat)pick(hit);else pop(hit.name,S.P[hit.o].n+'<br>'+stat(hit)+flagHtml(hit),[])}}
-window.__V={splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
+window.__V={rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
 /* ---------- Kamera ---------- */
 const cv=$('c'),cx=cv.getContext('2d');let sc=1,tx=0,ty=0,fit=1,dpr=1;
 let lastWH='';function resetView(){fit=Math.min(innerWidth/(W*SC),Math.max(200,innerHeight-110)/(H*SC));sc=fit;clampV()}
@@ -267,7 +267,7 @@ function pvOf(m){const k=m.gx.toFixed(2)+'/'+m.gy.toFixed(2)+'/'+(m.a||0).toFixe
 function gh(e){const m=mode;m.gx=(e.clientX-tx)/sc/SC;m.gy=(e.clientY-(e.pointerType=='touch'?70:0)-ty)/sc/SC;if(drg()){dragHint(m);return}const er=placeErr(G.S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a);hint(stg(m)?(!er||plSnap(m,m.gx,m.gy)?STH:er):!er?'Loslassen zum Platzieren':plSnap(m,m.gx,m.gy)?'Rastet an der nächsten gültigen Stelle ein ('+er+')':er)}
 const adjXY=e=>[(e.clientX-tx)/sc/SC,(e.clientY-(e.pointerType=='touch'?60:0)-ty)/sc/SC];
 cv.onpointerdown=e=>{cv.setPointerCapture(e.pointerId);if(mode&&mode.t=='adj'&&!ptr.size){const m=mode,[x,y]=adjXY(e),[ox,oy]=[(e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC],N=m.P.map((p,i)=>({x:p[0],y:p[1],a:m.orig[i].a,l:m.orig[i].l,w:m.orig[i].w})),near=N.map((p,i)=>[mDistPt(p,ox,oy),i]).sort((a,b)=>a[0]-b[0])[0];if(near[0]<=1.2){m.sel=near[1];m.drg=1;m.keep=m.P[near[1]].slice();m.P[near[1]]=adjClamp(m,x,y);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:true,adj:1});note('Ziehen und loslassen – bis '+m.allow.toFixed(1)+' Zoll');return}}
- let onG=false;if(stg(mode)&&mode.gx!=null&&ptr.size==0){const fx=(e.clientX-tx)/sc/SC,fy=(e.clientY-ty)/sc/SC,[w,h]=mode.q.u.w?[mode.q.u.w,mode.q.u.h]:TERSZ[mode.q.u.big?'big':'small'],c=Math.cos(-mode.a),sn=Math.sin(-mode.a),lx=(fx-mode.gx)*c-(fy-mode.gy)*sn,ly=(fx-mode.gx)*sn+(fy-mode.gy)*c;onG=Math.abs(lx)<=w/2+1&&Math.abs(ly)<=h/2+1}
+ let onG=false;if(stg(mode)&&mode.gx!=null&&ptr.size==0){const fx=(e.clientX-tx)/sc/SC,fy=(e.clientY-ty)/sc/SC,[w,h]=mode.q.u.w?[mode.q.u.w,mode.q.u.h]:TERSZ[mode.q.u.big?'big':'small'],c=Math.cos(-mode.a),sn=Math.sin(-mode.a),lx=(fx-mode.gx)*c-(fy-mode.gy)*sn,ly=(fx-mode.gx)*sn+(fy-mode.gy)*c;onG=(Math.abs(lx)<=w/2+1.5&&Math.abs(ly)<=h/2+1.5)||Math.hypot(fx-mode.gx,fy-mode.gy)<=3}
  if(plc()&&!onG)gh(e);ptr.set(e.pointerId,{x:e.clientX,y:e.clientY,sx:e.clientX,sy:e.clientY,m:false,gh:onG});if(ptr.size==2){const[a,b]=[...ptr.values()];pd=Math.hypot(a.x-b.x,a.y-b.y);pa=Math.atan2(b.y-a.y,b.x-a.x)}};
 cv.onpointermove=e=>{const p=ptr.get(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const[x,y]=adjXY(e);mode.P[mode.sel]=adjClamp(mode,x,y);return}if(plc()&&ptr.size<2){if(p&&p.gh){const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.sx,p.y-p.sy)>8)p.m=true;if(p.m){mode.gx+=dx/sc/SC;mode.gy+=dy/sc/SC;hint(STH)}return}gh(e);if(p){p.x=e.clientX;p.y=e.clientY}return}if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;if(Math.hypot(p.x-p.sx,p.y-p.sy)>8)p.m=true;
  if(ptr.size==1&&p.m){tx+=dx;ty+=dy;clampV()}

@@ -1,5 +1,8 @@
 # Changelog
 
+## v112
+- Gelände/Reliquien: Dreh-Knöpfe ↺ ↻ entfernt. Gedreht wird per Antippen des Stücks (45°) oder mit zwei Fingern; die Treffzone zum Antippen ist größer (mind. 3" um die Mitte), damit auch kleine Stücke auf dem Handy zuverlässig reagieren.
+
 ## v111
 - Regel-App: Nummerierung der Startseiten-Kacheln korrigiert (Battlepacks 4, Suche 5).
 
