@@ -1,5 +1,6 @@
 // Taktikkarten, Befehle, Wendungskarten, Punkte
 import {hk,GL} from './hooks.js';
+import {betr} from './abil.js';
 import {W,H,CR,into,onTer,route,tdist,pathPts,tcorners} from './geom.js';
 import {TAC,TWD} from './data.js';
 import {d6,d3,add,has} from './util.js';
@@ -7,7 +8,7 @@ import {fxL,fxSum,addFx,usedKey,useKey} from './fx.js';
 import {mkUnit} from './state.js';
 import {setAbs,wholly,abs,edgeD} from './models.js';
 import {choice,ask,info} from './game.js';
-import {fdStage,rl,litIn,wgN,gnl,EN,ENI,byId,myU,foes,dist,inCombat,nm,wnd,mx,isHero,ONM,RG,ct,cvOf,lt,mm,ctrl,hurt,useCard,CMD,place,moveErr,cnm,chargeErr,RGI,hasAb,mvOf,mvRest,pr,obs,chargeModelErr,AN,cycOf,canHeal,applyMove,updCtrl} from './rules.js';
+import {fdStage,rl,litIn,wgN,gnl,EN,ENI,byId,myU,foes,dist,inCombat,nm,wnd,mx,isHero,ONM,RG,ct,cvOf,lt,mm,ctrl,hurt,useCard,offBlk,CMD,place,moveErr,cnm,chargeErr,RGI,hasAb,mvOf,mvRest,pr,obs,chargeModelErr,AN,cycOf,canHeal,applyMove,updCtrl} from './rules.js';
 
 export const HK={};
 // Eine Einheit liegt vollständig (alle Ecken aller Basen) im Territorium von Spieler t
@@ -15,7 +16,7 @@ export const whollyT=(S,t,u)=>u.M?abs(u).every(m=>tcorners({x:m.x,y:m.y,a:m.a,w:
 // Raze: nur die lange Spielfeldkante, die im gegnerischen Territorium liegt
 // Maßgeblich ist der Rand der Basen (nicht der Mittelpunkt): irgendein Modell der Einheit mit Basisrand höchstens 3" von der Kante
 export const razeOK=(S,o)=>{const top=into(S,1-o,W/2,0)>0;return myU(S,o).some(u=>edgeD(u,top?0:2)<=3)};
-const FW=(S,P,c)=>!S.K.pack&&P.hand.includes(c);
+const FW=(S,P,c)=>!S.K.pack&&P.hand.includes(c)&&!offBlk(S,S.P.indexOf(P),c);
 export const CH={
  1:(S,o)=>S.D[1-o]>0&&S.D[1-o]>S.D[o],
  2:(S,o)=>myU(S,o).some(u=>whollyT(S,1-o,u)&&!inCombat(S,u)),
@@ -29,7 +30,7 @@ export const CH={
  10:(S,o)=>razeOK(S,o),
  11:(S,o)=>S.obj.filter((p,k)=>S.ocs[k]===1-o&&S.oc[k]===o).length>=2,
  12:(S,o)=>myU(S,o).some(u=>has(S.T.fought,u.id))&&S.D[o]==0};
-export function endTac(S,o){const p=S.P[o],r=[],as=p.aside||(p.aside=[]),oc=S.oath&&S.oath[o];p.hand.slice().forEach(c=>{if(as.includes(c))return;if(CH[c]&&CH[c](S,o)){if(c===oc)as.push(c);else{p.hand.splice(p.hand.indexOf(c),1);p.disc.push(c)}r.push(TAC[c-1][0]+(c===oc?' (Schwur erfüllt, Karte zur Seite gelegt)':''))}});if(S.oath)S.oath[o]=null;return r}
+export function endTac(S,o){const p=S.P[o],r=[],as=p.aside||(p.aside=[]),oc=S.oath&&S.oath[o];if(S.off&&S.off[o]!=null){const i=as.indexOf(S.off[o]);if(i>=0)as.splice(i,1);S.off[o]=null}p.hand.slice().forEach(c=>{if(as.includes(c))return;if(CH[c]&&CH[c](S,o)){if(c===oc)as.push(c);else{p.hand.splice(p.hand.indexOf(c),1);p.disc.push(c);(S.dsc||(S.dsc=[0,0]))[o]++}r.push(TAC[c-1][0]+(c===oc?' (Schwur erfüllt, Karte zur Seite gelegt)':''))}});if(S.oath)S.oath[o]=null;return r}
 
 // ---------- Würfelduell ----------
 export function rolloff(G){const S=G.S;let a,b;do{a=d6(S);b=d6(S)}while(a==b);G.rep('Würfelduell (Wendungskarte)',[{k:'txt',s:'Du'},{k:'row',l:'',v:[a]},{k:'txt',s:'Computer'},{k:'row',l:'',v:[b]},{k:'txt',s:'<b>'+(a>b?'Du entscheidest':'Computer entscheidet')+'</b>'}],0);S.TW=S.TW||{};S.TW.rl=[a,b];return a>b?0:1}
@@ -91,14 +92,14 @@ export function* doCharge(G,u){const S=G.S,P=S.P[u.o];const tp=yield* tisch(G,u)
  if(!G.isAI(u.o)){
   for(let k=0;k<4;k++){const o1=[{t:'Ziel wählen'}],ks=['go'],fdv=(S.fd&&S.fd[u.o]||[]).slice().sort((x,y)=>y-x);if(FW(S,P,7)){o1.push({t:'Vorwärts zum Sieg: neu würfeln',s:'Karte wird abgelegt'});ks.push('fw')}if(rr){o1.push({t:hasAb(u,'tr_ugesch')?'Unübertroffene Geschwindigkeit: neu würfeln':!oth?'Kein Lohn ohne Risiko: neu würfeln':'Angetrieben von Hass: neu würfeln',s:'Einmal je Angriff'});ks.push('rr')}if(fdv.length&&(S.fdp||[0,0])[u.o]&&ds.length>1&&Math.min(...ds)<fdv[0]){o1.push({t:'Schicksalswürfel einsetzen',s:'Ersetzt den niedrigsten Würfel durch einen Schicksalswürfel ('+fdv.join(', ')+')'});ks.push('fd')}
    const i=yield* choice(G,u.o,k?'Angriff (wiederholt)':'Angriff','Angriffswurf',o1,{blocks:blk()}),key=ks[i];if(key=='go')break;
-   if(key=='fw'){useCard(S,u.o,7);ds=dice()}else if(key=='rr'){useKey(S,u.id+':rrc','turn');kd0();rr=false;ds=dice()}else if(key=='fd'){const li=ds.indexOf(Math.min(...ds));const v=S.fd[u.o].splice(S.fd[u.o].indexOf(Math.max(...S.fd[u.o])),1)[0];G.note('Schicksalswürfel: '+ds[li]+' → '+v);ds[li]=v}}}
+   if(key=='fw'){useCard(S,u.o,7);yield* betr(G,u.o,7);ds=dice()}else if(key=='rr'){useKey(S,u.id+':rrc','turn');kd0();rr=false;ds=dice()}else if(key=='fd'){const li=ds.indexOf(Math.min(...ds));const v=S.fd[u.o].splice(S.fd[u.o].indexOf(Math.max(...S.fd[u.o])),1)[0];G.note('Schicksalswürfel: '+ds[li]+' → '+v);ds[li]=v}}}
  else{if(rr&&sum()<8){useKey(S,u.id+':rrc','turn');kd0();ds=dice()}while(S.fd&&S.fd[u.o]&&S.fd[u.o].length&&S.fdp[u.o]==1&&ds.length>1&&sum()+mod()<8&&Math.max(...S.fd[u.o])>Math.min(...ds)){const li=ds.indexOf(Math.min(...ds));const v=S.fd[u.o].splice(S.fd[u.o].indexOf(Math.max(...S.fd[u.o])),1)[0];G.note('Schicksalswürfel (Angriff): '+ds[li]+' → '+v);ds[li]=v}G.tray(`Computer: ${u.name} würfelt Angriff`,[{k:'row',l:'Angriffswurf',v:ds},{k:'txt',s:`Summe ${sum()}`}])}
  if(AN(S,u.o)=='Magma-Fyrd'&&!usedKey(S,u.o+':bers','turn')){const y=G.isAI(u.o)?(sum()+mod()<8?0:1):yield* choice(G,u.o,'Berserker-Angriff','Angriffswurf wiederholen? Bei Erfolg kämpft die Einheit bis zu deinem nächsten Zug zuerst. (1× pro Zug)',[{t:'Wiederholen'},{t:'Nicht wiederholen'}],{pref:1,blocks:blk()});
   if(y==0){useKey(S,u.o+':bers','turn');ds=dice();add(S.T.bers,u.id);G.tray('Berserker-Angriff: neu gewürfelt',[{k:'row',l:'Angriffswurf',v:ds}])}}
  const roll=Math.max(0,sum()+mod());S.T.cr[u.id]=roll;S.T.cr0[u.id]=sum();
  const ans=yield {t:'dest',who:u.o,u:u.id,rng:roll,chg:1,roll,text:'Angriffswurf '+roll,check:x=>x&&x.stay?'':(x&&x.P?chargeModelErr(S,u,x.P,roll):(x&&Number.isFinite(x.x)&&Number.isFinite(x.y)?chargeErr(S,u,x.x,x.y,roll):'Ungültig'))};
  if(ans.stay){G.rep('Angriff gescheitert',[{k:'txt',s:`${u.name} bleibt stehen (Wurf ${roll}").`}]);return}
- if(ans.P)setAbs(u,ans.P.map(p=>({x:+p[0],y:+p[1]})));else{u.x=ans.x;u.y=ans.y}add(S.T.charged,u.id);if(has(S.T.bers,u.id))addFx(S,{k:'first',u:u.id,exp:'own'});G.rep('Angriff erfolgreich',[{k:'txt',s:`${u.name} hat mit Wurf ${roll}" einen Feind erreicht.`}])}
+ if(ans.P)setAbs(u,ans.P.map(p=>({x:+p[0],y:+p[1]})));else{u.x=ans.x;u.y=ans.y}add(S.T.charged,u.id);if(S.T.kcA&&/Kavallerie/.test(u.kw))addFx(S,{k:'first',u:u.id,exp:'turn'});if(has(S.T.bers,u.id))addFx(S,{k:'first',u:u.id,exp:'own'});G.rep('Angriff erfolgreich',[{k:'txt',s:`${u.name} hat mit Wurf ${roll}" einen Feind erreicht.`}])}
 export function* doRun(G,u){const S=G.S;
  let vf=EN(S,u.o)=='Vorwärts!'&&!S.T.vw&&!isHero(u)&&S.U.some(g=>g.o==u.o&&g.gen&&g.x>=0&&dist(u,g)<=12),r=vf?6:(()=>{let q=d6(S);if(q<=3){const g=gnl(S,u.o);if(hasAb(u,'ep_wahn')||(ENI(S,u.o)=='fp_lunge'&&g&&u.x>=0&&wholly(u,g,9)))q=4}return Math.max(0,q+fxSum(S,u,'run')+hk(S,'run',u)+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'?1:0))})();
  if(vf){S.T.vw=true;G.note('Vorwärts!: +6 Zoll statt Rennenwurf')}
@@ -110,7 +111,7 @@ export function* doRetreat(G,u,opt={}){const S=G.S,P=S.P[u.o];add(S.Ph.used,u.id
  if(!opt.free&&RGI(S,u.o)=='am'&&!usedKey(S,u.o+':am','battle')){const y=G.isAI(u.o)?(inCombat(S,u)?0:1):yield* choice(G,u.o,'Reaktion: Am richtigen Ort zuschlagen','Kein tödlicher Schaden; die Einheit darf danach noch angreifen. (1× pro Schlacht)',[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:1});if(y==0){useKey(S,u.o+':am','battle');am=true;add(S.T.FZ,u.id);G.note('Am richtigen Ort zuschlagen: kein tödlicher Schaden, Angriff danach erlaubt')}}
  if(!opt.free&&!G.isAI(u.o)&&FW(S,P,12)&&u.n<u.nmax&&canHeal(S,u)){
   const i=yield* choice(G,u.o,'Rückzug','Möchtest du Fall Back and Rally einsetzen? (Karte wird abgelegt)',[{t:'Ja'},{t:'Nein'}],{pref:1});
-  if(i==0){useCard(S,u.o,12);const s=canHeal(S,u)?u.nmax-u.n:0,rs=[];for(let k=0;k<s;k++)rs.push(d6(S));const b=rs.filter(x=>x>=5).length;u.n=Math.min(u.nmax,u.n+b);G.tray('Fall Back and Rally',[{k:'row',l:b+' Modelle zurück (5+)',v:rs,th:5}]);
+  if(i==0){useCard(S,u.o,12);yield* betr(G,u.o,12);const s=canHeal(S,u)?u.nmax-u.n:0,rs=[];for(let k=0;k<s;k++)rs.push(d6(S));const b=rs.filter(x=>x>=5).length;u.n=Math.min(u.nmax,u.n+b);G.tray('Fall Back and Rally',[{k:'row',l:b+' Modelle zurück (5+)',v:rs,th:5}]);
    const a=yield* destReq(G,u,mvOf(S,u),{ret:1,text:'Kein tödlicher Schaden'});if(!a.stay){applyMove(S,u,a,mvOf(S,u));add(S.T.moved,u.id)}return}}
  const kl=fxL(S,u,'klaev').length>0||hasAb(u,'fc_sprung');if(kl)add(S.T.FZ,u.id);const nod=opt.free||am||kl||fxL(S,u,'lose').length>0||hk(S,'nort',u)>0||fxL(S,u,'nort').length>0||RGI(S,u.o)=='zsz'||AN(S,u.o)=='Rudelfletscha-Jäga'||hasAb(u,'stelzen')||(u.dn=='Squighoppa'&&litIn(S,u))||(u.gen&&ENI(S,u.o)=='gw_blut');const d=nod?0:Math.max(0,d3(S)-(u.gen&&ENI(S,u.o)=='gw_rueck'?1:0));if(nod&&!am&&!opt.free)G.note('Zu schnell zum Treffen-Treffen: kein tödlicher Schaden');else{G.tray(G.isAI(u.o)?'Computer: Rückzug':'Rückzug: W3 tödlicher Schaden',[{k:'row',l:'',v:[d]}]);hurt(G,u,d)}
  if(u.n>0&&S.U.includes(u)){const a=yield* destReq(G,u,mvOf(S,u),{ret:1,text:`${d} tödlicher Schaden`});if(!a.stay){applyMove(S,u,a,mvOf(S,u));add(S.T.moved,u.id)}}}
@@ -145,6 +146,6 @@ export function cmdOk(S,s,c){const my=myU(S,s).filter(x=>x.x>=0);
   default:return true}}
 export function* cmdWindow(G){const S=G.S;
  for(const s of [0,1]){if(G.isAI(s))continue;
-  while(!S.over){const mineT=S.act==s;const h=S.P[s].hand.filter(c=>{const m=CMD[c];return m.ph==S.ph&&(m.w=='any'||(m.w=='opp'&&!mineT)||(m.w=='own'&&mineT))&&(S.K.pack>=1?HK.ok(S,s,c):cmdOk(S,s,c))}),tb=S.K.pack>=1&&HK.ta?HK.ta(S,s):[];if(!h.length&&!tb.length)break;
+  while(!S.over){const mineT=S.act==s;const h=S.P[s].hand.filter(c=>{const m=CMD[c];return !offBlk(S,s,c)&&m.ph==S.ph&&(m.w=='any'||(m.w=='opp'&&!mineT)||(m.w=='own'&&mineT))&&(S.K.pack>=1?HK.ok(S,s,c):cmdOk(S,s,c))}),tb=S.K.pack>=1&&HK.ta?HK.ta(S,s):[];if(!h.length&&!tb.length)break;
    const i=yield* choice(G,s,'Befehle – '+['Beginn','Heldenphase','Bewegungsphase','Fernkampfphase','Angriffsphase','Nahkampfphase','Ende'][S.ph],mineT?'Deine Phase: Möchtest du einen Befehl einsetzen? (Karte wird abgelegt)':'Gegnerische Phase: Möchtest du reagieren? (Karte wird abgelegt)',[...h.map(c=>({t:TAC[c-1][2],s:TAC[c-1][3]})),...tb.map(x=>({t:x.t,s:x.s})),{t:'Keinen Befehl'}],{pref:h.length+tb.length});
-   if(i==h.length+tb.length)break;if(i>=h.length){yield* tb[i-h.length].run(G);continue}const c=h[i];useCard(S,s,c);yield* CE[c](G,s)}}}
+   if(i==h.length+tb.length)break;if(i>=h.length){yield* tb[i-h.length].run(G);continue}const c=h[i];useCard(S,s,c);yield* betr(G,s,c);yield* CE[c](G,s)}}}

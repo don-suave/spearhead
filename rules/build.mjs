@@ -28,5 +28,5 @@ const tpl=fs.readFileSync(here+'regeln.template.html','utf8');
 const out=tpl.replace('/*__DATA__*/',()=>'const DATA='+JSON.stringify(data)+';');
 fs.mkdirSync(here+'../dist',{recursive:true});
 fs.writeFileSync(here+'../dist/regeln.html',out);
-console.log('regeln.html',(out.length/1024|0)+'KB','missing EN:',miss.size,process.env.ALLMISS?[...miss]:[...miss].slice(0,5));
+console.log('regeln.html',(out.length/1024|0)+'KB','missing EN:',miss.size,process.env.ALLMISS?(process.env.ALLMISS=='2'?(console.log(JSON.stringify([...miss])),''):[...miss]):[...miss].slice(0,5));
 if(process.argv.includes('--strict')&&(miss.size||missingDE.length||A.length<31)){console.error('Übersetzungen fehlen oder Armeezahl falsch');process.exit(1)}

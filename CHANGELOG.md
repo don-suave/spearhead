@@ -1,5 +1,10 @@
 # Changelog
 
+## v107
+- Vier neue Armeen (alle aktuellen Battleclash-Speerspitzen jetzt komplett): **Khainitischer Schattenzirkel** (Töchter des Khaine: Schlächterkönigin auf Blutkessel, Hexenkönigin, Blutqual-Medusa, 2× Schlächterschwestern, Schattenjäger; Schattenmasken, Tanz des Todes, Schattensprung u. a.), **Hurakan-Speerspitze** (Lumineth: Windmagier, Windreiter, Auralanwächter, Windgeist; leewärtige Schlachtfeldkante mit Im Sog der Winde, Kraft des Sturms, Sprung in den Sturm, Auge des Sturms), **Kastellitenkompanie** (Städte Sigmars: Rittermarschall, 2× Stahlhelme, Ritter, Eisenschmiede-Großkanone; Befehl des Offizars, Das Land weihen, Granatenmunition) und **Tzaangor-Kriegsherde** (Jünger des Tzeentch: Schamane, Erleuchtete aus der Reserve, Omenleser, Tzaangors; Die Zukunft vorhersagen, Das Schicksal betrügen, Mutationsaura, Höllentor).
+- Engine: neue Reservezone „1 Zoll vom Rand im eigenen Territorium“, Gegner-Phasen-Fähigkeiten auch zu Beginn der gegnerischen Fernkampfphase, Bewegungs-Einschränkungen (Tosender Gegenwind), Treffer-Hooks vor Attacken (Kraft des Sturms, Schimmerling), Taktikkarten, die nach dem Befehl auf die Hand zurückkehren.
+- Vereinfachungen: Mehrere Bewegungs-/Aufstellungsfähigkeiten setzt die KI nicht ein; „näher an der Kante“ misst vom Einheitenmittelpunkt; Schattenmasken, Für Sigmar zum Angriff und Kraft des Sturms wirken nur in der eigenen Angriffsphase bzw. automatisch; Großkanone wählt das Profil automatisch (Kartätsche nach Bewegung oder gegen Horden ≤ 12").
+
 ## v106
 - Neue Armee: Nachtspuk Sensenheer: Ritter des Grabtuchs, Geisterscharen, 2× Düsterschnitter, 2× Kettengeister; Welle des Schreckens, Körperlos (Schutzwurf-Modifikatoren ignoriert), Regimenter, Verbesserungen (u. a. In Schatten gewandet: nur 1 Angreifer je Phase auf den General).
 

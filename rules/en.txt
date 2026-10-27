@@ -1573,3 +1573,137 @@ Kettengeister	Chainghasts
 Gespensterwaffe	Spectral Weapon
 Grabeskalte Horde	Gravechill Horde
 Passiv: Addiere 1 auf Verwundungswürfe für Nahkampfattacken dieser Einheit, wenn sie im selben Zug angegriffen hat.	Passive: Add 1 to wound rolls for this unit's melee attacks if it charged in the same turn.
+Khainitischer Schattenzirkel	Khainite Shadow Coven
+Lasst sie bluten	Let Them Bleed
+Einmal pro Schlacht, beliebige Nahkampfphase: Wähle eine befreundete Infanterie-Einheit im Nahkampf, die in diesem Zug nicht angegriffen hat. Sie kann sich bis zu 6 Zoll bewegen, aber nicht im Nahkampf enden.	Once per battle, any Combat phase: Pick a friendly Infantry unit in combat that did not charge this turn. It can move up to 6", but cannot end that move in combat.
+Mordschlag	Murderous Strike
+Passiv: Addiere 1 auf den Wuchtwert von Nahkampfwaffen befreundeter Infanterie-Einheiten, die im selben Zug angegriffen haben.	Passive: Add 1 to the Rend characteristic of Melee weapons used by friendly Infantry units that charged this turn.
+Avatar der Schatten	Avatar of Shadows
+Einmal pro Schlacht, deine Nahkampfphase: Addiere für den Rest des Zugs 1 auf den Wuchtwert der Nahkampfwaffen deiner Generalin.	Once per battle, your Combat phase: Add 1 to the Rend characteristic of your general's Melee weapons for the rest of the turn.
+Wahnhafte Predigt	Delirious Sermon
+Deine Heldenphase: Wähle eine sichtbare befreundete Einheit ganz innerhalb von 12 Zoll um deine Generalin. Wirf einen Würfel: Bei 3+ addiere für den Rest des Zugs 1 auf Rettungswürfe des Ziels.	Your Hero phase: Pick a visible friendly unit wholly within 12" of your general. Roll a dice: on a 3+, add 1 to ward rolls for the target for the rest of the turn.
+Brodelndes Blut	Seething Blood
+Deine Fernkampfphase: Wähle eine sichtbare feindliche Einheit innerhalb von 12 Zoll um deine Generalin. Wirf einen Würfel: Entspricht das Ergebnis dem Schutzwert des Ziels oder übertrifft es ihn, halbiere bis zu deinem nächsten Zug seinen Bewegungswert.	Your Shooting phase: Pick a visible enemy unit within 12" of your general. Roll a dice: if the result equals or exceeds the target's Save characteristic, halve the target's Move characteristic until the start of your next turn.
+Aufprallklingen	Impact Blades
+Beliebige Angriffsphase: Wenn deine Generalin in dieser Phase angegriffen hat, wähle eine feindliche Einheit innerhalb von 1 Zoll um sie. Wirf einen W3: Bei 2+ füge dem Ziel tödlichen Schaden in Höhe des Wurfergebnisses zu.	Any Charge phase: If your general charged in this phase, pick an enemy unit within 1" of it. Roll a D3: on a 2+, inflict mortal damage on the target equal to the roll.
+Schlächterkönigin auf Blutkessel	Slaughter Queen on Cauldron of Blood
+Klingen der Schreinwächterinnen	Shrinewarden Blades
+Heiliger Abscheu	Holy Loathing
+Deine Heldenphase: Wähle eine sichtbare befreundete Infanterie-Einheit ganz innerhalb von 12 Zoll um diese Einheit. Wirf einen Würfel: Bei 3+ addiere bis zu deinem nächsten Zug 1 auf Schutzwürfe des Ziels.	Your Hero phase: Pick a visible friendly Infantry unit wholly within 12" of this unit. Roll a dice: on a 3+, add 1 to save rolls for the target until the start of your next turn.
+Hexenkönigin	Hag Queen
+Klinge des Khaine	Blade of Khaine
+Blutige Aufwiegelung	Bloody Incitement
+Beliebige Nahkampfphase: Wähle eine sichtbare befreundete Einheit ganz innerhalb von 12 Zoll um diese Einheit. Ist das Ziel im Nahkampf, haben seine Nahkampfwaffen für den Rest des Zugs Krit. (verwundet). Ist es nicht im Nahkampf, wirf einen Würfel: Bei 3+ haben seine Nahkampfwaffen für den Rest des Zugs Krit. (verwundet).	Any Combat phase: Pick a visible friendly unit wholly within 12" of this unit. If the target is in combat, its Melee weapons have Crit (Wound) for the rest of the turn. If it is not in combat, roll a dice: on a 3+, its Melee weapons have Crit (Wound) for the rest of the turn.
+Blutqual-Medusa	Bloodtorment Medusa
+Zauberin	Sorceress
+Blutqual-Speer	Bloodtorment Spear
+Blutrünstiges Starren	Bloodthirsty Stare
+Deine Fernkampfphase: Ist diese Einheit im Nahkampf, wähle eine feindliche Einheit im Nahkampf mit ihr, sonst eine sichtbare feindliche Einheit innerhalb von 12 Zoll. Wirf einen Würfel: Bei 3+ füge dem Ziel 1 tödlichen Schaden zu. Wurde dadurch mindestens ein Modell getötet, füge dem Ziel 1 weiteren tödlichen Schaden zu.	Your Shooting phase: If this unit is in combat, pick an enemy unit in combat with it; otherwise pick a visible enemy unit within 12". Roll a dice: on a 3+, inflict 1 mortal damage on the target. Then, if at least one enemy model was slain by that damage, inflict 1 more mortal damage on the target.
+Schlächterschwestern	Slaughter Sisters
+Kruip-Peitsche	Kruip Whip
+Tanz des Todes	Dance of Death
+Einmal pro Zug (Armee), gegnerische Nahkampfphase: Ist diese Einheit im Nahkampf, kann sie sich 2W6 Zoll bewegen. Sie kann sich durch die Nahkampfreichweite feindlicher Einheiten bewegen und muss die Bewegung im Nahkampf beenden.	Once per turn (Army), enemy Combat phase: If this unit is in combat, it can move 2D6". It can move through the combat range of enemy units and must end that move in combat.
+Khainitische Schattenjäger	Khainite Shadowstalkers
+Dunkle Flüche und Geschosse	Dark Curses and Missiles
+Mörderische Klingen	Murderous Blades
+Schattensprung	Shadow Leap
+Einmal pro Schlacht, deine Bewegungsphase: Nimm diese Einheit vom Schlachtfeld und stelle sie weiter als 6 Zoll von allen feindlichen Einheiten wieder auf.	Once per battle, your Movement phase: Remove this unit from the battlefield and set it up again more than 6" from all enemy units.
+Hurakan-Speerspitze	Hurakan Vanguard
+Herumwirbelnde Trümmer	Whirling Debris
+Deine Heldenphase: Wähle eine feindliche Einheit, die näher an der leewärtigen Schlachtfeldkante ist als das große Geländestück in deinem Territorium. Wirf so viele Würfel, wie die Nummer der aktuellen Schlachtrunde beträgt: Für jede 3+ füge dem Ziel 1 tödlichen Schaden zu. (Schlüssel: Wirbelwind reiten)	Your Hero phase: Pick an enemy unit that is closer to the leeward battlefield edge than the large terrain feature in your territory. Roll a number of dice equal to the current battle round number: for each 3+, inflict 1 mortal damage on the target. (Keyword: Ride the Whirlwind)
+Tosender Gegenwind	Raging Headwind
+Einmal pro Schlacht (Armee), gegnerische Heldenphase: Wähle eine feindliche Einheit. Für den Rest des Zugs muss sie jede Bewegung näher an der leewärtigen Schlachtfeldkante beenden.	Once per battle (Army), enemy Hero phase: Pick an enemy unit. For the rest of the turn, each time it uses a Move ability, it must end that move closer to the leeward battlefield edge.
+Vom Winde verweht	Blown Away
+Passiv: Subtrahiere für jede befreundete Wirbelwind-reiten-Fähigkeit, die in dieser Schlachtrunde eingesetzt wurde, 1 vom Kontrollwert feindlicher Einheiten innerhalb von 6 Zoll um deinen General.	Passive: Subtract 1 from the control score of enemy units within 6" of your general for each friendly Ride the Whirlwind ability used in this battle round.
+Windflüsterer	Windwhisperer
+Einmal pro Schlacht (Armee), beliebige Heldenphase: Ändere die leewärtige Schlachtfeldkante zu einer von dir gewählten Kante.	Once per battle (Army), any Hero phase: Change the leeward battlefield edge to a battlefield edge of your choice.
+Tempelwächter	Temple Guardian
+Passiv: Solange sich mindestens eine befreundete Infanterie-Einheit in Nahkampfreichweite deines Generals befindet, haben dein General und jene Einheiten Rettung (5+).	Passive: While at least one friendly Infantry unit is within combat range of your general, your general and those units have Ward (5+).
+Gekrümmte Flugbahn	Curving Trajectory
+Passiv: Reichweite und Sichtbarkeit für die Fernkampfattacken deines Generals können von einem beliebigen Punkt der leewärtigen Schlachtfeldkante aus bestimmt werden.	Passive: Range and visibility for your general's Shooting attacks can be measured from any point on the leeward battlefield edge.
+Hurakan-Windmagier	Hurakan Windmage
+Windwirbel	Windblast
+Aspiragillum	Aspiragillum
+Die Winde leiten	Guide the Winds
+Deine Heldenphase: Wähle eine sichtbare befreundete Einheit ganz innerhalb von 12 Zoll um diese Einheit und wirf 2W6. Bei 6+ kann das Ziel für den Rest des Zugs Rückzug-Fähigkeiten einsetzen und danach noch schießen und angreifen; es erleidet beim Rückzug keinen tödlichen Schaden.	Your Hero phase: Pick a visible friendly unit wholly within 12" of this unit and make a casting roll of 2D6. On a 6+, for the rest of the turn the target can use Retreat abilities and still use Shoot and Charge abilities afterwards; it suffers no mortal damage when it retreats.
+Hurakan-Windreiter	Hurakan Windchargers
+Windreiterbogen	Windcharger Bow
+Windreiterklinge	Windcharger Blade
+Wipfelläuferklauen	Treetop Claws
+Sprung in den Sturm	Leap into the Storm
+Ende deines Zuges: Ist diese Einheit nicht im Nahkampf, stelle sie ganz innerhalb von 3 Zoll um die leewärtige Schlachtfeldkante und mehr als 6 Zoll von allen Feinden neu auf. (Schlüssel: Wirbelwind reiten)	End of your turn: If this unit is not in combat, set it up again wholly within 3" of the leeward battlefield edge and more than 6" from all enemy units. (Keyword: Ride the Whirlwind)
+Vanari-Auralanwächter (Hurakan)	Vanari Auralan Wardens (Hurakan)
+Spieß und Klinge	Spear and Blade
+Klingenwall	Blade Wall
+Beliebige Nahkampfphase: Hat diese Einheit in diesem Zug nicht angegriffen und ist sie im Nahkampf mit einer Einheit, die angegriffen hat, wirf einen Würfel (+1 gegen Kavallerie). Bei 3+ hat diese Einheit in diesem Zug Kämpft zuerst.	Any Combat phase: If this unit did not charge this turn and is in combat with a unit that did, roll a dice (+1 against Cavalry). On a 3+, this unit fights first for the rest of the turn.
+Hurakan-Windgeist	Hurakan Windwraith
+Bogen der Rache des Windes	Bow of the Wind's Vengeance
+Wirbelnde Splitter	Whirling Shards
+Auge des Sturms	Eye of the Storm
+Passiv: Subtrahiere 1 von Trefferwürfen für Attacken gegen befreundete Einheiten ganz innerhalb von 6 Zoll um diese Einheit.	Passive: Subtract 1 from hit rolls for attacks that target friendly units wholly within 6" of this unit.
+Wirbelwinde	Whirlwinds
+Deine Fernkampfphase: Wähle eine feindliche Einheit, der durch Fernkampfattacken dieser Einheit in dieser Phase mindestens 1 Schaden zugefügt wurde. Wirf einen Würfel: Bei 3+ hat das Ziel für den Rest des Zugs Kämpft zuletzt.	Your Shooting phase: Pick an enemy unit that was dealt at least 1 damage by Shooting attacks made by this unit in this phase. Roll a dice: on a 3+, the target fights last for the rest of the turn.
+Kastellitenkompanie	Castelite Company
+Für Sigmar, zum Angriff!	For Sigmar, Charge!
+Einmal pro Schlacht, deine Angriffsphase (vor etwaigen Angriff-Fähigkeiten dieser Phase einzusetzen): Befreundete Kavallerie-Einheiten, die in dieser Phase angreifen, haben in diesem Zug Kämpft zuerst.	Once per battle, your Charge phase (use before any Charge abilities in this phase): Friendly Cavalry units that charge in this phase fight first for the rest of the turn.
+Eisenschmiede-Disziplin	Ironweld Discipline
+Einmal pro Schlacht (Armee), gegnerische Fernkampfphase: Wähle deine Eisenschmiede-Großkanone. Wirf einen Würfel: Bei 3+ kann sie die Fähigkeit „Fernkampf“ wie in deiner Fernkampfphase einsetzen.	Once per battle (Army), enemy Shooting phase: Pick your Ironweld Great Cannon. Roll a dice: on a 3+, it can use the Shoot ability as if it were your Shooting phase.
+Flasche mit Lethisianischem Dunkelwasser	Flask of Lethisian Darkwater
+Einmal pro Schlacht, Beginn eines beliebigen Zuges: Heile (W6) deinen General.	Once per battle, start of any turn: Heal (D6) your general.
+Vererbte Klinge	Inherited Blade
+Passiv: Addiere 1 zum Wuchtwert des Meisterhaften Langschwerts deines Generals.	Passive: Add 1 to the Rend characteristic of your general's Masterwork Longsword.
+Heilige Flamme	Sacred Flame
+Ende eines beliebigen Zuges: Wähle eine befreundete Freigilden-Stahlhelme-Einheit in Nahkampfreichweite deines Generals. Du kannst bis zu W3 getötete Modelle in sie zurückbringen.	End of any turn: Pick a friendly Freeguild Steelhelms unit within combat range of your general. You can return up to D3 slain models to that unit.
+Schimmerling	Glimmerling
+Passiv: Du kannst in jeder Phase 1 Trefferwurf oder 1 Verwundungswurf oder 1 Schutzwurf für deinen General wiederholen.	Passive: In each phase, you can re-roll 1 hit roll or 1 wound roll or 1 save roll for your general.
+Freigilden-Rittermarschall	Freeguild Knight-Marshal
+Dragonerpistole	Dragoon Pistol
+Meisterhaftes Langschwert	Masterwork Longsword
+Stahlbeschlagene Hufe des Kriegsrosses	Steel-shod Hooves of the Warhorse
+Entschlossener Befehlshaber	Determined Commander
+Deine Heldenphase: Wähle eine befreundete Freigilden-Stahlhelme-Einheit ganz innerhalb von 12 Zoll um diese Einheit als Ziel und wirf einen Würfel. Bei 2+ wähle 1 Option: Auf die Beine! Ist das Ziel nicht im Nahkampf, kannst du W3 getötete Modelle in es zurückbringen. Weicht keinen Meter! Addiere bis zu deinem nächsten Zug 3 zum Kontrollwert des Ziels.	Your Hero phase: Pick a friendly Freeguild Steelhelms unit wholly within 12" of this unit as the target and roll a dice. On a 2+, pick 1 option: On Your Feet! If the target is not in combat, you can return D3 slain models to it. Hold the Line! Add 3 to the control score of the target until the start of your next turn.
+Freigilden-Stahlhelme (Kastelliten)	Freeguild Steelhelms (Castelite)
+Freigilden-Waffe	Freeguild Weapon
+Deine Bewegungsphase: Beansprucht diese Einheit ein Ziel, das du kontrollierst und das nicht von feindlichen Modellen beansprucht wird, wirf einen Würfel. Bei 3+ gilt das Ziel für dich als geweiht. Befreundete Einheiten haben Rettung (6+), solange sie ein geweihtes Ziel beanspruchen. Erlangt dein Gegner die Kontrolle über ein geweihtes Ziel, gilt es nicht länger als geweiht.	Your Movement phase: If this unit is contesting an objective you control that is not contested by enemy models, roll a dice. On a 3+, that objective counts as consecrated for you. Friendly units have Ward (6+) while contesting a consecrated objective. If your opponent gains control of a consecrated objective, it is no longer consecrated.
+Freigilden-Ritter	Freeguild Knights
+Ritterwaffe	Knight's Weapon
+Verheerender Ansturm	Devastating Charge
+Beliebige Angriffsphase: Hat diese Einheit in dieser Phase angegriffen, wähle eine feindliche Einheit im Nahkampf mit ihr und wirf einen Würfel. Bei 2+ füge dem Ziel W3 tödlichen Schaden zu.	Any Charge phase: If this unit charged in this phase, pick an enemy unit in combat with it and roll a dice. On a 2+, inflict D3 mortal damage on the target.
+Eisenschmiede-Großkanone	Ironweld Great Cannon
+Großkanone: Kanonenkugel	Great Cannon: Cannonball
+Großkanone: Kartätsche	Great Cannon: Canister Shot
+Werkzeug und Handwaffen der Mannschaft	Crew's Tools and Handweapons
+Granatenmunition	Grenade Ammunition
+Passiv: Jedes Mal, wenn diese Einheit eine Fernkampf-Fähigkeit einsetzt, wähle Kanonenkugel oder Kartätsche als Waffenprofil für alle Attacken mit der Großkanone. Kanonenkugel kann nur gewählt werden, wenn diese Einheit in jenem Zug keine Bewegung-Fähigkeit eingesetzt hat.	Passive: Each time this unit uses a Shoot ability, choose either Cannonball or Canister Shot as the weapon profile for all attacks made with the Great Cannon. Cannonball can only be chosen if this unit did not use a Move ability in that turn.
+Tzaangor-Kriegsherde	Tzaangor Warflock
+Unaufhörlicher Wandel	Relentless Change
+Passiv: Subtrahiere 1 vom Wuchtwert von Waffen, mit denen Attacken gegen diese Einheit ausgeführt werden, solange du der Außenseiter bist.	Passive: Subtract 1 from the Rend characteristic of weapons used for attacks that target this unit while you are the underdog.
+Arkane Ritualisten	Arcane Ritualists
+Passiv: Addiere 1 zu Zauberwürfen für deinen General, solange er sich vollständig innerhalb von 6 Zoll um eine andere befreundete Einheit befindet.	Passive: Add 1 to casting rolls for your general while it is wholly within 6" of another friendly unit.
+Vorhergesagter Schlag	Foreseen Strike
+Einmal pro Schlacht, gegnerische Bewegungsphase: Wähle eine sichtbare befreundete Einheit ganz innerhalb von 12 Zoll um deinen General, die nicht im Nahkampf ist. Sie kann sich bis zu W6 Zoll bewegen, durch die Nahkampfreichweite feindlicher Einheiten, aber nicht im Nahkampf enden.	Once per battle, enemy Movement phase: Pick a visible friendly unit wholly within 12" of your general that is not in combat. It can move up to D6", through the combat range of enemy units, but cannot end that move in combat.
+Die Realität falten	Folding Reality
+Deine Heldenphase: Wähle eine sichtbare befreundete Einheit ganz innerhalb von 12 Zoll um deinen General und führe einen Zauberwurf mit 2W6 aus. Bei 6+ nimm das Ziel vom Schlachtfeld und stelle es ganz innerhalb von 12 Zoll um deinen General und mehr als 6 Zoll von allen Feinden wieder auf.	Your Hero phase: Pick a visible friendly unit wholly within 12" of your general and make a casting roll of 2D6. On a 6+, remove the target from the battlefield and set it up again wholly within 12" of your general and more than 6" from all enemy units.
+Höllentor	Hellgate
+Deine Heldenphase: Wähle eine sichtbare feindliche Einheit innerhalb von 18 Zoll um deinen General und führe einen Zauberwurf mit 2W6 aus. Bei 5+ wirf entweder 3 Würfel oder so viele Würfel, wie du Taktikvorhabenkarten in dieser Schlacht abgelegt hast. Für jede 4+ füge dem Ziel 1 tödlichen Schaden zu.	Your Hero phase: Pick a visible enemy unit within 18" of your general and make a casting roll of 2D6. On a 5+, roll either 3 dice or as many dice as the number of tactic cards you have discarded in this battle. For each 4+, inflict 1 mortal damage on the target.
+Mutierende Zauberei	Mutating Sorcery
+Ende eines beliebigen Zugs: Wähle eine sichtbare feindliche Einheit innerhalb von 12 Zoll um deinen General (feindliches Ziel) und optional eine befreundete Tzaangors-Einheit im Nahkampf mit ihr (befreundetes Ziel). Wirf einen W3: Bei 2+ füge dem feindlichen Ziel tödlichen Schaden in Höhe des Wurfs zu und bringe 1 getötetes Modell in das befreundete Ziel zurück.	End of any turn: Pick a visible enemy unit within 12" of your general (the enemy target) and, optionally, a friendly Tzaangors unit in combat with it (the friendly target). Roll a D3: on a 2+, inflict mortal damage on the enemy target equal to the roll and return 1 slain model to the friendly target.
+Tzaangor-Schamane	Tzaangor Shaman
+Stab des Wandels und Ritualdolch	Staff of Change and Ritual Dagger
+Mutationsaura	Mutating Aura
+Deine Heldenphase: Wähle eine sichtbare feindliche Einheit innerhalb von 18 Zoll um diese Einheit und führe einen Zauberwurf mit 2W6 aus. Bei 7+ erleidet das Ziel bis zu deinem nächsten Zug für jeden unmodifizierten Trefferwurf von 1 bei Nahkampfattacken des Ziels 1 tödlichen Schaden, nachdem die Kämpfen-Fähigkeit abgehandelt wurde.	Your Hero phase: Pick a visible enemy unit within 18" of this unit and make a casting roll of 2D6. On a 7+, until the start of your next turn, for each unmodified hit roll of 1 for a Melee attack made by the target, inflict 1 mortal damage on the target after the Fight ability has been resolved.
+Tzaangor-Erleuchtete	Tzaangor Enlightened
+Tzeentchianischer Speer und Bösartiger Schnabel	Tzeentchian Spear and Vicious Beak
+Vorherbestimmte Ankunft	Destined Arrival
+Wird nicht in der Aufstellungsphase aufgestellt. Deine Bewegungsphase (ab der zweiten Schlachtrunde): Stelle diese Einheit ganz innerhalb deines Territoriums, innerhalb von 1 Zoll um eine Schlachtfeldkante und weiter als 6 Zoll von allen Feinden entfernt auf.	This unit is not set up in the setup phase. Your Movement phase (from the second battle round): Set up this unit wholly within your territory, within 1" of a battlefield edge and more than 6" from all enemy units.
+Vollstrecker des Schicksals	Executioner of Fate
+Passiv: Addiere 1 zu Angriffswürfen für diese Einheit, solange du der Außenseiter bist.	Passive: Add 1 to charge rolls for this unit while you are the underdog.
+Tzaangor-Omenleser	Tzaangor Skyfires
+Pfeil des Schicksals	Arrow of Fate
+Bogenschaft und Bösartiger Schnabel	Bowshaft and Vicious Beak
+Auserkorene Beute	Chosen Prey
+Deine Fernkampfphase: Wähle eine feindliche Einheit, der durch Fernkampfattacken dieser Einheit in dieser Phase mindestens 1 Schadenspunkt zugewiesen wurde. Addiere für den Rest des Zugs 1 zu Trefferwürfen für Nahkampfattacken befreundeter Einheiten, deren Ziel jene Einheit ist.	Your Shooting phase: Pick an enemy unit that was allocated at least 1 damage point by Shooting attacks made by this unit in this phase. For the rest of the turn, add 1 to hit rolls for Melee attacks made by friendly units that target that unit.
+Tzaangors (Kriegsherde)	Tzaangors (Warflock)
+Bösartige Klingen und Bösartiger Schnabel	Vicious Blades and Vicious Beak
+Boshafte Räuber	Wicked Raiders
+Passiv: Addiere 1 auf Verwundungswürfe für Attacken dieser Einheit, solange sie sich vollständig innerhalb von feindlichem Territorium befindet.	Passive: Add 1 to wound rolls for attacks made by this unit while it is wholly within enemy territory.

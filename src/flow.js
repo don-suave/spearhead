@@ -177,7 +177,7 @@ function* turn(G){const S=G.S;
   S.ph=ph;S.Ph=newPh();G.emit({t:'phase'});const s0=snapOf(S);G.phEv=[];G.phD=[];
   if(ph>0)yield* cmdWindow(G);
   if(ph==5&&HK.ph5)HK.ph5(G);
-  if(ph==1||ph==2)yield* oppWindow(G,'start');
+  if(ph>=1&&ph<=3)yield* oppWindow(G,'start');
   if(ph==2)yield* oppMove(G);
   if(ph==2&&!S.over)yield* autoReinf(G);
   const sk=ph>=1&&ph<=5&&!S.over?phaseSkip(S):'';

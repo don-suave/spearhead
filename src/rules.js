@@ -6,7 +6,7 @@ import {mkUnit} from './state.js';
 import {gridPos,radius,wholly,udist,abs,mgap,inRange,inRangePt,cohBad,syncM,removeModels,setAbs,mDistPt} from './models.js';
 import {choice,ask} from './game.js';
 import {fxL,fxSum,fxMin,addFx,usedKey,useKey} from './fx.js';
-import {abList,abGlobals,abCheck,rsvGlobals,AB,runAb} from './abil.js';
+import {abList,abGlobals,abCheck,rsvGlobals,AB,runAb,betr} from './abil.js';
 
 // ---------- Abfragen ----------
 export const byId=(S,id)=>S.U.find(u=>u.id==id);
@@ -103,6 +103,7 @@ export function modW(S,u,w,e,shoot){const o=u.o;let x=hkW(S,u,w,e,shoot);const c
  if(e&&!shoot){const rv=fxL(S,u,'rendV').filter(f=>f.w==e.id).reduce((t,f)=>t+f.v,0);if(rv&&x[5]>0){c();x[5]=Math.max(0,x[5]-rv)}}
  if(hasAb(u,'hh_stark')&&dk(S,u)&&typeof x[2]=='number'){c();x[2]=+x[2]+dk(S,u)}
  if(shoot&&fxL(S,u,'critV').length&&!(x[7]||'').includes('V')){c();x[7]=(x[7]||'')+'V'}
+ if(!shoot&&fxL(S,u,'critVM').length&&!(x[7]||'').includes('V')){c();x[7]=(x[7]||'')+'V'}
  if(!shoot&&fxL(S,u,'critD').length&&!(x[7]||'').includes('D')){c();x[7]=(x[7]||'')+'D'}
  if(hasAb(u,'kh_eifer')&&has(S.T.charged,u.id)){c();x[5]=(x[5]||0)+1}
  if(u.gen&&ENI(S,o)=='sp_klinge'&&w[0]=='Reliquien-Celestitwaffe'){c();x[5]=(x[5]||0)+1}
@@ -115,7 +116,7 @@ export function modW(S,u,w,e,shoot){const o=u.o;let x=hkW(S,u,w,e,shoot);const c
  return x}
 export const cn=(u,p)=>p.length>3?(u.M?abs(u).filter(m=>objD(p,m.x,m.y)-m.l/2<=0).length:(objD(p,u.x,u.y)-u.r<=0?u.n:0)):u.M?inRangePt(u,p[0],p[1],OR(p)):(Math.hypot(u.x-p[0],u.y-p[1])-u.r<=OR(p)?u.n:0);
 export const ct=(u,p)=>cn(u,p)>0;
-export const cvOf=(S,u,k=0,bi=-1)=>Math.min(hasAb(u,'sp_ako')&&!akOf(u)?1:1e9,fxL(S,u,'ctlmax').length?Math.min(...fxL(S,u,'ctlmax').map(f=>f.v)):1e9,Math.max(0,u.cv*(k||nm(u))+hk(S,'ctl',u,bi)+(RGI(S,u.o)=='fe_diebe'?5:0)+(S.T.cvb[u.id]||0)+fxSum(S,u,'ctl')+(u.gen&&ENI(S,u.o)=='gw_prosp'?2:0)+(u.dn=='Mondclan-Piksa'&&litIn(S,u)?3:0)+(hasAb(u,'sp_besch')?1:0)+(hasAb(u,'sp_ako')?akOf(u):0)+(hasAb(u,'sv')&&bi>=0&&into(S,u.o,S.obj[bi][0],S.obj[bi][1])>=3?3:0)+(RG(S,u.o)=='Wilde Zeloten'&&u.name=='Freigilden-Stahlhelme'?3:0)+(hasAb(u,'ghol')&&has(S.T.charged,u.id)?2:0)+(hasAb(u,'fp_tramp')&&has(S.T.charged,u.id)?2:0)+(wgN(S,u.o)>=5?2:0)+(RGI(S,u.o)=='gw_holt'&&!isHero(u)&&S.U.some(f=>f.o!=u.o&&f.x>=0&&udist(u,f)<=CR&&(nm(f)>=6||f.wm>=3))?5:0)-(cycOf(S,1-u.o)==3&&S.U.some(f=>f.o!=u.o&&f.x>=0&&udist(u,f)<=CR&&AN(S,f.o)=='Seuchenzelle')?3:0)-(nearF(S,u,'vulk')?1:0)));
+export const cvOf=(S,u,k=0,bi=-1)=>Math.min(hasAb(u,'sp_ako')&&!akOf(u)?1:1e9,fxL(S,u,'ctlmax').length?Math.min(...fxL(S,u,'ctlmax').map(f=>f.v)):1e9,Math.max(0,u.cv*(k||nm(u))+hk(S,'ctl',u,bi)+(RGI(S,u.o)=='fe_diebe'?5:0)+(S.T.cvb[u.id]||0)+fxSum(S,u,'ctl')+GL.ctl.reduce((q,f)=>q+(+f(S,u)||0),0)+(u.gen&&ENI(S,u.o)=='gw_prosp'?2:0)+(u.dn=='Mondclan-Piksa'&&litIn(S,u)?3:0)+(hasAb(u,'sp_besch')?1:0)+(hasAb(u,'sp_ako')?akOf(u):0)+(hasAb(u,'sv')&&bi>=0&&into(S,u.o,S.obj[bi][0],S.obj[bi][1])>=3?3:0)+(RG(S,u.o)=='Wilde Zeloten'&&u.name=='Freigilden-Stahlhelme'?3:0)+(hasAb(u,'ghol')&&has(S.T.charged,u.id)?2:0)+(hasAb(u,'fp_tramp')&&has(S.T.charged,u.id)?2:0)+(wgN(S,u.o)>=5?2:0)+(RGI(S,u.o)=='gw_holt'&&!isHero(u)&&S.U.some(f=>f.o!=u.o&&f.x>=0&&udist(u,f)<=CR&&(nm(f)>=6||f.wm>=3))?5:0)-(cycOf(S,1-u.o)==3&&S.U.some(f=>f.o!=u.o&&f.x>=0&&udist(u,f)<=CR&&AN(S,f.o)=='Seuchenzelle')?3:0)-(nearF(S,u,'vulk')?1:0)));
 export const nearest=(u,l)=>{let b=null,d=1e9;l.forEach(e=>{const x=dist(u,e);if(x<d){d=x;b=e}});return b};
 export const cnm=(S,o)=>S.obj.map((p,k)=>S.oc[k]===o?ONM(S)[k]:null).filter(Boolean).join(', ');
 export const ctrl=(S,o)=>S.oc.filter(x=>x===o).length;
@@ -172,8 +173,8 @@ export function chkWin(G){const S=G.S;[0,1].forEach(o=>{if(!S.over&&!S.U.some(u=
 const inFld=m=>{const c=Math.abs(Math.cos(m.a||0)),s=Math.abs(Math.sin(m.a||0)),hx=c*m.l/2+s*m.w/2,hy=s*m.l/2+c*m.w/2;return m.x>=hx-1e-9&&m.x<=W-hx+1e-9&&m.y>=hy-1e-9&&m.y<=H-hy+1e-9};
 const inField=(x,y,r)=>x>=r&&x<=W-r&&y>=r&&y<=H-r;
 // Reserve am Spielfeldrand: Die Einheit wird in Reihen entlang des nächsten Rands aufgestellt, damit alle Modelle in der Randzone stehen
-export function rsvForm(u,x,y){if(!(u.rsv=='edge'||u.rsv=='edgeT'||u.rsv=='edge1'||u.rsv=='edge6')||!u.M)return null;
- const lim=u.rsv=='edge1'?1:u.rsv=='edge6'?6:3,n=u.M.length,bases=u.M.map(m=>({l:m.l,w:m.w})),l=Math.max(...bases.map(b=>b.l)),w=Math.max(...bases.map(b=>b.w)),st=l+.15,dp=w+.15;
+export function rsvForm(u,x,y){if(!(u.rsv=='edge'||u.rsv=='edgeT'||u.rsv=='edge1'||u.rsv=='edgeT1'||u.rsv=='edge6')||!u.M)return null;
+ const lim=u.rsv=='edge1'||u.rsv=='edgeT1'?1:u.rsv=='edge6'?6:3,n=u.M.length,bases=u.M.map(m=>({l:m.l,w:m.w})),l=Math.max(...bases.map(b=>b.l)),w=Math.max(...bases.map(b=>b.w)),st=l+.15,dp=w+.15;
  const ed=[x,W-x,y,H-y],k=ed.indexOf(Math.min(...ed));if(ed[k]>lim+3)return null;const span=k>=2?W:H,maxRows=Math.max(1,Math.floor((lim-w)/dp+1e-9)+1);
  let rows=n>=7&&maxRows>=2?2:1;while(rows<maxRows&&Math.ceil(n/rows)*st>span-1)rows++;
  const per=Math.ceil(n/rows),G=gridPos(bases,per,false),half=Math.max(...G.map(m=>Math.abs(m.dx)+m.l/2)),s0=Math.max(half,Math.min(span-half,k>=2?x:y)),minD=Math.min(...G.map(m=>m.dy-m.w/2));
@@ -207,8 +208,8 @@ export function placeErr(S,kind,o,u,x,y,a){
  if(kind=='dep'){if(onTerM(S,g)||P.some(m=>depBad(S,o,m))||overlapErr(S,g))return 'Ganz im eigenen Gebiet, mehr als 6 Zoll vom Gegner, nicht auf Einheiten';return ''}
  if(kind=='amb'){const dd=e=>dist(g,e);if(!fe.every(e=>dd(e)>CR)||!fe.some(e=>dd(e)<=6)||onTerM(S,g)||!P.every(m=>inFld(m))||overlapErr(S,g))return '3 bis 6 Zoll vom Gegner, nicht im Nahkampf';return ''}
  if(kind=='repl'){if(onTerM(S,g)||P.some(m=>into(S,o,m.x,m.y)<m.l/2||Math.min(m.x,m.y,W-m.x,H-m.y)+m.l/2>6)||fe.some(e=>dist(g,e)<=CR)||overlapErr(S,g))return 'Ganz im eigenen Gebiet, höchstens 6 Zoll vom Rand, nicht im Nahkampf';return ''}
- if(kind=='rsv'){const t=u.rsv=='edgeT'?'edge':u.rsv,ok=m=>t=='edge'||t=='edge1'||t=='edge6'?Math.min(m.x,m.y,W-m.x,H-m.y)-m.l/2<=(t=='edge'?3:t=='edge6'?6:1):t=='corner'?[[0,0],[W,0],[0,H],[W,H]].some(c=>Math.hypot(m.x-c[0],m.y-c[1])-m.l/2<=6):true;
-  if(onTerM(S,g)||!P.every(ok)||(u.rsv=='edgeT'&&P.some(m=>into(S,o,m.x,m.y)<m.l/2))||fe.some(e=>dist(g,e)<=(t=='corner'?9:6))||!P.every(m=>inFld(m))||overlapErr(S,g))return t=='edge1'?'Vollständig bis 1 Zoll vom Rand, mehr als 6 Zoll von Feinden':u.rsv=='edgeT'?'Ganz in deinem Territorium, vollständig bis 3 Zoll vom Rand, mehr als 6 Zoll von Feinden':t=='edge'?'Vollständig bis 3 Zoll vom Rand, mehr als 6 Zoll von Feinden':t=='edge6'?'Vollständig bis 6 Zoll vom Rand, mehr als 6 Zoll von Feinden':t=='corner'?'Vollständig bis 6 Zoll von einer Ecke, mehr als 9 Zoll von Feinden':'Mehr als 6 Zoll von allen Feinden';return ''}
+ if(kind=='rsv'){const t=u.rsv=='edgeT'?'edge':u.rsv=='edgeT1'?'edge1':u.rsv,ok=m=>t=='edge'||t=='edge1'||t=='edge6'?Math.min(m.x,m.y,W-m.x,H-m.y)-m.l/2<=(t=='edge'?3:t=='edge6'?6:1):t=='corner'?[[0,0],[W,0],[0,H],[W,H]].some(c=>Math.hypot(m.x-c[0],m.y-c[1])-m.l/2<=6):true;
+  if(onTerM(S,g)||!P.every(ok)||((u.rsv=='edgeT'||u.rsv=='edgeT1')&&P.some(m=>into(S,o,m.x,m.y)<m.l/2))||fe.some(e=>dist(g,e)<=(t=='corner'?9:6))||!P.every(m=>inFld(m))||overlapErr(S,g))return t=='edge1'?'Vollständig bis 1 Zoll vom Rand, mehr als 6 Zoll von Feinden':u.rsv=='edgeT'?'Ganz in deinem Territorium, vollständig bis 3 Zoll vom Rand, mehr als 6 Zoll von Feinden':t=='edge'?'Vollständig bis 3 Zoll vom Rand, mehr als 6 Zoll von Feinden':t=='edge6'?'Vollständig bis 6 Zoll vom Rand, mehr als 6 Zoll von Feinden':t=='corner'?'Vollständig bis 6 Zoll von einer Ecke, mehr als 9 Zoll von Feinden':'Mehr als 6 Zoll von allen Feinden';return ''}
  if(kind=='rep6'){if(onTerM(S,g)||P.some(m=>into(S,o,m.x,m.y)<m.l/2)||fe.some(e=>dist(g,e)<=6)||overlapErr(S,g))return 'Ganz im eigenen Gebiet, mehr als 6 Zoll von allen Feinden, nicht auf Einheiten';return ''}
  if(kind=='shadow'){const t=byId(S,u.sht);if(!t||onTerM(S,g)||!wholly(g,t,6)||overlapErr(S,g)||fe.some(e=>abs(g).some(p=>abs(e).some(q=>mgap(p,q)<0))))return 'Ganz innerhalb von 6 Zoll um die Zieleinheit, nicht auf Modelle, nicht auf Gelände';return ''}
  if(kind=='repl13'){const g0=gnl(S,o);if(onTerM(S,g)||!g0||!wholly(g,g0,13)||fe.some(e=>dist(g,e)<=CR)||overlapErr(S,g))return 'Ganz innerhalb von 13 Zoll um den General, nicht im Nahkampf';return ''}
@@ -279,7 +280,7 @@ export function optForm(S,u,P0,lim,ok,hot){const A=abs(u),n=A.length;if(n<2&&!ho
    for(const [,x,y] of C.slice(0,5)){const old=P[i];P[i]=[x,y];if(ok(P)){imp=true;break}P[i]=old}}
   if(!imp)break}
  return P}
-export const moveErr=(S,u,x,y,rng,rot)=>moveForm(S,u,x,y,rng,rot).err;
+export const moveErr=(S,u,x,y,rng,rot)=>moveForm(S,u,x,y,rng,rot).err||GL.mvChk.reduce((r,f)=>r||f(S,u,x,y),'');
 // Bewegung ausführen: Endformation übernehmen, Rückgabe = verbrauchte Strecke (längster Modellweg)
 export function applyMove(S,u,a,rng){
  if(a.P){const A=abs(u),L=Math.max(0,...a.P.map((p,i)=>Math.hypot(+p[0]-A[i].x,+p[1]-A[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1]})));return L}
@@ -409,6 +410,7 @@ export function hitMod(S,u,e,shoot){let m=hk(S,'hit',u,e,shoot)+hk(S,'hitT',e,u,
  if(AN(S,e.o)=='Strahlende Phalanx'&&(S.fac||[])[e.o]==1)m--;
  if(AN(S,e.o)=='Grundstok-Wegbereiter'&&/Infanterie/.test(e.kw)&&e.M&&S.U.some(k=>k.o==e.o&&k.dn=='Grundstok-Kanonenboot'&&k.x>=0&&wholly(e,k,6)))m--;
  if(hasAb(u,'wk_wyrd')&&nm(e)>=5)m++;
+ if(S.U.some(k=>k.o==e.o&&k.x>=0&&hasAb(k,'hu_auge')&&wholly(e,k,6)))m--;
  if(shoot&&hasAb(u,'hh_flug')&&nm(e)>=5&&dist(u,e)>12)m++;
  if(e.gen&&ENI(S,e.o)=='ms_kutte')m--;
  if(RGI(S,e.o)=='fp_staub'&&has(S.T.arr,e.id))m--;
@@ -425,11 +427,12 @@ export function* reactAtk(G,a,e,shoot){const S=G.S,P=S.P[e.o];
  const rue=()=>RGI(S,e.o)=='rue'&&e.dn=='Sturmbestien'&&!usedKey(S,e.o+':rue','battle');
  const doRue=()=>{useKey(S,e.o+':rue','battle');addFx(S,{k:'ward',u:e.id,v:5,exp:'turn'});G.note('Warpsteinbeschlagene Rüstung: '+e.name+' hat Rettung 5+ bis Zugende')};
  if(G.isAI(e.o)){if(rue())doRue();return}
- const L=()=>P.hand.filter(c=>CMD[c].r=='atk'||(shoot&&CMD[c].r=='shoot'));let l=L();
+ const L=()=>P.hand.filter(c=>!offBlk(S,e.o,c)&&(CMD[c].r=='atk'||(shoot&&CMD[c].r=='shoot')));let l=L();
  while(l.length||rue()){const ro=rue(),opts=[...l.map(c=>({t:TACN[c-1][2],s:TACN[c-1][3]})),...(ro?[{t:'Warpsteinbeschlagene Rüstung',s:'Rettung 5+ bis Zugende (1× pro Schlacht)'}]:[]),{t:'Keine Reaktion'}];
   const i=yield* choice(G,e.o,'Reaktion?',`${a.name} greift ${e.name} an${shoot?' (Fernkampf)':''}. Möchtest du reagieren?`,opts,{pref:opts.length-1});
-  if(i==opts.length-1)break;if(i==l.length&&ro){doRue();l=L();continue}const c=l[i];useCard(S,e.o,c);CR2[c](S,e);l=L()}}
-export const useCard=(S,o,c)=>{const p=S.P[o];p.hand.splice(p.hand.indexOf(c),1);if(p.aside){const i=p.aside.indexOf(c);if(i>=0)p.aside.splice(i,1)}p.disc.push(c)};
+  if(i==opts.length-1)break;if(i==l.length&&ro){doRue();l=L();continue}const c=l[i];useCard(S,e.o,c);yield* betr(G,e.o,c);CR2[c](S,e);l=L()}}
+export const offBlk=(S,o,c)=>(S.offB||[]).some(f=>f.o==o&&f.c==c&&f.tn==S.tn&&f.ph==S.ph);
+export const useCard=(S,o,c)=>{const p=S.P[o];if(S.off&&S.off[o]===c&&p.aside&&p.aside.includes(c)){p.aside.splice(p.aside.indexOf(c),1);S.off[o]=null;(S.offB||(S.offB=[])).push({o,c,tn:S.tn,ph:S.ph});return}(S.dsc||(S.dsc=[0,0]))[o]++;p.hand.splice(p.hand.indexOf(c),1);if(p.aside){const i=p.aside.indexOf(c);if(i>=0)p.aside.splice(i,1)}p.disc.push(c)};
 // Wiederholungs-Marker (Visionen des Ruhms): jeder Marker wiederholt automatisch einen misslungenen Treffer-, Verwundungs- oder Schutzwurf der Einheit
 export function* rrt(G,S,u,rolls,ok,label){const o=u.o,pol=(S.rrpol||[])[o]==null?1:S.rrpol[o];let n=0;if(!pol)return 0;
  for(;;){const f=fxL(S,u,'rrt').find(x=>x.v>0);if(!f)break;const bad=rolls.map((x,k)=>k).filter(k=>!ok(rolls[k]));if(!bad.length)break;let k=bad[0];
@@ -463,19 +466,21 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
  const S=G.S,T=S.T,Ph=S.Ph,TW=S.TW,R=[];
  if(shB(S,u,e)){G.note('In Schatten gewandet: '+e.name+' kann in dieser Phase nicht von '+u.name+' angegriffen werden (bereits von einer anderen Einheit gewählt)');return}
  if(e.gen&&u.o!=e.o&&Ph.sch==null&&ENI(S,e.o)=='sn_schatten')Ph.sch=u.id;
+ for(const f of GL.pre)f(S,u,e,shoot,G);
  try{if(e.gen&&ENI(S,e.o)=='og_phiole'&&!usedKey(S,e.o+':phi','battle')){useKey(S,e.o+':phi','battle');addFx(S,{k:'ward',u:e.id,v:3,exp:'ph'});G.note('Steinyakblut-Phiole: '+e.name+' hat in dieser Phase Rettung 3+')}}catch(x){}
  let ws=shoot?u.rw:u.mw;if(shoot&&inCombat(S,u)&&!nahb(S,u))ws=ws.filter(w=>(w[7]||'').includes('B'));
+ if(shoot&&hasAb(u,'kc_muni')&&ws.length>1){const kar=has(T.moved,u.id)||(dist(u,e)<=12&&nm(e)>=4);ws=ws.filter(w=>(w[0].includes('Kartätsche'))==kar&&dist(u,e)<=w[1])}
  let crits=0,ones=0,gdfN=0,fdN=0,ak1=0;const fc=[2,2];const gdf=!shoot&&fxL(S,e,'gdf').length>0;if(!shoot){const mt=T.mt||(T.mt={});mt[e.id]=[...new Set([...(mt[e.id]||[]),u.id])]}const ch=!shoot&&has(T.charged,u.id),fr=e.fp==S.tn+'/'+S.ph&&!isHero(u),nb=nm(e);let dmg=0,mort=0;
  const o0=u.o;for(const [wi,w0] of ws.entries()){const w=modW(S,u,w0,e,shoot);
   let a=w[2],rd=w[5];if(wi==0&&!shoot&&u.gen&&EN(S,u.o)=='Frommer Befehlshaber'){a++;rd++}if(has(Ph.nr,e.id))rd=0;
-  const ck=fxL(S,u,'crit5').length||hk(S,'crit5',u,e,shoot,w)>0||(shoot&&hasAb(u,'hz_herz')&&!has(T.moved,u.id))?5:6,fl=w[7]||'',F=c=>fl.includes(c),fy=shoot&&u.gen&&fxL(S,u,'schuer').length>0&&w[0]=='Tosender Fŷratem';const av=u.M?inRange(u,e,shoot?(rngOf(S,u,w[1])||CR):CR):nm(u),mn=w[8]==null?av:Math.min(w[8],av);let n=a,ar=null;if(typeof a=='string'){const q=/^(\d?)W(\d)(?:\+(\d+))?$/.exec(a),ex=+q[3]||0;let t=0;ar=[];if(pre&&pre[wi]){pre[wi].forEach(x=>{ar.push(x);t+=x})}else for(let k=0;k<(+q[1]||1)*mn;k++){const x=(q[2]=='3'?d3(S):d6(S))+ex;ar.push(x);t+=x}n=t}else n=a*mn;if(sh)n=Math.floor(n*sh[1]+1e-9)-Math.floor(n*sh[0]+1e-9);const hr=[],wr=[],sr=[];if(F('Q')&&/Zauberer|Priester/.test(e.kw))rd++;if(F('I')&&/Infanterie/.test(e.kw))rd++;if(F('K')&&/Kavallerie/.test(e.kw))rd++;if(F('N')&&has(S.T.charged,e.id))rd++;if(F('H')&&isHero(e))rd++;if(F('O')&&/Monster/.test(e.kw))rd++;if(!shoot&&fxSum(S,u,'antichg')&&has(T.charged,e.id))rd++;if(hartWie(S,e,shoot))rd=Math.max(0,rd-1);rd=Math.max(0,rd+hk(S,'rend',u,e,shoot,w)+hk(S,'rendT',e,u,shoot,w));
+  const ck=fxL(S,u,'crit5').length||hk(S,'crit5',u,e,shoot,w)>0||(shoot&&hasAb(u,'hz_herz')&&!has(T.moved,u.id))?5:6,fl=w[7]||'',F=c=>fl.includes(c),fy=shoot&&u.gen&&fxL(S,u,'schuer').length>0&&w[0]=='Tosender Fŷratem';const av=u.M?(shoot&&GL.rng.some(f=>f(S,u,e)<=(rngOf(S,u,w[1])||CR))?nm(u):inRange(u,e,shoot?(rngOf(S,u,w[1])||CR):CR)):nm(u),mn=w[8]==null?av:Math.min(w[8],av);let n=a,ar=null;if(typeof a=='string'){const q=/^(\d?)W(\d)(?:\+(\d+))?$/.exec(a),ex=+q[3]||0;let t=0;ar=[];if(pre&&pre[wi]){pre[wi].forEach(x=>{ar.push(x);t+=x})}else for(let k=0;k<(+q[1]||1)*mn;k++){const x=(q[2]=='3'?d3(S):d6(S))+ex;ar.push(x);t+=x}n=t}else n=a*mn;if(sh)n=Math.floor(n*sh[1]+1e-9)-Math.floor(n*sh[0]+1e-9);const hr=[],wr=[],sr=[];if(F('Q')&&/Zauberer|Priester/.test(e.kw))rd++;if(F('I')&&/Infanterie/.test(e.kw))rd++;if(F('K')&&/Kavallerie/.test(e.kw))rd++;if(F('N')&&has(S.T.charged,e.id))rd++;if(F('H')&&isHero(e))rd++;if(F('O')&&/Monster/.test(e.kw))rd++;if(!shoot&&fxSum(S,u,'antichg')&&has(T.charged,e.id))rd++;if(hartWie(S,e,shoot))rd=Math.max(0,rd-1);rd=Math.max(0,rd+hk(S,'rend',u,e,shoot,w)+hk(S,'rendT',e,u,shoot,w));
   const th0=(TW.id=='ws'&&TW.obj&&ct(e,S.obj[TW.obj[0]]))||(shoot&&has(Ph.g2g,e.id))?6:w[3]-Math.max(-1,Math.min(1,(!shoot&&TW.fren==u.id?1:0)+(shoot&&u.ab=='sg'&&!has(T.moved,u.id)?1:0)+hitMod(S,u,e,shoot)+fxL(S,u,'hitW').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0)-(fr?1:0)-(shoot&&grd(S,e)?1:0)-(shoot&&covered(S,u,e)?1:0)));
   const tw=w[4]-(!shoot&&RGI(S,o0)=='uh'&&!isHero(u)&&nm(e)<nm(u)?1:0)+(S.round==1&&RG(S,e.o)=='Krach machen'?1:0)-(TW.id=='tl'&&TW.wu==u.o&&S.ter.some(t=>t.big&&tdist(e,t)<=3)?1:0)-((hasAb(u,'bd_blut')&&e.dmg>0?1:0)+(!shoot&&wgN(S,u.o)==4?1:0)+(shoot?fxSum(S,u,'wndS'):0)+fxSum(S,u,'wnd')+(!shoot&&AN(S,u.o)=='Herzspaltzirkel'&&rl(S,u.o)>=4?1:0)+(!shoot?fxSum(S,u,'wndM'):0)+fxSum(S,e,'wndT')+(!shoot?fxSum(S,e,'wndTm'):0)+hk(S,'wnd',u,e,shoot,w)+hk(S,'wndT',e,u,shoot,w)-(e.gen&&ENI(S,e.o)=='schw'?1:0));
   const aura=shoot&&e.gen&&ENI(S,e.o)=='bd_aura';if(aura)rd=0;
   const gyb=TW.id=='gy'&&S.U.some(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=3)?1:0;const sv0=-gyb+((TW.id=='wn'&&TW.wnU===e.id)?e.sv:e.sv-(aura?Math.max(0,fxSum(S,e,'svP')):fxSum(S,e,'svP'))-(hasAb(e,'fp_mauer')&&!has(T.charged,e.id)?1:0)-hk(S,'svT',e,u,shoot,w)-GL.sv.reduce((q,f)=>q+(+f(S,e)||0),0)-(e.dn=='Felsmagen-Troggoths'&&litIn(S,e)?1:0)-(hasAb(e,'sp_geord')&&S.obj.some((p,k)=>S.oc[k]===e.o&&ct(e,p))?1:0)+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:rd+(TW.rot==e.id?1:0))+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:1)*((()=>{const g=gnl(S,1-e.o);return g&&ENI(S,1-e.o)=='wam'&&dist(g,e)<=CR?1:0})()));const sv=((e.gen&&ENI(S,e.o)=='id_stahl')||AN(S,e.o)=='Sensenheer')?e.sv:sv0;const th=fxL(S,u,'hit6').length?6:th0;let h=0,wn=0,un=0,m=0;
   const hf=[],hx=[];for(let i=0;i<n;i++)hf.push(d6(S));
   if(!shoot&&e.grd===u.o&&/Infanterie/.test(u.kw))for(let i=0;i<hf.length;i++)if(hf[i]==1){hx.push(1);hf[i]=d6(S)}
-  yield* rrt(G,S,u,hf,x=>x!=1&&(x>=th||x==6),'Trefferwürfe ('+th+'+)');fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);
+  yield* rrt(G,S,u,hf,x=>x!=1&&(x>=th||x==6),'Trefferwürfe ('+th+'+)');fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);if(!shoot&&fxL(S,u,'mutau').length)T.mutN=(T.mutN||0)+hf.filter(x=>x==1).length;
   let nw=0,aw=0;
   for(const r of hf){if(r==1&&fy)ones++;if(r==1||(r<th&&r!=6)||(r<=4&&hasAb(e,'cj_att'))||(r<=3&&has(Ph.tfl,e.id)))continue;h++;if(r>=ck&&(F('D')||(hasAb(u,'ss_metz')&&!shoot&&/Zauberer|Priester/.test(e.kw))))h++;if(r>=ck&&u.gen&&ENI(S,o0)=='glk')crits++;
    if(F('M')){m++;continue}
@@ -494,7 +499,7 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
  let tot=dmg+mort;(Ph.alc||(Ph.alc={}))[e.id]=((Ph.alc||{})[e.id]||0)+tot;if(shoot)(T.sh[u.id]||(T.sh[u.id]=[])).push(e.id);const wd=TW.nw==e.id?9:Math.min(wardOf(S,e),TW.wd==e.id?6:9,has(Ph.w5,e.id)?5:9),wrd=[];
  const nwd=!shoot&&fxL(S,u,'nward').length>0,wb=fxSum(S,e,'wardB');if(wd<9&&!nwd)for(let i=0;i<tot;i++)wrd.push(d6(S));const sv2=wrd.filter(x=>x+wb>=wd).length;tot-=sv2;if(e.crow&&wrd.includes(1)){e.crow=0;G.note('Gryphkrähe von '+e.name+' wurde entfernt')}
  add(Ph.used,u.id);if(!shoot)add(T.fought,u.id);const nme=e.name;if(crits&&!shoot){u.dmg=Math.max(0,u.dmg-2*crits);G.note('Geraubte Lebenskraft: '+u.name+' heilt '+2*crits)}if(e.gen&&tot>0&&EN(S,e.o)=='Egomane'){const al=S.U.find(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=CR);if(al){let k=0;const rs=[];for(let i=0;i<tot;i++){const r=d6(S);rs.push(r);if(r>=4)k++}tot-=k;if(k){G.note('Egomane: '+k+' Schadenspunkt(e) auf '+al.name+' umgeleitet (Würfe '+rs.join(',')+')');hurt(G,al,k)}}}
- G.atk=u.id;hurt(G,e,tot);G.atk=null;if(ak1&&S.U.includes(e)&&akOf(e)>0){const k=Math.min(ak1,akOf(e));e.ak=akOf(e)-k;G.note('Sonnenakolythen: '+e.name+' verliert '+k+' Akolythen ('+e.ak+' übrig)')}if(fdN)R.push({k:'txt',s:'Schicksalswürfel eingesetzt: '+fdN});
+ G.atk=u.id;hurt(G,e,tot);G.atk=null;if(T.mutN){const k=T.mutN;T.mutN=0;if(S.U.includes(u)){G.note('Mutationsaura: '+u.name+' erleidet '+k+' tödlichen Schaden');hurt(G,u,k)}}if(ak1&&S.U.includes(e)&&akOf(e)>0){const k=Math.min(ak1,akOf(e));e.ak=akOf(e)-k;G.note('Sonnenakolythen: '+e.name+' verliert '+k+' Akolythen ('+e.ak+' übrig)')}if(fdN)R.push({k:'txt',s:'Schicksalswürfel eingesetzt: '+fdN});
  if(tot>0)for(const f of GL.dealt)f(G,u,e,tot,shoot);
  {const kk=nb-(S.U.includes(e)?nm(e):0);if(kk>0)add(T.sm||(T.sm=[]),e.id);if(!shoot&&kk>0)for(const f of GL.after)f(G,u,e,kk)}
  if(u.gen&&ENI(S,u.o)=='hz_blut'&&S.U.includes(u)&&nb-(S.U.includes(e)?nm(e):0)>0&&u.dmg>0&&canHeal(S,u)){u.dmg=Math.max(0,u.dmg-(nb-(S.U.includes(e)?nm(e):0)));G.note('In Blut gebadet: '+u.name+' heilt')}if(!shoot){const k2=nb-(S.U.includes(e)?nm(e):0);if(k2>0)add(T.kl||(T.kl=[]),u.id)}if(!S.U.includes(e))add(T.ds||(T.ds=[]),u.id);if(tot>0)add(T.dd||(T.dd=[]),e.id);if(!shoot&&hasAb(u,'ob_ernte')){const kk=nb-(S.U.includes(e)?nm(e):0);if(kk>0)u.kt=Math.min(6,(u.kt||0)+kk)}if(!shoot&&u.gen&&ENI(S,u.o)=='ob_mark'&&tot>0&&u.dmg>0&&S.U.includes(u)){const h0=u.dmg;u.dmg=Math.max(0,u.dmg-tot);G.note('Markpakt: '+u.name+' heilt '+(h0-u.dmg))}if(!shoot&&u.gen&&nb-(S.U.includes(e)?nm(e):0)>0)add(T.gk,u.id);if(shoot&&tot>0)(Ph.shd||(Ph.shd=[])).push(u.id+'>'+e.id);
@@ -565,5 +570,5 @@ export function actCheck(S,who,a){
  const ab=abilities(S,u).find(x=>x.k==a.a);if(!ab||ab.dis)return 'Fähigkeit jetzt nicht möglich';
  if(a.a=='move')return moveErr(S,u,a.x,a.y,mvRest(S,u),a.rot);
  if(a.a=='adj')return adjErr(S,u,a.P,adjAllow(S,u));
- if(a.a=='shoot'){const t=byId(S,a.t);if(!t||t.o==who)return 'Gegnerische Einheit wählen';if(dist(u,t)>rngOf(S,u,u.rw[0][1]))return 'Ziel außerhalb der Reichweite'+(obscured(S,u)?' (Reichweite im Sichtblocker halbiert)':'');if(shB(S,u,t))return 'In Schatten gewandet: In dieser Phase hat schon eine andere Einheit den General als Ziel gewählt';if(blk(S,u,t))return 'Geschützter Held: nur Schützen innerhalb von 12 Zoll';if(hidden(S,u,t))return 'Ziel nicht sichtbar: Schusslinie führt durch einen Sichtblocker, das Ziel steht höchstens 1 Zoll daran (gestrichelte Zone) – nur auf höchstens 3 Zoll beschießbar';return ''}
+ if(a.a=='shoot'){const t=byId(S,a.t);if(!t||t.o==who)return 'Gegnerische Einheit wählen';if(Math.min(dist(u,t),...GL.rng.map(f=>f(S,u,t)))>rngOf(S,u,u.rw[0][1]))return 'Ziel außerhalb der Reichweite'+(obscured(S,u)?' (Reichweite im Sichtblocker halbiert)':'');if(shB(S,u,t))return 'In Schatten gewandet: In dieser Phase hat schon eine andere Einheit den General als Ziel gewählt';if(blk(S,u,t))return 'Geschützter Held: nur Schützen innerhalb von 12 Zoll';if(hidden(S,u,t))return 'Ziel nicht sichtbar: Schusslinie führt durch einen Sichtblocker, das Ziel steht höchstens 1 Zoll daran (gestrichelte Zone) – nur auf höchstens 3 Zoll beschießbar';return ''}
  return ''}
