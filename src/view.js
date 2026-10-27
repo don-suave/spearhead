@@ -34,12 +34,14 @@ function setMode(m){mode=m;pcache=new Map();rehint()}
 /* ---------- Pop-ups ---------- */
 let popAfter=null;
 function pop(title,body,btns,close=true,after=null){
- const d=$('pop');d.innerHTML='';d.className='';d.style.display='flex';popAfter=after;const s=document.createElement('div');s.className='sheet';
+ const d=$('pop');if(!keepPop)popStack=[];keepPop=false;d.innerHTML='';d.className='';d.style.display='flex';popAfter=after;const s=document.createElement('div');s.className='sheet';
  s.innerHTML=`<h3>${title}</h3><p>${body}</p>`;
  btns.forEach(b=>{const x=document.createElement('button');x.innerHTML=b.t+(b.s?`<small>${b.s}</small>`:'');x.disabled=!!b.dis;x.onclick=()=>{closePop(false);b.fn&&b.fn()};s.appendChild(x)});
  if(close){const x=document.createElement('button');x.textContent=btns.length?'Abbrechen':'OK';x.onclick=()=>closePop();s.appendChild(x)}
- d.appendChild(s);d.onclick=e=>{if(e.target==d&&close)closePop()}}
-function closePop(run=true){$('pop').style.display='none';const f=popAfter;popAfter=null;if(run&&f)f()}
+ d.appendChild(s);const gb=document.createElement('button');gb.id='pgh';gb.textContent='◐';gb.title='Fenster 80 % durchsichtig / wieder normal';gb.onclick=e=>{e.stopPropagation();d.classList.toggle('ghost')};d.appendChild(gb);d.onclick=e=>{if(e.target==d&&close)closePop()}}
+let popStack=[],keepPop=false;
+const pushPop=()=>{const d=$('pop');if(popOpen()){popStack=popStack.concat([{k:[...d.childNodes],a:popAfter,c:d.className,o:d.onclick}]);keepPop=true}};
+function closePop(run=true){const d=$('pop'),sv=popStack.length?popStack[popStack.length-1]:null;if(sv){popStack=popStack.slice(0,-1);d.innerHTML='';sv.k.forEach(n=>d.appendChild(n));d.className=sv.c;d.onclick=sv.o;popAfter=sv.a;d.style.display='flex';return}$('pop').style.display='none';const f=popAfter;popAfter=null;if(run&&f)f()}
 const popOpen=()=>$('pop').style.display=='flex';
 function blocking(title,html){busy=true;pop(title,html,[],true,()=>{busy=false;pump()})}
 /* ---------- Spielfluss: Ereignisse anzeigen, Anfragen stellen ---------- */
@@ -124,11 +126,12 @@ function rulesApp(){const o=$('rov');if(!o)return;
  fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
 $('info').onclick=rulesApp;
 addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
-$('menu').onclick=()=>{const S=G.S,q=G.req;
+const mw=l=>l.map(b=>({...b,fn:b.ui?()=>{pushPop();b.fn();if(keepPop){keepPop=false;closePop(false)}}:()=>{const d=$('pop');d.style.display='none';popAfter=null;popStack=[];b.fn()}}));
+$('menu').onclick=()=>{pushPop();const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
  pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small><br><small>Spieler: ${(myName()||'Gast').replace(/[<>&"]/g,'')} · Version: ${relInfo()}</small>`,
- [{t:'Ansicht zurücksetzen',fn:resetView},...(S.stage?[{t:'Meine Taktikkarten ('+S.P[seat].hand.length+')',fn:hand}]:[]),...(can?[{t:'Befehle jetzt',fn:()=>answer({a:'cmdwin'})}]:[]),
-  ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,s:withSrc(seat,g),fn:()=>answer({a:g.k})})):[]),{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}])};
+ mw([{t:'Ansicht zurücksetzen',fn:resetView,ui:1},...(S.stage?[{t:'Meine Taktikkarten ('+S.P[seat].hand.length+')',fn:hand,ui:1}]:[]),...(can?[{t:'Befehle jetzt',fn:()=>answer({a:'cmdwin'})}]:[]),
+  ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,s:withSrc(seat,g),fn:()=>answer({a:g.k})})):[]),{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}]))};
 const KC=['⚔️','💰','💥','👑','🏃','💀','🎯','🔥','☄️','🔨','🔍','⚖️'],KS=['⚡','💀','⛰️','🏴','🕯️','👻','🦴','🗿','⚰️','↩️','😱','🩸'],KG0=['⚔️','🏴','↔️','⚡','⛰️','👑','🔥','🗿','🐉','🏹','⚔️','🛡️'];
 function cardsUi(){const S=G.S,h=S.P[seat].hand,d=$('cards');d.innerHTML='';
  h.forEach(c=>{const b=document.createElement('button');b.className='kc'+(CMD[c]&&CMD[c].ph==S.ph?' on':'');b.textContent=(G.S.K.pack==2?KC:G.S.K.pack==1?KS:KG0)[c-1]||'🂠';b.setAttribute('aria-label',TAC[c-1][0]);
