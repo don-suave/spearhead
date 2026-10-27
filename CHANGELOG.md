@@ -1,5 +1,8 @@
 # Changelog
 
+## v104
+- Neue Armee: Gebeinwache (Höfe der Leichenfresser): Wahn und Irrsinn (Ritterheer/Festmahl/Wächter/Jäger), Scheußlicher Bluthüter, Königliche Bestienhäuter, Gruftschrecken, Gruftschinder, Regimenter, Verbesserungen und Fähigkeiten.
+
 ## v103
 - Pop-ups: Button oben rechts (◐) macht das Fenster zu 80 % durchsichtig und wieder normal; Menü- und Info-Button sind immer bedienbar, auch bei offenen Pop-ups (das Menü legt sich über das offene Fenster und gibt es danach zurück).
 - Shattered Crossroads: Zielumrisse (Great Wheel, Ghal Maraz, Twin-Tailed Comet, High Star) liegen jetzt auf den Umrissen des Hintergrundbilds.

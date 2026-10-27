@@ -11,7 +11,7 @@ function mk(a0,a1='Zenestras Zeloten',reg=0,enh=0,o=0){const g=new Game(7,['ai',
  const gen=ARMY[S.K.army[0]].units.find(u=>u.gen);let G0=gen?add(gen.n,0,12,22):null;return {g,S,add,gen:G0}}
 function drive(g,it){let r=it.next(),n=0;while(!r.done&&n++<300){let a;const q=r.value;if(q&&q.t=='place'&&q.kind=='shadow'&&q.check){a={cancel:true};const t=g.S.U.find(x=>x.o==0&&x.dn=='Gossenläufer');if(t)for(let k=0;k<4000;k++){const c={x:t.x+(Math.random()*8-4),y:t.y+(Math.random()*8-4),a:0};if(!q.check(c)){a=c;break}}}else a=aiAnswer(g,q,()=>.37);r=it.next(a)}if(!r.done)throw new Error('Endlos');}
 const E=(S,add,x=26,y=22,dn='Freigilden-Stahlhelme',n)=>add(dn,1,x,y,n);
-import {hk} from '../src/hooks.js';import {modW,hitMod,attackG,hidden} from '../src/rules.js';import {doRetreat} from '../src/cards.js';
+import {hk} from '../src/hooks.js';import {modW,hitMod,attackG,hidden,rsvForm} from '../src/rules.js';import {wahnStart} from '../src/abil3.js';import {doRetreat} from '../src/cards.js';
 import {mkUnits} from '../src/state.js';import {eot3} from '../src/abil3.js';
 const KV='Kavalos-Speerspitze';
 T('Kavalos: General Rettung 5+ (Verbesserung), Klinge Krit. 2 Treffer',()=>{const {S,gen}=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_arch'));assert.equal(wardOf(S,gen),5);const m=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_klinge'));const w=abilities?0:0;assert.ok(m.gen)});
@@ -92,4 +92,17 @@ T('Aaskreuzzug: Verwandlung, Rede, Blutrote Kost, Gral, Raubtiersprünge, Sieges
  const gr=mk(AK,'Zenestras Zeloten',0,ei(AK,'fc_gral'));gr.gen.dmg=4;drive(gr.g,AB.fc_gral.run(gr.g,0));assert.ok(gr.gen.dmg<4);
  const rt=mk(AK);const mr=rt.add('Morbheg-Ritter',0,16,22);const f=E(rt.S,rt.add,18.5,22);rt.S.ph=2;drive(rt.g,doRetreat(rt.g,mr,{}));assert.equal(mr.dmg,0);assert.ok(rt.S.T.FZ.includes(mr.id));
  const sm=mk(AK);const v=sm.add('Varghulf-Höfling',0,16,22);v.dmg=5;const fe=E(sm.S,sm.add,18.5,22);sm.S.T.kl=[v.id];drive(sm.g,eot3(sm.g,0,0));assert.ok(v.dmg<5)});
+
+const GW='Gebeinwache';
+T('Gebeinwache: Registrierung, Wahn und Irrsinn (Runde 1 Wahl, danach 1–3 wechseln, 4+ gleich)',()=>{for(const k of ['lw_wahn','lw_waechter','lw_jaeger','lw_sinn','lw_herausf','lw_jagd','lw_chor','lw_blast','lw_land','lw_klinge','lw_chor2'])assert.ok(AB[k],k);const {g,S}=mk(GW,'Zenestras Zeloten',ri(GW,'lw_waechter'));drive(g,wahnStart(g,0));assert.ok(S.wz&&S.wz[0]&&['ritter','fest','waech'].includes(S.wz[0].cur));let same=0,diff=0;for(let i=0;i<40;i++){S.rng=i*17+3;const c0=S.wz[0].cur;drive(g,wahnStart(g,0));if(S.wz[0].cur==c0)same++;else diff++}assert.ok(same>5&&diff>5,'same '+same+' diff '+diff)});
+T('Gebeinwache: Ritterheer, Festmahl, Wächter, Jäger',()=>{const a=mk(GW);const {S,add,gen}=a;S.wz=[{cur:'ritter',last:'ritter'},null];const e=E(S,add,gen.x+2,gen.y);assert.equal(hk(S,'hit',gen,e,false),0,'L0_1');S.T.charged.push(gen.id);S.T.cr0[gen.id]=8;assert.equal(hk(S,'hit',gen,e,false),1,'L0_2');S.T.cr0[gen.id]=7;assert.equal(hk(S,'hit',gen,e,false),0,'L0_3');
+ const f=mk(GW);const bh=f.add('Königliche Bestienhäuter',0,10,10);bh.n=4;f.gen.dmg=3;f.S.wz=[{cur:'fest',last:'fest'},null];drive(f.g,eot3(f.g,0,0));assert.ok(bh.n>4);assert.equal(f.gen.dmg,2,'L1_1');
+ const w=mk(GW,'Zenestras Zeloten',ri(GW,'lw_waechter'));const wu=w.add('Gruftschrecken',0,w.S.obj[0][0],w.S.obj[0][1]);w.S.wz=[{cur:'waech',last:'waech'},null];assert.equal(GL.sv.reduce((t,x)=>t+(+x(w.S,wu)||0),0),1,'L2_1');w.S.wz=[{cur:'ritter',last:'ritter'},null];assert.equal(GL.sv.reduce((t,x)=>t+(+x(w.S,wu)||0),0),0,'L2_2');
+ const j=mk(GW,'Zenestras Zeloten',ri(GW,'lw_jaeger'));const ju=j.add('Gruftschrecken',0,12,12);j.S.wz=[{cur:'jaeg',last:'jaeg'},null];const je=E(j.S,j.add,14,12);assert.equal(hk(j.S,'wnd',ju,je,false,ju.mw[0]),1,'L3_1');ju.x=j.S.obj[0][0];ju.y=j.S.obj[0][1];assert.equal(hk(j.S,'wnd',ju,je,false,ju.mw[0]),0,'L3_2')});
+T('Gebeinwache: Blast zur Jagd, Klingen, Chor, Herausforderung, Land',()=>{const a=mk(GW);const {g,S,add,gen}=a;S.ph=1;const t=add('Gruftschrecken',0,gen.x+4,gen.y);let ok=0;for(let i=0;i<20;i++){S.rng=i*5+1;S.E=[];S.Ph.au=[];S.Ub=[];drive(g,AB.lw_blast.run(g,gen));if(S.E.some(x=>x.k=='cdx'))ok++}assert.ok(ok>0&&ok<20);
+ const k=mk(GW);const ks=k.add('Gruftschrecken',0,16,22);const en=E(k.S,k.add,18.5,22,'Freigilden-Stahlhelme',5);k.S.ph=5;k.S.T.charged.push(en.id);let dm=0;for(let i=0;i<20;i++){k.S.rng=i*9+4;en.dmg=0;en.n=en.nmax=5;k.S.Ph.au=[];k.S.Ub=[];drive(k.g,AB.lw_klinge.run(k.g,ks));dm+=5-en.n}assert.ok(dm>0);
+ const h=mk(GW,'Zenestras Zeloten',0,ei(GW,'lw_herausf'));h.S.ph=5;const sm=E(h.S,h.add,h.gen.x+2,h.gen.y,'Flüsterklinge');assert.ok(AB.lw_herausf.can(h.S,0));drive(h.g,AB.lw_herausf.run(h.g,0));assert.ok(h.S.T.SL.includes(sm.id));
+ const c=mk(GW,'Zenestras Zeloten',0,ei(GW,'lw_chor'));c.S.ph=3;const ct=E(c.S,c.add,c.gen.x+4,c.gen.y);assert.ok(AB.lw_chor.can(c.S,0));drive(c.g,AB.lw_chor.run(c.g,0));assert.ok(fxL(c.S,ct,'lwchor').length>0);const sh=c.add('Gruftschinder',0,c.gen.x,c.gen.y+3);assert.equal(hk(c.S,'dmg',sh,ct,true,sh.rw[0]),1);
+ const l=mk(GW);const bu=l.add('Königliche Bestienhäuter',0,3,3);assert.ok(AB.lw_land.can(l.S,bu));bu.x=15;bu.y=11;assert.ok(!AB.lw_land.can(l.S,bu));
+ assert.ok(typeof rsvForm=='function')});
 console.log(pass+' bestanden, '+fail+' fehlgeschlagen');process.exit(fail?1:0);

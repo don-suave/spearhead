@@ -1471,3 +1471,33 @@ Ungeheuerliche Krallen	Monstrous Claws
 Dolchgleiche Fangzähne	Dagger-like Fangs
 Siegesmahl	Victory Feast
 Ende eines beliebigen Zuges: Hat diese Einheit in diesem Zug mindestens ein Modell getötet, heile (W6) diese Einheit. Sie kann sofort die Fähigkeit „Rückzug“ einsetzen, ohne dass ihr dadurch tödlicher Schaden zugefügt wird.	End of any turn: If this unit slew at least one model this turn, heal (D6) this unit. It can immediately use the Retreat ability without mortal damage being inflicted on it.
+Gebeinwache	Bonereaper Guard
+Wahn des Wächters	Delusion of the Warden
+Passiv: Solange du an diesen Wahn glaubst, addiere 1 auf Rettungswürfe für befreundete Einheiten, solange jedes Modell der Einheit ein Ziel beansprucht.	Passive: While you believe in this delusion, add 1 to save rolls for friendly units while every model in the unit is contesting an objective.
+Wahn des Jägers	Delusion of the Hunter
+Passiv: Solange du an diesen Wahn glaubst, addiere 1 auf Verwundungswürfe für Nahkampfattacken befreundeter Einheiten, solange kein Modell der Einheit ein Ziel beansprucht.	Passive: While you believe in this delusion, add 1 to wound rolls for friendly units' melee attacks while no model in the unit is contesting an objective.
+Fast bei Sinnen	Nearly Sane
+Einmal pro Schlacht, Reaktion: Du sagst die Fähigkeit „Wahn und Irrsinn“ an. Du kannst den Wahnwurf wiederholen.	Once per battle, reaction: You declare the Delusion and Madness ability. You can re-roll the delusion roll.
+Eine würdige Herausforderung	A Worthy Challenge
+Einmal pro Schlacht, beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit, die die Schlacht mit 3 oder weniger Modellen begonnen hat und sich im Nahkampf mit deinem General befindet. Dein Gegner entscheidet, ob das Ziel die Herausforderung annimmt: Dann müssen für den Rest der Phase alle Attacken deines Generals und des Ziels einander als Ziel haben. Lehnt es ab, hat das Ziel für den Rest der Phase Kämpft zuletzt.	Once per battle, any combat phase: Pick an enemy unit that started the battle with 3 or fewer models and is in combat with your general. Your opponent decides whether the target accepts the challenge: if so, for the rest of the phase all attacks made by your general and the target must target each other. If it declines, the target has Fights Last for the rest of the phase.
+Jagdgefährte	Hunting Companion
+Ende eines beliebigen Zugs: Falls dein General nicht im Nahkampf ist, kann er sich 3 Zoll bewegen, aber nicht in den Nahkampf.	End of any turn: If your general is not in combat, it can move 3", but not into combat.
+Chorleiter	Choirmaster
+Einmal pro Schlacht, deine Fernkampfphase: Wähle als Ziel eine sichtbare feindliche Einheit innerhalb von 6 Zoll um deinen General. Addiere für den Rest des Zugs 1 auf den Schadenswert der Fernkampfattacken befreundeter Einheiten gegen jene Einheit.	Once per battle, your shooting phase: Pick a visible enemy unit within 6" of your general. For the rest of the turn, add 1 to the Damage characteristic of friendly units' ranged attacks against that unit.
+Scheußlicher Bluthüter	Abhorrant Bloodhound
+Blast zur Jagd!	Sound the Hunt!
+Deine Heldenphase: Wähle als Ziel eine befreundete Einheit vollständig innerhalb von 12 Zoll um diese Einheit, dann führe einen Zauberwurf (2W6) aus. Bei 6+ addiere bis zum Beginn deines nächsten Zugs bei Angriffswürfen für das Ziel 1 zur Anzahl der geworfenen Würfel (bis zu einem Maximum von 3), dann entferne 1 Würfel deiner Wahl und verwende die verbleibenden Würfel als Angriffswurf.	Your hero phase: Pick a friendly unit wholly within 12" of this unit, then make a casting roll (2D6). On 6+, until the start of your next turn, add 1 to the number of dice rolled for the target's charge rolls (up to a maximum of 3), then remove 1 die of your choice and use the remaining dice as the charge roll.
+Königliche Bestienhäuter	Royal Beastflayers
+Knechte	Menials
+Bestienhäuterwaffen	Beastflayer Weapons
+Beschaffenheit des Landes	Lay of the Land
+Deine Bewegungsphase: Wenn sich diese Einheit nicht im Nahkampf befindet und vollständig innerhalb von 6 Zoll um eine Schlachtfeldkante ist, entferne sie vom Schlachtfeld und stelle sie erneut auf, vollständig innerhalb von 6 Zoll um eine Schlachtfeldkante und weiter als 6 Zoll von allen feindlichen Einheiten entfernt.	Your movement phase: If this unit is not in combat and is wholly within 6" of a battlefield edge, remove it from the battlefield and set it up again wholly within 6" of a battlefield edge and more than 6" from all enemy units.
+Gruftschrecken	Crypt Horrors
+Ritter	Knights
+Keule und giftige Krallen	Club and Poisonous Claws
+Heilige Knochenklingen	Sacred Bone Blades
+Beliebige Nahkampfphase: Wähle als Ziel eine feindliche Einheit, die in diesem Zug angegriffen hat und sich im Nahkampf mit dieser Einheit befindet. Wirf einen Würfel für jedes Modell der Zieleinheit. Für jede 5+ füge der Zieleinheit 1 tödlichen Schaden zu.	Any combat phase: Pick an enemy unit that charged this turn and is in combat with this unit. Roll a die for each model in the target unit. For each 5+, inflict 1 mortal damage on the target unit.
+Gruftschinder	Crypt Flayers
+Durchbohrende Krallen	Piercing Talons
+Unheiliger Chor	Unholy Choir
+Deine Fernkampfphase: Wähle als Ziel eine sichtbare feindliche Einheit innerhalb von 10 Zoll um diese Einheit. Subtrahiere für den Rest des Zugs die Anzahl der Schadenspunkte, die dem Ziel in dieser Phase durch die Fernkampfattacken dieser Einheit zugewiesen wurden, vom Kontrollwert des Ziels.	Your shooting phase: Pick a visible enemy unit within 10" of this unit. For the rest of the turn, subtract the number of damage points allocated to the target in this phase by this unit's ranged attacks from the target's Control characteristic.

@@ -440,6 +440,7 @@ Object.assign(AB,{
 // ---------- Etappe 3 ----------
 export function* roundStartAb(G){const S=G.S;
  for(const o of [0,1])yield* beuteStart(G,o);
+ for(const o of [0,1])yield* wahnStart(G,o);
  for(const o of [0,1]){try{if(ARMY[S.K.army[o]].tr.includes('ob_pool')){(S.obp||(S.obp=[0,0]))[o]=2;G.note((o?'Computer':'Du')+': 2 Ossiarch-Befehlspunkte')}}catch(e){}}
  for(const o of [0,1]){
   if(AN(S,o)=='Strahlende Phalanx'){const c=yield* selI(G,o,'Kriegsfacette – Runde '+S.round,'Wähle die Facette dieser Schlachtrunde; nur sie ist aktiv.',['Hyshs Macht (Heldenphase, Krit. bei 5+)','Strahlende Kompanie (−1 auf Trefferwürfe gegen dich)','Überlegene Reaktionen (2 Einheiten kämpfen nacheinander)'],1);
@@ -741,5 +742,5 @@ export const srcTag=s=>s?'<span style="display:block;color:#e8c46a;font-weight:6
 
 // ---------- Hilfen und neue Armeen (Etappe 5: abil3.js) ----------
 export {fr,en,lab,yn,rep,row,mort,pickF,pickE,genOf,nmove,roll2,claims,relocate,heroT,armyN,segD,pk,hdr,FL,vis,scE};
-import {install3,eot3,beuteStart} from './abil3.js';
+import {install3,eot3,beuteStart,wahnStart} from './abil3.js';
 install3();

@@ -1,10 +1,10 @@
 // Fähigkeiten der dritten Armeenwelle (Hooks siehe hooks.js).
 import {yn,scE,mort,AB,abUsed,en,roll2,fr,lab,hdr,pk,FL,vis,genOf,nmove,pickF,rep,row,relocate,claims,pickE} from './abil.js';
 import {HK,GL} from './hooks.js';
-import {cn,placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
-import {ptDist} from './geom.js';
+import {byId,place,rsvForm,cn,placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
+import {ptDist,W,H,CR,objD} from './geom.js';
 import {doRetreat,destReq} from './cards.js';
-import {abs,wholly,udist,mgap} from './models.js';
+import {abs,wholly,udist,mgap,setAbs} from './models.js';
 import {ARMY} from './data.js';
 import {d6,d3,add,has} from './util.js';
 import {TAC} from './data.js';
@@ -42,6 +42,17 @@ export function* beuteStart(G,o){const S=G.S;if(!(trOf(S,o,'sy_rache')||trOf(S,o
 const AGN={2:'Schutz des Tzeentch (Rettung 6+)',3:'Anmut des Slaanesh (+1 auf Rennenwürfe)',4:'Segen des Nurgle (−1 auf Verwundungswürfe gegen die Einheit)',5:'Wut des Khorne (+1 Wucht der Nahkampfwaffen)'};
 const agL=(S,u)=>(S.ag&&S.ag[u.id])||[];
 const agH=(S,u,k)=>agL(S,u).includes(k);
+const WN={ritter:'Wahn des Ritterheers',fest:'Wahn des großen Festmahls',waech:'Wahn des Wächters',jaeg:'Wahn des Jägers'};
+function wahnOpts(S,o){const l=['ritter','fest'],r=RGI(S,o);if(r=='lw_waechter')l.push('waech');if(r=='lw_jaeger')l.push('jaeg');return l}
+export function* wahnStart(G,o){const S=G.S;if(!trOf(S,o,'lw_wahn'))return;const w=(S.wz||(S.wz=[null,null]));const L=wahnOpts(S,o),last=w[o]?w[o].cur:null;let pick=null,why='';
+ const choose=function*(l,t){if(G.isAI(o))return l[d6(S)%l.length];const i=yield* pk(G,o,t,l.map(k=>[WN[k],k]),()=>0);return i||l[0]};
+ if(!last){pick=yield* choose(L,'Wahn und Irrsinn: Wahn wählen');why='gewählt'}
+ else{let r=d6(S);let note='Wahnwurf '+r;if(r<=3&&ENI(S,o)=='lw_sinn'&&!usedKey(S,o+':sinn','battle')){const y=G.isAI(o)?true:yield* yn(G,o,'Fast bei Sinnen','Wahnwurf '+r+' (1–3: anderer Wahn) wiederholen?',false);if(y){useKey(S,o+':sinn','battle');const r2=d6(S);note+=' → wiederholt: '+r2;r=r2}}
+  if(r>=4){pick=last;why=note+' (4+): derselbe Wahn'}else{pick=yield* choose(L.filter(k=>k!=last),'Wahn und Irrsinn: anderen Wahn wählen');why=note+' (1–3): anderer Wahn'}}
+ w[o]={cur:pick,last:pick};G.note((o?'Computer':'Du')+' – Wahn und Irrsinn: '+WN[pick]+' ('+why+')')}
+
+const wahnOf=(S,o)=>S.wz&&S.wz[o]?S.wz[o].cur:null;
+
 const isCK=u=>/^(Chaoskrieger|Chaosritter)/.test(u.dn||u.n||'');
 function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S.ag[u.id]=[]);const r=d6(S);let k=r;
  if(r==6){const c=[2,3,4,5].filter(x=>!L.includes(x));k=c.length?yield* pk(G,o,'Champion des Chaos: Fähigkeit für '+u.name,c.map(x=>[AGN[x],x]),x=>({5:4,2:3,4:2,3:1})[x]):0}
@@ -49,6 +60,8 @@ function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S
  rep(G,'Auge der Götter'+(src?' ('+src+')':''),row('W6',[r]),txt)}
 const agOK=(S,o,x)=>x.x>=0&&((!inCombat(S,x)&&S.obj.some((p,k)=>claims(S,x,k)&&S.oc[k]!==1-o))||has(S.T.ds||[],x.id));
 export function* eot3(G,o,act){const S=G.S;
+ if(trOf(S,o,'lw_wahn')&&wahnOf(S,o)=='fest'){const hl=[];for(const x of fr(S,o).filter(x=>x.x>=0)){if(!canHealX(S,x))continue;if(kw(x,'Knechte')){const k=Math.min(d3(S),x.nmax-x.n);if(k>0){x.n+=k;hl.push(x.name+' +'+k+' Modell(e)')}}else if(x.dmg>0){x.dmg=Math.max(0,x.dmg-1);hl.push(x.name+' heilt 1')}}if(hl.length)G.note('Wahn des großen Festmahls: '+hl.join(', '))}
+ if(ENI(S,o)=='lw_jagd'){const g=genOf(S,o);if(g&&g.x>=0&&!inCombat(S,g)&&(G.isAI(o)||(yield* yn(G,o,'Jagdgefährte','General bis zu 3" bewegen (nicht in den Nahkampf)?',true)))){const a=yield* destReq(G,g,3,{text:'Jagdgefährte: bis 3 Zoll (nicht in den Nahkampf)'});if(!a.stay){applyMove(S,g,a,3);add(S.T.moved,g.id);G.note('Jagdgefährte: '+g.name+' bewegt sich')}}}
  for(const v of fr(S,o).filter(x=>x.x>=0&&hasAb(x,'fc_mahl')&&has(S.T.kl||[],x.id))){if(canHealX(S,v))v.dmg=Math.max(0,v.dmg-d6(S));G.note('Siegesmahl: '+v.name+' heilt');if(inCombat(S,v)&&(G.isAI(o)||(yield* yn(G,o,'Siegesmahl','Sofort zurückziehen (ohne tödlichen Schaden)?',true))))yield* doRetreat(G,v,{free:true})}
  if(ENI(S,o)=='id_raubseele'){const g=genOf(S,o);if(g&&g.dmg>0&&inCombat(S,g)&&canHealX(S,g)){const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note('Seelenräuber: '+g.name+' heilt '+h)}}
  if(RGI(S,o)=='id_raub'&&!usedKey(S,o+':raub','turn')){const c=FL(S,o,x=>x.x>=0&&kw(x,'Kavallerie')&&has(S.T.fought,x.id)&&x.dmg>0&&canHealX(S,x));if(c.length){const t=yield* pk(G,o,'Schleiersee-Raubfische: Einheit heilen',[...c,['Keine',null]],x=>x?x.dmg:-1e9);if(t){useKey(S,o+':raub','turn');const h=d3(S);t.dmg=Math.max(0,t.dmg-h);G.note('Schleiersee-Raubfische: '+t.name+' heilt '+h)}}}
@@ -412,7 +425,7 @@ Object.assign(AB,{
 
  // ---- Höfe der Leichenfresser: Aaskreuzzug ----
  const fcPts=(u,n)=>{u.nd=Math.min(6,(u.nd||0)+n)};
- GL.dealt.push((G,u,e,tot)=>{const S=G.S;if(isHero(u)&&S.U.includes(u)&&trOf(S,u.o,'fc_edel')&&tot>0){fcPts(u,tot);G.note('Edle Taten: '+u.name+' erhält '+tot+' Punkt(e) ('+u.nd+')')}});
+ GL.dealt.push((G,u,e,tot,shoot)=>{const S=G.S;if(!shoot&&isHero(u)&&S.U.includes(u)&&trOf(S,u.o,'fc_edel')&&tot>0){fcPts(u,tot);G.note('Edle Taten: '+u.name+' erhält '+tot+' Punkt(e) ('+u.nd+')')}});
  Object.assign(HK,{
   fc_edel:{att:(S,u,w,e,shoot)=>!shoot&&S.U.some(h=>h.o==u.o&&h.x>=0&&isHero(h)&&(h.nd||0)>=6&&wholly(u,h,12))?1:0},
   fc_kreuz:{chg:()=>1,run:()=>1}
@@ -437,6 +450,36 @@ Object.assign(AB,{
   fc_kost:{n:'Blutrote Kost',s:'Heldenphase: Sichtbarer Feind innerhalb 18" um den General: 2W6 6+ → W3 tödlicher Schaden; Gruftgarde ganz innerhalb 6" um das Ziel erhält je Schadenspunkt 1 Modell zurück',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='fc_kost',can:(S,o)=>{const g=genOf(S,o);return !!g&&foes(S,g).some(x=>x.x>=0&&dist(g,x)<=18&&vis(S,g,x))},
    *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Blutrote Kost: Ziel',foes(S,g).filter(x=>x.x>=0&&dist(g,x)<=18&&vis(S,g,x)).map(x=>[lab(x),x]),scE);if(!t)return;if(!spell(G,'Blutrote Kost',6))return;const d=d3(S),w0=wnd(t);mort(G,t,d,'Blutrote Kost');const dealt=Math.min(d,w0);
     const gg=fr(S,o).filter(x=>x.dn=='Gruftgarde'&&x.n<x.nmax&&dist(x,t)<=6);if(gg.length&&dealt>0){const q=yield* pk(G,o,'Blutrote Kost: Gruftgarde',[...gg.map(x=>[lab(x),x]),['Keine',null]],x=>x?x.nmax-x.n:-1);if(q&&canHealX(S,q)){const k=Math.min(dealt,q.nmax-q.n);q.n+=k;G.note('Blutrote Kost: '+k+' Modell(e) kehren zu '+q.name+' zurück')}}},ai:()=>true}
+ });
+
+ // ---- Höfe der Leichenfresser: Gebeinwache (Wahn) ----
+ Object.assign(HK,{
+  lw_wahn:{hit:(S,u,e,shoot)=>!shoot&&wahnOf(S,u.o)=='ritter'&&(isHero(u)||kw(u,'Ritter'))&&has(S.T.charged,u.id)&&(S.T.cr0[u.id]||0)>=8?1:0,
+   dmg:(S,u,e,shoot)=>shoot&&e&&fxL(S,e,'lwchor').some(f=>f.o==u.o)?1:0},
+  lw_jaeger:{wnd:(S,u,e,shoot)=>!shoot&&wahnOf(S,u.o)=='jaeg'&&u.M&&!abs(u).some(m=>S.obj.some(p=>objD(p,m.x,m.y)-m.l/2<=0))?1:0}
+ });
+ GL.sv.push((S,e)=>e.x>=0&&e.M&&RGI(S,e.o)=='lw_waechter'&&wahnOf(S,e.o)=='waech'&&abs(e).every(m=>S.obj.some(p=>objD(p,m.x,m.y)-m.l/2<=0))?1:0);
+ GL.dealt.push((G,u,e,tot,shoot)=>{if(shoot&&hasAb(u,'lw_chor2')&&tot>0){const T=G.S.T;(T.lwd||(T.lwd={}));T.lwd[u.id+'>'+e.id]=(T.lwd[u.id+'>'+e.id]||0)+tot}});
+ Object.assign(AB,{
+  lw_wahn:{n:'Wahn und Irrsinn / Wahn des Ritterheers / Wahn des großen Festmahls',s:'Beginn jeder Schlachtrunde (Pflicht): Runde 1 Wahn wählen, danach W6: 1–3 anderer Wahn, 4+ derselbe. Ritterheer: unmod. Angriffswurf 8+ → +1 Treffen (Nahkampf) für Held/Ritter; Großes Festmahl: Zugende Heilen (1) aller, Knechte W3 Modelle zurück',army:1,src:(S,o)=>trOf(S,o,'lw_wahn')},
+  lw_waechter:{n:'Wahn des Wächters',s:'Passiv (bei diesem Wahn): +1 auf Schutzwürfe, solange jedes Modell der Einheit ein Ziel beansprucht',army:1,src:(S,o)=>RGI(S,o)=='lw_waechter'},
+  lw_jaeger:{n:'Wahn des Jägers',s:'Passiv (bei diesem Wahn): +1 auf Verwundungswürfe im Nahkampf, solange kein Modell der Einheit ein Ziel beansprucht',army:1,src:(S,o)=>RGI(S,o)=='lw_jaeger'},
+  lw_sinn:{n:'Fast bei Sinnen',s:'Reaktion auf „Wahn und Irrsinn“, 1× pro Schlacht: Wahnwurf wiederholen',army:1,src:(S,o)=>ENI(S,o)=='lw_sinn'},
+  lw_herausf:{n:'Eine würdige Herausforderung',s:'Nahkampfphase, 1× pro Schlacht: Feind (Schlachtbeginn ≤3 Modelle) im Nahkampf mit dem General: Gegner nimmt an (Attacken nur gegeneinander) oder lehnt ab (Ziel kämpft zuletzt)',ph:5,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='lw_herausf',can:(S,o)=>{const g=genOf(S,o);return !!g&&foes(S,g).some(x=>x.x>=0&&x.nmax<=3&&dist(g,x)<=1)},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Eine würdige Herausforderung: Ziel',foes(S,g).filter(x=>x.x>=0&&x.nmax<=3&&dist(g,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const acc=G.isAI(1-o)?false:yield* yn(G,1-o,'Eine würdige Herausforderung','Nimmt '+t.name+' die Herausforderung von '+g.name+' an? Sonst kämpft die Einheit in dieser Phase zuletzt.',false);
+    if(acc){addFx(S,{k:'only',u:g.id,v:t.id,exp:'ph'});addFx(S,{k:'only',u:t.id,v:g.id,exp:'ph'});G.note('Herausforderung angenommen: '+g.name+' und '+t.name+' greifen nur einander an')}else{add(S.T.SL,t.id);G.note('Herausforderung abgelehnt: '+t.name+' kämpft zuletzt')}},ai:()=>true},
+  lw_jagd:{n:'Jagdgefährte',s:'Zugende (jeder Zug): Ist der General nicht im Nahkampf, darf er 3" ziehen (nicht in den Nahkampf)',army:1,src:(S,o)=>ENI(S,o)=='lw_jagd'},
+  lw_chor:{n:'Chorleiter',s:'Fernkampfphase, 1× pro Schlacht: Sichtbarer Feind innerhalb 6" um den General: +1 Schaden für Fernkampfattacken befreundeter Einheiten gegen ihn (Zug)',ph:3,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='lw_chor',can:(S,o)=>{const g=genOf(S,o);return !!g&&foes(S,g).some(x=>x.x>=0&&dist(g,x)<=6&&vis(S,g,x))},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Chorleiter: Ziel',foes(S,g).filter(x=>x.x>=0&&dist(g,x)<=6&&vis(S,g,x)).map(x=>[lab(x),x]),scE);if(!t)return;addFx(S,{k:'lwchor',u:t.id,o,exp:'turn'});G.note('Chorleiter: Fernkampfattacken gegen '+t.name+' haben +1 Schaden')},ai:()=>true},
+  lw_blast:{n:'Blast zur Jagd!',s:'Heldenphase: Befreundete Einheit ganz innerhalb 12": 2W6 6+ → bei Angriffswürfen 1 Würfel zusätzlich (max. 3), 1 Würfel entfernen, bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'lw_blast'),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Blast zur Jagd!: Ziel',FL(S,u.o,x=>wholly(x,u,12)),x=>mx(x));if(!t)return;if(!spell(G,'Blast zur Jagd!',6))return;addFx(S,{k:'cdx',u:t.id,exp:'own'});G.note('Blast zur Jagd!: '+t.name+' würfelt Angriffe mit 3 Würfeln (schlechtester entfällt)')},ai:()=>true},
+  lw_land:{n:'Beschaffenheit des Landes',s:'Bewegungsphase: Nicht im Nahkampf und ganz innerhalb 6" um eine Kante: neu aufstellen, ganz innerhalb 6" um eine Kante, über 6" von Feinden',ph:2,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'lw_land'),can:(S,u)=>u.x>=0&&!inCombat(S,u)&&u.M&&abs(u).every(m=>Math.min(m.x,m.y,W-m.x,H-m.y)+m.l/2<=6),
+   *run(G,u){const S=G.S,rs=u.rsv;u.rsv='edge6';let p;try{p=yield* place(G,u.o,'rsv',u,'Beschaffenheit des Landes','Neu aufstellen: ganz innerhalb 6" um eine Schlachtfeldkante, über 6" von Feinden',{cancel:true})}finally{u.rsv=rs}
+    if(p.cancel)return;const Pf=(u.rsv='edge6',rsvForm(u,p.x,p.y));u.rsv=rs;if(Pf)setAbs(u,Pf);else{u.x=p.x;u.y=p.y}add(S.T.moved,u.id);G.note('Beschaffenheit des Landes: '+u.name+' erscheint an anderer Stelle')},ai:()=>true},
+  lw_klinge:{n:'Heilige Knochenklingen',s:'Nahkampfphase: Feind, der in diesem Zug angegriffen hat, im Nahkampf mit der Einheit: 1 W6 je Modell, je 5+ → 1 tödlicher Schaden',ph:5,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'lw_klinge'),can:(S,u)=>foes(S,u).some(x=>x.x>=0&&has(S.T.charged,x.id)&&dist(u,x)<=CR),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Heilige Knochenklingen: Ziel',foes(S,u).filter(x=>x.x>=0&&has(S.T.charged,x.id)&&dist(u,x)<=CR).map(x=>[lab(x),x]),scE);if(!t)return;const rs=[];let dm=0;for(let i=0;i<nm(t);i++){const r=d6(S);rs.push(r);if(r>=5)dm++}rep(G,'Heilige Knochenklingen',row('Würfel (5+)',rs,5),dm?t.name+': '+dm+' tödlicher Schaden':'Kein Effekt');if(dm)mort(G,t,dm,'Heilige Knochenklingen')},ai:()=>true},
+  lw_chor2:{n:'Unheiliger Chor',s:'Fernkampfphase: Sichtbarer Feind innerhalb 10": Kontrollwert −(Schadenspunkte der Fernkampfattacken dieser Einheit in dieser Phase) bis Zugende',ph:3,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'lw_chor2'),can:(S,u)=>Object.keys(S.T.lwd||{}).some(k=>k.startsWith(u.id+'>')),
+   *run(G,u){const S=G.S,c=Object.keys(S.T.lwd||{}).filter(k=>k.startsWith(u.id+'>')).map(k=>byId(S,+k.split('>')[1])).filter(x=>x&&x.x>=0&&dist(u,x)<=10&&vis(S,u,x));if(!c.length)return;const t=yield* pk(G,u.o,'Unheiliger Chor: Ziel',c.map(x=>[lab(x)+' ('+S.T.lwd[u.id+'>'+x.id]+' Schaden)',x]),x=>S.T.lwd[u.id+'>'+x.id]);if(!t)return;const v=S.T.lwd[u.id+'>'+t.id];addFx(S,{k:'ctl',u:t.id,v:-v,exp:'turn'});G.note('Unheiliger Chor: Kontrollwert von '+t.name+' −'+v)},ai:()=>true}
  });
 
 }
