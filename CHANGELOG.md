@@ -1,5 +1,8 @@
 # Changelog
 
+## v111
+- Regel-App: Nummerierung der Startseiten-Kacheln korrigiert (Battlepacks 4, Suche 5).
+
 ## v110
 - Gelände (und Reliquien) platzieren: neue Steuerung. Stück ziehen = verschieben (wird nicht sofort abgelegt), Stück antippen = um 45° drehen (↺ ↻ für Feinschritte, Zwei-Finger-Drehen bleibt), „✓ Fertig“ legt das Stück ab und bringt das nächste.
 - Regel-App: Kampfeigenschaften aller Armeen aus den PDFs ergänzt (inkl. Blutdrangjagd, Epikureische Feiernde, Ödschar, Füsilierzug, Felsenwerfer, Traumschnitter, Sternenpanzerheer, Wallbrecher, Eisenkiefa, Blutgeschworene Pilger, Mondsuchtmob).
