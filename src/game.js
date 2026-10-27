@@ -19,7 +19,8 @@ export class Game{
  // Rückgängig: Logindex, auf den zurückgesetzt wird (-1 = nicht möglich). Aufstellung: ganz von vorne; sonst letzte Bewegung/Anpassung.
  undoIdx(){const q=this.req,L=this.lk;if(!q||this.isAI(q.who))return -1;
   if(q.t=='place'&&q.kind=='dep'){let i=L.length;while(i>0&&L[i-1]=='place:dep')i--;return i<L.length?i:-1}
-  if(q.t=='act'&&L.length&&(L[L.length-1]=='act:move'||L[L.length-1]=='act:adj'))return L.length-1;return -1}
+  if(q.t=='act'){let i=L.length-1;while(i>=0&&!L[i].startsWith('act:'))i--;
+   if(i>=0&&/^act:(move|adj|run|retreat|charge|amb|rsv:\d+)$/.test(L[i])&&!L.slice(i+1).some(x=>x.startsWith('act:')))return i}return -1}
  // Spielstand aus Seed und Antworten rekonstruieren
  static replay(seed,ctl,flow,log){const g=new Game(seed,ctl).start(flow);for(const a of log){const e=g.submit(a);if(e)throw new Error('Replay: '+e)}return g}
 }

@@ -34,7 +34,7 @@ export function home(onStart){document.getElementById('home')?.remove();
  $('hgo').onclick=()=>{d.remove();onStart()};
  $('hrl').onclick=()=>document.getElementById('info')?.click();
  if(!online()){$('hst').style.display='none';return}
- const tbl=(h,rows)=>{const w=document.createElement('div');w.className='w';const t=document.createElement('table');const hr=t.insertRow();h.forEach((x,i)=>{const c=document.createElement('th');c.textContent=x;if(i&&x!=='Spieler'&&x!=='Feld'&&x!=='Armee'&&x!=='Ergebnis')c.className='n';hr.appendChild(c)});
+ const tbl=(h,rows)=>{const w=document.createElement('div');w.className='w';const t=document.createElement('table');const hr=t.insertRow();h.forEach((x,i)=>{const c=document.createElement('th');c.textContent=x;if(i&&x!=='Spieler'&&x!=='Feld'&&x!=='Armee'&&x!=='Gegner'&&x!=='Ergebnis')c.className='n';hr.appendChild(c)});
   rows.forEach(r=>{const tr=t.insertRow();r.forEach((x,i)=>{const c=tr.insertCell();c.textContent=x;if(typeof x==='number'||x==='–'||/%$/.test(x))c.className='n'})});w.appendChild(t);return w};
  const H=['Gestartet','Beendet','Siege','Nied.','Remis','Quote'],row=a=>[a.k,a.n,a.e,a.w,a.l,a.d,a.e?Math.round(100*a.w/a.e)+'%':'–'];
  fetch('/api/stats').then(r=>r.ok?r.json():r.json().catch(()=>({})).then(j=>Promise.reject(j&&j.error||('HTTP '+r.status)))).then(G=>{const st=$('hst');st.innerHTML='<h2>Statistik</h2>';
@@ -42,5 +42,5 @@ export function home(onStart){document.getElementById('home')?.remove();
   if(!G.length)return;
   [['Spieler','Name',g=>g.name||'Gast'],['Schlachtfelder','Schlachtfeld',g=>PK[g.pack]+' · '+g.field],['Armeen','Armee',g=>g.army]].forEach(([t,hd,k])=>{const h=document.createElement('h2');h.textContent=t;st.appendChild(h);st.appendChild(tbl([hd,...H],agg(G,k).map(row)))});
   const h=document.createElement('h2');h.textContent='Letzte Spiele';st.appendChild(h);
-  st.appendChild(tbl(['Wann','Spieler','Feld','Armee','Ergebnis'],G.slice(0,15).map(g=>[new Date(g.started).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}),g.name||'Gast',PK[g.pack]+' · '+g.field,g.army,g.ended?(g.winner==0?'Sieg ':g.winner==1?'Niederlage ':'Remis ')+g.vp_h+':'+g.vp_c:'offen (R'+g.round+')'])))
+  st.appendChild(tbl(['Wann','Spieler','Feld','Armee','Gegner','Ergebnis'],G.slice(0,15).map(g=>[new Date(g.started).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}),g.name||'Gast',PK[g.pack]+' · '+g.field,g.army,g.foe||'–',g.ended?(g.winner==0?'Sieg ':g.winner==1?'Niederlage ':'Remis ')+g.vp_h+':'+g.vp_c:'offen (R'+g.round+')'])))
  }).catch(e=>{$('hsum').textContent='Statistik gerade nicht verfügbar'+(typeof e=='string'&&e?' ('+e+')':'')})}

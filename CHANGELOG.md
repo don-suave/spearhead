@@ -1,5 +1,10 @@
 # Changelog
 
+## v108
+- Statistik: „Letzte Spiele“ zeigt jetzt auch die gegnerische Armee.
+- Rückgängig (↶) gilt nun für alle Bewegungsaktionen der eigenen Phase: Bewegen, Anpassen, Rennen, Rückzug, Angriff, Reserve/Hinterhalt – solange danach keine andere Aktion folgte.
+- Aufstellung: neuer Knopf „Rest automatisch“ stellt die verbleibenden Einheiten regelkonform zufällig auf. Behebt außerdem einen Fehler (fehlender Import), durch den die Startoption „Aufstellung: Zufällig“ nicht funktionierte.
+
 ## v107
 - Vier neue Armeen (alle aktuellen Battleclash-Speerspitzen jetzt komplett): **Khainitischer Schattenzirkel** (Töchter des Khaine: Schlächterkönigin auf Blutkessel, Hexenkönigin, Blutqual-Medusa, 2× Schlächterschwestern, Schattenjäger; Schattenmasken, Tanz des Todes, Schattensprung u. a.), **Hurakan-Speerspitze** (Lumineth: Windmagier, Windreiter, Auralanwächter, Windgeist; leewärtige Schlachtfeldkante mit Im Sog der Winde, Kraft des Sturms, Sprung in den Sturm, Auge des Sturms), **Kastellitenkompanie** (Städte Sigmars: Rittermarschall, 2× Stahlhelme, Ritter, Eisenschmiede-Großkanone; Befehl des Offizars, Das Land weihen, Granatenmunition) und **Tzaangor-Kriegsherde** (Jünger des Tzeentch: Schamane, Erleuchtete aus der Reserve, Omenleser, Tzaangors; Die Zukunft vorhersagen, Das Schicksal betrügen, Mutationsaura, Höllentor).
 - Engine: neue Reservezone „1 Zoll vom Rand im eigenen Territorium“, Gegner-Phasen-Fähigkeiten auch zu Beginn der gegnerischen Fernkampfphase, Bewegungs-Einschränkungen (Tosender Gegenwind), Treffer-Hooks vor Attacken (Kraft des Sturms, Schimmerling), Taktikkarten, die nach dem Befehl auf die Hand zurückkehren.

@@ -22,12 +22,12 @@ const drg=()=>mode&&(mode.t=='move'||mode.t=='dest');
 function rehint(){const m=mode;hint(m?m.hint:'');const pl=m&&m.t=='place';const hb=$('hb');hb.innerHTML='';
  if(m&&m.t=='bar'){m.q.opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o.b||o.t;b.onclick=()=>answer(i);hb.appendChild(b)});['rl','rr','ho','hy','hx'].forEach(i=>$(i).style.display='none');return}
  $('rl').style.display=$('rr').style.display=(pl&&(m.q.kind=='terr'||m.q.kind=='relic'))?'':'none';
- $('ho').style.display='none';$('hy').style.display=m&&m.t=='adj'?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
+ $('ho').style.display=pl&&m.q.auto?'':'none';if(pl&&m.q.auto)$('ho').textContent='Rest automatisch';$('hy').style.display=m&&m.t=='adj'?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
  $('hx').style.display=m&&m.t!='fightsel'&&((m.t=='place'&&m.q.cancel)||m.t!='place')?'':'none';
  $('hx').textContent=m&&m.t=='dest'?(m.chg?'Angriff abbrechen':m.pile?'Nicht nachrücken':'Stehen bleiben'):m&&(m.t=='place'||m.t=='tgt')?'✕ Abbrechen':'✕';
  const ra=!m&&G&&rsvAvail();if(ra&&ra.length){hint('Reserve bereit: '+ra.map(g=>g.t).join(' · '));$('ho').style.display='';$('ho').textContent='Aufstellen';$('hx').style.display='none';$('rl').style.display=$('rr').style.display='none'}}
 const rsvAvail=()=>{const q=G&&G.req;return q&&q.t=='act'&&!G.isAI(q.who)?globals(G.S,q.who).filter(g=>g.k.startsWith('rsv:')):[]};
-$('ho').onclick=()=>{const l=rsvAvail();if(!l.length)return;const q=G.req;pop('Aus der Reserve aufstellen','Welche Einheit soll jetzt aufgestellt werden?',l.map(g=>({t:g.t,s:g.s,fn:()=>answer({a:g.k})})))};
+$('ho').onclick=()=>{if(mode&&mode.t=='place'&&mode.q.auto){answer({auto:true});return}const l=rsvAvail();if(!l.length)return;const q=G.req;pop('Aus der Reserve aufstellen','Welche Einheit soll jetzt aufgestellt werden?',l.map(g=>({t:g.t,s:g.s,fn:()=>answer({a:g.k})})))};
 function note(t){hint(t);clearTimeout(ntm);ntm=setTimeout(rehint,2600)}
 let pcache=new Map();
 function setMode(m){mode=m;pcache=new Map();rehint()}

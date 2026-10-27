@@ -218,7 +218,7 @@ export function placeErr(S,kind,o,u,x,y,a){
  if(kind=='kdland'){const F=byId(S,u.kdf);if(!F||F.x<0||onTerM(S,g)||!P.every(m=>inFld(m))||overlapErr(S,g)||!wholly(g,F,CR)||fe.some(e=>dist(g,e)<=CR))return 'Ganz innerhalb der Nahkampfreichweite der Fregatte, nicht im Nahkampf, nicht auf Modellen';return ''}
  return 'Unbekannt'}
 export function* place(G,who,kind,u,title,text,x={}){
- return yield {t:'place',who,kind,u,title,text,...x,check:a=>(x.cancel&&a&&a.cancel)?'':(a&&Number.isFinite(a.x)&&Number.isFinite(a.y))?placeErr(G.S,kind,who,u,a.x,a.y,a.a):'Ungültig'}}
+ return yield {t:'place',who,kind,u,title,text,...x,check:a=>((x.cancel&&a&&a.cancel)||(x.auto&&a&&a.auto))?'':(a&&Number.isFinite(a.x)&&Number.isFinite(a.y))?placeErr(G.S,kind,who,u,a.x,a.y,a.a):'Ungültig'}}
 
 // ---------- Bewegung ----------
 export const pr=u=>Math.min(u.r,2); // Wegfindungsradius (Einheit bewegt sich starr; große Formationen werden nicht überschätzt)

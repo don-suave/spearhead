@@ -6,7 +6,7 @@ import {rand,d6,d3,shuffle,range,add,has} from './util.js';
 import {newT,newPh,mkUnit,mkUnits,setObj} from './state.js';
 import {kdPre,kdPost,roundStartAb,runAb,eot,dep2,AB,abUsed,CYC,rsvGlobals,crossAb,perfStreich} from './abil.js';
 import {unitFlags} from './abil.js';
-import {shB,attackG,depForm,abilities,ONM,autoPile,modW,pileR,phaseSkip,hurt,inCombat,mvOf,ENI,gnl,pileModelErr,pr,obs,hasAb,byId,eligF,sfOK,pileIn,pileErr,reactAtk,attack,actCheck,skill,updCtrl,ctrl,cnm,place,foes,dist,globals,useCard,wnd,mx,AN,RG,RGI,canHeal,isHero,rsvForm,applyMove,mvRest} from './rules.js';
+import {placeErr,shB,attackG,depForm,abilities,ONM,autoPile,modW,pileR,phaseSkip,hurt,inCombat,mvOf,ENI,gnl,pileModelErr,pr,obs,hasAb,byId,eligF,sfOK,pileIn,pileErr,reactAtk,attack,actCheck,skill,updCtrl,ctrl,cnm,place,foes,dist,globals,useCard,wnd,mx,AN,RG,RGI,canHeal,isHero,rsvForm,applyMove,mvRest} from './rules.js';
 import {CR,W,H,pathPts,plen,terrRoom} from './geom.js';
 import {setAbs,abs,inRange} from './models.js';
 import {SB_TER,CA_MANOR,CA_START,CA_REL} from './packdata.js';
@@ -92,8 +92,11 @@ function* deploy(G){const S=G.S,K=S.K;
  for(const o of [K.att,K.def]){
   if(ARMY[K.army[o]].tunnel){const l=S.U.filter(u=>u.o==o&&!u.amb&&!u.rsv).map(u=>[u.name+(u.c>1?' ('+u.id+')':''),u]);const t=yield* ask(G,o,'Die lauernde Rattenschar',[...l,['Keine Einheit',null]],'Eine Einheit in Reserve (Tunnel) stellen? Sie kommt per Nagloch-Überfall (Bewegungsphase) bis 6" von einer Ecke, mehr als 9" von Feinden. Wird sie bis Ende von Runde 3 nicht aufgestellt, ist sie zerstört.');if(t){t.rsv='corner';t.rr=1;t.tun=1}}
   const DL=S.U.filter(u=>u.o==o&&!u.amb&&!u.rsv);if(G.isAI(o))DL.sort((a,b)=>b.r*b.n-a.r*a.n);
+  let au=K.rdep&&!G.isAI(o);
   for(const u of DL){
-  const rp=K.rdep&&!G.isAI(o)?randDep(S,o,u,DL.slice(DL.indexOf(u)+1)):null;const a=rp||(yield* place(G,o,'dep',u,'Aufstellen',`Aufstellen: ${u.name} (antippen)`));const Pf=depForm(S,o,u,a.x,a.y);if(Pf)setAbs(u,Pf);else{u.x=a.x;u.y=a.y}}}
+  let a=au?randDep(S,o,u,DL.slice(DL.indexOf(u)+1)):null;
+  while(!a){const r=yield* place(G,o,'dep',u,'Aufstellen',`Aufstellen: ${u.name} (antippen)`,G.isAI(o)?{}:{auto:true});if(r.auto){au=true;a=randDep(S,o,u,DL.slice(DL.indexOf(u)+1));if(!a)au=false}else a=r}
+  const Pf=depForm(S,o,u,a.x,a.y);if(Pf)setAbs(u,Pf);else{u.x=a.x;u.y=a.y}}}
  yield* depAbil(G)}
 
 function* battle(G){const S=G.S;let f=true;
