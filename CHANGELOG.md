@@ -1,5 +1,8 @@
 # Changelog
 
+## v105
+- Neue Armee: Kharadron Himmelsschlagverband (Himmelsherrscher der Kharadron): Arkanauten-Admiral, Himmelswächter, zwei Arkanauten-Kompanien, Arkanauten-Fregatte; Durchquert die Himmel (Transport), Angriffsschiff, Lösen, Bombenvorrat, Zeitzünder-Sprengladungen und alle Verbesserungen.
+
 ## v104
 - Neue Armee: Gebeinwache (Höfe der Leichenfresser): Wahn und Irrsinn (Ritterheer/Festmahl/Wächter/Jäger), Scheußlicher Bluthüter, Königliche Bestienhäuter, Gruftschrecken, Gruftschinder, Regimenter, Verbesserungen und Fähigkeiten.
 

@@ -85,6 +85,7 @@ export function modW(S,u,w,e,shoot){const o=u.o;let x=hkW(S,u,w,e,shoot);const c
  if(!shoot&&u.gen&&ENI(S,o)=='ragn'&&w[0]=='Azangrom'){c();x[2]=+x[2]+2}
  if(fxL(S,u,'schuer').length&&w[0]=='Tosender Fŷratem'){c();x[2]='W3+4'}
  if(hasAb(u,'schwer')&&u.dmg>=10&&w[0]=='Magmadrothmaul'){c();x[2]=4}
+ if(hasAb(u,'kd_schwer')&&u.dmg>=10&&w[0]=='Schwere Himmelsharpune'){c();x[2]=1}
  if(!shoot&&fxSum(S,u,'rendP')){c();x[5]=(x[5]||0)+fxSum(S,u,'rendP')}
  if(!shoot&&!(w[7]||'').includes('G')&&(fxSum(S,u,'rendN')||fxSum(S,u,'attN'))){c();x[5]=(x[5]||0)+fxSum(S,u,'rendN');if(typeof w[2]=='number')x[2]=+x[2]+fxSum(S,u,'attN')}
  {const rs=fxL(S,u,'rendWS').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0);if(rs&&shoot){c();x[5]=(x[5]||0)+rs}}
@@ -210,6 +211,7 @@ export function placeErr(S,kind,o,u,x,y,a){
  if(kind=='repl13'){const g0=gnl(S,o);if(onTerM(S,g)||!g0||!wholly(g,g0,13)||fe.some(e=>dist(g,e)<=CR)||overlapErr(S,g))return 'Ganz innerhalb von 13 Zoll um den General, nicht im Nahkampf';return ''}
  if(kind=='rein9'){if(onTerM(S,g)||fe.some(e=>dist(g,e)<=9)||!P.every(m=>inFld(m))||overlapErr(S,g))return 'Mehr als 9 Zoll von allen Gegnern';return ''}
  if(kind=='rein'){if(onTerM(S,g)||fe.some(e=>dist(g,e)<=6)||!P.every(m=>inFld(m))||overlapErr(S,g))return 'Mehr als 6 Zoll von allen Gegnern';return ''}
+ if(kind=='kdland'){const F=byId(S,u.kdf);if(!F||F.x<0||onTerM(S,g)||!P.every(m=>inFld(m))||overlapErr(S,g)||!wholly(g,F,CR)||fe.some(e=>dist(g,e)<=CR))return 'Ganz innerhalb der Nahkampfreichweite der Fregatte, nicht im Nahkampf, nicht auf Modellen';return ''}
  return 'Unbekannt'}
 export function* place(G,who,kind,u,title,text,x={}){
  return yield {t:'place',who,kind,u,title,text,...x,check:a=>(x.cancel&&a&&a.cancel)?'':(a&&Number.isFinite(a.x)&&Number.isFinite(a.y))?placeErr(G.S,kind,who,u,a.x,a.y,a.a):'Ungültig'}}
@@ -502,7 +504,7 @@ export function abilities(S,u){
  const c=inCombat(S,u),dn=has(S.Ph.used,u.id),a=[],ph=S.ph,T=S.T,Ph=S.Ph;
  const nmv=fxL(S,u,'nomove').length>0,mv=mvOf(S,u);
  if(ph==2){a.push({k:'move',t:'Normale Bewegung',s:`bis ${mvRest(S,u).toFixed(mvRest(S,u)%1?1:0)}"`,dis:dn||c||nmv},{k:'run',t:'Rennen',s:`${mv}" + W6`,dis:dn||c||nmv||fxL(S,u,'norun').length>0},{k:'retreat',t:'Rückzug',s:`${RGI(S,u.o)=='zsz'?'kein':'W3'} tödlicher Schaden, bis ${mv}"`,dis:dn||!c||nmv})}
- if(ph==3&&u.rw.length){const rn=has(T.ran,u.id)&&!fxL(S,u,'klaev').length&&!hasAb(u,'tr_leicht')&&!hasAb(u,'id_lauf')&&!(hk(S,'ranOK',u)>0),cb=c&&!nahb(S,u)&&!u.rw.some(w=>w[7]=='B');a.push({k:'shoot',t:'Fernkampf',s:dn?'Schon eingesetzt in dieser Phase':rn?'Nicht möglich: gerannt oder zurückgezogen':cb?'Nicht möglich: im Nahkampf (nur Waffen mit „Nahkampf-Fernwaffe“)':`Reichweite ${u.rw[0][1]} Zoll`,dis:dn||rn||cb})}
+ if(ph==3&&u.rw.length){const rn=has(T.ran,u.id)&&!fxL(S,u,'klaev').length&&!fxL(S,u,'lose').length&&!hasAb(u,'tr_leicht')&&!hasAb(u,'id_lauf')&&!(hk(S,'ranOK',u)>0),cb=c&&!nahb(S,u)&&!u.rw.some(w=>w[7]=='B');a.push({k:'shoot',t:'Fernkampf',s:dn?'Schon eingesetzt in dieser Phase':rn?'Nicht möglich: gerannt oder zurückgezogen':cb?'Nicht möglich: im Nahkampf (nur Waffen mit „Nahkampf-Fernwaffe“)':`Reichweite ${u.rw[0][1]} Zoll`,dis:dn||rn||cb})}
  if(ph==4)a.push({k:'charge',t:'Angriff',s:'2W6',dis:dn||c||fxL(S,u,'nochg').length>0||(has(T.ran,u.id)&&!has(T.FZ,u.id)&&!fxL(S,u,'fz').length&&!(hk(S,'ranOK',u)>0)&&!((AN(S,u.o)=='Rudelfletscha-Jäga'||hk(S,'chgRtr',u)>0)&&has(T.rtr||[],u.id))&&!(S.TW.id=='rm'&&onRoad(S,u))&&!(u.gen&&ENI(S,u.o)=='gw_blut')&&!(S.vd&&S.vd[u.o]>=12))});
  if(ph==2&&RG(S,u.o)=='Inbrünstiger Ansturm')a.push({k:'ia',t:'Inbrünstiger Ansturm',s:'Angriff trotz Rennen (1× pro Zug)',dis:T.ia});
  if(ph==1&&u.ab=='gs')a.push({k:'gs',t:'Gefäß des Sigmar',s:'bis zu 3 Ziele, W3 je Ziel',dis:has(Ph.abu,u.id+'gs')});

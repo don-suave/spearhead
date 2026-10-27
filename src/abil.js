@@ -742,5 +742,6 @@ export const srcTag=s=>s?'<span style="display:block;color:#e8c46a;font-weight:6
 
 // ---------- Hilfen und neue Armeen (Etappe 5: abil3.js) ----------
 export {fr,en,lab,yn,rep,row,mort,pickF,pickE,genOf,nmove,roll2,claims,relocate,heroT,armyN,segD,pk,hdr,FL,vis,scE};
-import {install3,eot3,beuteStart,wahnStart} from './abil3.js';
+import {install3,eot3,beuteStart,wahnStart,kdPre,kdPost} from './abil3.js';
+export {kdPre,kdPost};
 install3();

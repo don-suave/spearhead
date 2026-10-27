@@ -1501,3 +1501,43 @@ Gruftschinder	Crypt Flayers
 Durchbohrende Krallen	Piercing Talons
 Unheiliger Chor	Unholy Choir
 Deine Fernkampfphase: Wähle als Ziel eine sichtbare feindliche Einheit innerhalb von 10 Zoll um diese Einheit. Subtrahiere für den Rest des Zugs die Anzahl der Schadenspunkte, die dem Ziel in dieser Phase durch die Fernkampfattacken dieser Einheit zugewiesen wurden, vom Kontrollwert des Ziels.	Your shooting phase: Pick a visible enemy unit within 10" of this unit. For the rest of the turn, subtract the number of damage points allocated to the target in this phase by this unit's ranged attacks from the target's Control characteristic.
+Himmelsschlagverband	Skystrike Force
+Durchquert die Himmel	Traverse the Skies
+Reaktion: Du sagst eine Bewegung-Fähigkeit für eine Arkanauten-Fregatte an, die kein Angriff ist. Wähle eine befreundete Infanterie-Einheit, die sich vollständig innerhalb der Nahkampfreichweite jener Fregatte und nicht im Nahkampf befindet. Entferne sie vom Schlachtfeld. Wenn die Fregatte ihre Bewegung beendet hat, stelle die Einheit vollständig innerhalb der Nahkampfreichweite der Fregatte und nicht im Nahkampf wieder auf. Eine Einheit kann keine Angriff-Fähigkeiten einsetzen, wenn sie im selben Zug transportiert wurde.	Reaction: You declare a Move ability for an Arkanaut Frigate that is not a Charge. Pick a friendly Infantry unit wholly within combat range of that Frigate and not in combat. Remove it from the battlefield. When the Frigate has finished its move, set that unit up again wholly within combat range of the Frigate and not in combat. A unit cannot use Charge abilities if it was transported in the same turn.
+Angriffsschiff	Assault Ship
+Einmal pro Schlacht, deine Bewegungsphase: Wähle eine befreundete Einheit, die in diesem Zug transportiert wurde. Jene Einheit kann später in diesem Zug noch Angriff-Fähigkeiten einsetzen.	Once per battle, your movement phase: Pick a friendly unit that was transported this turn. That unit can still use Charge abilities later this turn.
+Lösen	Disengage
+Einmal pro Schlacht, deine Bewegungsphase: Wähle eine befreundete Arkanauten-Fregatte. Wenn jene Einheit in dieser Phase eine Rückzug-Fähigkeit einsetzt, wird ihr kein tödlicher Schaden zugefügt und sie kann später in diesem Zug noch Fernkampf-Fähigkeiten einsetzen.	Once per battle, your movement phase: Pick a friendly Arkanaut Frigate. If that unit uses a Retreat ability this phase, no mortal damage is inflicted on it and it can still use Shoot abilities later this turn.
+Meisterliche Rüstung	Masterwork Armour
+Flasche auserlesenen Gorognas	Bottle of Fine Gorogna
+Einmal pro Schlacht, beliebige Heldenphase: Heile (W6) deinen General.	Once per battle, any hero phase: Heal (D6) your general.
+Kein Lohn ohne Risiko	No Reward Without Risk
+Einmal pro Schlacht, Reaktion: Du sagst eine Angriff-Fähigkeit für eine Einheit vollständig innerhalb von 12 Zoll um deinen General an. Du kannst den Angriffswurf für jene Angriff-Fähigkeit wiederholen.	Once per battle, reaction: You declare a Charge ability for a unit wholly within 12" of your general. You can re-roll the charge roll for that ability.
+Kein Duardin wird zurückgelassen	No Duardin Left Behind
+Einmal pro Schlacht, deine Heldenphase: Wähle eine befreundete Arkanauten-Kompanie-Einheit vollständig innerhalb von 12 Zoll um deinen General und wirf einen Würfel für jedes zerstörte Modell jener Einheit. Für jede 4+ kannst du 1 zerstörtes Modell in jene Einheit zurückbringen.	Once per battle, your hero phase: Pick a friendly Arkanaut Company unit wholly within 12" of your general and roll a die for each destroyed model in that unit. For each 4+, you can return 1 destroyed model to that unit.
+Arkanauten-Admiral	Arkanaut Admiral
+Meisterhafte Salvenpistole	Masterwork Volley Pistol
+Skalfhammer	Skaref Hammer
+Nimm dir stets, was dir zusteht	Take What Is Owed
+Deine Heldenphase: Wähle als Ziel eine befreundete Arkanauten-Kompanie-Einheit vollständig innerhalb von 12 Zoll um diese Einheit. Addiere bis zu deinem nächsten Zug W6 zum Kontrollwert des Ziels.	Your hero phase: Pick a friendly Arkanaut Company unit wholly within 12" of this unit. Until your next turn, add D6 to the target's Control characteristic.
+Himmelswächter	Skywardens
+Vulkanisationspistole	Vulcaniser Pistol
+Aethermatisches Salvengewehr	Aethermatic Volley Gun
+Himmelspike	Skypike
+Sprengladungen mit Zeitzünder	Delayed-Fuse Charges
+Ende eines beliebigen Zuges: Wähle als Ziel eine feindliche Einheit im Nahkampf mit dieser Einheit, dann wirf einen Würfel. Bei 2+ weise dem Ziel 1 tödlichen Schaden zu. Diese Einheit kann sofort die Fähigkeit „Rückzug“ einsetzen, ohne dass ihr dadurch tödlicher Schaden zugewiesen wird.	End of any turn: Pick an enemy unit in combat with this unit, then roll a die. On 2+, inflict 1 mortal damage on the target. This unit can immediately use the Retreat ability without mortal damage being inflicted on it.
+Arkanauten-Kompanie (Himmelspike)	Arkanaut Company (Skypike)
+Arkanauten-Kompanie	Arkanaut Company
+Freibeuterpistole	Privateer Pistol
+Arkanaut-Enterwaffe	Arkanaut Boarding Weapon
+Auf der Suche nach Ruhm	Seeking Glory
+Passiv: Addiere 1 zu den Trefferwürfen für Attacken dieser Einheit, deren Ziel eine Einheit ist, die ein Ziel beansprucht.	Passive: Add 1 to hit rolls for attacks made by this unit that target a unit contesting an objective.
+Arkanauten-Kompanie (Salvengewehr)	Arkanaut Company (Volley Gun)
+Leichte Himmelsharpune	Light Skyhook
+Arkanauten-Fregatte	Arkanaut Frigate
+Schwere Himmelsharpune	Heavy Skyhook
+Aetherprojektil-Karabiner	Aethershot Carbine
+Enterwaffen der Mannschaft	Crew's Boarding Weapons
+Passiv: Solange dieser Einheit mindestens 10 Schadenspunkte zugewiesen sind, ist der Attackenwert ihrer Schweren Himmelsharpune 1.	Passive: While this unit has 10 or more damage points allocated to it, the Attacks characteristic of its Heavy Skyhook is 1.
+Bombenvorrat	Bomb Stores
+Einmal pro Schlacht, deine Bewegungsphase: Wähle als Ziel eine feindliche Einheit, über die sich diese Einheit in dieser Phase hinwegbewegt hat, dann wirf einen Würfel. Bei 2+ füge dem Ziel W3 tödlichen Schaden zu.	Once per battle, your movement phase: Pick an enemy unit this unit moved over this phase, then roll a die. On 2+, inflict D3 mortal damage on the target.

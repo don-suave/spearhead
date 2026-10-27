@@ -4,7 +4,7 @@ import {settings,choice,ask,info} from './game.js';
 import {fxL,addFx,usedKey,useKey} from './fx.js';
 import {rand,d6,d3,shuffle,range,add,has} from './util.js';
 import {newT,newPh,mkUnit,mkUnits,setObj} from './state.js';
-import {roundStartAb,runAb,eot,dep2,AB,abUsed,CYC,rsvGlobals,crossAb,perfStreich} from './abil.js';
+import {kdPre,kdPost,roundStartAb,runAb,eot,dep2,AB,abUsed,CYC,rsvGlobals,crossAb,perfStreich} from './abil.js';
 import {unitFlags} from './abil.js';
 import {attackG,depForm,abilities,ONM,autoPile,modW,pileR,phaseSkip,hurt,inCombat,mvOf,ENI,gnl,pileModelErr,pr,obs,hasAb,byId,eligF,sfOK,pileIn,pileErr,reactAtk,attack,actCheck,skill,updCtrl,ctrl,cnm,place,foes,dist,globals,useCard,wnd,mx,AN,RG,RGI,canHeal,isHero,rsvForm,applyMove,mvRest} from './rules.js';
 import {CR,W,H,pathPts,plen,terrRoom} from './geom.js';
@@ -247,6 +247,7 @@ export function* doAction(G,a){const S=G.S,o=S.act;
  if(a.a.startsWith('rsv:')){const q=byId(S,+a.a.slice(4));const p=yield* place(G,o,'rsv',q,'Aus der Reserve aufstellen','Aufstellen: '+q.name,{cancel:true});if(p.cancel)return;{const Pf=rsvForm(q,p.x,p.y);if(Pf)setAbs(q,Pf);else{q.x=p.x;q.y=p.y}}q.rsv=0;if(q.lim)useKey(S,o+':ank','turn');add(S.T.arr,q.id);S.T.mvt[q.id]=0;add(S.Ph.used,q.id);add(S.T.moved,q.id);G.note(q.name+' erscheint auf dem Schlachtfeld');return}
  if(a.a.startsWith('ab:')){const id=a.a.slice(3);yield* runAb(G,id,a.u!=null?byId(S,a.u):null,o);return}
  const u=byId(S,a.u),P0=u&&u.M&&S.ph==2?abs(u).map(m=>({x:m.x,y:m.y})):null;
+ if(u)yield* kdPre(G,a,u);
  if(a.a=='move'){const L=applyMove(S,u,a,mvRest(S,u));add(S.Ph.used,u.id);add(S.T.moved,u.id);S.T.mvt[u.id]=mvOf(S,u);S.T.mvd[u.id]=(S.T.mvd[u.id]||0)+L}
  else if(a.a=='adj'){const A0=abs(u),used=Math.max(...a.P.map((p,i)=>Math.hypot(+p[0]-A0[i].x,+p[1]-A0[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1]})));add(S.T.moved,u.id);
   if(has(S.Ph.used,u.id))S.T.adj.push(u.id);else{S.T.adjB.push(u.id);S.T.mvt[u.id]=mvOf(S,u)}
@@ -259,6 +260,7 @@ export function* doAction(G,a){const S=G.S,o=S.act;
    if(y==0){const r=d6(S);G.rep('Mehr-Mehr Warpenergie!',[{k:'row',l:'Wurf (2+)',v:[r],th:2},{k:'txt',s:r>=2?'Schadenswert 3 in dieser Phase':'Rückschlag: W3 tödlicher Schaden'}]);if(r>=2)addFx(S,{k:'dmgw',u:u.id,v:'Warpstein-Muskete',n:3,exp:'ph'});else hurt(G,u,d3(S))}}
   if(!S.U.includes(u))return;yield* reactAtk(G,u,t,1);if(S.U.includes(t)&&S.U.includes(u))yield* attackG(G,u,t,1)}
  else yield* skill(G,u,a.a);
+ if(u&&['move','run','retreat'].includes(a.a))yield* kdPost(G,a,u);
  if(P0&&['move','run','retreat'].includes(a.a)&&(hasAb(u,'ms_boing')||hasAb(u,'wk_finne')))yield* crossAb(G,u,P0)}
 
 export function* endTurn(G){const S=G.S,act=S.act;

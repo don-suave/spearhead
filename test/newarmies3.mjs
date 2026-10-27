@@ -1,7 +1,7 @@
 // Tests der Fähigkeiten der neuen Spearheads (Runde 4): jede Fähigkeit wird vorbereitet, ausgeführt und geprüft
 import assert from 'node:assert/strict';
 import {Game} from '../src/game.js';import {setBoard} from '../src/geom.js';import {mkUnit,setObj,newPh,newT} from '../src/state.js';import {ARMY} from '../src/data.js';
-import {AB,eot2,dep2} from '../src/abil.js';import {aiAnswer} from '../src/ai.js';import {fxL,fxSum,usedKey} from '../src/fx.js';
+import {AB,eot2,dep2} from '../src/abil.js';import {aiAnswer} from '../src/ai.js';import {fxL,fxSum,usedKey,addFx} from '../src/fx.js';import {wholly} from '../src/models.js';
 import {wardOf,cvOf,hurt,attack,abilities,mvOf,actCheck,placeErr,wgN,hasAb,updCtrl,rngOf,nahb,dist,inCombat} from '../src/rules.js';
 let pass=0,fail=0;const T=(n,f)=>{try{f();pass++;console.log('  ok  ',n)}catch(e){fail++;console.log('  FAIL',n,'\n      ',(e.stack||e.message).split('\n').slice(0,3).join(' | '))}};
 const ix=n=>ARMY.findIndex(a=>a.n==n);
@@ -11,7 +11,7 @@ function mk(a0,a1='Zenestras Zeloten',reg=0,enh=0,o=0){const g=new Game(7,['ai',
  const gen=ARMY[S.K.army[0]].units.find(u=>u.gen);let G0=gen?add(gen.n,0,12,22):null;return {g,S,add,gen:G0}}
 function drive(g,it){let r=it.next(),n=0;while(!r.done&&n++<300){let a;const q=r.value;if(q&&q.t=='place'&&q.kind=='shadow'&&q.check){a={cancel:true};const t=g.S.U.find(x=>x.o==0&&x.dn=='Gossenläufer');if(t)for(let k=0;k<4000;k++){const c={x:t.x+(Math.random()*8-4),y:t.y+(Math.random()*8-4),a:0};if(!q.check(c)){a=c;break}}}else a=aiAnswer(g,q,()=>.37);r=it.next(a)}if(!r.done)throw new Error('Endlos');}
 const E=(S,add,x=26,y=22,dn='Freigilden-Stahlhelme',n)=>add(dn,1,x,y,n);
-import {hk} from '../src/hooks.js';import {modW,hitMod,attackG,hidden,rsvForm} from '../src/rules.js';import {wahnStart} from '../src/abil3.js';import {doRetreat} from '../src/cards.js';
+import {hk} from '../src/hooks.js';import {modW,hitMod,attackG,hidden,rsvForm} from '../src/rules.js';import {wahnStart,kdPre,kdPost} from '../src/abil3.js';import {doRetreat} from '../src/cards.js';
 import {mkUnits} from '../src/state.js';import {eot3} from '../src/abil3.js';
 const KV='Kavalos-Speerspitze';
 T('Kavalos: General Rettung 5+ (Verbesserung), Klinge Krit. 2 Treffer',()=>{const {S,gen}=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_arch'));assert.equal(wardOf(S,gen),5);const m=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_klinge'));const w=abilities?0:0;assert.ok(m.gen)});
@@ -105,4 +105,20 @@ T('Gebeinwache: Blast zur Jagd, Klingen, Chor, Herausforderung, Land',()=>{const
  const c=mk(GW,'Zenestras Zeloten',0,ei(GW,'lw_chor'));c.S.ph=3;const ct=E(c.S,c.add,c.gen.x+4,c.gen.y);assert.ok(AB.lw_chor.can(c.S,0));drive(c.g,AB.lw_chor.run(c.g,0));assert.ok(fxL(c.S,ct,'lwchor').length>0);const sh=c.add('Gruftschinder',0,c.gen.x,c.gen.y+3);assert.equal(hk(c.S,'dmg',sh,ct,true,sh.rw[0]),1);
  const l=mk(GW);const bu=l.add('Königliche Bestienhäuter',0,3,3);assert.ok(AB.lw_land.can(l.S,bu));bu.x=15;bu.y=11;assert.ok(!AB.lw_land.can(l.S,bu));
  assert.ok(typeof rsvForm=='function')});
+
+const KD='Himmelsschlagverband';
+T('Himmelsschlagverband: Registrierung, Transport, Bombenvorrat',()=>{for(const k of ['kd_himmel','kd_angriff','kd_loesen','kd_ruest','kd_gorogna','kd_risiko','kd_nachzug','kd_nimm','kd_spreng','kd_ruhm','kd_schwer','kd_bombe'])assert.ok(AB[k],k);
+ const a=mk(KD);const {g,S,add}=a;const f=add('Arkanauten-Fregatte',0,14,15);const c=add('Arkanauten-Kompanie (Himmelspike)',0,17.5,15);const ov=E(S,add,26,15);const mv={a:'move'};
+ S.ph=2;drive(g,kdPre(g,mv,f));assert.ok(c.x<0,'transportiert');assert.equal(f.kdc,c.id);f.x=33;drive(g,kdPost(g,mv,f));assert.ok(c.x>=0&&wholly(c,f,3),'abgesetzt');assert.ok(fxL(S,c,'nochg').length>0);assert.ok(S.T.kdov[f.id].includes(ov.id),'überflogen');
+ assert.ok(AB.kd_bombe.can(S,f));let k=0;for(let i=0;i<20;i++){S.rng=i*7+1;ov.dmg=0;ov.n=ov.nmax=5;S.Ph.au=[];drive(g,AB.kd_bombe.run(g,f));if(ov.dmg>0||ov.n<5)k++}assert.ok(k>0)});
+T('Himmelsschlagverband: Angriffsschiff, Lösen, Ruhm, Schwer, Rettung, Nachzug, Gorogna, Nimm, Zeitzünder',()=>{
+ const a=mk(KD,'Zenestras Zeloten',ri(KD,'kd_angriff'));const c=a.add('Arkanauten-Kompanie (Salvengewehr)',0,5,5);addFx(a.S,{k:'nochg',u:c.id,s:'kd',exp:'turn'});assert.ok(AB.kd_angriff.can(a.S,0));drive(a.g,AB.kd_angriff.run(a.g,0));assert.ok(!fxL(a.S,c,'nochg').length);
+ const l=mk(KD,'Zenestras Zeloten',ri(KD,'kd_loesen'));const f=l.add('Arkanauten-Fregatte',0,20,15);const fe=E(l.S,l.add,23,15);assert.ok(AB.kd_loesen.can(l.S,0));drive(l.g,AB.kd_loesen.run(l.g,0));assert.ok(fxL(l.S,f,'lose').length>0);
+ const r=mk(KD);const k=r.add('Arkanauten-Kompanie (Himmelspike)',0,12,22);const eo=E(r.S,r.add,18.5,22);r.S.obj[0]=[18.5,22];r.S.oc[0]=-1;assert.equal(hk(r.S,'hit',k,eo,false),1);const ef=E(r.S,r.add,30,5);assert.equal(hk(r.S,'hit',k,ef,false),0);
+ const ff=r.add('Arkanauten-Fregatte',0,5,5);ff.dmg=10;const w=attackG;assert.ok(ff.dmg>=10);
+ const q=mk(KD,'Zenestras Zeloten',0,ei(KD,'kd_ruest'));assert.equal(GL.ward.reduce((m,x)=>Math.max(m,+x(q.S,q.gen)||0),0),6);
+ const n=mk(KD,'Zenestras Zeloten',0,ei(KD,'kd_nachzug'));const nk=n.add('Arkanauten-Kompanie (Himmelspike)',0,n.gen.x+3,n.gen.y);nk.n=1;assert.ok(AB.kd_nachzug.can(n.S,0));let up=0;for(let i=0;i<10;i++){n.S.rng=i*3+2;nk.n=1;drive(n.g,AB.kd_nachzug.run(n.g,0));if(nk.n>1)up++}assert.ok(up>0);
+ const go=mk(KD,'Zenestras Zeloten',0,ei(KD,'kd_gorogna'));go.gen.dmg=5;drive(go.g,AB.kd_gorogna.run(go.g,0));assert.ok(go.gen.dmg<5);
+ const ni=mk(KD);const nc=ni.add('Arkanauten-Kompanie (Himmelspike)',0,ni.gen.x+3,ni.gen.y);ni.S.ph=1;drive(ni.g,AB.kd_nimm.run(ni.g,ni.gen));assert.ok(fxL(ni.S,nc,'ctl').length>0);
+ const sp=mk(KD);const wu=sp.add('Himmelswächter',0,20,15);const se=E(sp.S,sp.add,22,15);let dd=0;for(let i=0;i<15;i++){sp.S.rng=i*11+5;se.dmg=0;se.n=se.nmax=5;wu.x=20;wu.y=15;drive(sp.g,eot3(sp.g,0,0));dd+=5-se.n+se.dmg}assert.ok(dd>0)});
 console.log(pass+' bestanden, '+fail+' fehlgeschlagen');process.exit(fail?1:0);

@@ -59,7 +59,25 @@ function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S
  let txt;if(r==1||!k)txt='Von den Göttern abgewiesen: kein Effekt';else if(L.includes(k))txt=u.name+' hat '+AGN[k]+' bereits (nicht kumulativ)';else{L.push(k);txt=u.name+' erhält dauerhaft: '+AGN[k]}
  rep(G,'Auge der Götter'+(src?' ('+src+')':''),row('W6',[r]),txt)}
 const agOK=(S,o,x)=>x.x>=0&&((!inCombat(S,x)&&S.obj.some((p,k)=>claims(S,x,k)&&S.oc[k]!==1-o))||has(S.T.ds||[],x.id));
+
+// ---- Kharadron: Himmelsschlagverband (Durchquert die Himmel / Bombenvorrat) ----
+const segD=(a,b,p)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l2=dx*dx+dy*dy,t=l2?Math.max(0,Math.min(1,((p.x-a[0])*dx+(p.y-a[1])*dy)/l2)):0;return Math.hypot(a[0]+t*dx-p.x,a[1]+t*dy-p.y)};
+const isFreg=u=>!!u&&u.dn=='Arkanauten-Fregatte';
+export function* kdPre(G,a,u){const S=G.S;if(!u||!['move','run','retreat'].includes(a.a)||!isFreg(u)||u.x<0)return;
+ u.kds=[u.x,u.y];if(!trOf(S,u.o,'kd_himmel'))return;
+ const c=FL(S,u.o,x=>x!==u&&x.x>=0&&kw(x,'Infanterie')&&!inCombat(S,x)&&wholly(x,u,CR));if(!c.length)return;
+ const t=yield* pk(G,u.o,'Durchquert die Himmel: Infanterie-Einheit transportieren',[...c,['Nicht transportieren',null]],x=>x?mx(x):-1e9);if(!t)return;
+ t.kdp=[t.x,t.y];t.kdf=u.id;u.kdc=t.id;t.x=-99;G.note('Durchquert die Himmel: '+t.name+' wird von '+u.name+' transportiert')}
+export function* kdPost(G,a,u){const S=G.S;if(!u||!isFreg(u))return;
+ if(u.kds){const st=u.kds;u.kds=null;if(u.x>=0&&Math.hypot(u.x-st[0],u.y-st[1])>.5&&hasAb(u,'kd_bombe')){const ov=(S.T.kdov||(S.T.kdov={}))[u.id]||(S.T.kdov[u.id]=[]);for(const e of foes(S,u))if(e.x>=0&&segD(st,[u.x,u.y],e)<=e.r+2&&!ov.includes(e.id))ov.push(e.id)}}
+ const c=u.kdc!=null?byId(S,u.kdc):null;u.kdc=null;if(!c)return;
+ let pos=null;
+ if(!G.isAI(u.o)){const p=yield* place(G,u.o,'kdland',c,'Durchquert die Himmel','Aufstellen: ganz innerhalb von 3 Zoll um die Fregatte, nicht im Nahkampf',{cancel:true});if(!p.cancel)pos=p}
+ if(!pos&&u.x>=0)for(let r=1;r<=9&&!pos;r+=.5)for(let an=0;an<360&&!pos;an+=15){const x=u.x+r*Math.cos(an*Math.PI/180),y=u.y+r*Math.sin(an*Math.PI/180);if(!placeErr(S,'kdland',c.o,c,x,y,0))pos={x,y}}
+ if(pos){c.x=pos.x;c.y=pos.y;G.note('Durchquert die Himmel: '+c.name+' wird abgesetzt')}else{c.x=c.kdp[0];c.y=c.kdp[1];G.note('Durchquert die Himmel: kein Platz – '+c.name+' bleibt am alten Ort')}
+ addFx(S,{k:'nochg',u:c.id,s:'kd',exp:'turn'});add(S.T.kdt||(S.T.kdt=[]),c.id)}
 export function* eot3(G,o,act){const S=G.S;
+ for(const v of fr(S,o).filter(x=>x.x>=0&&hasAb(x,'kd_spreng')&&inCombat(S,x))){const c=foes(S,v).filter(e=>e.x>=0&&dist(v,e)<=CR);if(!c.length)continue;const t=yield* pk(G,o,'Sprengladungen mit Zeitzünder: Ziel',[...c.map(x=>[lab(x),x]),['Nicht einsetzen',null]],x=>x?scE(x):-1e9);if(!t)continue;const r=d6(S);hdr(G,'Sprengladungen mit Zeitzünder',r,r>=2,2,t.name+': 1 tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,1,'Sprengladungen');if(S.U.includes(v)&&inCombat(S,v)&&(G.isAI(o)||(yield* yn(G,o,'Sprengladungen mit Zeitzünder','Sofort zurückziehen (ohne tödlichen Schaden)?',true))))yield* doRetreat(G,v,{free:true})}
  if(trOf(S,o,'lw_wahn')&&wahnOf(S,o)=='fest'){const hl=[];for(const x of fr(S,o).filter(x=>x.x>=0)){if(!canHealX(S,x))continue;if(kw(x,'Knechte')){const k=Math.min(d3(S),x.nmax-x.n);if(k>0){x.n+=k;hl.push(x.name+' +'+k+' Modell(e)')}}else if(x.dmg>0){x.dmg=Math.max(0,x.dmg-1);hl.push(x.name+' heilt 1')}}if(hl.length)G.note('Wahn des großen Festmahls: '+hl.join(', '))}
  if(ENI(S,o)=='lw_jagd'){const g=genOf(S,o);if(g&&g.x>=0&&!inCombat(S,g)&&(G.isAI(o)||(yield* yn(G,o,'Jagdgefährte','General bis zu 3" bewegen (nicht in den Nahkampf)?',true)))){const a=yield* destReq(G,g,3,{text:'Jagdgefährte: bis 3 Zoll (nicht in den Nahkampf)'});if(!a.stay){applyMove(S,g,a,3);add(S.T.moved,g.id);G.note('Jagdgefährte: '+g.name+' bewegt sich')}}}
  for(const v of fr(S,o).filter(x=>x.x>=0&&hasAb(x,'fc_mahl')&&has(S.T.kl||[],x.id))){if(canHealX(S,v))v.dmg=Math.max(0,v.dmg-d6(S));G.note('Siegesmahl: '+v.name+' heilt');if(inCombat(S,v)&&(G.isAI(o)||(yield* yn(G,o,'Siegesmahl','Sofort zurückziehen (ohne tödlichen Schaden)?',true))))yield* doRetreat(G,v,{free:true})}
@@ -480,6 +498,30 @@ Object.assign(AB,{
    *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Heilige Knochenklingen: Ziel',foes(S,u).filter(x=>x.x>=0&&has(S.T.charged,x.id)&&dist(u,x)<=CR).map(x=>[lab(x),x]),scE);if(!t)return;const rs=[];let dm=0;for(let i=0;i<nm(t);i++){const r=d6(S);rs.push(r);if(r>=5)dm++}rep(G,'Heilige Knochenklingen',row('Würfel (5+)',rs,5),dm?t.name+': '+dm+' tödlicher Schaden':'Kein Effekt');if(dm)mort(G,t,dm,'Heilige Knochenklingen')},ai:()=>true},
   lw_chor2:{n:'Unheiliger Chor',s:'Fernkampfphase: Sichtbarer Feind innerhalb 10": Kontrollwert −(Schadenspunkte der Fernkampfattacken dieser Einheit in dieser Phase) bis Zugende',ph:3,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'lw_chor2'),can:(S,u)=>Object.keys(S.T.lwd||{}).some(k=>k.startsWith(u.id+'>')),
    *run(G,u){const S=G.S,c=Object.keys(S.T.lwd||{}).filter(k=>k.startsWith(u.id+'>')).map(k=>byId(S,+k.split('>')[1])).filter(x=>x&&x.x>=0&&dist(u,x)<=10&&vis(S,u,x));if(!c.length)return;const t=yield* pk(G,u.o,'Unheiliger Chor: Ziel',c.map(x=>[lab(x)+' ('+S.T.lwd[u.id+'>'+x.id]+' Schaden)',x]),x=>S.T.lwd[u.id+'>'+x.id]);if(!t)return;const v=S.T.lwd[u.id+'>'+t.id];addFx(S,{k:'ctl',u:t.id,v:-v,exp:'turn'});G.note('Unheiliger Chor: Kontrollwert von '+t.name+' −'+v)},ai:()=>true}
+ });
+
+ // ---- Himmelsherrscher der Kharadron: Himmelsschlagverband ----
+ Object.assign(HK,{kd_ruhm:{hit:(S,u,e)=>e&&e.x>=0&&S.obj.some((p,i)=>claims(S,e,i))?1:0}});
+ GL.ward.push((S,e)=>e.gen&&e.x>=0&&ENI(S,e.o)=='kd_ruest'?6:0);
+ Object.assign(AB,{
+  kd_himmel:{n:'Durchquert die Himmel',s:'Reaktion auf Bewegung einer Arkanauten-Fregatte (kein Angriff): Infanterie-Einheit ganz innerhalb 3" und nicht im Nahkampf wird transportiert und danach ganz innerhalb 3" um die Fregatte, nicht im Nahkampf, wieder aufgestellt. Transportierte Einheiten können in diesem Zug nicht angreifen',army:1,src:(S,o)=>trOf(S,o,'kd_himmel')},
+  kd_angriff:{n:'Angriffsschiff',s:'Bewegungsphase, 1× pro Schlacht: Eine in diesem Zug transportierte Einheit darf später noch Angriff-Fähigkeiten einsetzen',ph:2,freq:'battle',army:1,src:(S,o)=>RGI(S,o)=='kd_angriff',can:(S,o)=>fr(S,o).some(x=>x.x>=0&&fxL(S,x,'nochg').some(f=>f.s=='kd')),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Angriffsschiff: Einheit',FL(S,o,x=>x.x>=0&&fxL(S,x,'nochg').some(f=>f.s=='kd')),x=>mx(x));if(!t)return;S.E=S.E.filter(f=>!(f.k=='nochg'&&f.u==t.id&&f.s=='kd'));G.note('Angriffsschiff: '+t.name+' darf in diesem Zug angreifen')},ai:()=>true},
+  kd_loesen:{n:'Lösen',s:'Bewegungsphase, 1× pro Schlacht: Arkanauten-Fregatte: Rückzug in diesem Zug ohne tödlichen Schaden, Fernkampf danach weiter möglich',ph:2,freq:'battle',army:1,src:(S,o)=>RGI(S,o)=='kd_loesen',can:(S,o)=>fr(S,o).some(x=>x.x>=0&&x.dn=='Arkanauten-Fregatte'&&inCombat(S,x)),
+   *run(G,o){const S=G.S,t=yield* pk(G,o,'Lösen: Arkanauten-Fregatte',FL(S,o,x=>x.x>=0&&x.dn=='Arkanauten-Fregatte'&&inCombat(S,x)),x=>mx(x));if(!t)return;addFx(S,{k:'lose',u:t.id,exp:'turn'});G.note('Lösen: '+t.name+' zieht sich ohne tödlichen Schaden zurück und kann danach noch schießen')},ai:()=>true},
+  kd_ruest:{n:'Meisterliche Rüstung',s:'Passiv: Der General hat Rettung 6+',army:1,src:(S,o)=>ENI(S,o)=='kd_ruest'},
+  kd_gorogna:{n:'Flasche auserlesenen Gorognas',s:'Beliebige Heldenphase, 1× pro Schlacht: General heilt W6',ph:1,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='kd_gorogna',can:(S,o)=>{const g=genOf(S,o);return !!g&&g.dmg>0&&canHealX(S,g)},
+   *run(G,o){const S=G.S,g=genOf(S,o),r=d6(S);g.dmg=Math.max(0,g.dmg-r);rep(G,'Flasche auserlesenen Gorognas',row('Heilen (W6)',[r]),g.name+' heilt '+r)},ai:()=>true},
+  kd_risiko:{n:'Kein Lohn ohne Risiko',s:'Reaktion auf Angriff-Fähigkeit einer Einheit ganz innerhalb 12" um den General, 1× pro Schlacht: Angriffswurf wiederholen (wird bei der Angriffswurf-Wiederholung angeboten)',army:1,src:(S,o)=>ENI(S,o)=='kd_risiko'},
+  kd_nachzug:{n:'Kein Duardin wird zurückgelassen',s:'Heldenphase, 1× pro Schlacht: Arkanauten-Kompanie ganz innerhalb 12" um den General: 1 W6 je zerstörtem Modell, je 4+ kehrt 1 Modell zurück',ph:1,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='kd_nachzug',can:(S,o)=>{const g=genOf(S,o);return !!g&&g.x>=0&&fr(S,o).some(x=>x.x>=0&&kw(x,'Arkanauten-Kompanie')&&x.n<x.nmax&&wholly(x,g,12)&&canHealX(S,x))},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Kein Duardin wird zurückgelassen: Einheit',FL(S,o,x=>x.x>=0&&kw(x,'Arkanauten-Kompanie')&&x.n<x.nmax&&wholly(x,g,12)&&canHealX(S,x)),x=>x.nmax-x.n);if(!t)return;const rs=[];let h=0;for(let i=0;i<t.nmax-t.n;i++){const r=d6(S);rs.push(r);if(r>=4)h++}t.n+=h;rep(G,'Kein Duardin wird zurückgelassen',row('Würfel (4+)',rs,4),h+' Modell(e) kehren zu '+t.name+' zurück')},ai:()=>true},
+  kd_nimm:{n:'Nimm dir stets, was dir zusteht',s:'Heldenphase: Arkanauten-Kompanie ganz innerhalb 12": +W6 Kontrollwert bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'kd_nimm'),can:(S,u)=>u.x>=0&&fr(S,u.o).some(x=>x.x>=0&&kw(x,'Arkanauten-Kompanie')&&wholly(x,u,12)),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Nimm dir stets, was dir zusteht: Einheit',FL(S,u.o,x=>x.x>=0&&kw(x,'Arkanauten-Kompanie')&&wholly(x,u,12)),x=>mx(x));if(!t)return;const r=d6(S);addFx(S,{k:'ctl',u:t.id,v:r,exp:'own'});rep(G,'Nimm dir stets, was dir zusteht',row('W6',[r]),t.name+': Kontrollwert +'+r+' bis zu deinem nächsten Zug')},ai:()=>true},
+  kd_spreng:{n:'Sprengladungen mit Zeitzünder',s:'Ende eines beliebigen Zuges: Feind im Nahkampf mit der Einheit: Wurf 2+ → 1 tödlicher Schaden; danach sofort Rückzug ohne tödlichen Schaden möglich',unit:1,src:(S,u)=>hasAb(u,'kd_spreng')},
+  kd_ruhm:{n:'Auf der Suche nach Ruhm',s:'Passiv: +1 auf Trefferwürfe gegen Einheiten, die ein Ziel beanspruchen',unit:1,src:(S,u)=>hasAb(u,'kd_ruhm')},
+  kd_schwer:{n:'Schwer angeschlagen',s:'Passiv: Ab 10 zugewiesenen Schadenspunkten hat die Schwere Himmelsharpune 1 Attacke',unit:1,src:(S,u)=>hasAb(u,'kd_schwer')},
+  kd_bombe:{n:'Bombenvorrat',s:'Bewegungsphase, 1× pro Schlacht: Feind, über den sich die Einheit in dieser Phase hinwegbewegt hat: Wurf 2+ → W3 tödlicher Schaden',ph:2,freq:'battle',unit:1,src:(S,u)=>hasAb(u,'kd_bombe'),can:(S,u)=>((S.T.kdov||{})[u.id]||[]).some(id=>{const e=byId(S,id);return e&&e.x>=0}),
+   *run(G,u){const S=G.S,c=((S.T.kdov||{})[u.id]||[]).map(id=>byId(S,id)).filter(e=>e&&e.x>=0);const t=yield* pk(G,u.o,'Bombenvorrat: Ziel',c.map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S);hdr(G,'Bombenvorrat',r,r>=2,2,t.name+': W3 tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,d3(S),'Bombenvorrat')},ai:()=>true}
  });
 
 }
