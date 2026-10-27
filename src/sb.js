@@ -105,7 +105,7 @@ export function* sbAp(G,u,key,{A,who,un,ob,lg}){const S=G.S,TW=S.TW;TW.ud=u;
   const id=yield* A(G,p,e?'Feindliche Einheit wählen':'Eigene Einheit wählen',un(e?1-p:p));
   if(e)addFx(S,{k:'ctlmax',u:id,v:1,...R(S)});else TW.wnU=id}
  else if(key=='ui'&&u>=0){const id=yield* A(G,u,'Einheit wählen (+W6 Kontrollwert)',un(u)),r=d6(S);addFx(S,{k:'ctl',u:id,v:r,...R(S)});G.tray('Uncompromising Invasion',[{k:'row',l:'Kontrollwert +'+r+' bis Rundenende',v:[r]}])}
- else if(key=='sg'||key=='by'){const p=u>=0?u:null;if(p!=null){const id=yield* A(G,p,key=='sg'?'Einheit wählen (Angriff nach Rennen/Rückzug)':'Einheit wählen (Anti-charge)',un(p));
+ else if(key=='sg'||key=='by'){const p=key=='sg'?who():u>=0?u:null;if(p!=null){const id=yield* A(G,p,key=='sg'?'Einheit wählen (Angriff nach Rennen/Rückzug)':'Einheit wählen (Anti-charge)',un(p));
    if(key=='sg')addFx(S,{k:'fz',u:id,...R(S)});else addFx(S,{k:'antichg',u:id,v:1,...R(S)})}}}
 
 export function sbVP(S,o){const k=S.TW.id,TW=S.TW;

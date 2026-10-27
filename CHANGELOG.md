@@ -1,5 +1,8 @@
 # Changelog
 
+## v98
+- Wendungskarten ohne Außenseiter: Underdog-Effekte entfallen, außer die Karte nennt ausdrücklich eine Ersatzregel. Korrigiert: Survivor's Grief (Würfelduell-Gewinner wählt). Alle übrigen Karten geprüft.
+
 ## v97
 - Neue Armee: Akhelianer-Flutgarde (Tiefenvolk der Idoneth): Akhelianer-König, Morrsarrgarde, Ishlaengarde, Namarti-Bogenschützen; Königlicher Imperativ, Regimenter, Verbesserungen.
 - Drehung beim Bewegen von Einheiten entfernt.

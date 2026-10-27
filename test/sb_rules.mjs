@@ -102,4 +102,6 @@ T('Terrain-Kontrolle terrCtl',()=>{const {S,add}=mk();const t={x:15,y:6,w:7,h:1.
 // ---------------- Kartenaufbau ----------------
 T('Taktikkarten-Daten: 12 Karten mit Bedingung und Befehl; Befehle für alle Karten definiert',()=>{setPack(1);assert.equal(SB_TAC.length,12);for(let c=1;c<=12;c++){assert.ok(TAC[c-1][1]&&TAC[c-1][2]&&TAC[c-1][3],'Karte '+c);assert.ok(CH[c]&&CMD[c]&&(CMD[c].r?CR2[c]:CE[c]),'Logik '+c)}});
 T('Fire and Jade bleibt nach Rückschaltung unverändert',()=>{setPack(0);for(let c=1;c<=12;c++)assert.ok(CH[c]&&CMD[c]&&(CMD[c].r=='atk'||CMD[c].r=='shoot'?CR2[c]:CMD[c].r?true:CE[c]));assert.equal(Object.keys(CE).length,7);setPack(1)});
+T('Wendungskarten ohne Außenseiter: nur ausdrücklich genannte Ersatzregel wird ausgeführt',()=>{for(const k of ['sm','by']){const {g,S,add}=mk();setTw(S,0,k);add(sk(),0,15,6);add('Freigilden-Stahlhelme',1,20,16);S.ud=-1;drive(g,applyTw(g,-1));assert.ok(!S.E.some(x=>['hitA','antichg','fz','chg'].includes(x.k)&&x.exp!=='ph'&&k!='sp'),k);assert.ok(!S.TW.fren&&!S.TW.spear,k)}
+ const {g,S,add}=mk();setTw(S,0,'sg');add(sk(),0,15,6);add('Freigilden-Stahlhelme',1,20,16);drive(g,applyTw(g,-1));assert.ok(S.E.some(x=>x.k=='fz'),'sg: Würfelduell-Gewinner wählt')});
 console.log(`\n${pass} bestanden, ${fail} fehlgeschlagen`);process.exit(fail?1:0);
