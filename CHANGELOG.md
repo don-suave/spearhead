@@ -1,5 +1,8 @@
 # Changelog
 
+## v101
+- Regelübersicht: Grand-Alliance-Zuordnung korrigiert (Ossiarch → Tod, Sklaven der Finsternis → Chaos; Sylvaneth und Idoneth ausdrücklich Ordnung).
+
 ## v100
 - Neue Armee: Eisenkiefa-Moschmob (Orruk-Kriegsclans): Megaboss, Platt’nhelme (2×), Wutprotze, Kraftprotze (Reserve ab Runde 3); Mächtige Zerstörer, Naturgewalt, Ordentlicher Radau, vier Verbesserungen.
 - Näherung: „Mächtige Zerstörer“ nur in der eigenen Heldenphase; „keine Ziele beanspruchen“ = zählt nicht für die Zielkontrolle.

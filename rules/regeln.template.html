@@ -299,15 +299,15 @@ function armyPage(ai){
  });
  return h;
 }
-const ALLI={'Städte Sigmars':0,'Sturmgeschmiedete Ewige':0,'Khazalid':0,'Seraphon':0,'Himmelsherrscher der Kharadron':0,'Lichtfürsten der Lumineth':0,'Töchter des Khaine':0,
- 'Klingen des Khorne':1,'Jünger des Tzeentch':1,'Maggotkin des Nurgle':1,'Hedoniten des Slaanesh':1,'Skaven':1,'Helschmiede des Hashut':1,
- 'Nachtspuk':2,'Seelenbrand-Grabesfürsten':2,
+const ALLI={'Städte Sigmars':0,'Sturmgeschmiedete Ewige':0,'Khazalid':0,'Seraphon':0,'Himmelsherrscher der Kharadron':0,'Lichtfürsten der Lumineth':0,'Töchter des Khaine':0,'Sylvaneth':0,'Tiefenvolk der Idoneth':0,
+ 'Klingen des Khorne':1,'Jünger des Tzeentch':1,'Maggotkin des Nurgle':1,'Hedoniten des Slaanesh':1,'Skaven':1,'Helschmiede des Hashut':1,'Sklaven der Finsternis':1,
+ 'Nachtspuk':2,'Seelenbrand-Grabesfürsten':2,'Knochenlegionen der Ossiarch':2,
  'Orruk-Kriegsclans':3,'Ogor-Schlundstämme':3,'Mondwahn-Gits':3,'Behemats Söhne':3};
 const ALN=[['Ordnung','Order'],['Chaos','Chaos'],['Tod','Death'],['Zerstörung','Destruction']];
 function spOverview(){
  let h=`<div class="crumb"><a href="#/">${T('home')}</a></div><h1 class="ser" style="font-size:26px;margin:4px 0">${T('t1')}</h1><p class="hint">${T('d1')}</p>`;
  for(let g=0;g<4;g++){
-  const list=A.filter(a=>(ALLI[a.f[0]]??0)==g);if(!list.length)continue;
+  const list=A.filter(a=>(ALLI[a.f[0]]??(console.warn('Allianz fehlt',a.f[0]),0))==g);if(!list.length)continue;
   h+=`<div class="grp" data-k="al${g}">${ALN[g][li()]} · ${list.length}</div>`;
   const by={};list.forEach(a=>{(by[a.f[li()]]=by[a.f[li()]]||[]).push(a)});
   Object.keys(by).sort((x,y)=>x.localeCompare(y,L)).forEach(f=>{
