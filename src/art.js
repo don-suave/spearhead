@@ -110,7 +110,7 @@ export const iconOf=(army,dn)=>{if(!ICM)buildIcons();return(ICM[army]&&ICM[army]
 
 // ---------- Fraktionsfarben ----------
 const FP={
- 'Städte Sigmars':['#3d5f94','#e6c75c','ring'],'Orruk-Kriegsclans':['#4f7d2a','#e0d6a0','jag'],'Seelenbrand-Grabesfürsten':['#6e2a4e','#d9d2bd','dots'],
+ 'Städte Sigmars':['#3d5f94','#e6c75c','ring'],'Orruk-Kriegsclans':['#4f7d2a','#e0d6a0','jag'],'Seelenbrand-Grabesfürsten':['#6e2a4e','#d9d2bd','dots'],'Höfe der Leichenfresser':['#8a1f26','#d8c7a1','ring'],
  'Skaven':['#6a5a2c','#8fe35e','jag'],'Sturmgeschmiedete Ewige':['#27508f','#f4cf55','ring'],'Nachtspuk':['#3a7b78','#c8fff6','wave'],
  'Maggotkin des Nurgle':['#6a7a2a','#d4dc78','dots'],'Khazalid':['#a24a1a','#ffcf5a','jag'],'Hedoniten des Slaanesh':['#a02c6c','#f6a9d8','wave'],
  'Ogor-Schlundstämme':['#8a5a3a','#ecc794','jag'],'Behemats Söhne':['#7b6b52','#d9c9a8','ring'],'Helschmiede des Hashut':['#5e2a22','#e8832e','jag'],

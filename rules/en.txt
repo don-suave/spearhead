@@ -1439,3 +1439,35 @@ Jetz’ geht’s los	Here We Go
 Deine Bewegungsphase (ab der dritten Schlachtrunde): Stelle diese Einheit weiter als 6 Zoll von allen feindlichen Einheiten entfernt irgendwo auf dem Schlachtfeld auf. Diese Einheit wird nicht in der Aufstellungsphase aufgestellt.	Your movement phase (from the third battle round): Set up this unit anywhere on the battlefield more than 6" from all enemy units. This unit is not set up during the setup phase.
 Was glotzt’n so?	What You Lookin' At?
 Passiv: Feindliche Einheiten mit Ausdauerwert 1 oder 2 können keine Ziele beanspruchen, solange sie im Nahkampf mit dieser Einheit sind.	Passive: Enemy units with a Health characteristic of 1 or 2 cannot claim objectives while they are in combat with this unit.
+Höfe der Leichenfresser	Flesh-eater Courts
+Aaskreuzzug	Carrion Crusade
+Auf dem Kreuzzug	On Crusade
+Passiv: Addiere 1 auf Rennen- und Angriffswürfe für befreundete Einheiten.	Passive: Add 1 to run and charge rolls for friendly units.
+Verteidiger der Krone	Defenders of the Crown
+Passiv: Addiere 1 auf Schutzwürfe für befreundete Einheiten, die ein von dir kontrolliertes Ziel beanspruchen.	Passive: Add 1 to save rolls for friendly units that claim an objective you control.
+Ulguisches Geschmeide	Ulguan Finery
+Passiv: Dein General ist für feindliche Modelle, die weiter als 12 Zoll von ihm entfernt sind, nicht sichtbar.	Passive: Your general is not visible to enemy models more than 12" away from it.
+Blutflussgral	Grail of the Blood River
+Einmal pro Schlacht, deine Heldenphase: Heile (2W3) deinen General.	Once per battle, your hero phase: Heal (2D3) your general.
+Erhebende Rede	Rousing Speech
+Deine Heldenphase: Wirf für jede befreundete Einheit vollständig innerhalb von 12 Zoll um deinen General (außer ihn selbst) einen Würfel. Für jede 5+ gib deinem General 1 Edle-Taten-Punkt.	Your hero phase: Roll a die for each friendly unit wholly within 12" of your general (excluding your general). For each 5+, give your general 1 Noble Deeds point.
+Blutrote Kost	Crimson Feast
+Deine Heldenphase: Wähle eine sichtbare feindliche Einheit innerhalb von 18 Zoll um deinen General als Ziel und führe einen Zauberwurf (2W6) aus. Bei 6+ füge dem Ziel W3 tödlichen Schaden zu. Dann kannst du, wenn sich deine Gruftgarde-Einheit innerhalb von 6 Zoll um das Ziel befindet, für jeden durch diese Fähigkeit zugewiesenen Schadenspunkt 1 getötetes Modell in deine Gruftgarde-Einheit zurückbringen.	Your hero phase: Pick a visible enemy unit within 18" of your general as the target and make a casting roll (2D6). On a 6+, inflict D3 mortal damage on the target. Then, if your Crypt Guard unit is within 6" of the target, for each damage point allocated by this ability you can return 1 slain model to that Crypt Guard unit.
+Scheußlicher Erzregent	Abhorrent Archregent
+Blutige Krallen und Reißzähne	Bloody Claws and Fangs
+Krankhafte Verwandlung	Morbid Transformation
+Deine Heldenphase: Wähle eine sichtbare befreundete Einheit vollständig innerhalb von 18 Zoll um diese Einheit als Ziel; führe einen Zauberwurf (2W6) aus. Bei 6+ addiere bis zum Beginn deines nächsten Zugs 2 Zoll auf den Bewegungswert der Zieleinheit und 1 auf Verwundungswürfe für ihre Attacken.	Your hero phase: Pick a visible friendly unit wholly within 18" of this unit as the target and make a casting roll (2D6). On a 6+, add 2" to the target's Move characteristic and 1 to wound rolls for its attacks until the start of your next turn.
+Gruftgarde	Crypt Guard
+Verfluchte Waffe	Cursed Weapon
+Königliche Leibwache	Royal Bodyguard
+Passiv: Addiere 1 auf Rettungswürfe (Schutzwürfe) für befreundete Helden vollständig innerhalb der Nahkampfreichweite dieser Einheit.	Passive: Add 1 to save rolls for friendly heroes wholly within combat range of this unit.
+Morbheg-Ritter	Morbheg Knights
+Grausige Lanze	Ghastly Lance
+Krallen und Fänge des Nachtkreischers	Claws and Fangs of the Night Screamer
+Raubtiersprünge	Predator Leaps
+Passiv: Diese Einheit kann Angriff-Fähigkeiten auch dann einsetzen, wenn sie im selben Zug Rückzug-Fähigkeiten eingesetzt hat. Außerdem wird dieser Einheit kein tödlicher Schaden zugefügt, wenn sie Rückzug-Fähigkeiten einsetzt.	Passive: This unit can use charge abilities even if it used retreat abilities in the same turn. In addition, no mortal damage is inflicted on this unit when it uses retreat abilities.
+Varghulf-Höfling	Varghulf Courtier
+Ungeheuerliche Krallen	Monstrous Claws
+Dolchgleiche Fangzähne	Dagger-like Fangs
+Siegesmahl	Victory Feast
+Ende eines beliebigen Zuges: Hat diese Einheit in diesem Zug mindestens ein Modell getötet, heile (W6) diese Einheit. Sie kann sofort die Fähigkeit „Rückzug“ einsetzen, ohne dass ihr dadurch tödlicher Schaden zugefügt wird.	End of any turn: If this unit slew at least one model this turn, heal (D6) this unit. It can immediately use the Retreat ability without mortal damage being inflicted on it.

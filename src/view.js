@@ -315,7 +315,7 @@ function draw(t){
   const P=abs(u),cap=m=>{cx.save();cx.translate(m.x,m.y);cx.rotate(m.a);cx.beginPath();cx.ellipse(0,0,m.l/2,m.w/2,0,0,7);cx.restore()};
   const hero=/Held/.test(u.kw)||u.gen;P.forEach(m=>drawToken(cx,m,u,c,S.K.army[u.o],hero,ready,t));
   flagsDraw(u,P)
-  const bw=Math.max(1.6,u.r*1.6),by=Math.max(...P.map(m=>m.y+m.l/2))+.2;cx.fillStyle='#000a';cx.fillRect(u.x-bw/2,by,bw,.32);cx.fillStyle=wnd(u)/mx(u)>.4?'#6fcf6f':'#e0603c';cx.fillRect(u.x-bw/2,by,bw*wnd(u)/mx(u),.32)})}
+  const bw=Math.max(1.6,u.r*1.6),by=Math.max(...P.map(m=>m.y+m.l/2))+.2;cx.fillStyle='#000a';cx.fillRect(u.x-bw/2,by,bw,.32);cx.fillStyle=wnd(u)/mx(u)>.4?'#6fcf6f':'#e0603c';cx.fillRect(u.x-bw/2,by,bw*wnd(u)/mx(u),.32);if(u.nd>0){cx.fillStyle='#e8c15c';cx.font='bold .6px sans-serif';cx.textAlign='center';cx.fillText('★'+u.nd,u.x,by+1)}})}
 function flagsDraw(u,P){const f=unitFlags(G.S,u);if(!f.length)return;const top=Math.min(...P.map(m=>m.y-m.l/2))-.15,show=f.slice(0,4);
  cx.save();cx.scale(1/SC,1/SC);cx.font='bold 9px system-ui';cx.textBaseline='middle';cx.textAlign='left';
  const hh=11,ws=show.map(a=>cx.measureText('⚑ '+a.t).width+8),ox=u.x*SC;show.forEach((a,i)=>{const w=ws[i],y=top*SC-(i+1)*(hh+2)+hh/2;cx.fillStyle=a.c=='bad'?'#a8322ccc':'#2f7d46cc';cx.beginPath();cx.roundRect(ox-w/2,y-hh/2,w,hh,3);cx.fill();cx.fillStyle='#fff';cx.fillText('⚑ '+a.t,ox-w/2+4,y+.5)});

@@ -1,5 +1,9 @@
 # Changelog
 
+## v102
+- Neue Armee: Aaskreuzzug (Höfe der Leichenfresser): Scheußlicher Erzregent, Gruftgarde, Morbheg-Ritter, Varghulf-Höfling; Edle-Taten-Punkte (★ unter der Lebensleiste), Fressrausch, Treue Diener beschwören, zwei Regimenter, vier Verbesserungen.
+- Näherung: Ulguisches Geschmeide wirkt über die allgemeine Sichtbarkeitsprüfung (Fernkampf, Zauber).
+
 ## v101
 - Regelübersicht: Grand-Alliance-Zuordnung korrigiert (Ossiarch → Tod, Sklaven der Finsternis → Chaos; Sylvaneth und Idoneth ausdrücklich Ordnung).
 

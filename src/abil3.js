@@ -1,7 +1,7 @@
 // Fähigkeiten der dritten Armeenwelle (Hooks siehe hooks.js).
 import {yn,scE,mort,AB,abUsed,en,roll2,fr,lab,hdr,pk,FL,vis,genOf,nmove,pickF,rep,row,relocate,claims,pickE} from './abil.js';
 import {HK,GL} from './hooks.js';
-import {placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
+import {cn,placeErr,inCombat,isHero,hasAb,mvOf,ENI,RGI,mx,wnd,hurt,dist,foes,nm,cvOf,gnl,applyMove} from './rules.js';
 import {ptDist} from './geom.js';
 import {doRetreat,destReq} from './cards.js';
 import {abs,wholly,udist,mgap} from './models.js';
@@ -49,6 +49,7 @@ function* augeRoll(G,o,u,src){const S=G.S;S.ag||(S.ag={});const L=S.ag[u.id]||(S
  rep(G,'Auge der Götter'+(src?' ('+src+')':''),row('W6',[r]),txt)}
 const agOK=(S,o,x)=>x.x>=0&&((!inCombat(S,x)&&S.obj.some((p,k)=>claims(S,x,k)&&S.oc[k]!==1-o))||has(S.T.ds||[],x.id));
 export function* eot3(G,o,act){const S=G.S;
+ for(const v of fr(S,o).filter(x=>x.x>=0&&hasAb(x,'fc_mahl')&&has(S.T.kl||[],x.id))){if(canHealX(S,v))v.dmg=Math.max(0,v.dmg-d6(S));G.note('Siegesmahl: '+v.name+' heilt');if(inCombat(S,v)&&(G.isAI(o)||(yield* yn(G,o,'Siegesmahl','Sofort zurückziehen (ohne tödlichen Schaden)?',true))))yield* doRetreat(G,v,{free:true})}
  if(ENI(S,o)=='id_raubseele'){const g=genOf(S,o);if(g&&g.dmg>0&&inCombat(S,g)&&canHealX(S,g)){const h=d3(S);g.dmg=Math.max(0,g.dmg-h);G.note('Seelenräuber: '+g.name+' heilt '+h)}}
  if(RGI(S,o)=='id_raub'&&!usedKey(S,o+':raub','turn')){const c=FL(S,o,x=>x.x>=0&&kw(x,'Kavallerie')&&has(S.T.fought,x.id)&&x.dmg>0&&canHealX(S,x));if(c.length){const t=yield* pk(G,o,'Schleiersee-Raubfische: Einheit heilen',[...c,['Keine',null]],x=>x?x.dmg:-1e9);if(t){useKey(S,o+':raub','turn');const h=d3(S);t.dmg=Math.max(0,t.dmg-h);G.note('Schleiersee-Raubfische: '+t.name+' heilt '+h)}}}
  if(trOf(S,o,'sd_auge')&&!usedKey(S,o+':auge','turn')){const c=FL(S,o,x=>agOK(S,o,x));if(c.length){const t=yield* pk(G,o,'Auge der Götter: Einheit wählen',[...c,['Keine',null]],x=>x?10-agL(S,x).length*2+mx(x)*.01:-1e9);if(t){useKey(S,o+':auge','turn');yield* augeRoll(G,o,t)}}}
@@ -407,6 +408,35 @@ Object.assign(AB,{
    *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Schildschlag: Ziel',foes(S,u).filter(x=>x.x>=0&&dist(u,x)<=1).map(x=>[lab(x),x]),scE);if(!t)return;const T=abs(t),k=abs(u).filter(m=>T.some(q=>mgap(m,q)<=3)).length,rs=[];let dm=0;for(let i=0;i<k;i++){const r=d6(S);rs.push(r);if(r>=6)dm++}rep(G,'Schildschlag',row('Würfel (6+)',rs,6),dm?t.name+': '+dm+' tödlicher Schaden':'Kein Effekt');if(dm)mort(G,t,dm,'Schildschlag')},ai:()=>true},
   oz_wut:{n:'Entfesselte Wut',s:'Passiv: Kämpft zuerst, wenn die Einheit im selben Zug angegriffen hat',unit:1,src:(S,u)=>hasAb(u,'oz_wut')},
   oz_glotz:{n:'Was glotzt’n so?',s:'Passiv: Feindliche Einheiten mit Ausdauerwert 1 oder 2 können im Nahkampf mit dieser Einheit keine Ziele beanspruchen',unit:1,src:(S,u)=>hasAb(u,'oz_glotz')}
+ });
+
+ // ---- Höfe der Leichenfresser: Aaskreuzzug ----
+ const fcPts=(u,n)=>{u.nd=Math.min(6,(u.nd||0)+n)};
+ GL.dealt.push((G,u,e,tot)=>{const S=G.S;if(isHero(u)&&S.U.includes(u)&&trOf(S,u.o,'fc_edel')&&tot>0){fcPts(u,tot);G.note('Edle Taten: '+u.name+' erhält '+tot+' Punkt(e) ('+u.nd+')')}});
+ Object.assign(HK,{
+  fc_edel:{att:(S,u,w,e,shoot)=>!shoot&&S.U.some(h=>h.o==u.o&&h.x>=0&&isHero(h)&&(h.nd||0)>=6&&wholly(u,h,12))?1:0},
+  fc_kreuz:{chg:()=>1,run:()=>1}
+ });
+ GL.sv.push((S,e)=>{if(e.x<0)return 0;let v=0;if(RGI(S,e.o)=='fc_krone'&&S.obj.some((p,k)=>S.oc[k]===e.o&&cn(e,p)>0))v++;if(isHero(e)&&S.U.some(x=>x.o==e.o&&x!==e&&x.x>=0&&hasAb(x,'fc_leib')&&wholly(e,x,3)))v++;return v});
+ const fcHeroes=(S,o)=>fr(S,o).filter(x=>x.x>=0&&isHero(x)&&(x.nd||0)>0);
+ Object.assign(AB,{
+  fc_edel:{n:'Edle Taten / Fressrausch / Treue Diener beschwören',s:'Bewegungsphase: Held mit Edle-Taten-Punkten: Punkte ausgeben – Gruftgarde (9", 1 Punkt) oder Morbheg-Ritter (9", 2 Punkte): je 1 Modell zurück. Punkte: Schadenspunkte der Kämpfen-Fähigkeit (max. 6); Fressrausch: +1 Attacken bei 6 Punkten (12")',ph:2,freq:'phase',unit:1,src:(S,u)=>trOf(S,u.o,'fc_edel')&&isHero(u),can:(S,u)=>(u.nd||0)>0&&fr(S,u.o).some(x=>x.x>=0&&x.n<x.nmax&&((x.dn=='Gruftgarde'&&dist(u,x)<=9)||(x.dn=='Morbheg-Ritter'&&dist(u,x)<=9&&(u.nd||0)>=2))),
+   *run(G,u){const S=G.S;for(let i=0;i<12;i++){const p=u.nd||0;if(p<1)break;const c=fr(S,u.o).filter(x=>x.x>=0&&x.n<x.nmax&&((x.dn=='Gruftgarde'&&dist(u,x)<=9)||(x.dn=='Morbheg-Ritter'&&dist(u,x)<=9&&p>=2)));if(!c.length)break;const t=yield* pk(G,u.o,'Treue Diener beschwören ('+p+' Punkte): Einheit',[...c.map(x=>[lab(x)+' – '+(x.dn=='Gruftgarde'?1:2)+' Punkt(e)',x]),['Fertig',null]],x=>x?(x.nmax-x.n)*(x.dn=='Gruftgarde'?1:2):-1);if(!t)break;if(!canHealX(S,t))break;t.n++;u.nd-=(t.dn=='Gruftgarde'?1:2);G.note('Treue Diener beschwören: 1 Modell kehrt zu '+t.name+' zurück ('+u.name+': '+u.nd+' Punkte)')}},ai:()=>true},
+  fc_verw:{n:'Krankhafte Verwandlung',s:'Heldenphase: Sichtbare befreundete Einheit ganz innerhalb 18": 2W6 6+ → +2" Bewegung und +1 auf Verwundungswürfe bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'fc_verw'),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Krankhafte Verwandlung: Ziel',FL(S,u.o,x=>wholly(x,u,18)&&vis(S,u,x)),x=>mx(x));if(!t)return;if(!spell(G,'Krankhafte Verwandlung',6))return;addFx(S,{k:'mv',u:t.id,v:2,exp:'own'});addFx(S,{k:'wnd',u:t.id,v:1,exp:'own'});G.note('Krankhafte Verwandlung: '+t.name+' +2" Bewegung, +1 auf Verwundungswürfe')},ai:()=>true},
+  fc_leib:{n:'Königliche Leibwache',s:'Passiv: +1 auf Rettungswürfe befreundeter Helden ganz innerhalb 3" um diese Einheit',unit:1,src:(S,u)=>hasAb(u,'fc_leib')},
+  fc_sprung:{n:'Raubtiersprünge',s:'Passiv: Angriff nach Rückzug erlaubt, Rückzug ohne tödlichen Schaden',unit:1,src:(S,u)=>hasAb(u,'fc_sprung')},
+  fc_mahl:{n:'Siegesmahl',s:'Zugende (jeder Zug): Hat die Einheit ein Modell getötet: heilt W6; darf sofort zurückziehen (ohne tödlichen Schaden)',unit:1,src:(S,u)=>hasAb(u,'fc_mahl')},
+  fc_kreuz:{n:'Auf dem Kreuzzug',s:'Passiv: +1 auf Rennen- und Angriffswürfe für befreundete Einheiten',army:1,src:(S,o)=>RGI(S,o)=='fc_kreuz'},
+  fc_krone:{n:'Verteidiger der Krone',s:'Passiv: +1 auf Schutzwürfe für Einheiten, die ein von dir kontrolliertes Ziel beanspruchen',army:1,src:(S,o)=>RGI(S,o)=='fc_krone'},
+  fc_geschm:{n:'Ulguisches Geschmeide',s:'Passiv: General ist für feindliche Modelle über 12" nicht sichtbar',army:1,src:(S,o)=>ENI(S,o)=='fc_geschm'},
+  fc_gral:{n:'Blutflussgral',s:'Heldenphase, 1× pro Schlacht: Heile (2W3) den General',ph:1,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='fc_gral',can:(S,o)=>{const g=genOf(S,o);return !!g&&g.dmg>0},
+   *run(G,o){const S=G.S,g=genOf(S,o),h=d3(S)+d3(S);if(canHealX(S,g))g.dmg=Math.max(0,g.dmg-h);G.note('Blutflussgral: '+g.name+' heilt '+h)},ai:()=>true},
+  fc_rede:{n:'Erhebende Rede',s:'Heldenphase: Je ein Würfel für befreundete Einheiten ganz innerhalb 12" um den General; je 5+ → 1 Edle-Taten-Punkt für den General',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='fc_rede',can:(S,o)=>{const g=genOf(S,o);return !!g&&(g.nd||0)<6&&fr(S,o).some(x=>x!==g&&wholly(x,g,12))},
+   *run(G,o){const S=G.S,g=genOf(S,o),l=fr(S,o).filter(x=>x!==g&&wholly(x,g,12)),rs=l.map(()=>d6(S)),k=rs.filter(x=>x>=5).length;fcPts(g,k);rep(G,'Erhebende Rede',row('Würfel (5+)',rs,5),k?g.name+': +'+k+' Edle-Taten-Punkt(e) ('+g.nd+')':'Kein Effekt')},ai:()=>true},
+  fc_kost:{n:'Blutrote Kost',s:'Heldenphase: Sichtbarer Feind innerhalb 18" um den General: 2W6 6+ → W3 tödlicher Schaden; Gruftgarde ganz innerhalb 6" um das Ziel erhält je Schadenspunkt 1 Modell zurück',ph:1,freq:'phase',army:1,src:(S,o)=>ENI(S,o)=='fc_kost',can:(S,o)=>{const g=genOf(S,o);return !!g&&foes(S,g).some(x=>x.x>=0&&dist(g,x)<=18&&vis(S,g,x))},
+   *run(G,o){const S=G.S,g=genOf(S,o),t=yield* pk(G,o,'Blutrote Kost: Ziel',foes(S,g).filter(x=>x.x>=0&&dist(g,x)<=18&&vis(S,g,x)).map(x=>[lab(x),x]),scE);if(!t)return;if(!spell(G,'Blutrote Kost',6))return;const d=d3(S),w0=wnd(t);mort(G,t,d,'Blutrote Kost');const dealt=Math.min(d,w0);
+    const gg=fr(S,o).filter(x=>x.dn=='Gruftgarde'&&x.n<x.nmax&&dist(x,t)<=6);if(gg.length&&dealt>0){const q=yield* pk(G,o,'Blutrote Kost: Gruftgarde',[...gg.map(x=>[lab(x),x]),['Keine',null]],x=>x?x.nmax-x.n:-1);if(q&&canHealX(S,q)){const k=Math.min(dealt,q.nmax-q.n);q.n+=k;G.note('Blutrote Kost: '+k+' Modell(e) kehren zu '+q.name+' zurück')}}},ai:()=>true}
  });
 
 }
