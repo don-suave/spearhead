@@ -20,6 +20,7 @@ export function collect(){
     rw:(u.rw||[]).map(w=>({n:w[0],r:w[1],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||''})),
     mw:(u.mw||[]).map(w=>({n:w[0],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||''})),ab,note};
   });
+  (a.tr||[]).forEach(k=>{const b=AB[k];if(b&&!traits.some(x=>x.n==b.n))traits.push({n:b.n,t:b.s})});
   return {i,f:a.f,n:a.n,reg:a.reg.map(r=>({n:r[0],t:r[1]})),enh:a.enh.map(r=>({n:r[0],t:r[1]})),traits,units};
  });
 }

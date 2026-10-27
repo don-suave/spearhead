@@ -18,6 +18,7 @@ import {CH,destReq,endTac,twVP,twAfter,twRound,applyTw,cmdWindow,doCharge,doRun,
 export function turnStart(S){S.tn++;S.D=[0,0];S.ocs=S.oc.slice();S.T=newT();S.Ph=newPh();if(RGI(S,S.act)=='bg_seg'&&d6(S)>=2)(S.bz||(S.bz=[0,0]))[S.act]++;S.U.forEach(u=>{if(u.x>=0&&hasAb(u,'ms_regen')&&u.dmg>0&&canHeal(S,u))u.dmg=Math.max(0,u.dmg-d3(S))});if(S.K.pack==2&&HK.ts)HK.ts(S)}
 const draw1=(S,p)=>{while(p.hand.length-(p.aside||[]).length<3){if(!p.deck.length){p.deck=shuffle(S,p.disc);p.disc=[]}if(!p.deck.length)break;p.hand.push(p.deck.pop())}};
 
+const AUTODEP=false;
 const GA={'Städte Sigmars':'Ordnung','Sturmgeschmiedete Ewige':'Ordnung','Khazalid':'Ordnung','Skaven':'Chaos','Maggotkin des Nurgle':'Chaos','Seelenbrand-Grabesfürsten':'Tod','Höfe der Leichenfresser':'Tod','Nachtspuk':'Tod','Orruk-Kriegsclans':'Zerstörung','Hedoniten des Slaanesh':'Chaos','Ogor-Schlundstämme':'Zerstörung','Behemats Söhne':'Zerstörung','Helschmiede des Hashut':'Chaos','Seraphon':'Ordnung','Klingen des Khorne':'Chaos','Töchter des Khaine':'Ordnung','Mondwahn-Gits':'Zerstörung','Himmelsherrscher der Kharadron':'Ordnung','Lichtfürsten der Lumineth':'Ordnung','Jünger des Tzeentch':'Chaos','Knochenlegionen der Ossiarch':'Tod','Sylvaneth':'Ordnung','Sklaven der Finsternis':'Chaos','Tiefenvolk der Idoneth':'Ordnung'};
 export function* flow(G){
  const S=G.S,K=S.K;
@@ -26,8 +27,9 @@ export function* flow(G){
  const st=yield* settings(G,'Spielstart','Voreinstellungen bestätigen oder ändern.',[
   {n:'Battlepack',def:0,opts:PACKN.map((t,i)=>({t,s:PACKS[i]}))},
   // Option „Schlachtrunden-Infos“ (Nein/Ja) ist im Startmenü ausgeblendet, K.rinfo bleibt im Code erhalten (hier auf true setzen oder wieder ins Menü aufnehmen)
-  {n:'Aufstellung',def:0,opts:[{t:'Manuell'},{t:'Zufällig',s:'Deine Einheiten werden nach allen Regeln zufällig aufgestellt.'}]}]);
- K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=false;K.rdep=st[1]==1;
+  // Option „Aufstellung: Zufällig“ (K.rdep) und Knopf „Rest automatisch“ (place-Flag auto) sind vorerst abgeschaltet (AUTODEP=false)
+  ]);
+ K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=false;K.rdep=AUTODEP&&st[1]==1;
  setPack(K.pack);
  const i=yield* choice(G,0,'Armee wählen','Dein Gegner (Computer) spielt eine andere Armee.',ARMY.map(a=>({t:a.n,f:a.f,ga:GA[a.f]||'Ordnung',s:a.units.map(d=>d.n).join(' · ')})),{car:1});
  K.army=[i,(i+1+Math.floor(rand(S)*(ARMY.length-1)))%ARMY.length];mkUnits(S);
@@ -95,7 +97,7 @@ function* deploy(G){const S=G.S,K=S.K;
   let au=K.rdep&&!G.isAI(o);
   for(const u of DL){
   let a=au?randDep(S,o,u,DL.slice(DL.indexOf(u)+1)):null;
-  while(!a){const r=yield* place(G,o,'dep',u,'Aufstellen',`Aufstellen: ${u.name} (antippen)`,G.isAI(o)?{}:{auto:true});if(r.auto){au=true;a=randDep(S,o,u,DL.slice(DL.indexOf(u)+1));if(!a)au=false}else a=r}
+  while(!a){const r=yield* place(G,o,'dep',u,'Aufstellen',`Aufstellen: ${u.name} (antippen)`,G.isAI(o)||!AUTODEP?{}:{auto:true});if(r.auto){au=true;a=randDep(S,o,u,DL.slice(DL.indexOf(u)+1));if(!a)au=false}else a=r}
   const Pf=depForm(S,o,u,a.x,a.y);if(Pf)setAbs(u,Pf);else{u.x=a.x;u.y=a.y}}}
  yield* depAbil(G)}
 
