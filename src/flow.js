@@ -6,7 +6,7 @@ import {rand,d6,d3,shuffle,range,add,has} from './util.js';
 import {newT,newPh,mkUnit,mkUnits,setObj} from './state.js';
 import {kdPre,kdPost,roundStartAb,runAb,eot,dep2,AB,abUsed,CYC,rsvGlobals,crossAb,perfStreich} from './abil.js';
 import {unitFlags} from './abil.js';
-import {attackG,depForm,abilities,ONM,autoPile,modW,pileR,phaseSkip,hurt,inCombat,mvOf,ENI,gnl,pileModelErr,pr,obs,hasAb,byId,eligF,sfOK,pileIn,pileErr,reactAtk,attack,actCheck,skill,updCtrl,ctrl,cnm,place,foes,dist,globals,useCard,wnd,mx,AN,RG,RGI,canHeal,isHero,rsvForm,applyMove,mvRest} from './rules.js';
+import {shB,attackG,depForm,abilities,ONM,autoPile,modW,pileR,phaseSkip,hurt,inCombat,mvOf,ENI,gnl,pileModelErr,pr,obs,hasAb,byId,eligF,sfOK,pileIn,pileErr,reactAtk,attack,actCheck,skill,updCtrl,ctrl,cnm,place,foes,dist,globals,useCard,wnd,mx,AN,RG,RGI,canHeal,isHero,rsvForm,applyMove,mvRest} from './rules.js';
 import {CR,W,H,pathPts,plen,terrRoom} from './geom.js';
 import {setAbs,abs,inRange} from './models.js';
 import {SB_TER,CA_MANOR,CA_START,CA_REL} from './packdata.js';
@@ -203,7 +203,7 @@ export function* fights(G){const S=G.S,fs=S.Ph.fs;fs.on=true;fs.done=false;fs.wh
    if(only.length&&a.t!=null&&a.t!=only[0].v)return 'Kopfjäger: Alle Attacken müssen den gewählten Helden zum Ziel haben';if(only.length&&(a.d||a.split))return 'Kopfjäger: keine Verteilung möglich';
    if(a.d){const ks=Object.keys(a.d);if(!ks.length||ks.some(k=>!inr.includes(byId(S,+k))||!Number.isFinite(a.d[k])||a.d[k]<0)||ks.reduce((q,k)=>q+a.d[k],0)<=0)return 'Ungültige Verteilung'}
    if(a.split)return inr.length>=2?'':'Keine Verteilung möglich';
-   if(a.t==null)return inr.length?'Ziel wählen':'';const t=byId(S,a.t);return t&&t.o!=w&&inr.includes(t)?'':'Ziel nicht in Nahkampfreichweite'}};
+   if(a.t==null)return inr.length?'Ziel wählen':'';const t=byId(S,a.t);if(t&&shB(S,u,t)&&inr.some(e=>!shB(S,u,e)))return 'In Schatten gewandet: In dieser Phase hat schon eine andere Einheit den General als Ziel gewählt';return t&&t.o!=w&&inr.includes(t)?'':'Ziel nicht in Nahkampfreichweite'}};
   if(a.a=='cmdwin'){yield* cmdWindow(G);continue}
   if(a.a.startsWith('ab:')){yield* runAb(G,a.a.slice(3),a.u!=null?byId(S,a.u):null,w);continue}
   const u=byId(S,a.u);let t=a.t!=null?byId(S,a.t):null;add(S.T.fought,u.id);let dmap=a.d||null,pre=null;

@@ -1,5 +1,8 @@
 # Changelog
 
+## v106
+- Neue Armee: Nachtspuk Sensenheer: Ritter des Grabtuchs, Geisterscharen, 2× Düsterschnitter, 2× Kettengeister; Welle des Schreckens, Körperlos (Schutzwurf-Modifikatoren ignoriert), Regimenter, Verbesserungen (u. a. In Schatten gewandet: nur 1 Angreifer je Phase auf den General).
+
 ## v105
 - Neue Armee: Kharadron Himmelsschlagverband (Himmelsherrscher der Kharadron): Arkanauten-Admiral, Himmelswächter, zwei Arkanauten-Kompanien, Arkanauten-Fregatte; Durchquert die Himmel (Transport), Angriffsschiff, Lösen, Bombenvorrat, Zeitzünder-Sprengladungen und alle Verbesserungen.
 

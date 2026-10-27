@@ -2,7 +2,7 @@
 import {W,H,CR,OR,into,pathPts,plen,walk} from './geom.js';
 import {abAI,inRsv} from './abil.js';
 import {usedKey,fxL,fxSum} from './fx.js';
-import {ONM,hasAb,updCtrl,ctrl,isHero,wnd,mx,nm,ct,wardOf,mvOf,byId,foes,dist,inCombat,nearest,eligF,sfOK,abilities,actCheck,moveErr,blk,hidden,rngOf,placeErr,pileIn,chargeDest,obs,pr,depForm} from './rules.js';
+import {ONM,hasAb,updCtrl,ctrl,isHero,wnd,mx,nm,ct,wardOf,mvOf,byId,foes,dist,inCombat,nearest,eligF,sfOK,abilities,actCheck,moveErr,blk,shB,hidden,rngOf,placeErr,pileIn,chargeDest,obs,pr,depForm} from './rules.js';
 import {setAbs as setAbsM} from './models.js';
 import {has,add} from './util.js';
 import {CH,twVP} from './cards.js';
@@ -84,7 +84,7 @@ function aiAct(G,rnd){const S=G.S,o=S.act,ph=S.ph;
     if(pr2.sc>=pm.sc+RUNK&&!u.rw.some(w=>!(w[7]||'').includes('B')&&dist(u,e)<=rngOf(S,u,w[1])+mv)||(!u.rw.length&&goal>mv+4&&!pm.stay&&pr2.sc>=pm.sc-.5))a={a:'run',u:u.id};
     else if(!pm.stay)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
    else if(!pm.stay&&pm.vp*10>pm.base-1&&pm.sc>=pm.base+SHK)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
-  else if(ph==3&&u.rw.length){const R=Math.max(...u.rw.map(w=>rngOf(S,u,w[1])||0));const tg=fl.filter(f=>dist(u,f)<=R&&!blk(S,u,f)&&!hidden(S,u,f));const t=bestTgt(S,u,tg,true);if(t)a={a:'shoot',u:u.id,t:t.id}}
+  else if(ph==3&&u.rw.length){const R=Math.max(...u.rw.map(w=>rngOf(S,u,w[1])||0));const tg=fl.filter(f=>dist(u,f)<=R&&!blk(S,u,f)&&!shB(S,u,f)&&!hidden(S,u,f));const t=bestTgt(S,u,tg,true);if(t)a={a:'shoot',u:u.id,t:t.id}}
   if(a&&!actCheck(S,o,a))return a}
  return {a:'next'}}
 
@@ -130,7 +130,7 @@ export function aiAnswer(G,req,rnd=Math.random){const S=G.S,pick=n=>Math.floor(r
   for(let k=0;k<6000;k++){let x=1+rnd()*(W-2),y=1+rnd()*(H-2);const md=k%3;if(md==1){const e=pick(4);if(e==0)x=rnd()*4;else if(e==1)x=W-rnd()*4;else if(e==2)y=rnd()*4;else y=H-rnd()*4}else if(md==2){x=rnd()<.5?rnd()*7:W-rnd()*7;y=rnd()<.5?rnd()*7:H-rnd()*7}const a=rnd()*Math.PI,r={x,y,a};if(!req.check(r))return r}for(let x=.5;x<W;x+=.5)for(let y=.5;y<H;y+=.5)for(const a of [0,Math.PI/2]){const r={x,y,a};if(!req.check(r))return r}return {cancel:true}}
   case 'dest':{const u=byId(S,req.u),q=u&&(req.chg?chargeDest(S,u,req.roll):req.pile?null:aiDest(S,u,req.rng));return q||{stay:true}}
   case 'tgt':{const u=byId(S,req.u),c=chargeTgt(S,u),e=c?c.e:nearest(u,foes(S,u).filter(x=>x.x>=0));return e?{t:e.id}:{cancel:true}}
-  case 'fight':{let bu=null,bt=null,bv=-1e9;for(const u of eligF(S,req.who).filter(x=>sfOK(S,x)&&(!S.Ph.fs.bote||x.dn=='Dämonetten'))){const all=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR),only=fxL(S,u,'only').filter(f=>all.some(e=>e.id==f.v)),inr=all.filter(e=>!only.length||e.id==only[0].v),t=bestTgt(S,u,inr,false),v=t?tgtValue(S,u,t,false)-.3*tgtValue(S,t,u,false):-1e8;if(!bu||v>bv){bu=u;bt=t;bv=v}}return {a:'fight',u:bu.id,t:bt?bt.id:null}}
+  case 'fight':{let bu=null,bt=null,bv=-1e9;for(const u of eligF(S,req.who).filter(x=>sfOK(S,x)&&(!S.Ph.fs.bote||x.dn=='Dämonetten'))){const all0=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR),all1=all0.filter(e=>!shB(S,u,e)),all=all1.length?all1:all0,only=fxL(S,u,'only').filter(f=>all.some(e=>e.id==f.v)),inr=all.filter(e=>!only.length||e.id==only[0].v),t=bestTgt(S,u,inr,false),v=t?tgtValue(S,u,t,false)-.3*tgtValue(S,t,u,false):-1e8;if(!bu||v>bv){bu=u;bt=t;bv=v}}return {a:'fight',u:bu.id,t:bt?bt.id:null}}
   case 'act':return aiAct(G,rnd)}
  throw new Error('KI: unbekannte Anfrage '+req.t)}
 

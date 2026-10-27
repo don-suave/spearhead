@@ -44,7 +44,8 @@ const agL=(S,u)=>(S.ag&&S.ag[u.id])||[];
 const agH=(S,u,k)=>agL(S,u).includes(k);
 const WN={ritter:'Wahn des Ritterheers',fest:'Wahn des großen Festmahls',waech:'Wahn des Wächters',jaeg:'Wahn des Jägers'};
 function wahnOpts(S,o){const l=['ritter','fest'],r=RGI(S,o);if(r=='lw_waechter')l.push('waech');if(r=='lw_jaeger')l.push('jaeg');return l}
-export function* wahnStart(G,o){const S=G.S;if(!trOf(S,o,'lw_wahn'))return;const w=(S.wz||(S.wz=[null,null]));const L=wahnOpts(S,o),last=w[o]?w[o].cur:null;let pick=null,why='';
+export function* wahnStart(G,o){const S=G.S;if(S.round==1&&RGI(S,o)=='sn_jaeger'&&!(S.sjt&&S.sjt[o]!=null)){const c=en(S,o).filter(x=>x.x>=0);const t=c.length?yield* pk(G,o,'Jäger des Todes: Feindliche Einheit wählen',c.map(x=>[lab(x),x]),x=>mx(x)):null;if(t){(S.sjt||(S.sjt=[null,null]))[o]=t.id;G.note('Jäger des Todes: '+t.name+' ist Beute – +1 Wucht für Nahkampfwaffen gegen sie')}}
+ if(!trOf(S,o,'lw_wahn'))return;const w=(S.wz||(S.wz=[null,null]));const L=wahnOpts(S,o),last=w[o]?w[o].cur:null;let pick=null,why='';
  const choose=function*(l,t){if(G.isAI(o))return l[d6(S)%l.length];const i=yield* pk(G,o,t,l.map(k=>[WN[k],k]),()=>0);return i||l[0]};
  if(!last){pick=yield* choose(L,'Wahn und Irrsinn: Wahn wählen');why='gewählt'}
  else{let r=d6(S);let note='Wahnwurf '+r;if(r<=3&&ENI(S,o)=='lw_sinn'&&!usedKey(S,o+':sinn','battle')){const y=G.isAI(o)?true:yield* yn(G,o,'Fast bei Sinnen','Wahnwurf '+r+' (1–3: anderer Wahn) wiederholen?',false);if(y){useKey(S,o+':sinn','battle');const r2=d6(S);note+=' → wiederholt: '+r2;r=r2}}
@@ -77,6 +78,7 @@ export function* kdPost(G,a,u){const S=G.S;if(!u||!isFreg(u))return;
  if(pos){c.x=pos.x;c.y=pos.y;G.note('Durchquert die Himmel: '+c.name+' wird abgesetzt')}else{c.x=c.kdp[0];c.y=c.kdp[1];G.note('Durchquert die Himmel: kein Platz – '+c.name+' bleibt am alten Ort')}
  addFx(S,{k:'nochg',u:c.id,s:'kd',exp:'turn'});add(S.T.kdt||(S.T.kdt=[]),c.id)}
 export function* eot3(G,o,act){const S=G.S;
+ if(ENI(S,o)=='sn_ring'){const g=genOf(S,o);if(g&&g.x>=0&&g.dmg>0&&has(S.T.kl||[],g.id)&&canHealX(S,g)){const h=d6(S);g.dmg=Math.max(0,g.dmg-h);G.note('Seelenfeuerring: '+g.name+' heilt bis zu '+h)}}
  for(const v of fr(S,o).filter(x=>x.x>=0&&hasAb(x,'kd_spreng')&&inCombat(S,x))){const c=foes(S,v).filter(e=>e.x>=0&&dist(v,e)<=CR);if(!c.length)continue;const t=yield* pk(G,o,'Sprengladungen mit Zeitzünder: Ziel',[...c.map(x=>[lab(x),x]),['Nicht einsetzen',null]],x=>x?scE(x):-1e9);if(!t)continue;const r=d6(S);hdr(G,'Sprengladungen mit Zeitzünder',r,r>=2,2,t.name+': 1 tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,1,'Sprengladungen');if(S.U.includes(v)&&inCombat(S,v)&&(G.isAI(o)||(yield* yn(G,o,'Sprengladungen mit Zeitzünder','Sofort zurückziehen (ohne tödlichen Schaden)?',true))))yield* doRetreat(G,v,{free:true})}
  if(trOf(S,o,'lw_wahn')&&wahnOf(S,o)=='fest'){const hl=[];for(const x of fr(S,o).filter(x=>x.x>=0)){if(!canHealX(S,x))continue;if(kw(x,'Knechte')){const k=Math.min(d3(S),x.nmax-x.n);if(k>0){x.n+=k;hl.push(x.name+' +'+k+' Modell(e)')}}else if(x.dmg>0){x.dmg=Math.max(0,x.dmg-1);hl.push(x.name+' heilt 1')}}if(hl.length)G.note('Wahn des großen Festmahls: '+hl.join(', '))}
  if(ENI(S,o)=='lw_jagd'){const g=genOf(S,o);if(g&&g.x>=0&&!inCombat(S,g)&&(G.isAI(o)||(yield* yn(G,o,'Jagdgefährte','General bis zu 3" bewegen (nicht in den Nahkampf)?',true)))){const a=yield* destReq(G,g,3,{text:'Jagdgefährte: bis 3 Zoll (nicht in den Nahkampf)'});if(!a.stay){applyMove(S,g,a,3);add(S.T.moved,g.id);G.note('Jagdgefährte: '+g.name+' bewegt sich')}}}
@@ -522,6 +524,27 @@ Object.assign(AB,{
   kd_schwer:{n:'Schwer angeschlagen',s:'Passiv: Ab 10 zugewiesenen Schadenspunkten hat die Schwere Himmelsharpune 1 Attacke',unit:1,src:(S,u)=>hasAb(u,'kd_schwer')},
   kd_bombe:{n:'Bombenvorrat',s:'Bewegungsphase, 1× pro Schlacht: Feind, über den sich die Einheit in dieser Phase hinwegbewegt hat: Wurf 2+ → W3 tödlicher Schaden',ph:2,freq:'battle',unit:1,src:(S,u)=>hasAb(u,'kd_bombe'),can:(S,u)=>((S.T.kdov||{})[u.id]||[]).some(id=>{const e=byId(S,id);return e&&e.x>=0}),
    *run(G,u){const S=G.S,c=((S.T.kdov||{})[u.id]||[]).map(id=>byId(S,id)).filter(e=>e&&e.x>=0);const t=yield* pk(G,u.o,'Bombenvorrat: Ziel',c.map(x=>[lab(x),x]),scE);if(!t)return;const r=d6(S);hdr(G,'Bombenvorrat',r,r>=2,2,t.name+': W3 tödlicher Schaden','Kein Effekt');if(r>=2)mort(G,t,d3(S),'Bombenvorrat')},ai:()=>true}
+ });
+
+ // ---- Nachtspuk: Sensenheer ----
+ Object.assign(HK,{sn_ernte:{crit5:(S,u,e,shoot)=>!shoot&&e&&nm(e)>=5?1:0},sn_horde:{wnd:(S,u,e,shoot)=>!shoot&&has(S.T.charged,u.id)?1:0},sn_choral:{hitT:(S,u,e,shoot)=>!shoot&&has(S.T.charged,u.id)?-1:0}});
+ GL.ward.push((S,e)=>e.gen&&e.x>=0&&S.U.some(x=>x.o==e.o&&x.x>=0&&hasAb(x,'sn_geist')&&dist(e,x)<=1)?4:0);
+ Object.assign(AB,{
+  sn_koerper:{n:'Körperlos',s:'Passiv: Modifikatoren auf Schutzwürfe befreundeter Einheiten werden ignoriert (positive und negative)',army:1,src:(S,o)=>trOf(S,o,'sn_koerper')},
+  sn_welle:{n:'Welle des Schreckens',s:'Angriffsphase: Befreundete Einheit, die mit Angriffswurf 10+ angegriffen hat: feindliche Einheit innerhalb 1" hat in diesem Zug Kämpft zuletzt',ph:4,freq:'phase',army:1,src:(S,o)=>trOf(S,o,'sn_welle'),can:(S,o)=>fr(S,o).some(x=>x.x>=0&&has(S.T.charged,x.id)&&(S.T.cr[x.id]||0)>=10&&foes(S,x).some(e=>e.x>=0&&dist(x,e)<=1)),
+   *run(G,o){const S=G.S,u=yield* pk(G,o,'Welle des Schreckens: Einheit',FL(S,o,x=>x.x>=0&&has(S.T.charged,x.id)&&(S.T.cr[x.id]||0)>=10&&foes(S,x).some(e=>e.x>=0&&dist(x,e)<=1)),x=>mx(x));if(!u)return;const t=yield* pk(G,o,'Welle des Schreckens: Ziel',foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=1).map(x=>[lab(x),x]),scE);if(!t)return;add(S.T.SL,t.id);G.note('Welle des Schreckens: '+t.name+' kämpft in diesem Zug zuletzt')},ai:()=>true},
+  sn_verbl:{n:'Verblassen',s:'Heldenphase: Befreundete Einheit ganz innerhalb 9": Rettung 5+ bis zu deinem nächsten Zug',ph:1,freq:'phase',unit:1,src:(S,u)=>hasAb(u,'sn_verbl'),
+   *run(G,u){const S=G.S,t=yield* pk(G,u.o,'Verblassen: Einheit',FL(S,u.o,x=>x.x>=0&&wholly(x,u,9)),x=>mx(x));if(!t)return;addFx(S,{k:'ward',u:t.id,v:5,exp:'own'});G.note('Verblassen: '+t.name+' hat Rettung 5+ bis zu deinem nächsten Zug')},ai:()=>true},
+  sn_geist:{n:'Vom Krieg angezogen',s:'Passiv: General hat Rettung 4+, solange er innerhalb 1" um diese Einheit ist',unit:1,src:(S,u)=>hasAb(u,'sn_geist')},
+  sn_ernte:{n:'Die Ernte einfahren',s:'Passiv: Nahkampf-Krit. Treffer bei unmod. 5+, wenn das Ziel mindestens 5 Modelle hat',unit:1,src:(S,u)=>hasAb(u,'sn_ernte')},
+  sn_horde:{n:'Grabeskalte Horde',s:'Passiv: +1 auf Verwundungswürfe im Nahkampf, wenn die Einheit in diesem Zug angegriffen hat',unit:1,src:(S,u)=>hasAb(u,'sn_horde')},
+  sn_jaeger:{n:'Jäger des Todes',s:'Beginn der ersten Runde: Feindliche Einheit wählen, +1 Wucht für Nahkampfwaffen gegen sie',army:1,src:(S,o)=>RGI(S,o)=='sn_jaeger'},
+  sn_choral:{n:'Choral des Grauens',s:'Passiv: −1 auf Trefferwürfe von Nahkampfattacken gegen befreundete Einheiten, die in diesem Zug angegriffen haben',army:1,src:(S,o)=>RGI(S,o)=='sn_choral'},
+  sn_ring:{n:'Seelenfeuerring',s:'Zugende: Hat der General in diesem Zug ein Modell getötet, heilt er W6',army:1,src:(S,o)=>ENI(S,o)=='sn_ring'},
+  sn_leucht:{n:'Leuchtfeuer von Nagashizzar',s:'Heldenphase, 1× pro Schlacht: 1 getötetes Modell jeder befreundeten Einheit kehrt zurück',ph:1,freq:'battle',army:1,src:(S,o)=>ENI(S,o)=='sn_leucht',can:(S,o)=>fr(S,o).some(x=>x.x>=0&&x.n<x.nmax&&canHealX(S,x)),
+   *run(G,o){const S=G.S,hl=[];for(const x of fr(S,o).filter(x=>x.x>=0&&x.n<x.nmax&&canHealX(S,x))){x.n++;hl.push(x.name)}G.note('Leuchtfeuer von Nagashizzar: 1 Modell kehrt zurück bei '+hl.join(', '))},ai:()=>true},
+  sn_schatten:{n:'In Schatten gewandet',s:'Passiv: In jeder Phase kann nur 1 feindliche Einheit den General als Ziel für Attacken wählen',army:1,src:(S,o)=>ENI(S,o)=='sn_schatten'},
+  sn_schnitt:{n:'Schattenschneide',s:'Passiv: Schwert der gestohlenen Stunden hat Krit. (tödlich)',army:1,src:(S,o)=>ENI(S,o)=='sn_schnitt'}
  });
 
 }

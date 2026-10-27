@@ -1541,3 +1541,35 @@ Enterwaffen der Mannschaft	Crew's Boarding Weapons
 Passiv: Solange dieser Einheit mindestens 10 Schadenspunkte zugewiesen sind, ist der Attackenwert ihrer Schweren Himmelsharpune 1.	Passive: While this unit has 10 or more damage points allocated to it, the Attacks characteristic of its Heavy Skyhook is 1.
 Bombenvorrat	Bomb Stores
 Einmal pro Schlacht, deine Bewegungsphase: Wähle als Ziel eine feindliche Einheit, über die sich diese Einheit in dieser Phase hinwegbewegt hat, dann wirf einen Würfel. Bei 2+ füge dem Ziel W3 tödlichen Schaden zu.	Once per battle, your movement phase: Pick an enemy unit this unit moved over this phase, then roll a die. On 2+, inflict D3 mortal damage on the target.
+Sensenheer	Reaper Host
+Welle des Schreckens	Wave of Terror
+Beliebige Angriffsphase: Wähle eine befreundete Einheit, die in dieser Phase mit einem Angriffswurf von 10+ angegriffen hat, die diese Fähigkeit einsetzt. Wähle dann eine feindliche Einheit in 1 Zoll um sie als Ziel. Das Ziel hat für diesen Zug Kämpft zuletzt.	Any charge phase: Pick a friendly unit that charged this phase with a charge roll of 10+ and is using this ability. Then pick an enemy unit within 1" of it as the target. The target has Fights Last for this turn.
+Körperlos	Incorporeal
+Passiv: Ignoriere alle Modifikatoren auf Schutzwürfe für befreundete Einheiten (positive und negative).	Passive: Ignore all modifiers to save rolls for friendly units (positive and negative).
+Jäger des Todes	Hunters of Death
+Beginn der ersten Schlachtrunde: Wähle eine feindliche Einheit auf dem Schlachtfeld. Addiere 1 auf den Wuchtwert von Attacken mit Nahkampfwaffen, deren Ziel jene Einheit ist.	Start of the first battle round: Pick an enemy unit on the battlefield. Add 1 to the Rend characteristic of attacks made with melee weapons that target that unit.
+Choral des Grauens	Chorus of Horror
+Passiv: Subtrahiere 1 von Trefferwürfen für Nahkampfattacken, deren Ziel eine befreundete Einheit ist, die im selben Zug angegriffen hat.	Passive: Subtract 1 from hit rolls for melee attacks that target a friendly unit that charged in the same turn.
+Seelenfeuerring	Soulfire Ring
+Ende eines beliebigen Zuges: Wenn dein General in diesem Zug mindestens ein Modell getötet hat, heile (W6) deinen General.	End of any turn: If your general slew at least one model this turn, heal (D6) your general.
+Leuchtfeuer von Nagashizzar	Beacon of Nagashizzar
+Einmal pro Schlacht, deine Heldenphase: Bringe 1 getötetes Modell jeder befreundeten Einheit auf dem Schlachtfeld zurück.	Once per battle, your hero phase: Return 1 slain model to each friendly unit on the battlefield.
+In Schatten gewandet	Shrouded in Shadow
+Passiv: In jeder Phase kann nicht mehr als 1 feindliche Einheit deinen General als Ziel für ihre Attacken (Fernkampf oder Nahkampf) wählen.	Passive: In each phase, no more than 1 enemy unit can pick your general as the target of its attacks (shooting or melee).
+Schattenschneide	Shadow Edge
+Passiv: Das Schwert der gestohlenen Stunden deines Generals hat Krit. (tödlich).	Passive: Your general's Sword of Stolen Hours has Crit (Mortal).
+Ritter des Grabtuchs	Knight of Shrouds
+Schwert der gestohlenen Stunden	Sword of Stolen Hours
+Deine Heldenphase: Wähle als Ziel eine befreundete Einheit vollständig innerhalb von 9 Zoll um diese Einheit. Bis zum Beginn deines nächsten Zuges hat das Ziel Rettung (5+).	Your hero phase: Pick a friendly unit wholly within 9" of this unit. Until the start of your next turn, the target has Ward (5+).
+Geisterscharen	Spirit Hosts
+Geisterhafte Klauen und Dolche	Spectral Claws and Daggers
+Vom Krieg angezogen	Drawn to War
+Passiv: Dein General hat Rettung (4+), solange er sich innerhalb von 1 Zoll um diese Einheit befindet.	Passive: Your general has Ward (4+) while within 1" of this unit.
+Düsterschnitter	Grimhold Reapers
+Schneidende Sense	Cutting Scythe
+Die Ernte einfahren	Reaping the Harvest
+Passiv: Von dieser Einheit ausgeführte Nahkampfattacken erzielen bei unmodifizierten Trefferwürfen von 5+ kritische Treffer, wenn die Zieleinheit aus mindestens 5 Modellen besteht.	Passive: Melee attacks made by this unit score critical hits on unmodified hit rolls of 5+ if the target unit has 5 or more models.
+Kettengeister	Chainghasts
+Gespensterwaffe	Spectral Weapon
+Grabeskalte Horde	Gravechill Horde
+Passiv: Addiere 1 auf Verwundungswürfe für Nahkampfattacken dieser Einheit, wenn sie im selben Zug angegriffen hat.	Passive: Add 1 to wound rolls for this unit's melee attacks if it charged in the same turn.

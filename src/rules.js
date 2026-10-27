@@ -87,6 +87,8 @@ export function modW(S,u,w,e,shoot){const o=u.o;let x=hkW(S,u,w,e,shoot);const c
  if(hasAb(u,'schwer')&&u.dmg>=10&&w[0]=='Magmadrothmaul'){c();x[2]=4}
  if(hasAb(u,'kd_schwer')&&u.dmg>=10&&w[0]=='Schwere Himmelsharpune'){c();x[2]=1}
  if(!shoot&&fxSum(S,u,'rendP')){c();x[5]=(x[5]||0)+fxSum(S,u,'rendP')}
+ if(!shoot&&e&&S.sjt&&S.sjt[o]===e.id&&RGI(S,o)=='sn_jaeger'){c();x[5]=(x[5]||0)+1}
+ if(u.gen&&ENI(S,o)=='sn_schnitt'&&w[0]=='Schwert der gestohlenen Stunden'){c();x[7]=(x[7]||'')+'T'}
  if(!shoot&&!(w[7]||'').includes('G')&&(fxSum(S,u,'rendN')||fxSum(S,u,'attN'))){c();x[5]=(x[5]||0)+fxSum(S,u,'rendN');if(typeof w[2]=='number')x[2]=+x[2]+fxSum(S,u,'attN')}
  {const rs=fxL(S,u,'rendWS').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0);if(rs&&shoot){c();x[5]=(x[5]||0)+rs}}
  {const rw=fxL(S,u,'rendW').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0);if(rw&&!shoot){c();x[5]=(x[5]||0)+rw}}
@@ -139,6 +141,7 @@ export const hidden=(S,a,e)=>(fxL(S,e,'notgt').some(f=>!f.ex||dist(a,e)>CR)||(e.
 export const rngOf=(S,u,r)=>{const b=r+(r>0?fxSum(S,u,'rng'):0);return obscured(S,u)?Math.floor(b/2):b};
 // Deckung: -1 auf Trefferwürfe gegen Einheiten hinter/auf Gelände (Linie kreuzt es; Teile in der Kampfreichweite des Angreifers zählen nicht), außer sie haben in diesem Zug angegriffen oder fliegen
 export const covered=(S,a,e)=>!hasFly(e)&&!has(S.T.charged,e.id)&&(((S.fort||[]).some(k=>clmAll(S,e,k)))||(e.x>=0&&onOrBehind(S,a,e,S.ter.filter(t=>!t.rel))));
+export const shB=(S,u,e)=>!!e.gen&&e.x>=0&&u.o!=e.o&&ENI(S,e.o)=='sn_schatten'&&S.Ph.sch!=null&&S.Ph.sch!==u.id;
 export const blk=(S,a,e)=>/Infanterie/.test(e.kw)&&grd(S,e)&&dist(a,e)>12;
 const fxC=(S,u,k)=>fxL(S,u,k).some(f=>!f.cond||(f.cond=='terr'&&u.M&&abs(u).every(m=>into(S,f.t,m.x,m.y)>=m.l/2))||(f.cond=='rip'&&S.U.some(e=>e.o!=u.o&&e.x>=0&&has(S.T.charged,e.id)&&dist(u,e)<=CR))),sfx=(S,u)=>(has(S.T.SF,u.id)||fxC(S,u,'first')||(u.gen&&ENI(S,u.o)=='wut'&&has(S.T.charged,u.id))||(u.gen&&ENI(S,u.o)=='sd_slaan')||hk(S,'first',u)>0||(hasAb(u,'rj_schimm')&&has(S.T.charged,u.id)))&&!has(S.T.SL,u.id),slx=(S,u)=>(has(S.T.SL,u.id)||fxC(S,u,'last'))&&!has(S.T.SF,u.id);
 export const eligF=(S,o)=>S.U.filter(x=>x.o==o&&x.x>=0&&!has(S.T.fought,x.id)&&(inCombat(S,x)||(o==S.act&&has(S.T.charged,x.id))));
@@ -458,6 +461,8 @@ export function* fdStage(G,o,vals,ok,fc,label,noAsk,noV){
 export function attack(G,u,e,shoot,sh,pre){const it=attackG(G,u,e,shoot,sh,pre,true);while(!it.next().done);}
 export function* attackG(G,u,e,shoot,sh,pre,noAsk){
  const S=G.S,T=S.T,Ph=S.Ph,TW=S.TW,R=[];
+ if(shB(S,u,e)){G.note('In Schatten gewandet: '+e.name+' kann in dieser Phase nicht von '+u.name+' angegriffen werden (bereits von einer anderen Einheit gewählt)');return}
+ if(e.gen&&u.o!=e.o&&Ph.sch==null&&ENI(S,e.o)=='sn_schatten')Ph.sch=u.id;
  try{if(e.gen&&ENI(S,e.o)=='og_phiole'&&!usedKey(S,e.o+':phi','battle')){useKey(S,e.o+':phi','battle');addFx(S,{k:'ward',u:e.id,v:3,exp:'ph'});G.note('Steinyakblut-Phiole: '+e.name+' hat in dieser Phase Rettung 3+')}}catch(x){}
  let ws=shoot?u.rw:u.mw;if(shoot&&inCombat(S,u)&&!nahb(S,u))ws=ws.filter(w=>(w[7]||'').includes('B'));
  let crits=0,ones=0,gdfN=0,fdN=0,ak1=0;const fc=[2,2];const gdf=!shoot&&fxL(S,e,'gdf').length>0;if(!shoot){const mt=T.mt||(T.mt={});mt[e.id]=[...new Set([...(mt[e.id]||[]),u.id])]}const ch=!shoot&&has(T.charged,u.id),fr=e.fp==S.tn+'/'+S.ph&&!isHero(u),nb=nm(e);let dmg=0,mort=0;
@@ -467,7 +472,7 @@ export function* attackG(G,u,e,shoot,sh,pre,noAsk){
   const th0=(TW.id=='ws'&&TW.obj&&ct(e,S.obj[TW.obj[0]]))||(shoot&&has(Ph.g2g,e.id))?6:w[3]-Math.max(-1,Math.min(1,(!shoot&&TW.fren==u.id?1:0)+(shoot&&u.ab=='sg'&&!has(T.moved,u.id)?1:0)+hitMod(S,u,e,shoot)+fxL(S,u,'hitW').filter(f=>f.w==w[0]).reduce((t,f)=>t+f.v,0)-(fr?1:0)-(shoot&&grd(S,e)?1:0)-(shoot&&covered(S,u,e)?1:0)));
   const tw=w[4]-(!shoot&&RGI(S,o0)=='uh'&&!isHero(u)&&nm(e)<nm(u)?1:0)+(S.round==1&&RG(S,e.o)=='Krach machen'?1:0)-(TW.id=='tl'&&TW.wu==u.o&&S.ter.some(t=>t.big&&tdist(e,t)<=3)?1:0)-((hasAb(u,'bd_blut')&&e.dmg>0?1:0)+(!shoot&&wgN(S,u.o)==4?1:0)+(shoot?fxSum(S,u,'wndS'):0)+fxSum(S,u,'wnd')+(!shoot&&AN(S,u.o)=='Herzspaltzirkel'&&rl(S,u.o)>=4?1:0)+(!shoot?fxSum(S,u,'wndM'):0)+fxSum(S,e,'wndT')+(!shoot?fxSum(S,e,'wndTm'):0)+hk(S,'wnd',u,e,shoot,w)+hk(S,'wndT',e,u,shoot,w)-(e.gen&&ENI(S,e.o)=='schw'?1:0));
   const aura=shoot&&e.gen&&ENI(S,e.o)=='bd_aura';if(aura)rd=0;
-  const gyb=TW.id=='gy'&&S.U.some(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=3)?1:0;const sv0=-gyb+((TW.id=='wn'&&TW.wnU===e.id)?e.sv:e.sv-(aura?Math.max(0,fxSum(S,e,'svP')):fxSum(S,e,'svP'))-(hasAb(e,'fp_mauer')&&!has(T.charged,e.id)?1:0)-hk(S,'svT',e,u,shoot,w)-GL.sv.reduce((q,f)=>q+(+f(S,e)||0),0)-(e.dn=='Felsmagen-Troggoths'&&litIn(S,e)?1:0)-(hasAb(e,'sp_geord')&&S.obj.some((p,k)=>S.oc[k]===e.o&&ct(e,p))?1:0)+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:rd+(TW.rot==e.id?1:0))+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:1)*((()=>{const g=gnl(S,1-e.o);return g&&ENI(S,1-e.o)=='wam'&&dist(g,e)<=CR?1:0})()));const sv=(e.gen&&ENI(S,e.o)=='id_stahl')?e.sv:sv0;const th=fxL(S,u,'hit6').length?6:th0;let h=0,wn=0,un=0,m=0;
+  const gyb=TW.id=='gy'&&S.U.some(f=>f.o==e.o&&f!==e&&f.x>=0&&dist(e,f)<=3)?1:0;const sv0=-gyb+((TW.id=='wn'&&TW.wnU===e.id)?e.sv:e.sv-(aura?Math.max(0,fxSum(S,e,'svP')):fxSum(S,e,'svP'))-(hasAb(e,'fp_mauer')&&!has(T.charged,e.id)?1:0)-hk(S,'svT',e,u,shoot,w)-GL.sv.reduce((q,f)=>q+(+f(S,e)||0),0)-(e.dn=='Felsmagen-Troggoths'&&litIn(S,e)?1:0)-(hasAb(e,'sp_geord')&&S.obj.some((p,k)=>S.oc[k]===e.o&&ct(e,p))?1:0)+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:rd+(TW.rot==e.id?1:0))+(AN(S,e.o)=='Verfluchte Fesselhorde'?0:1)*((()=>{const g=gnl(S,1-e.o);return g&&ENI(S,1-e.o)=='wam'&&dist(g,e)<=CR?1:0})()));const sv=((e.gen&&ENI(S,e.o)=='id_stahl')||AN(S,e.o)=='Sensenheer')?e.sv:sv0;const th=fxL(S,u,'hit6').length?6:th0;let h=0,wn=0,un=0,m=0;
   const hf=[],hx=[];for(let i=0;i<n;i++)hf.push(d6(S));
   if(!shoot&&e.grd===u.o&&/Infanterie/.test(u.kw))for(let i=0;i<hf.length;i++)if(hf[i]==1){hx.push(1);hf[i]=d6(S)}
   yield* rrt(G,S,u,hf,x=>x!=1&&(x>=th||x==6),'Trefferwürfe ('+th+'+)');fdN+=yield* fdStage(G,o0,hf,x=>x!=1&&(x>=th||x==6),fc,'Trefferwürfe ('+th+'+)',noAsk);hr.push(...hf,...hx);
@@ -560,5 +565,5 @@ export function actCheck(S,who,a){
  const ab=abilities(S,u).find(x=>x.k==a.a);if(!ab||ab.dis)return 'Fähigkeit jetzt nicht möglich';
  if(a.a=='move')return moveErr(S,u,a.x,a.y,mvRest(S,u),a.rot);
  if(a.a=='adj')return adjErr(S,u,a.P,adjAllow(S,u));
- if(a.a=='shoot'){const t=byId(S,a.t);if(!t||t.o==who)return 'Gegnerische Einheit wählen';if(dist(u,t)>rngOf(S,u,u.rw[0][1]))return 'Ziel außerhalb der Reichweite'+(obscured(S,u)?' (Reichweite im Sichtblocker halbiert)':'');if(blk(S,u,t))return 'Geschützter Held: nur Schützen innerhalb von 12 Zoll';if(hidden(S,u,t))return 'Ziel nicht sichtbar: Schusslinie führt durch einen Sichtblocker, das Ziel steht höchstens 1 Zoll daran (gestrichelte Zone) – nur auf höchstens 3 Zoll beschießbar';return ''}
+ if(a.a=='shoot'){const t=byId(S,a.t);if(!t||t.o==who)return 'Gegnerische Einheit wählen';if(dist(u,t)>rngOf(S,u,u.rw[0][1]))return 'Ziel außerhalb der Reichweite'+(obscured(S,u)?' (Reichweite im Sichtblocker halbiert)':'');if(shB(S,u,t))return 'In Schatten gewandet: In dieser Phase hat schon eine andere Einheit den General als Ziel gewählt';if(blk(S,u,t))return 'Geschützter Held: nur Schützen innerhalb von 12 Zoll';if(hidden(S,u,t))return 'Ziel nicht sichtbar: Schusslinie führt durch einen Sichtblocker, das Ziel steht höchstens 1 Zoll daran (gestrichelte Zone) – nur auf höchstens 3 Zoll beschießbar';return ''}
  return ''}

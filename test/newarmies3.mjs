@@ -11,7 +11,7 @@ function mk(a0,a1='Zenestras Zeloten',reg=0,enh=0,o=0){const g=new Game(7,['ai',
  const gen=ARMY[S.K.army[0]].units.find(u=>u.gen);let G0=gen?add(gen.n,0,12,22):null;return {g,S,add,gen:G0}}
 function drive(g,it){let r=it.next(),n=0;while(!r.done&&n++<300){let a;const q=r.value;if(q&&q.t=='place'&&q.kind=='shadow'&&q.check){a={cancel:true};const t=g.S.U.find(x=>x.o==0&&x.dn=='Gossenläufer');if(t)for(let k=0;k<4000;k++){const c={x:t.x+(Math.random()*8-4),y:t.y+(Math.random()*8-4),a:0};if(!q.check(c)){a=c;break}}}else a=aiAnswer(g,q,()=>.37);r=it.next(a)}if(!r.done)throw new Error('Endlos');}
 const E=(S,add,x=26,y=22,dn='Freigilden-Stahlhelme',n)=>add(dn,1,x,y,n);
-import {hk} from '../src/hooks.js';import {modW,hitMod,attackG,hidden,rsvForm} from '../src/rules.js';import {wahnStart,kdPre,kdPost} from '../src/abil3.js';import {doRetreat} from '../src/cards.js';
+import {hk} from '../src/hooks.js';import {modW,hitMod,attackG,hidden,rsvForm,shB} from '../src/rules.js';import {wahnStart,kdPre,kdPost} from '../src/abil3.js';import {doRetreat} from '../src/cards.js';
 import {mkUnits} from '../src/state.js';import {eot3} from '../src/abil3.js';
 const KV='Kavalos-Speerspitze';
 T('Kavalos: General Rettung 5+ (Verbesserung), Klinge Krit. 2 Treffer',()=>{const {S,gen}=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_arch'));assert.equal(wardOf(S,gen),5);const m=mk(KV,'Zenestras Zeloten',0,ei(KV,'kv_klinge'));const w=abilities?0:0;assert.ok(m.gen)});
@@ -121,4 +121,18 @@ T('Himmelsschlagverband: Angriffsschiff, Lösen, Ruhm, Schwer, Rettung, Nachzug,
  const go=mk(KD,'Zenestras Zeloten',0,ei(KD,'kd_gorogna'));go.gen.dmg=5;drive(go.g,AB.kd_gorogna.run(go.g,0));assert.ok(go.gen.dmg<5);
  const ni=mk(KD);const nc=ni.add('Arkanauten-Kompanie (Himmelspike)',0,ni.gen.x+3,ni.gen.y);ni.S.ph=1;drive(ni.g,AB.kd_nimm.run(ni.g,ni.gen));assert.ok(fxL(ni.S,nc,'ctl').length>0);
  const sp=mk(KD);const wu=sp.add('Himmelswächter',0,20,15);const se=E(sp.S,sp.add,22,15);let dd=0;for(let i=0;i<15;i++){sp.S.rng=i*11+5;se.dmg=0;se.n=se.nmax=5;wu.x=20;wu.y=15;drive(sp.g,eot3(sp.g,0,0));dd+=5-se.n+se.dmg}assert.ok(dd>0)});
+
+const SN='Sensenheer';
+T('Sensenheer: Registrierung, Passive, Welle, Verblassen, Jäger, Schatten',()=>{for(const k of ['sn_koerper','sn_welle','sn_verbl','sn_geist','sn_ernte','sn_horde','sn_jaeger','sn_choral','sn_ring','sn_leucht','sn_schatten','sn_schnitt'])assert.ok(AB[k],k);
+ const a=mk(SN,'Zenestras Zeloten',ri(SN,'sn_choral'));const {g,S,add,gen}=a;const k=add('Kettengeister',0,16,22);const e=E(S,add,19,22,'Freigilden-Stahlhelme',5);
+ assert.equal(hk(S,'wnd',k,e,false),0);S.T.charged.push(k.id);assert.equal(hk(S,'wnd',k,e,false),1);assert.equal(hk(S,'hitT',k,e,false),-1);
+ const d=add('Düsterschnitter',0,30,5);assert.equal(hk(S,'crit5',d,e,false),1);e.n=3;assert.equal(hk(S,'crit5',d,e,false),0);
+ const gs=add('Geisterscharen',0,gen.x+1.5,gen.y);assert.equal(GL.ward.reduce((m,x)=>Math.max(m,+x(S,gen)||0),0),4);
+ S.ph=4;S.T.cr[k.id]=10;e.x=17.5;assert.ok(AB.sn_welle.can(S,0));drive(g,AB.sn_welle.run(g,0));assert.ok(S.T.SL.includes(e.id));
+ S.ph=1;drive(g,AB.sn_verbl.run(g,gen));assert.ok(S.E.some(f=>f.k=='ward'&&f.v==5));
+ const j=mk(SN,'Zenestras Zeloten',ri(SN,'sn_jaeger'));const je=E(j.S,j.add,30,5);j.S.round=1;drive(j.g,wahnStart(j.g,0));assert.equal(j.S.sjt[0],je.id);const jw=j.gen.mw[0];assert.equal(modW(j.S,j.gen,jw,je,false)[5],jw[5]+1);
+ const h=mk(SN,'Zenestras Zeloten',0,ei(SN,'sn_schnitt'));const he=E(h.S,h.add,h.gen.x+2,h.gen.y);assert.ok(modW(h.S,h.gen,h.gen.mw[0],he,false)[7].includes('T'));
+ const sc=mk(SN,'Zenestras Zeloten',0,ei(SN,'sn_schatten'));const a1=E(sc.S,sc.add,sc.gen.x+2,sc.gen.y,'Freigilden-Stahlhelme',5),a2=E(sc.S,sc.add,sc.gen.x-2,sc.gen.y,'Freigilden-Stahlhelme',5);sc.S.Ph.sch=a1.id;assert.ok(shB(sc.S,a2,sc.gen));assert.ok(!shB(sc.S,a1,sc.gen));
+ const l=mk(SN,'Zenestras Zeloten',0,ei(SN,'sn_leucht'));const lu=l.add('Kettengeister',0,10,10);lu.n=4;l.S.ph=1;assert.ok(AB.sn_leucht.can(l.S,0));drive(l.g,AB.sn_leucht.run(l.g,0));assert.equal(lu.n,5);
+ const r=mk(SN,'Zenestras Zeloten',0,ei(SN,'sn_ring'));r.gen.dmg=3;r.S.T.kl=[r.gen.id];drive(r.g,eot3(r.g,0,0));assert.ok(r.gen.dmg<3)});
 console.log(pass+' bestanden, '+fail+' fehlgeschlagen');process.exit(fail?1:0);
