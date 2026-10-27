@@ -29,7 +29,8 @@ function rehint(){const m=mode;hint(m?m.hint:'');const pl=m&&m.t=='place';const 
 const rsvAvail=()=>{const q=G&&G.req;return q&&q.t=='act'&&!G.isAI(q.who)?globals(G.S,q.who).filter(g=>g.k.startsWith('rsv:')):[]};
 $('ho').onclick=()=>{const l=rsvAvail();if(!l.length)return;const q=G.req;pop('Aus der Reserve aufstellen','Welche Einheit soll jetzt aufgestellt werden?',l.map(g=>({t:g.t,s:g.s,fn:()=>answer({a:g.k})})))};
 function note(t){hint(t);clearTimeout(ntm);ntm=setTimeout(rehint,2600)}
-function setMode(m){mode=m;rehint()}
+let pcache=new Map();
+function setMode(m){mode=m;pcache=new Map();rehint()}
 /* ---------- Pop-ups ---------- */
 let popAfter=null;
 function pop(title,body,btns,close=true,after=null){
@@ -91,7 +92,7 @@ function present(q){const S=G.S;
  else if(q.t=='choice'){setMode(null);pop(q.title,titleSrc(q.who,q.title)+(q.text||'')+(q.blocks?'<br>'+rb(q.blocks):''),q.opts.map((o,i)=>({t:o.t,s:/^\d\. /.test(q.title||'')?o.s:withSrc(q.who,o),dis:o.dis,fn:()=>answer(i)})),false);if(q.bot)$('pop').className='bot'}
  else if(q.t=='info'){setMode(null);pop(q.title,q.text+(q.blocks?'<br>'+rb(q.blocks):''),[{t:q.btn||'Weiter',fn:()=>answer(true)}],false)}
  else if(q.t=='place'){const u=q.u;setMode({t:'place',q,a:(u&&u.a0)||0,zone:null,hint:q.text||'Platzieren'})}
- else if(q.t=='dest'&&!q.adjOnly)setMode({t:'dest',q,u:byId(S,q.u),rng:q.rng,roll:q.roll,chg:q.chg,pile:q.pile,tg:q.tgt,hint:q.chg?'Angriff '+q.roll+' Zoll: Einheit ziehen, grün = möglich, ↺↻ dreht':q.pile?'Nachrücken (optional): Einheit ziehen (bis 3 Zoll), grün = möglich, ↺↻ dreht':(q.text?q.text+' – ':'')+'Einheit ziehen: grün = möglich, ↺↻ dreht (jedes Modell bis '+q.rng+' Zoll)',a:0});
+ else if(q.t=='dest'&&!q.adjOnly)setMode({t:'dest',q,u:byId(S,q.u),rng:q.rng,roll:q.roll,chg:q.chg,pile:q.pile,tg:q.tgt,hint:q.chg?'Angriff '+q.roll+' Zoll: Einheit ziehen, grün = möglich':q.pile?'Nachrücken (optional): Einheit ziehen (bis 3 Zoll), grün = möglich, ↺↻ dreht':(q.text?q.text+' – ':'')+'Einheit ziehen: grün = möglich, ↺↻ dreht (jedes Modell bis '+q.rng+' Zoll)',a:0});
  else if(q.t=='tgt')setMode({t:'tgt',q,u:byId(S,q.u),roll:q.roll,hint:'Angriffswurf '+q.roll+': gegnerische Einheit antippen'});
  else if(q.t=='dest'&&q.adjOnly){const u=byId(S,q.u);setMode({t:'adj',kind:'pile',u,allow:q.rng||3,P:q.P0.map(p=>[p[0],p[1]]),orig:abs(u),sel:null,tg:q.tgt,hint:'Modell mit dem Finger ziehen (bis '+(q.rng||3).toFixed(0)+' Zoll) – am Ende „Fertig“',back:null})}
  else if(q.t=='split')splitPop(byId(S,q.u),q.inr.map(i=>byId(S,i)),q.rolls||[]);
@@ -146,7 +147,7 @@ const titleSrc=(o,t)=>{let s='';try{s=originOf(G.S,o,t)||(G.src?originOf(G.S,G.c
 function pick(u){const S=G.S,a=abilities(S,u).filter(x=>x.k!='fight');
  pop(u.name,stat(u)+flagHtml(u),a.length?a.map(x=>({t:x.t,s:withSrc(u.o,x,u),dis:x.dis,fn:()=>useAb(u,x.k)})):[{t:'Keine Fähigkeiten in dieser Phase',dis:true}])}
 function useAb(u,k){
- if(k=='move')setMode({t:'move',u,rng:mvRest(G.S,u),a:0,hint:'Einheit ziehen: grün = Zielformation möglich, ↺↻ dreht · jedes Modell läuft einzeln (bis '+mvRest(G.S,u).toFixed(1)+' Zoll)',back:null});
+ if(k=='move')setMode({t:'move',u,rng:mvRest(G.S,u),a:0,hint:'Einheit ziehen: grün = Zielformation möglich · jedes Modell läuft einzeln (bis '+mvRest(G.S,u).toFixed(1)+' Zoll)',back:null});
  else if(k=='shoot')setMode({t:'shoot',u,hint:'Ziel antippen ('+u.rw[0][1]+' Zoll)'});
  else if(k=='adj')setMode({t:'adj',u,allow:adjAllow(G.S,u),P:abs(u).map(m=>[m.x,m.y]),orig:abs(u),sel:null,hint:'Modell mit dem Finger ziehen und loslassen – am Ende „Fertig“',back:null});
  else answer({a:k,u:u.id})}
@@ -254,7 +255,8 @@ function dragHint(m){const r=pvOf(m);hint(r.err?r.err+' – beim Loslassen wird 
 // Angriff: ist die gezogene Formation regelwidrig (z. B. Zusammenhalt), berechnet die Automatik eine gültige Formation zum nächsten Gegner
 function chargeFormA(S,u,x,y,roll,rot){const r=chargeForm(S,u,x,y,roll,rot);if(!r.err)return r;
  const t=foes(S,u).filter(e=>e.x>=0).sort((a,b)=>Math.hypot(a.x-x,a.y-y)-Math.hypot(b.x-x,b.y-y))[0];if(!t)return r;
- for(const k of ['reach','wrap']){const q=chargePlan(S,u,t,roll,k);if(q.P&&!chargeModelErr(S,u,q.P,roll))return {P:q.P,err:''}}return r}
+ const ck=u.id+'|'+t.id+'|'+roll;if(!pcache.has(ck)){let P=null;for(const k of ['reach','wrap']){const q=chargePlan(S,u,t,roll,k);if(q.P&&!chargeModelErr(S,u,q.P,roll)){P=q.P;break}}pcache.set(ck,P)}
+ const P=pcache.get(ck);return P?{P,err:''}:r}
 function pvOf(m){const k=m.gx.toFixed(2)+'/'+m.gy.toFixed(2)+'/'+(m.a||0).toFixed(3);if(!m.pv||m.pv.k!=k){const s=snapPos(formF(m,true),m.gx,m.gy,m.u.x,m.u.y,false);m.pv={k,...s.r,snap:s.snap}}return m.pv}
 function gh(e){const m=mode;m.gx=(e.clientX-tx)/sc/SC;m.gy=(e.clientY-(e.pointerType=='touch'?70:0)-ty)/sc/SC;if(drg()){dragHint(m);return}const er=placeErr(G.S,m.q.kind,m.q.who,m.q.u,m.gx,m.gy,m.a);hint(!er?'Loslassen zum Platzieren':plSnap(m,m.gx,m.gy)?'Rastet an der nächsten gültigen Stelle ein ('+er+')':er)}
 const adjXY=e=>[(e.clientX-tx)/sc/SC,(e.clientY-(e.pointerType=='touch'?60:0)-ty)/sc/SC];

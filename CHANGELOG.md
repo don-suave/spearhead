@@ -1,5 +1,9 @@
 # Changelog
 
+## v99
+- Angriff per Ziehen deutlich schneller: die Ersatzplanung (Angriffsplan) wird pro Angriff nur einmal berechnet statt bei jeder Mausbewegung.
+- Hinweise zum Drehen beim Bewegen/Angriff entfernt.
+
 ## v98
 - Wendungskarten ohne Außenseiter: Underdog-Effekte entfallen, außer die Karte nennt ausdrücklich eine Ersatzregel. Korrigiert: Survivor's Grief (Würfelduell-Gewinner wählt). Alle übrigen Karten geprüft.
 
