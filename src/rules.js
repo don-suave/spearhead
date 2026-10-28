@@ -378,7 +378,7 @@ function chargeErr0(S,u,x,y,roll){const g={...u,x,y};
  if(schlagBlock(S,u,fs.filter(e=>dist(g,e)<=.5)))return schlagMsg;
  if(route(S,u.x,u.y,x,y,pr(u),roll,obs(S,u))==null)return 'Weg zu weit ('+roll+' Zoll) oder durch Gelände/Einheiten blockiert';return ''}
 // Hindernisse für Einzelmodell-Wege: feindliche Modelle als Kreise entlang ihrer Achse
-const passE=(S,u,e)=>(hasAb(u,'bd_reit')&&/Infanterie/.test(e.kw))||(u.gen&&ENI(S,u.o)=='cj_akro'&&S.ph==4);
+const passE=(S,u,e)=>flyOf(S,u)||(hasAb(u,'bd_reit')&&/Infanterie/.test(e.kw))||(u.gen&&ENI(S,u.o)=='cj_akro'&&S.ph==4);
 export const mobs=(S,u)=>{const r=[];foes(S,u).filter(e=>e.x>=0&&!passE(S,u,e)).forEach(e=>abs(e).forEach(m=>{const h=(m.l-m.w)/2,c=Math.cos(m.a),s=Math.sin(m.a);[-h,0,h].forEach(k=>{if(k==0&&h<.01)return;r.push({x:m.x+k*c,y:m.y+k*s,r:m.w/2})});if(h<.01)r.push({x:m.x,y:m.y,r:m.w/2})}));return r};
 // Angriff Modell für Modell: jedes Modell höchstens Wurf Zoll (Weg um Gelände/Feinde), Zusammenhalt, keine Überlappung, mindestens ein Modell höchstens ½ Zoll vor einem Feind
 export function chargeModelErr(S,u,P,roll){setFly(flyOf(S,u));try{return chargeModelErr0(S,u,P,roll)}finally{setFly(false)}}

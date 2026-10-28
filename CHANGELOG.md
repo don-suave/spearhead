@@ -1,3 +1,6 @@
+## v124
+- Fliegen: Einheiten mit Fliegen (z. B. Arkanauten-Fregatte) bewegen sich bei Bewegung, Rennen und Rückzug jetzt auch über feindliche Einheiten hinweg (nicht nur über Gelände). Das Ende der Bewegung nicht auf oder neben Modellen bleibt unverändert.
+
 ## v123
 - 15 neue Einheitensymbole nach dem Aussehen der Modelle: Skelettkrieger, Vampir mit Reißzähnen, Knochenmaske (Ossiarch), hoher Aelfen-Helm (Lumineth), geflügelter Vollhelm (Stormcast), Hauer-Kopf (Orruk), Gitz-Kapuze, Rattenkopf (Skaven), gehörnter Nurgle-Kopf, Slaanesh-Kopf, Schnabelkopf (Tzeentch), gekrönter Ghul, Idoneth-Flossenkopf, Waldgeister-Gesicht, Ogor-Kopf; Zuordnung für Soulblight, Ossiarch, Lumineth, Stormcast, Skaven, Nurgle, Slaanesh, Tzeentch, Idoneth, Sylvaneth, Ogor, Orruk, Gitz angepasst.
 
