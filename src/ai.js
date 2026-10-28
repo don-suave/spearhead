@@ -33,7 +33,7 @@ function cands(S,u,rng){const out=[[u.x,u.y]],add2=(x,y)=>{x=Math.min(W-u.r,Math
 export function plan(S,u,rng){const oc0=S.oc.slice(),o=u.o,fs=foes(S,u).filter(e=>e.x>=0),unh=S.obj.map((p,k)=>[p,k]).filter(([p,k])=>S.oc[k]!==o);
  const shooter=u.rw.length>0&&!u.rw.every(w=>(w[7]||'').includes('B')&&false);
  const tb=(x,y)=>{const g={...u,x,y};let t=0;const dn=Math.min(...unh.map(([p])=>Math.hypot(p[0]-x,p[1]-y)),99);t-=.03*dn;
-  const fd=fs.length?Math.min(...fs.map(e=>dist(g,e))):0;if(shooter){const R=Math.max(...u.rw.map(w=>rngOf(S,u,w[1])||0));t-=.03*Math.abs(fd-Math.max(3,R-3))}else t-=.03*fd;
+  const fd=fs.length?Math.min(...fs.map(e=>dist(g,e))):0;if(shooter){const R=Math.max(...u.rw.filter((w,i)=>!(i==0&&u.rw.length>1&&hasAb(u,'kc_muni')&&has(S.T.moved,u.id))).map(w=>rngOf(S,u,w[1])||0));t-=.03*Math.abs(fd-Math.max(3,R-3))}else t-=.03*fd;
   if(isHero(u)&&!/Monster|Kriegsmaschine/.test(u.kw)){const thr=fs.filter(e=>dist(g,e)<=9&&e.mw.length&&!isHero(e)).length;t-=.15*thr}
   // Gefahr: erwarteter Verlust durch Feinde, die diese Stelle mit Bewegung und Angriff erreichen können
   let dg=0;for(const e of fs){if(!e.mw.length||inCombat(S,e))continue;const d=dist(g,e),reach=mvOf(S,e)+7;if(d>reach)continue;dg+=Math.min(evAtk(S,e,g,false),wnd(u))/Math.max(1,wnd(u))*(d<=reach-3?1:.5)}t-=DANG*dg;return t};
@@ -84,7 +84,7 @@ function aiAct(G,rnd){const S=G.S,o=S.act,ph=S.ph;
     if(pr2.sc>=pm.sc+RUNK&&!u.rw.some(w=>!(w[7]||'').includes('B')&&dist(u,e)<=rngOf(S,u,w[1])+mv)||(!u.rw.length&&goal>mv+4&&!pm.stay&&pr2.sc>=pm.sc-.5))a={a:'run',u:u.id};
     else if(!pm.stay)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
    else if(!pm.stay&&pm.vp*10>pm.base-1&&pm.sc>=pm.base+SHK)a={a:'move',u:u.id,x:pm.x,y:pm.y}}
-  else if(ph==3&&u.rw.length){const R=Math.max(...u.rw.map(w=>rngOf(S,u,w[1])||0));const tg=fl.filter(f=>dist(u,f)<=R&&!blk(S,u,f)&&!shB(S,u,f)&&!hidden(S,u,f));const t=bestTgt(S,u,tg,true);if(t)a={a:'shoot',u:u.id,t:t.id}}
+  else if(ph==3&&u.rw.length){const R=Math.max(...u.rw.filter((w,i)=>!(i==0&&u.rw.length>1&&hasAb(u,'kc_muni')&&has(S.T.moved,u.id))).map(w=>rngOf(S,u,w[1])||0));const tg=fl.filter(f=>dist(u,f)<=R&&!blk(S,u,f)&&!shB(S,u,f)&&!hidden(S,u,f));const t=bestTgt(S,u,tg,true);if(t)a={a:'shoot',u:u.id,t:t.id}}
   if(a&&!actCheck(S,o,a))return a}
  return {a:'next'}}
 

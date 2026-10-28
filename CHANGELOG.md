@@ -1,3 +1,6 @@
+## v115
+- Fernkampf ohne einsetzbare Waffe (z. B. Großkanone nach Bewegung: nur Kartätsche 12") wird vorab mit Meldung abgelehnt; sonst klare Meldung statt leerem Bericht ohne Würfel. KI beachtet das ebenfalls.
+
 ## v114
 - Monument of Living Bone: das Gelände zählt als Ziel mit 3" Reichweite vom Geländerand (abgerundete Ecken) statt von der Mitte; Anzeige auf dem Feld entsprechend.
 
