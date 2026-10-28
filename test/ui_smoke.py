@@ -25,6 +25,13 @@ with sync_playwright() as p:
         if s['over'] and not s['pop'] and s['req'] is None: break
         if s['req']=='act' and s['round']>=2 and s['ph']==3 and not globals().get('_shot'):
             globals()['_shot']=1;pg.screenshot(path='/tmp/shot.png')
+        if s['mode']=='pickmap':
+            cnt['pickmap']=cnt.get('pickmap',0)+1
+            c=pg.evaluate("(()=>{const r=window.__V.mode.mi.it[0],o=r.ref;return r.kind=='o'?(o.length>3?[o[0],o[1]]:[o[0],o[1]]):[o.x,o.y]})()")
+            pg.evaluate("([x,y])=>window.__V.tap(x,y)",c);pg.wait_for_timeout(60)
+            if pg.evaluate("window.__V.mode&&window.__V.mode.t")=='pickmap':
+                bb=pg.query_selector_all('#hb button');bb[-1].click();pg.wait_for_timeout(60)
+            continue
         if s['mode']=='bar':
             bb=pg.query_selector_all('#hb button');bb[0].click();pg.wait_for_timeout(60);continue
         if s['pop']:

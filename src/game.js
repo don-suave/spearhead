@@ -28,7 +28,7 @@ export class Game{
 export function* choice(G,who,title,text,opts,x={}){
  return yield {t:'choice',who,title,text,opts,close:false,...x,check:a=>(Number.isInteger(a)&&a>=0&&a<opts.length&&!opts[a].dis)?'':'Ungültige Wahl'}}
 export function* ask(G,who,title,list,text=''){
- if(!list.length)return null;const i=yield* choice(G,who,title,text,list.map(c=>({t:c[0]})),{vals:list.map(c=>c[1]&&typeof c[1]=='object'?(c[1].dn?{u:c[1].id}:null):c[1])});
+ if(!list.length)return null;const i=yield* choice(G,who,title,text,list.map(c=>({t:c[0]})),{vals:list.map(c=>c[1]&&typeof c[1]=='object'?(c[1].dn?{u:c[1].id}:null):c[1]),tg:list.map(c=>{const v=c[1];if(v&&typeof v=='object'){if(v.dn)return {k:'u',id:v.id};const i=G.S.ter?G.S.ter.indexOf(v):-1;return i>=0?{k:'t',i}:null}return typeof v=='number'?{k:'n',v}:null})});
  if(G.isAI(who))G.note(G.S.P[who].n+' wählt: '+list[i][0]);return list[i][1]}
 export function* info(G,who,title,text,btn='Weiter',x={}){
  yield {t:'info',who,title,text,btn,...x,check:a=>a===true?'':'Bestätigen'}}

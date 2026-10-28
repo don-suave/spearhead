@@ -1,3 +1,7 @@
+## v119
+- Armee-Auswahl beim Start: Reihenfolge wie in der Regel-App (Ordnung, Chaos, Tod, Zerstörung; darin nach Fraktion, dann Reihenfolge der Spearheads).
+- Auswahl von Einheiten, Zielen und Gelände (Karten, Fähigkeiten u. Ä.): die wählbaren Objekte sind auf der Karte golden umrandet und werden direkt angetippt; übrige Optionen als Knöpfe, „Liste“ öffnet die bisherige Liste.
+
 ## v118
 - Leiste der 1×-pro-Schlacht-Fähigkeiten: Tippen auf ein Symbol bietet bei einsetzbaren eigenen Fähigkeiten den Knopf „Jetzt einsetzen“ (bisher nur Info; Einsatz nur über das Menü).
 
