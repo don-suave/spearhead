@@ -57,7 +57,7 @@ with sync_playwright() as p:
                 cnt['zw']=cnt.get('zw',0)+1;pg.wait_for_timeout(60);continue
             if not z:
                 if s['kind']=='terr' and cnt.get('rotz',0)<40:
-                    cnt['rotz']=cnt.get('rotz',0)+1;pg.evaluate('window.__V.rot(Math.PI/12)');pg.wait_for_timeout(120);continue
+                    cnt['rotz']=cnt.get('rotz',0)+1;pg.evaluate('window.__V.rot(Math.PI/10)');pg.wait_for_timeout(120);continue
                 print('keine gültige Zone',s);pg.screenshot(path='/tmp/nozone.png');break
             zx,zy=random.choice(z)
             if s['kind']=='dep':
@@ -68,7 +68,7 @@ with sync_playwright() as p:
             if s['kind'] in ('terr','relic'):
                 if s['kind']=='terr' and not cnt.get('tapRot'):
                     a0=pg.evaluate("window.__V.mode.a");pg.mouse.move(x,y);pg.mouse.down();pg.mouse.up();pg.wait_for_timeout(40);a1=pg.evaluate("window.__V.mode.a")
-                    d=((a1-a0)*180/3.14159265)%360;print('Drehung durch Antippen: %.0f°'%d);assert abs(d-45)<1,'Antippen dreht nicht um 45°';cnt['tapRot']=1
+                    d=((a1-a0)*180/3.14159265)%180;print('Drehung durch Antippen: %.0f°'%d);assert abs(d-18)<1,'Antippen dreht nicht um 18°';cnt['tapRot']=1
                     pg.mouse.move(x,y);pg.mouse.down();pg.mouse.move(x+30,y);pg.mouse.up();pg.wait_for_timeout(40)
                     assert pg.evaluate("window.__V.mode.t")=='place','Ziehen darf nicht platzieren'
                 pg.click('#hy');pg.wait_for_timeout(60)

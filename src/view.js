@@ -121,9 +121,9 @@ $('hx').onclick=()=>{const m=mode;if(!m)return;
  if(m.t=='dest'){answer({stay:true});return}
  if(m.t=='tgt'){answer({cancel:true});return}
  setMode(m.back||null)};
-const rot=d=>{const m=mode;if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic')){m.a=(m.a+d+2*Math.PI)%(2*Math.PI);m.zone=null;if(m.gx!=null)hint(placeErr(G.S,'terr',m.q.who,m.q.u,m.gx,m.gy,m.a)||'Gedreht: '+Math.round(m.a*180/Math.PI)+'° – '+STH)}};
-$('rl').onclick=()=>rot(-Math.PI/12);$('rr').onclick=()=>rot(Math.PI/12);
-addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/12);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/12)});
+const rot=d=>{const m=mode;if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='relic')){m.a=((m.a+d)%Math.PI+Math.PI)%Math.PI;if(m.a>Math.PI-1e-6)m.a=0;m.zone=null;if(m.gx!=null)hint(placeErr(G.S,'terr',m.q.who,m.q.u,m.gx,m.gy,m.a)||'Gedreht: '+Math.round(m.a*180/Math.PI)+'° – '+STH)}};
+$('rl').onclick=()=>rot(-Math.PI/10);$('rr').onclick=()=>rot(Math.PI/10);
+addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/10);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/10)});
 // Regel-App als Overlay (Spielstand bleibt erhalten)
 function rulesApp(){const o=$('rov');if(!o)return;
  fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
@@ -273,7 +273,7 @@ cv.onpointermove=e=>{const p=ptr.get(e.pointerId);if(p&&p.adj&&mode&&mode.drg){c
  if(ptr.size==1&&p.m){tx+=dx;ty+=dy;clampV()}
  else if(ptr.size==2&&mode&&mode.t=='place'&&(mode.q.kind=='terr'||mode.q.kind=='relic')){const[a,b]=[...ptr.values()],an=Math.atan2(b.y-a.y,b.x-a.x);let da=an-pa;if(da>Math.PI)da-=2*Math.PI;if(da<-Math.PI)da+=2*Math.PI;pa=an;rot(da);a.m=b.m=true}
  else if(ptr.size==2){const[a,b]=[...ptr.values()],d=Math.hypot(a.x-b.x,a.y-b.y);zoomAt((a.x+b.x)/2,(a.y+b.y)/2,d/pd);pd=d;a.m=b.m=true}};
-cv.onpointerup=e=>{const p=ptr.get(e.pointerId);ptr.delete(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const m=mode,[x,y]=adjXY(e),k=m.keep;m.drg=0;m.P[m.sel]=k;adjPut(m,x,y);return}if(p&&!p.m&&!ptr.size){if(stg(mode)){if(p.gh)rot(Math.PI/4)}else if(plc()&&mode.gx!=null)tap(mode.gx,mode.gy);else tap((e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC)}};
+cv.onpointerup=e=>{const p=ptr.get(e.pointerId);ptr.delete(e.pointerId);if(p&&p.adj&&mode&&mode.drg){const m=mode,[x,y]=adjXY(e),k=m.keep;m.drg=0;m.P[m.sel]=k;adjPut(m,x,y);return}if(p&&!p.m&&!ptr.size){if(stg(mode)){if(p.gh)rot(Math.PI/10)}else if(plc()&&mode.gx!=null)tap(mode.gx,mode.gy);else tap((e.clientX-tx)/sc/SC,(e.clientY-ty)/sc/SC)}};
 cv.onpointercancel=e=>ptr.delete(e.pointerId);
 /* ---------- Zeichnen ---------- */
 function txt(t,x,y,sz,col,al='center'){cx.save();cx.scale(1/SC,1/SC);cx.font=`bold ${sz}px Georgia`;cx.fillStyle=col;cx.textAlign=al;cx.textBaseline='middle';cx.fillText(t,x*SC,y*SC);cx.restore()}

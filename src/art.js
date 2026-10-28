@@ -56,8 +56,36 @@ export const GLY={
  heart:[['f','M12 22C3 15 1 10 1 7a5.500 5.500 0 0 1 11-1 5.500 5.500 0 0 1 11 1c0 3-2 8-11 15z']],
  leaf:[['f','M21 2C8 2 3 9 3 15c0 3 1 5 2 6 1-5 4-9 10-12-5 4-7 8-7 12 8 0 13-6 13-19z']],
  anchor:[['s','M12 6v16'],['s','M5 13c0 5 3 8 7 8s7-3 7-8'],['s','M8 10h8'],['f','M12 1.500a3 3 0 1 0 .01 0z']],
+
+ comet:[['f','M17 2a5 5 0 1 0 .01 0z'],['s','M13 9L2 22'],['s','M10 5L2 13'],['s','M19 11l-8 11']],
+ helm:[['e','M4 22V10a8 8 0 0 1 16 0v12h-4v-5H8v5zM8 10.500h8v2.500H8z']],
+ lance:[['s','M3 21L19 5'],['f','M21 3l-.5 7-6.500-6.500z'],['f','M5 14l5 5-5 3z']],
+ musket:[['f','M1 11h14l2-2h3v4h-3l-2 2H8l-1 7H3l2-7H1z']],
+ crossbow:[['s','M3 8c6 4 12 4 18 0'],['s','M12 5v17'],['f','M12 1l3 5h-6z']],
+ wolf:[['e','M3 2l6 4h6l6-4-1.500 10-4.500 4v6h-8v-6l-4.500-4zM8 11a1.300 1.300 0 1 0 .01 0zM16 11a1.300 1.300 0 1 0 .01 0z']],
+ bird:[['f','M1 5c5 0 9 2 11 6 2-3 5-4 10-4-1 4-3 6-6 7l1 6-5-3-3 4-1-6C5 14 2 11 1 5z']],
+ goat:[['e','M5 1c-3 3-3 8 1 10l2 2v7l4 3 4-3v-7l2-2c4-2 4-7 1-10-1 3-3 5-7 5S6 4 5 1zM9 12a1.200 1.200 0 1 0 .01 0zM15 12a1.200 1.200 0 1 0 .01 0z']],
+ beetle:[['f','M12 5a6 8 0 1 0 .01 0z'],['s','M6 10L2 8'],['s','M6 14l-4 2'],['s','M18 10l4-2'],['s','M18 14l4 2'],['s','M10 5L8 1'],['s','M14 5l2-4']],
+ tree:[['f','M12 1l7 10h-4l5 8H4l5-8H5z'],['f','M10.500 19h3v4h-3z']],
+ mushroom:[['f','M2 12a10 9 0 0 1 20 0z'],['f','M9 12h6v10H9z']],
+ wave:[['s','M1 9c3-4 5-4 8 0s5 4 8 0 4-3 6-1'],['s','M1 16c3-4 5-4 8 0s5 4 8 0 4-3 6-1']],
+ fish:[['f','M2 12c4-7 11-7 15 0-4 7-11 7-15 0z'],['f','M16 12l6-5v10z']],
+ tornado:[['s','M3 4h18'],['s','M5 9h14'],['s','M8 14h8'],['s','M11 19h2']],
+ bat:[['f','M12 5l2 3 6-3c1 4 2 8 1 12-2-2-4-2-6 0l-3 4-3-4c-2-2-4-2-6 0-1-4 0-8 1-12l6 3z']],
+ cauldron:[['f','M3 9h18l-2 10a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z'],['s','M6 6c2-3 10-3 12 0'],['s','M1 9h22']],
+ bone:[['f','M3 3a2.500 2.500 0 0 1 4 0l1 1 12 12 1 1a2.500 2.500 0 0 1 0 4 2.500 2.500 0 0 1-4 0l-1-1L4 8 3 7a2.500 2.500 0 0 1 0-4z']],
+ hourglass:[['f','M6 2h12c0 6-4 8-6 10 2 2 6 4 6 10H6c0-6 4-8 6-10-2-2-6-4-6-10z']],
+ horn:[['f','M2 10l11-5v14L2 14z'],['s','M16 8a5 5 0 0 1 0 8'],['s','M19 5a9 9 0 0 1 0 14']],
+ anvil:[['f','M2 6h20c0 3-3 5-7 5l1 3h3v5H5v-5h3l1-3C5 11 2 9 2 6z']],
+ bull:[['s','M2 4c0 8 4 11 10 11s10-3 10-11'],['f','M8 14h8l-1.500 8h-5z']],
+ orb:[['s','M12 3a9 9 0 1 0 .01 0'],['f','M12 8a4 4 0 1 0 .01 0z'],['s','M12 1v2']],
+ tower:[['f','M4 22V7h3v2h3V7h4v2h3V7h3v15z']],
+ crossed:[['s','M4 4l16 16'],['s','M20 4L4 20'],['f','M2 6l4-4 3 3-4 4z'],['f','M22 6l-4-4-3 3 4 4z']],
+ chalice:[['f','M5 2h14c0 7-3 10-7 10S5 9 5 2z'],['s','M12 12v8'],['s','M7 22h10']],
+ dice:[['e','M3 3h18v18H3zM8 8a1.600 1.600 0 1 0 .01 0zM16 8a1.600 1.600 0 1 0 .01 0zM12 12a1.600 1.600 0 1 0 .01 0zM8 16a1.600 1.600 0 1 0 .01 0zM16 16a1.600 1.600 0 1 0 .01 0z']],
+ whip:[['s','M4 22c5-9 9 0 13-9s2-8 4-11']],
 };
-const GL_ORDER=['sword','shield','axe','spear','bow','hammer','dagger','star','crown','skull','claw','fang','paw','flame','rune','eye','drop','crystal','cog','banner','moon','sun','wing','horseshoe','snake','book','fist','chain','bomb','tusk','trident','flask','mask','ghost','scythe','mountain','lizard','rat','fly','maw','gong','tentacle','airship','cannon','wheel','bolt','heart','leaf','anchor'];
+const GL_ORDER=['sword','shield','axe','spear','bow','hammer','dagger','star','crown','skull','claw','fang','paw','flame','rune','eye','drop','crystal','cog','banner','moon','sun','wing','horseshoe','snake','book','fist','chain','bomb','tusk','trident','flask','mask','ghost','scythe','mountain','lizard','rat','fly','maw','gong','tentacle','airship','cannon','wheel','bolt','heart','leaf','anchor','comet','helm','lance','musket','crossbow','wolf','bird','goat','beetle','tree','mushroom','wave','fish','tornado','bat','cauldron','bone','hourglass','horn','anvil','bull','orb','tower','crossed','chalice','dice','whip'];
 const GP={};
 const gpath=k=>GP[k]||(GP[k]=GLY[k].map(([t,d])=>[t,typeof Path2D!='undefined'?new Path2D(d):d]));
 export function drawGlyph(cx,k,x,y,s,fill,line=0){
@@ -100,10 +128,39 @@ const RULES=[
  [/Marschall|Fürst|General|Despot|Boss|Killaboss|Torfboss/,['crown','star']],
 ];
 const ROLE=(kw)=>/Held/.test(kw)?['crown','star']:/Kavallerie/.test(kw)?['horseshoe']:/Kriegsmaschine/.test(kw)?['cannon','cog']:/Bestie|Monster/.test(kw)?['paw','claw']:['sword','shield'];
+
+// Gezielte Zuordnung Einheit → Symbol (eigene, fraktionstypische Zeichen; Vorrang vor den Regeln, je Armee einmalig)
+const OVR={'Freigilden-Marschall':'crown','Pontifex Zenestra':'orb','Flüsterklinge':'dagger','Erzritter und Gefolge':'lance','Freigilden-Stahlhelme':'helm',
+ 'Füsiliermajor auf Ogor-Kriegshüne':'crown','Alchemit-Kriegsschmied':'flask','Freigilden-Füsiliere':'musket','Wilderkorps-Jäger':'bow','Jorvan Kreel, Erbe des Kraken':'tentacle','Mallus-Schmiedepriester':'anvil','Freigilden-Junker':'sword','Freigilden-Grenadiere':'bomb',
+ 'Freigilden-Rittermarschall':'lance','Freigilden-Stahlhelme (Kastelliten)':'tower','Freigilden-Ritter':'horseshoe','Eisenschmiede-Großkanone':'cannon',
+ 'Killaboss auf Großem Schnappzahn':'fang','Torfboss mit Sumpfgasbanna':'banner','Bolz’nschießa':'crossbow','Wanstreißa':'maw','Bestienkillabogen':'bow','Megaboss':'crown','Platt’nhelme':'helm','Wutprotze':'fist','Kraftprotze':'hammer',
+ 'Fletschaboss':'wolf','Gefolge-Wolfsgits':'paw','Rudelfletscha':'fang','Sonn’nräuber-Kriegswag’n':'wheel','Wahnboss':'mushroom','Mondclan-Piksa':'moon','Squighoppa':'maw','Felsmagen-Troggoths':'mountain',
+ 'Fluchfürst':'skull','Grabhügelwache':'shield','Grabhügelritter':'lance','Skelette (Knochenhorde)':'bone','Vampirfürst':'fang','Blutritter':'lance','Vargheister':'bat',
+ 'Klauenfürst auf Nagbestie':'claw','Grauer Prophet':'rune','Warlock-Techniker':'flask','Clanratten':'rat','Rattenogors':'fist','Sturmbestien':'fang','Warpblitzkanone':'bolt','Meisterassassine Crixxit':'mask','Meisterassassine':'dagger','Gossenläufer':'bomb','Schattenläufer':'crossed',
+ 'Yndrasta, der Celestische Speer':'spear','Bezwinger':'helm','Ritter Vexillor':'banner','Annihilatoren':'hammer','Sturmschlag-Streitwagen':'wheel','Fürst Vigilant auf Schattengryph':'wing','Fürst Veritant':'comet','Prosecutoren':'bolt','Liberatoren':'shield',
+ 'General Peingespenst':'crown','Kettenghaste':'chain','Klingengeist-Wiedergänger':'ghost','Sensenmegären':'scythe','Schreckensreiter':'horseshoe','Ritter des Grabtuchs':'sword','Geisterscharen':'ghost','Düsterschnitter':'scythe','Kettengeister':'chain',
+ 'Fäulnisboten-Hexer':'rune','Nurglinge':'fly','Schleimbestie':'drop','Krieger des Faulsumpf-Credos':'cauldron','Pestpockiger Buchhalter':'book','Eitriger Fliegenfürst':'fly','Faulige Pestkönige':'cauldron','Seuchenhüter':'sword',
+ 'Hjulda Drakkblud':'anvil','Clanschilde':'shield','Gholems des Gazul':'cog','Eidwahrerkanone':'cannon','Goldrunenvater auf Magmadroth':'crown','Goldrunenwerker':'hammer','Vulkyn-Flammensucher':'flame','Goldwächter':'helm','Schlachtenschmied':'anvil','Berserkerwächter':'axe','Vulkit-Berserker':'flame',
+ 'Das Zwieträchtige Dreigestirn':'heart','Slaaneshbestien':'claw','Dämonetten':'dagger','Jägerinnen':'bow','Scherbensprecherin des Slaanesh':'crystal','Silbergleven-Jäger':'spear','Slaangor-Scheusale':'claw','Giftdorn-Schützen':'crossbow','Giftdorn-Schützen (mit Homunkulus)':'eye',
+ 'Tyrann':'crown','Hungrige Ogors':'maw','Hungrige Ogors (3 Modelle)':'tusk','Eisenwänste':'anvil','Prankenbiestreiter':'paw','Fleischer':'axe','Metzger':'dagger','Gedärmdeuter':'eye','Verschlinger-Schlundrudel':'fang','Tyrann des Gebrülls':'horn','Eisenspeier':'cannon','Bleispucker':'musket','Hungrige Ogors (Gebrüll)':'maw','Trauerfangreiter':'paw',
+ 'Steinkloppa':'hammer','Steinschmeißer':'mountain','Menschenquetscher-Gargant':'fist','Menschenquetscher-Gargant (Verstärkung)':'mountain',
+ 'Kriegsdespot':'bull','Dominator-Maschine':'cog','Peinigerbombarde':'cannon','Infernale Kohorte':'anvil','Infernale Kohorte (Gongträger)':'gong',
+ 'Sonnenblut-Kohorte':'sun','Saurus-Krieger':'lizard','Huanchis Jäger':'bow','Terraflügler':'wing','Chotec-Echse':'snake','Saurus-Hornnackenveteran auf Carnosaurier':'crown','Kroxigors':'mountain',
+ 'Mordpriester':'skull','Schädelbrecher':'horseshoe','Blutkrieger':'axe','Blutjäger':'drop','Karanak':'wolf','Bluthunde':'paw','Karanaks Krallen':'claw',
+ 'Melusai-Eisenschuppe':'snake','Hexenkriegerinnen':'dagger','Fluchfeuerhexer':'flame','Blutpirscherinnen':'bow','Schlächterkönigin auf Blutkessel':'cauldron','Hexenkönigin':'crown','Blutqual-Medusa':'eye','Schlächterschwestern':'sword','Khainitische Schattenjäger':'mask',
+ 'Endrinenmeister mit Luftschiffrüstung':'airship','Grundstok-Donnerschützen':'bolt','Grundstok-Kanonenboot':'cannon','Endrinentakler':'anchor','Arkanauten-Admiral':'crown','Himmelswächter':'wing','Arkanauten-Kompanie (Himmelspike)':'spear','Arkanauten-Kompanie (Salvengewehr)':'musket','Arkanauten-Fregatte':'airship',
+ 'Scinari-Cathallar':'rune','Vanari-Klingenmeister':'sword','Vanari-Auralanschützen':'bow','Vanari-Auralanwächter':'shield','Hurakan-Windmagier':'tornado','Hurakan-Windreiter':'horseshoe','Vanari-Auralanwächter (Hurakan)':'sun','Hurakan-Windgeist':'wing',
+ 'Magister auf Flugdämon des Tzeentch':'bird','Kairische Akolythen':'eye','Kreischer des Tzeentch':'fang','Tzaangors':'goat','Feuerdämonen des Tzeentch':'flame','Tzaangor-Schamane':'rune','Tzaangor-Erleuchtete':'dice','Tzaangor-Omenleser':'eye','Tzaangors (Kriegsherde)':'goat',
+ 'Kavalos-Fürst':'crown','Kavalos-Todesreiter':'horseshoe','Teratische Kohorte':'fist','Mortisan-Seelenernter':'scythe','Mortek-Garde':'shield','Gothizzar-Knochenernter':'skull','Mortisan-Knochenbildner':'bone','Immortis-Garde':'spear','Nekropolenjäger':'bow','Morghast-Archai':'wing',
+ 'Zweighexe':'leaf','Baumfürst':'tree','Kurnoth-Jäger':'bow','Wehrhafte Waldgeister':'leaf','Höherer Waldgeist':'tree','Seidenschwingen-Schützen':'wing','Drachenkäfer-Lanzenreiter':'beetle','Sucher-Waldgeister':'spear',
+ 'Isharann-Seelenfinder':'crystal','Akhelianer-Morrsarrgarde':'fish','Akhelianer-Allopex':'wave','Namarti-Schwertknechte':'sword','Akhelianer-König':'trident','Akhelianer-Ishlaengarde':'spear','Namarti-Bogenschützen':'bow',
+ 'Kriegsherr des Chaos':'crown','Streitwagen des Chaos':'wheel','Chaoskrieger':'axe','Chaosritter':'lance','Finsterschwur-Kriegskönigin':'crown','Finsterschwur-Zerreißer':'axe','Finsterschwur-Grauensreiter':'horseshoe','Finsterschwur-Barbaren':'sword',
+ 'Scheußlicher Erzregent':'crown','Gruftgarde':'sword','Morbheg-Ritter':'lance','Varghulf-Höfling':'bat','Scheußlicher Bluthüter':'chalice','Königliche Bestienhäuter':'paw','Gruftschrecken':'claw','Gruftschinder':'bone'};
 let ICM=null;
 function buildIcons(){ICM={};Object.entries(ARMY).forEach(([ai,a])=>{const used=new Set(),m={};
  // erst klare Treffer, dann Rest, damit Spezialfälle ihr Symbol bekommen
  const order=a.units.map(d=>d.n);const cand=n=>{const d=a.units.find(x=>x.n==n),c=[];RULES.forEach(([re,g])=>{if(re.test(n))c.push(...g)});c.push(...ROLE(d.kw||''),...GL_ORDER);return c};
+ order.forEach(n=>{const o=OVR[n];if(o&&GLY[o]&&!used.has(o)){m[n]=o;used.add(o)}});
  order.forEach(n=>{if(m[n])return;const g=cand(n).find(k=>!used.has(k));m[n]=g;used.add(g)});
  ICM[ai]=m})}
 export const iconOf=(army,dn)=>{if(!ICM)buildIcons();return(ICM[army]&&ICM[army][dn])||'star'};

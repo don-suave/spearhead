@@ -1,3 +1,7 @@
+## v113
+- Gelände/Relikte: Antippen dreht in 10 Schritten à 18° bis 180° (danach wieder 0°).
+- Einheitensymbole: ~27 neue eigene Glyphen (Helm, Lanze, Muskete, Armbrust, Wolf, Ziege, Käfer, Baum, Pilz, Welle, Fisch, Fledermaus, Kessel, Knochen, Amboss, Turm …) und gezielte, fraktionstypische Zuordnung je Einheit.
+
 # Changelog
 
 ## v112
