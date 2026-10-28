@@ -143,7 +143,7 @@ function cardsUi(){const S=G.S,h=S.P[seat].hand,d=$('cards');d.innerHTML='';
 function onceUi(){const S=G.S,d=$('once');d.innerHTML='';if(!S.stage){document.documentElement.style.setProperty('--oh','0px');return}
  [1-seat,seat].forEach(o=>{const l=battleAbs(S,o);if(!l.length)return;const r=document.createElement('div');r.className='or';
   l.forEach(a=>{const b=document.createElement('button');b.className=(o==seat?'me':'en')+(a.used?' us':a.now===false?' idle':a.now===true?' on':'');b.textContent=a.ic;b.setAttribute('aria-label',a.n);
-   b.onclick=()=>pop((o==seat?'Eigene':'Gegnerische')+' Fähigkeit: '+a.n,a.s+(a.u?'<br><br>Einheit: '+a.u:'')+'<br><br>'+(a.st||'<b>'+(a.used?'Bereits eingesetzt (1× pro Schlacht)':a.now===false?'Noch verfügbar (1× pro Schlacht) – jetzt nicht einsetzbar, nur zum oben genannten Zeitpunkt':'Jetzt einsetzbar (1× pro Schlacht)')+'</b>'),[],true);r.appendChild(b)});d.appendChild(r)});
+   b.onclick=()=>pop((o==seat?'Eigene':'Gegnerische')+' Fähigkeit: '+a.n,a.s+(a.u?'<br><br>Einheit: '+a.u:'')+'<br><br>'+(a.st||'<b>'+(a.used?'Bereits eingesetzt (1× pro Schlacht)':a.now===false?'Noch verfügbar (1× pro Schlacht) – aktuell nicht einsetzbar (falsche Phase oder Voraussetzung nicht erfüllt, z. B. keine passende Einheit)':'Jetzt einsetzbar (1× pro Schlacht)')+'</b>'),[],true);r.appendChild(b)});d.appendChild(r)});
  document.documentElement.style.setProperty('--oh',d.offsetHeight+'px')}
 function hand(){const h=G.S.P[seat].hand;pop('Meine Taktikkarten','Taktiken werden am Zugende automatisch geprüft. Befehle auf der Kartenrückseite erscheinen bei Beginn der passenden Phase.',h.map(c=>({t:TAC[c-1][0],s:TAC[c-1][1]+'<br><i>Befehl '+TAC[c-1][2]+': '+TAC[c-1][3]+'</i>',dis:true})))}
 /* ---------- Eingabe auf dem Feld ---------- */

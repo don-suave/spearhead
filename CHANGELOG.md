@@ -1,3 +1,6 @@
+## v117
+- Leiste der 1×-pro-Schlacht-Fähigkeiten: „Jetzt einsetzbar“ berücksichtigt jetzt die Voraussetzungen (z. B. keine Kavallerie ohne Angriff übrig) und erkennt auch Texte mit „Deine …phase“ (Für Sigmar, zum Angriff!; Avatar der Schatten). Vorher wurden diese immer als einsetzbar gezeigt.
+
 ## v116
 - Würfel-/Berichts-Popup liegt jetzt unter der „Wer gegen wen“-Anzeige statt dahinter (kein überlagerter, unscharfer Text mehr), höhere Ebene und angepasste Maximalhöhe.
 
