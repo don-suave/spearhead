@@ -1,3 +1,8 @@
+## v120
+- Symbole: 100 neue, eigens gezeichnete Einheitensymbole (insgesamt 176); jede Einheit hat ein zur Fraktion passendes Motiv (z. B. Zahnrad/Anker/Luftschiff bei Kharadron, Warpstein/Zahnrad bei Skaven, Rippen/Knochenhand bei Ossiarch, Laterne/Kapuze bei Nachtspuk, Muschel/Aal bei Idoneth, Eichel/Eule bei Sylvaneth). 130 verschiedene Symbole im Einsatz (vorher 73).
+- Token-Rand: 12 statt 4 Zierrand-Muster, je Fraktion eigenes Muster.
+- Armee-Fähigkeiten (z. B. Fŷrstahl-Wurfaxt): sind jetzt im Hinweisbalken als „Fähigkeit“-Knopf erreichbar, wenn sie einsetzbar sind.
+
 ## v119
 - Armee-Auswahl beim Start: Reihenfolge wie in der Regel-App (Ordnung, Chaos, Tod, Zerstörung; darin nach Fraktion, dann Reihenfolge der Spearheads).
 - Auswahl von Einheiten, Zielen und Gelände (Karten, Fähigkeiten u. Ä.): die wählbaren Objekte sind auf der Karte golden umrandet und werden direkt angetippt; übrige Optionen als Knöpfe, „Liste“ öffnet die bisherige Liste.

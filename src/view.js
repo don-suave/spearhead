@@ -28,9 +28,9 @@ function rehint(){const m=mode;hint(m?m.hint:'');const pl=m&&m.t=='place';const 
  $('ho').style.display=pl&&m.q.auto?'':'none';if(pl&&m.q.auto)$('ho').textContent='Rest automatisch';$('hy').style.display=m&&(m.t=='adj'||stg(m))?'':'none';$('hy').textContent=m&&m.t=='dest'?'Modelle einzeln':'✓ Fertig';
  $('hx').style.display=m&&m.t!='fightsel'&&((m.t=='place'&&m.q.cancel)||m.t!='place')?'':'none';
  $('hx').textContent=m&&m.t=='dest'?(m.chg?'Angriff abbrechen':m.pile?'Nicht nachrücken':'Stehen bleiben'):m&&(m.t=='place'||m.t=='tgt')?'✕ Abbrechen':'✕';
- const ra=!m&&G&&rsvAvail();if(ra&&ra.length){hint('Reserve bereit: '+ra.map(g=>g.t).join(' · '));$('ho').style.display='';$('ho').textContent='Aufstellen';$('hx').style.display='none';$('rl').style.display=$('rr').style.display='none'}}
-const rsvAvail=()=>{const q=G&&G.req;return q&&q.t=='act'&&!G.isAI(q.who)?globals(G.S,q.who).filter(g=>g.k.startsWith('rsv:')):[]};
-$('ho').onclick=()=>{if(mode&&mode.t=='place'&&mode.q.auto){answer({auto:true});return}const l=rsvAvail();if(!l.length)return;const q=G.req;pop('Aus der Reserve aufstellen','Welche Einheit soll jetzt aufgestellt werden?',l.map(g=>({t:g.t,s:g.s,fn:()=>answer({a:g.k})})))};
+ const ra=!m&&G&&rsvAvail();if(ra&&ra.length){const onlyR=ra.every(g=>g.k.startsWith('rsv:'));hint((onlyR?'Reserve bereit: ':'Fähigkeit bereit: ')+ra.map(g=>g.t).join(' · '));$('ho').style.display='';$('ho').textContent=onlyR?'Aufstellen':'Fähigkeit';$('hx').style.display='none';$('rl').style.display=$('rr').style.display='none'}}
+const rsvAvail=()=>{const q=G&&G.req;return q&&q.t=='act'&&!G.isAI(q.who)&&q.who==seat?globals(G.S,q.who).filter(g=>!g.dis):[]};
+$('ho').onclick=()=>{if(mode&&mode.t=='place'&&mode.q.auto){answer({auto:true});return}const l=rsvAvail();if(!l.length)return;const q=G.req;pop(l.every(g=>g.k.startsWith('rsv:'))?'Aus der Reserve aufstellen':'Fähigkeit einsetzen',l.every(g=>g.k.startsWith('rsv:'))?'Welche Einheit soll jetzt aufgestellt werden?':'Jetzt einsetzbare Armee-Fähigkeiten und Reserven',l.map(g=>({t:g.t,s:g.s,fn:()=>answer({a:g.k})})))};
 function note(t){hint(t);clearTimeout(ntm);ntm=setTimeout(rehint,2600)}
 let pcache=new Map();
 function setMode(m){mode=m;pcache=new Map();rehint()}

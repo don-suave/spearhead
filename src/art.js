@@ -85,7 +85,8 @@ export const GLY={
  dice:[['e','M3 3h18v18H3zM8 8a1.600 1.600 0 1 0 .01 0zM16 8a1.600 1.600 0 1 0 .01 0zM12 12a1.600 1.600 0 1 0 .01 0zM8 16a1.600 1.600 0 1 0 .01 0zM16 16a1.600 1.600 0 1 0 .01 0z']],
  whip:[['s','M4 22c5-9 9 0 13-9s2-8 4-11']],
 };
-const GL_ORDER=['sword','shield','axe','spear','bow','hammer','dagger','star','crown','skull','claw','fang','paw','flame','rune','eye','drop','crystal','cog','banner','moon','sun','wing','horseshoe','snake','book','fist','chain','bomb','tusk','trident','flask','mask','ghost','scythe','mountain','lizard','rat','fly','maw','gong','tentacle','airship','cannon','wheel','bolt','heart','leaf','anchor','comet','helm','lance','musket','crossbow','wolf','bird','goat','beetle','tree','mushroom','wave','fish','tornado','bat','cauldron','bone','hourglass','horn','anvil','bull','orb','tower','crossed','chalice','dice','whip'];
+import {GLY2} from './glyphs2.js';Object.assign(GLY,GLY2);
+const GL_ORDER=['sword','shield','axe','spear','bow','hammer','dagger','star','crown','skull','claw','fang','paw','flame','rune','eye','drop','crystal','cog','banner','moon','sun','wing','horseshoe','snake','book','fist','chain','bomb','tusk','trident','flask','mask','ghost','scythe','mountain','lizard','rat','fly','maw','gong','tentacle','airship','cannon','wheel','bolt','heart','leaf','anchor','comet','helm','lance','musket','crossbow','wolf','bird','goat','beetle','tree','mushroom','wave','fish','tornado','bat','cauldron','bone','hourglass','horn','anvil','bull','orb','tower','crossed','chalice','dice','whip',...Object.keys(GLY2)];
 const GP={};
 const gpath=k=>GP[k]||(GP[k]=GLY[k].map(([t,d])=>[t,typeof Path2D!='undefined'?new Path2D(d):d]));
 export function drawGlyph(cx,k,x,y,s,fill,line=0){
@@ -130,32 +131,56 @@ const RULES=[
 const ROLE=(kw)=>/Held/.test(kw)?['crown','star']:/Kavallerie/.test(kw)?['horseshoe']:/Kriegsmaschine/.test(kw)?['cannon','cog']:/Bestie|Monster/.test(kw)?['paw','claw']:['sword','shield'];
 
 // Gezielte Zuordnung Einheit → Symbol (eigene, fraktionstypische Zeichen; Vorrang vor den Regeln, je Armee einmalig)
-const OVR={'Freigilden-Marschall':'crown','Pontifex Zenestra':'orb','Flüsterklinge':'dagger','Erzritter und Gefolge':'lance','Freigilden-Stahlhelme':'helm',
- 'Füsiliermajor auf Ogor-Kriegshüne':'crown','Alchemit-Kriegsschmied':'flask','Freigilden-Füsiliere':'musket','Wilderkorps-Jäger':'bow','Jorvan Kreel, Erbe des Kraken':'tentacle','Mallus-Schmiedepriester':'anvil','Freigilden-Junker':'sword','Freigilden-Grenadiere':'bomb',
- 'Freigilden-Rittermarschall':'lance','Freigilden-Stahlhelme (Kastelliten)':'tower','Freigilden-Ritter':'horseshoe','Eisenschmiede-Großkanone':'cannon',
- 'Killaboss auf Großem Schnappzahn':'fang','Torfboss mit Sumpfgasbanna':'banner','Bolz’nschießa':'crossbow','Wanstreißa':'maw','Bestienkillabogen':'bow','Megaboss':'crown','Platt’nhelme':'helm','Wutprotze':'fist','Kraftprotze':'hammer',
- 'Fletschaboss':'wolf','Gefolge-Wolfsgits':'paw','Rudelfletscha':'fang','Sonn’nräuber-Kriegswag’n':'wheel','Wahnboss':'mushroom','Mondclan-Piksa':'moon','Squighoppa':'maw','Felsmagen-Troggoths':'mountain',
- 'Fluchfürst':'skull','Grabhügelwache':'shield','Grabhügelritter':'lance','Skelette (Knochenhorde)':'bone','Vampirfürst':'fang','Blutritter':'lance','Vargheister':'bat',
- 'Klauenfürst auf Nagbestie':'claw','Grauer Prophet':'rune','Warlock-Techniker':'flask','Clanratten':'rat','Rattenogors':'fist','Sturmbestien':'fang','Warpblitzkanone':'bolt','Meisterassassine Crixxit':'mask','Meisterassassine':'dagger','Gossenläufer':'bomb','Schattenläufer':'crossed',
- 'Yndrasta, der Celestische Speer':'spear','Bezwinger':'helm','Ritter Vexillor':'banner','Annihilatoren':'hammer','Sturmschlag-Streitwagen':'wheel','Fürst Vigilant auf Schattengryph':'wing','Fürst Veritant':'comet','Prosecutoren':'bolt','Liberatoren':'shield',
- 'General Peingespenst':'crown','Kettenghaste':'chain','Klingengeist-Wiedergänger':'ghost','Sensenmegären':'scythe','Schreckensreiter':'horseshoe','Ritter des Grabtuchs':'sword','Geisterscharen':'ghost','Düsterschnitter':'scythe','Kettengeister':'chain',
- 'Fäulnisboten-Hexer':'rune','Nurglinge':'fly','Schleimbestie':'drop','Krieger des Faulsumpf-Credos':'cauldron','Pestpockiger Buchhalter':'book','Eitriger Fliegenfürst':'fly','Faulige Pestkönige':'cauldron','Seuchenhüter':'sword',
- 'Hjulda Drakkblud':'anvil','Clanschilde':'shield','Gholems des Gazul':'cog','Eidwahrerkanone':'cannon','Goldrunenvater auf Magmadroth':'crown','Goldrunenwerker':'hammer','Vulkyn-Flammensucher':'flame','Goldwächter':'helm','Schlachtenschmied':'anvil','Berserkerwächter':'axe','Vulkit-Berserker':'flame',
- 'Das Zwieträchtige Dreigestirn':'heart','Slaaneshbestien':'claw','Dämonetten':'dagger','Jägerinnen':'bow','Scherbensprecherin des Slaanesh':'crystal','Silbergleven-Jäger':'spear','Slaangor-Scheusale':'claw','Giftdorn-Schützen':'crossbow','Giftdorn-Schützen (mit Homunkulus)':'eye',
- 'Tyrann':'crown','Hungrige Ogors':'maw','Hungrige Ogors (3 Modelle)':'tusk','Eisenwänste':'anvil','Prankenbiestreiter':'paw','Fleischer':'axe','Metzger':'dagger','Gedärmdeuter':'eye','Verschlinger-Schlundrudel':'fang','Tyrann des Gebrülls':'horn','Eisenspeier':'cannon','Bleispucker':'musket','Hungrige Ogors (Gebrüll)':'maw','Trauerfangreiter':'paw',
- 'Steinkloppa':'hammer','Steinschmeißer':'mountain','Menschenquetscher-Gargant':'fist','Menschenquetscher-Gargant (Verstärkung)':'mountain',
- 'Kriegsdespot':'bull','Dominator-Maschine':'cog','Peinigerbombarde':'cannon','Infernale Kohorte':'anvil','Infernale Kohorte (Gongträger)':'gong',
- 'Sonnenblut-Kohorte':'sun','Saurus-Krieger':'lizard','Huanchis Jäger':'bow','Terraflügler':'wing','Chotec-Echse':'snake','Saurus-Hornnackenveteran auf Carnosaurier':'crown','Kroxigors':'mountain',
- 'Mordpriester':'skull','Schädelbrecher':'horseshoe','Blutkrieger':'axe','Blutjäger':'drop','Karanak':'wolf','Bluthunde':'paw','Karanaks Krallen':'claw',
- 'Melusai-Eisenschuppe':'snake','Hexenkriegerinnen':'dagger','Fluchfeuerhexer':'flame','Blutpirscherinnen':'bow','Schlächterkönigin auf Blutkessel':'cauldron','Hexenkönigin':'crown','Blutqual-Medusa':'eye','Schlächterschwestern':'sword','Khainitische Schattenjäger':'mask',
- 'Endrinenmeister mit Luftschiffrüstung':'airship','Grundstok-Donnerschützen':'bolt','Grundstok-Kanonenboot':'cannon','Endrinentakler':'anchor','Arkanauten-Admiral':'crown','Himmelswächter':'wing','Arkanauten-Kompanie (Himmelspike)':'spear','Arkanauten-Kompanie (Salvengewehr)':'musket','Arkanauten-Fregatte':'airship',
- 'Scinari-Cathallar':'rune','Vanari-Klingenmeister':'sword','Vanari-Auralanschützen':'bow','Vanari-Auralanwächter':'shield','Hurakan-Windmagier':'tornado','Hurakan-Windreiter':'horseshoe','Vanari-Auralanwächter (Hurakan)':'sun','Hurakan-Windgeist':'wing',
- 'Magister auf Flugdämon des Tzeentch':'bird','Kairische Akolythen':'eye','Kreischer des Tzeentch':'fang','Tzaangors':'goat','Feuerdämonen des Tzeentch':'flame','Tzaangor-Schamane':'rune','Tzaangor-Erleuchtete':'dice','Tzaangor-Omenleser':'eye','Tzaangors (Kriegsherde)':'goat',
- 'Kavalos-Fürst':'crown','Kavalos-Todesreiter':'horseshoe','Teratische Kohorte':'fist','Mortisan-Seelenernter':'scythe','Mortek-Garde':'shield','Gothizzar-Knochenernter':'skull','Mortisan-Knochenbildner':'bone','Immortis-Garde':'spear','Nekropolenjäger':'bow','Morghast-Archai':'wing',
- 'Zweighexe':'leaf','Baumfürst':'tree','Kurnoth-Jäger':'bow','Wehrhafte Waldgeister':'leaf','Höherer Waldgeist':'tree','Seidenschwingen-Schützen':'wing','Drachenkäfer-Lanzenreiter':'beetle','Sucher-Waldgeister':'spear',
- 'Isharann-Seelenfinder':'crystal','Akhelianer-Morrsarrgarde':'fish','Akhelianer-Allopex':'wave','Namarti-Schwertknechte':'sword','Akhelianer-König':'trident','Akhelianer-Ishlaengarde':'spear','Namarti-Bogenschützen':'bow',
- 'Kriegsherr des Chaos':'crown','Streitwagen des Chaos':'wheel','Chaoskrieger':'axe','Chaosritter':'lance','Finsterschwur-Kriegskönigin':'crown','Finsterschwur-Zerreißer':'axe','Finsterschwur-Grauensreiter':'horseshoe','Finsterschwur-Barbaren':'sword',
- 'Scheußlicher Erzregent':'crown','Gruftgarde':'sword','Morbheg-Ritter':'lance','Varghulf-Höfling':'bat','Scheußlicher Bluthüter':'chalice','Königliche Bestienhäuter':'paw','Gruftschrecken':'claw','Gruftschinder':'bone'};
+const OVR={'Freigilden-Marschall':'pennant','Pontifex Zenestra':'halo','Flüsterklinge':'rapier','Erzritter und Gefolge':'lance','Freigilden-Stahlhelme':'helm',
+ 'Füsiliermajor auf Ogor-Kriegshüne':'blunder','Alchemit-Kriegsschmied':'flask','Freigilden-Füsiliere':'musket','Wilderkorps-Jäger':'longrifle',
+ 'Jorvan Kreel, Erbe des Kraken':'hook','Mallus-Schmiedepriester':'anvil','Freigilden-Junker':'sword','Freigilden-Grenadiere':'bomb',
+ 'Freigilden-Rittermarschall':'fleur','Freigilden-Stahlhelme (Kastelliten)':'keep','Freigilden-Ritter':'horseshoe','Eisenschmiede-Großkanone':'cannon',
+ 'Killaboss auf Großem Schnappzahn':'teeth','Torfboss mit Sumpfgasbanna':'banner','Bolz’nschießa':'crossbow','Wanstreißa':'maw','Bestienkillabogen':'bow',
+ 'Fluchfürst':'brokencrown','Grabhügelwache':'shield','Grabhügelritter':'lance','Skelette (Knochenhorde)':'skull',
+ 'Klauenfürst auf Nagbestie':'claw','Grauer Prophet':'warpstone','Warlock-Techniker':'poison','Clanratten':'rat','Rattenogors':'fist','Sturmbestien':'fang','Warpblitzkanone':'bolt',
+ 'Yndrasta, der Celestische Speer':'spear','Bezwinger':'sigshield','Ritter Vexillor':'banner','Annihilatoren':'hammer','Sturmschlag-Streitwagen':'wheel',
+ 'Fürst Vigilant auf Schattengryph':'gryph','Fürst Veritant':'halo','Prosecutoren':'wing','Liberatoren':'shield',
+ 'General Peingespenst':'lantern','Kettenghaste':'chain','Klingengeist-Wiedergänger':'ghost','Sensenmegären':'scythe','Schreckensreiter':'horseshoe',
+ 'Ritter des Grabtuchs':'coffin','Geisterscharen':'hood','Düsterschnitter':'scythe','Kettengeister':'chain',
+ 'Fäulnisboten-Hexer':'bell','Nurglinge':'maggot','Schleimbestie':'drop','Krieger des Faulsumpf-Credos':'bubo',
+ 'Pestpockiger Buchhalter':'scales','Eitriger Fliegenfürst':'fly','Faulige Pestkönige':'cauldron','Seuchenhüter':'maggot',
+ 'Hjulda Drakkblud':'anvil','Clanschilde':'shield','Gholems des Gazul':'cog','Eidwahrerkanone':'cannon',
+ 'Goldrunenvater auf Magmadroth':'volcano','Goldrunenwerker':'hammer','Vulkyn-Flammensucher':'flame','Goldwächter':'dwarfhelm',
+ 'Schlachtenschmied':'ingot','Berserkerwächter':'axes2','Vulkit-Berserker':'axe',
+ 'Vampirfürst':'fang','Blutritter':'lance','Vargheister':'bat',
+ 'Das Zwieträchtige Dreigestirn':'lips','Slaaneshbestien':'claw','Dämonetten':'whip','Jägerinnen':'bow',
+ 'Scherbensprecherin des Slaanesh':'mirror','Silbergleven-Jäger':'spear','Slaangor-Scheusale':'claw','Giftdorn-Schützen (mit Homunkulus)':'lyre','Giftdorn-Schützen':'crossbow',
+ 'Tyrann':'crown','Hungrige Ogors':'maw','Hungrige Ogors (3 Modelle)':'tusk','Eisenwänste':'belly','Prankenbiestreiter':'paw',
+ 'Fleischer':'choppa','Metzger':'dagger','Gedärmdeuter':'eye','Verschlinger-Schlundrudel':'fang',
+ 'Tyrann des Gebrülls':'horn','Eisenspeier':'cannon','Bleispucker':'handgun','Hungrige Ogors (Gebrüll)':'maw','Trauerfangreiter':'paw',
+ 'Steinkloppa':'club','Steinschmeißer':'boulder','Menschenquetscher-Gargant':'giantfoot','Menschenquetscher-Gargant (Verstärkung)':'fist',
+ 'Meisterassassine Crixxit':'mask','Meisterassassine':'dagger','Gossenläufer':'bomb','Schattenläufer':'crossed',
+ 'Kriegsdespot':'bull','Dominator-Maschine':'hellforge','Peinigerbombarde':'mortar','Infernale Kohorte':'smokestack','Infernale Kohorte (Gongträger)':'gong',
+ 'Sonnenblut-Kohorte':'solar','Saurus-Krieger':'lizard','Huanchis Jäger':'bow','Terraflügler':'wing','Chotec-Echse':'snake',
+ 'Saurus-Hornnackenveteran auf Carnosaurier':'dinohead','Kroxigors':'headdress',
+ 'Mordpriester':'khrune','Schädelbrecher':'bull','Blutkrieger':'bdaxe','Blutjäger':'drop','Karanak':'collar','Bluthunde':'paw','Karanaks Krallen':'claw',
+ 'Melusai-Eisenschuppe':'snake','Hexenkriegerinnen':'dagger','Fluchfeuerhexer':'flame','Blutpirscherinnen':'bow',
+ 'Schlächterkönigin auf Blutkessel':'cauldron','Hexenkönigin':'crown','Blutqual-Medusa':'eye','Schlächterschwestern':'sword','Khainitische Schattenjäger':'mask',
+ 'Fletschaboss':'wolfhead','Gefolge-Wolfsgits':'paw','Rudelfletscha':'fang','Sonn’nräuber-Kriegswag’n':'wheel',
+ 'Wahnboss':'mushroom','Mondclan-Piksa':'moon','Squighoppa':'squig','Felsmagen-Troggoths':'boulder',
+ 'Endrinenmeister mit Luftschiffrüstung':'goggles','Grundstok-Donnerschützen':'bolt','Grundstok-Kanonenboot':'airship','Endrinentakler':'anchor',
+ 'Arkanauten-Admiral':'compass','Himmelswächter':'wing','Arkanauten-Kompanie (Himmelspike)':'harpoon','Arkanauten-Kompanie (Salvengewehr)':'musket','Arkanauten-Fregatte':'balloon',
+ 'Scinari-Cathallar':'crystal','Vanari-Klingenmeister':'sword','Vanari-Auralanschützen':'bow','Vanari-Auralanwächter':'aelfspear',
+ 'Hurakan-Windmagier':'windswirl','Hurakan-Windreiter':'horseshoe','Vanari-Auralanwächter (Hurakan)':'sun','Hurakan-Windgeist':'tornado',
+ 'Magister auf Flugdämon des Tzeentch':'bird','Kairische Akolythen':'portal','Kreischer des Tzeentch':'wing','Tzaangors':'goat','Feuerdämonen des Tzeentch':'flame',
+ 'Tzaangor-Schamane':'chaosstar','Tzaangor-Erleuchtete':'dice','Tzaangor-Omenleser':'eye','Tzaangors (Kriegsherde)':'goat',
+ 'Kavalos-Fürst':'skullcrown','Kavalos-Todesreiter':'horseshoe','Teratische Kohorte':'bonehand',
+ 'Mortisan-Seelenernter':'scythe','Mortek-Garde':'shield','Gothizzar-Knochenernter':'skull',
+ 'Mortisan-Knochenbildner':'ribs','Immortis-Garde':'spear','Nekropolenjäger':'bow','Morghast-Archai':'wing',
+ 'Zweighexe':'branch','Baumfürst':'tree','Kurnoth-Jäger':'bow','Wehrhafte Waldgeister':'thorns',
+ 'Höherer Waldgeist':'acorn','Seidenschwingen-Schützen':'butterfly','Drachenkäfer-Lanzenreiter':'beetle','Sucher-Waldgeister':'seedpod',
+ 'Isharann-Seelenfinder':'pearl','Akhelianer-Morrsarrgarde':'eel','Akhelianer-Allopex':'fish','Namarti-Schwertknechte':'sword',
+ 'Akhelianer-König':'trident','Akhelianer-Ishlaengarde':'spear','Namarti-Bogenschützen':'bow',
+ 'Kriegsherr des Chaos':'barbhelm','Streitwagen des Chaos':'wheel','Chaoskrieger':'axe','Chaosritter':'lance',
+ 'Finsterschwur-Kriegskönigin':'crown','Finsterschwur-Zerreißer':'flail','Finsterschwur-Grauensreiter':'horseshoe','Finsterschwur-Barbaren':'sword',
+ 'Megaboss':'boar','Platt’nhelme':'helm','Wutprotze':'fist','Kraftprotze':'hammer',
+ 'Scheußlicher Erzregent':'spikecrown','Gruftgarde':'sword','Morbheg-Ritter':'lance','Varghulf-Höfling':'bat',
+ 'Scheußlicher Bluthüter':'chalice','Königliche Bestienhäuter':'paw','Gruftschrecken':'claw','Gruftschinder':'bone'};
 let ICM=null;
 function buildIcons(){ICM={};Object.entries(ARMY).forEach(([ai,a])=>{const used=new Set(),m={};
  // erst klare Treffer, dann Rest, damit Spezialfälle ihr Symbol bekommen
@@ -167,13 +192,13 @@ export const iconOf=(army,dn)=>{if(!ICM)buildIcons();return(ICM[army]&&ICM[army]
 
 // ---------- Fraktionsfarben ----------
 const FP={
- 'Städte Sigmars':['#3d5f94','#e6c75c','ring'],'Orruk-Kriegsclans':['#4f7d2a','#e0d6a0','jag'],'Seelenbrand-Grabesfürsten':['#6e2a4e','#d9d2bd','dots'],'Höfe der Leichenfresser':['#8a1f26','#d8c7a1','ring'],
- 'Skaven':['#6a5a2c','#8fe35e','jag'],'Sturmgeschmiedete Ewige':['#27508f','#f4cf55','ring'],'Nachtspuk':['#3a7b78','#c8fff6','wave'],
- 'Maggotkin des Nurgle':['#6a7a2a','#d4dc78','dots'],'Khazalid':['#a24a1a','#ffcf5a','jag'],'Hedoniten des Slaanesh':['#a02c6c','#f6a9d8','wave'],
- 'Ogor-Schlundstämme':['#8a5a3a','#ecc794','jag'],'Behemats Söhne':['#7b6b52','#d9c9a8','ring'],'Helschmiede des Hashut':['#5e2a22','#e8832e','jag'],
- 'Sklaven der Finsternis':['#4a2323','#d8b27a','jag'],'Tiefenvolk der Idoneth':['#1d4e66','#9fe0d8','ring'],'Seraphon':['#1f7c7c','#eac24c','ring'],'Klingen des Khorne':['#8c1a1a','#e6c783','jag'],'Töchter des Khaine':['#6c1e4c','#ee4a68','wave'],
- 'Mondwahn-Gits':['#57724a','#f3e463','dots'],'Himmelsherrscher der Kharadron':['#27496c','#d9a143','ring'],'Lichtfürsten der Lumineth':['#4b7cb4','#f6f0d2','wave'],
- 'Jünger des Tzeentch':['#37379e','#43d6e6','wave'],'Knochenlegionen der Ossiarch':['#7a6a42','#efe6c8','ring'],'Sylvaneth':['#2f6b3a','#e3d79a','wave']};
+ 'Städte Sigmars':['#3d5f94','#e6c75c','rivet'],'Orruk-Kriegsclans':['#4f7d2a','#e0d6a0','jag'],'Seelenbrand-Grabesfürsten':['#6e2a4e','#d9d2bd','cross'],'Höfe der Leichenfresser':['#8a1f26','#d8c7a1','tri'],
+ 'Skaven':['#6a5a2c','#8fe35e','spike'],'Sturmgeschmiedete Ewige':['#27508f','#f4cf55','rays'],'Nachtspuk':['#3a7b78','#c8fff6','wave'],
+ 'Maggotkin des Nurgle':['#6a7a2a','#d4dc78','dots'],'Khazalid':['#a24a1a','#ffcf5a','dash'],'Hedoniten des Slaanesh':['#a02c6c','#f6a9d8','scallop'],
+ 'Ogor-Schlundstämme':['#8a5a3a','#ecc794','jag'],'Behemats Söhne':['#7b6b52','#d9c9a8','twin'],'Helschmiede des Hashut':['#5e2a22','#e8832e','jag'],
+ 'Sklaven der Finsternis':['#4a2323','#d8b27a','jag'],'Tiefenvolk der Idoneth':['#1d4e66','#9fe0d8','wave'],'Seraphon':['#1f7c7c','#eac24c','diamond'],'Klingen des Khorne':['#8c1a1a','#e6c783','jag'],'Töchter des Khaine':['#6c1e4c','#ee4a68','chev'],
+ 'Mondwahn-Gits':['#57724a','#f3e463','dots'],'Himmelsherrscher der Kharadron':['#27496c','#d9a143','twin'],'Lichtfürsten der Lumineth':['#4b7cb4','#f6f0d2','wave'],
+ 'Jünger des Tzeentch':['#37379e','#43d6e6','wave'],'Knochenlegionen der Ossiarch':['#7a6a42','#efe6c8','chev'],'Sylvaneth':['#2f6b3a','#e3d79a','wave']};
 export const palOf=f=>FP[f]||['#5a5a5a','#e0e0e0','ring'];
 
 // ---------- Token ----------
@@ -192,6 +217,16 @@ export function drawToken(cx,m,u,ring,army,hero,ready,t){
  if(pat=='ring'){rr(.86);cx.stroke()}
  else if(pat=='dots'){const n=Math.max(8,Math.round(R*22));for(let i=0;i<n;i++){const q=i/n*6.2832;cx.beginPath();cx.arc(Math.cos(q)*ax*.86,Math.sin(q)*ay*.86,Math.max(.03,R*.055),0,7);cx.fill()}}
  else if(pat=='jag'){const n=Math.max(8,Math.round(R*20));cx.beginPath();for(let i=0;i<=n*2;i++){const q=i/(n*2)*6.2832,f=i%2?.8:.97;cx.lineTo(Math.cos(q)*ax*f,Math.sin(q)*ay*f)}cx.closePath();cx.stroke()}
+ else if(pat=='rivet'){rr(.9);cx.stroke();const n=Math.max(8,Math.round(R*18));for(let i=0;i<n;i++){const q=i/n*6.2832;cx.fillRect(Math.cos(q)*ax*.76-R*.04,Math.sin(q)*ay*.76-R*.04,R*.08,R*.08)}}
+ else if(pat=='cross'){rr(.9);cx.stroke();for(let i=0;i<4;i++){const q=i*1.5708;cx.beginPath();cx.moveTo(Math.cos(q)*ax*.62,Math.sin(q)*ay*.62);cx.lineTo(Math.cos(q)*ax*.98,Math.sin(q)*ay*.98);cx.stroke()}}
+ else if(pat=='tri'){const n=Math.max(8,Math.round(R*14));for(let i=0;i<n;i++){const q=i/n*6.2832,w=.2;cx.beginPath();cx.moveTo(Math.cos(q-w)*ax*.98,Math.sin(q-w)*ay*.98);cx.lineTo(Math.cos(q+w)*ax*.98,Math.sin(q+w)*ay*.98);cx.lineTo(Math.cos(q)*ax*.74,Math.sin(q)*ay*.74);cx.closePath();cx.fill()}}
+ else if(pat=='spike'){rr(.8);cx.stroke();const n=Math.max(8,Math.round(R*14));for(let i=0;i<n;i++){const q=i/n*6.2832;cx.beginPath();cx.moveTo(Math.cos(q)*ax*.8,Math.sin(q)*ay*.8);cx.lineTo(Math.cos(q)*ax*1.04,Math.sin(q)*ay*1.04);cx.stroke()}}
+ else if(pat=='rays'){const n=Math.max(10,Math.round(R*20));for(let i=0;i<n;i++){const q=i/n*6.2832;cx.beginPath();cx.moveTo(Math.cos(q)*ax*.7,Math.sin(q)*ay*.7);cx.lineTo(Math.cos(q)*ax*.98,Math.sin(q)*ay*.98);cx.stroke()}}
+ else if(pat=='dash'){cx.setLineDash([R*.22,R*.14]);rr(.88);cx.stroke();cx.setLineDash([])}
+ else if(pat=='scallop'){const n=Math.max(8,Math.round(R*14));cx.beginPath();for(let i=0;i<=n*10;i++){const q=i/(n*10)*6.2832,f=.8+.12*Math.abs(Math.sin(q*n/2));cx.lineTo(Math.cos(q)*ax*f,Math.sin(q)*ay*f)}cx.closePath();cx.stroke()}
+ else if(pat=='twin'){rr(.93);cx.stroke();rr(.78);cx.stroke()}
+ else if(pat=='diamond'){const n=Math.max(8,Math.round(R*12));for(let i=0;i<n;i++){const q=i/n*6.2832,x0=Math.cos(q)*ax*.84,y0=Math.sin(q)*ay*.84,d=R*.09;cx.beginPath();cx.moveTo(x0,y0-d);cx.lineTo(x0+d,y0);cx.lineTo(x0,y0+d);cx.lineTo(x0-d,y0);cx.closePath();cx.fill()}}
+ else if(pat=='chev'){rr(.9);cx.stroke();const n=Math.max(6,Math.round(R*10));for(let i=0;i<n;i++){const q=i/n*6.2832,r1=.72,r2=.9,w=.12;cx.beginPath();cx.moveTo(Math.cos(q-w)*ax*r1,Math.sin(q-w)*ay*r1);cx.lineTo(Math.cos(q)*ax*r2,Math.sin(q)*ay*r2);cx.lineTo(Math.cos(q+w)*ax*r1,Math.sin(q+w)*ay*r1);cx.stroke()}}
  else{const n=Math.max(8,Math.round(R*16));cx.beginPath();for(let i=0;i<=n*8;i++){const q=i/(n*8)*6.2832,f=.86+.07*Math.sin(q*n);cx.lineTo(Math.cos(q)*ax*f,Math.sin(q)*ay*f)}cx.closePath();cx.stroke()}
  cx.restore();
  if(hero){cx.beginPath();cx.ellipse(0,0,rx,ry,0,0,7);cx.lineWidth=Math.max(.04,R*.06);cx.strokeStyle='#ffd35c';cx.stroke()}
