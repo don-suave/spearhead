@@ -1,3 +1,6 @@
+## v123
+- 15 neue Einheitensymbole nach dem Aussehen der Modelle: Skelettkrieger, Vampir mit Reißzähnen, Knochenmaske (Ossiarch), hoher Aelfen-Helm (Lumineth), geflügelter Vollhelm (Stormcast), Hauer-Kopf (Orruk), Gitz-Kapuze, Rattenkopf (Skaven), gehörnter Nurgle-Kopf, Slaanesh-Kopf, Schnabelkopf (Tzeentch), gekrönter Ghul, Idoneth-Flossenkopf, Waldgeister-Gesicht, Ogor-Kopf; Zuordnung für Soulblight, Ossiarch, Lumineth, Stormcast, Skaven, Nurgle, Slaanesh, Tzeentch, Idoneth, Sylvaneth, Ogor, Orruk, Gitz angepasst.
+
 ## v122
 - 24 Fraktions-Embleme (eigene Originale): in der Armee-Auswahl und in der „X vs Y“-Anzeige.
 - 6 weitere lore-nähere Einheitensymbole (Sturmhammer, Hoher Hut, Mondgesicht, Saurusschild, Warpfeuer, Kohlebecken); Zuordnung für Annihilatoren, Infernale Kohorte, Mondclan-Piksa, Saurus-Krieger, Warpblitzkanone angepasst.
