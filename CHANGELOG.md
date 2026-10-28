@@ -1,3 +1,6 @@
+## v116
+- Würfel-/Berichts-Popup liegt jetzt unter der „Wer gegen wen“-Anzeige statt dahinter (kein überlagerter, unscharfer Text mehr), höhere Ebene und angepasste Maximalhöhe.
+
 ## v115
 - Fernkampf ohne einsetzbare Waffe (z. B. Großkanone nach Bewegung: nur Kartätsche 12") wird vorab mit Meldung abgelehnt; sonst klare Meldung statt leerem Bericht ohne Würfel. KI beachtet das ebenfalls.
 
