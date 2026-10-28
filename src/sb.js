@@ -61,7 +61,7 @@ export const SBCE={
   for(const e of es){const r=d6(S);G.tray('Aura of Ending: '+e.name,[{k:'row',l:'4+ → 2 tödlicher Schaden',v:[r],th:4}]);if(r>=4)hurt(G,e,2)}},
  8:function*(G,s){const S=G.S,l=S.ter.filter(t=>terrOwn(S,t)==s&&!t.my);if(!l.length)return;
   const t=yield* ask(G,s,'Monument of Living Bone: Gelände wählen',l.map(t=>[t.nm+' ('+t.x.toFixed(0)+'|'+t.y.toFixed(0)+')',t]));if(!t||S.mon)return;
-  S.obj.push([t.x,t.y,3.5]);S.oc.push(-1);S.ocs.push(-1);S.on.push('Monument');S.mon=1;G.note('Monument of Living Bone: '+t.nm+' zählt bis Zugende als Ziel')},
+  S.obj.push([t.x,t.y,3,t.w,t.h,t.a||0,3]);S.oc.push(-1);S.ocs.push(-1);S.on.push('Monument');S.mon=1;G.note('Monument of Living Bone: '+t.nm+' zählt bis Zugende als Ziel')},
  9:function*(G,s){const S=G.S,x=yield* pickU(G,s,'Grind Them to Dust: Einheit wählen',myU(S,s).filter(x=>!has(S.T.fought,x.id)&&!has(S.T.dbl,x.id)));if(!x)return;add(S.T.dbl,x.id);add(S.T.dm,x.id);G.note('Grind Them to Dust: '+x.name+' kämpft zweimal (danach W3 tödlicher Schaden, zuletzt)')},
  10:function*(G,s){const S=G.S,x=yield* pickU(G,s,'Re-form the Line!: Einheit wählen',myU(S,s));if(!x)return;
   if(inCombat(S,x)){yield* doRetreat(G,x);return}

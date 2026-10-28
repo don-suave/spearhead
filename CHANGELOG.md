@@ -1,3 +1,6 @@
+## v114
+- Monument of Living Bone: das Gelände zählt als Ziel mit 3" Reichweite vom Geländerand (abgerundete Ecken) statt von der Mitte; Anzeige auf dem Feld entsprechend.
+
 ## v113
 - Gelände/Relikte: Antippen dreht in 10 Schritten à 18° bis 180° (danach wieder 0°).
 - Einheitensymbole: ~27 neue eigene Glyphen (Helm, Lanze, Muskete, Armbrust, Wolf, Ziege, Käfer, Baum, Pilz, Welle, Fisch, Fledermaus, Kessel, Knochen, Amboss, Turm …) und gezielte, fraktionstypische Zuordnung je Einheit.

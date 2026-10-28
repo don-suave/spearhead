@@ -4,7 +4,7 @@ export let W=30,H=22.4;export const CR=3;export function setBoard(w,h){W=w;H=h}
 export const OR=p=>p[2]==null?3:p[2];
 // Zielform: Kreis [x,y,r] oder Rechteck [x,y,r,w,h,a]; objD = Abstand eines Punkts zur Zielfläche (0 innen)
 export const objR=p=>p.length>3?{x:p[0],y:p[1],w:p[3],h:p[4],a:p[5]||0}:null;
-export const objD=(p,x,y)=>p.length>3?ptDist(objR(p),x,y):Math.max(0,Math.hypot(x-p[0],y-p[1])-OR(p));
+export const objD=(p,x,y)=>p.length>3?ptDist(objR(p),x,y)-(p[6]||0):Math.max(0,Math.hypot(x-p[0],y-p[1])-OR(p));
 // Vorzeichenbehafteter Abstand zur Territoriengrenze (Zoll)
 const sd=(K,x,y)=>K.map?(K.dg?(y/H-x/W):(x/W+y/H-1))/Math.hypot(1/W,1/H):y-H/2;
 // >0: im Gebiet von Spieler o; Wert = Abstand zur Grenze
