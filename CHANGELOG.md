@@ -1,3 +1,6 @@
+## v118
+- Leiste der 1×-pro-Schlacht-Fähigkeiten: Tippen auf ein Symbol bietet bei einsetzbaren eigenen Fähigkeiten den Knopf „Jetzt einsetzen“ (bisher nur Info; Einsatz nur über das Menü).
+
 ## v117
 - Leiste der 1×-pro-Schlacht-Fähigkeiten: „Jetzt einsetzbar“ berücksichtigt jetzt die Voraussetzungen (z. B. keine Kavallerie ohne Angriff übrig) und erkennt auch Texte mit „Deine …phase“ (Für Sigmar, zum Angriff!; Avatar der Schatten). Vorher wurden diese immer als einsetzbar gezeigt.
 
