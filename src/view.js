@@ -1,5 +1,5 @@
 // Ansicht: Canvas, Pop-ups, Eingabe. Kennt nur Game (Anfragen/Ereignisse), keine Regeln im Detail.
-import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer,aiFallback} from './ai.js';
+import {facSVG} from './factions.js';import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer,aiFallback} from './ai.js';
 import {W,H,CR,into,OR,objR,objD,ptDist} from './geom.js';
 import {abs,mDistPt,mgap,cohBad} from './models.js';
 import {PH,TWL,TERSZ,ARMY} from './data.js';
@@ -91,13 +91,13 @@ function present(q){const S=G.S;
    ps.push(()=>{bs.forEach((b,oi)=>{const on=sel[gi]==oi;b.style.background=on?'var(--gold)':'';b.style.color=on?'#1a1405':'';b.style.fontWeight=on?'bold':''});ds.textContent=g.opts[sel[gi]].s||''});sh.append(h,row,ds)});
   const paint=()=>ps.forEach(f=>f());paint();const ok=document.createElement('button');ok.textContent='Weiter';ok.style.cssText='margin-top:14px;background:var(--gold);color:#1a1405;font-weight:bold';ok.onclick=()=>{closePop(false);answer(sel.slice())};sh.appendChild(ok)}
  else if(q.t=='choice'&&q.car){setMode(null);pop(q.title,q.text||'',[],false);
-  const sh=$('pop').firstChild;const cmp=(a,b)=>a.localeCompare(b,'de');let k=0,fl;const card=document.createElement('div');card.style.cssText='border:1px solid var(--gold);border-radius:12px;padding:14px 12px;margin:8px 0;text-align:center;min-height:132px;display:flex;flex-direction:column;justify-content:center;gap:6px';
+  const sh=$('pop').firstChild;const cmp=(a,b)=>a.localeCompare(b,'de');let k=0,fl;const card=document.createElement('div');card.style.cssText='border:1px solid var(--gold);border-radius:12px;padding:14px 12px;margin:8px 0;text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:center;gap:6px';
   const GOR=['Ordnung','Chaos','Tod','Zerstörung'],GAS=[...new Set(q.opts.map(o=>o.ga))].sort((a,b)=>(GOR.indexOf(a)<0?9:GOR.indexOf(a))-(GOR.indexOf(b)<0?9:GOR.indexOf(b))||cmp(a,b));fl=GAS[0];const fr=document.createElement('div');fr.style.cssText='display:flex;gap:5px;flex-wrap:wrap';
   const L=()=>q.opts.map((o,i)=>i).filter(i=>q.opts[i].ga==fl).sort((a,b)=>cmp(q.opts[a].f,q.opts[b].f)||a-b);
   const fb=GAS.map(g=>{const b=document.createElement('button');b.textContent=g;b.style.cssText='flex:1 1 auto;padding:6px 8px;font-size:13px';b.onclick=()=>{fl=g;k=0;show()};fr.appendChild(b);return b});
   const nav=document.createElement('div');nav.style.cssText='display:flex;gap:8px;align-items:center';const bl=document.createElement('button'),br=document.createElement('button'),dots=document.createElement('div');bl.textContent='◀';br.textContent='▶';bl.style.flex=br.style.flex='none';dots.style.cssText='flex:1;text-align:center;font-size:11px;opacity:.7;letter-spacing:2px';nav.append(bl,dots,br);
   const ok=document.createElement('button');ok.style.cssText='background:var(--gold);color:#1a1405;font-weight:bold';
-  const show=()=>{const l=L(),o=q.opts[l[k]];fb.forEach((b,i)=>{const on=GAS[i]==fl;b.style.borderColor=on?'var(--gold)':'';b.style.color=on?'var(--gold)':'';b.style.fontWeight=on?'bold':''});card.innerHTML='<div style="font-size:12px;opacity:.7">'+o.ga+' · '+o.f+'</div><div style="font-size:19px;font-weight:bold;color:var(--gold)">'+o.t+'</div><div style="font-size:12px;opacity:.8;line-height:1.35">'+o.s+'</div>';dots.textContent=l.map((_,i)=>i==k?'●':'○').join(' ');ok.textContent='Auswählen: '+o.t};
+  const show=()=>{const l=L(),o=q.opts[l[k]];fb.forEach((b,i)=>{const on=GAS[i]==fl;b.style.borderColor=on?'var(--gold)':'';b.style.color=on?'var(--gold)':'';b.style.fontWeight=on?'bold':''});card.innerHTML='<div style="margin:0 auto">'+facSVG(o.f,68)+'</div><div style="font-size:12px;opacity:.7">'+o.ga+' · '+o.f+'</div><div style="font-size:19px;font-weight:bold;color:var(--gold)">'+o.t+'</div><div style="font-size:12px;opacity:.8;line-height:1.35">'+o.s+'</div>';dots.textContent=l.map((_,i)=>i==k?'●':'○').join(' ');ok.textContent='Auswählen: '+o.t};
   bl.onclick=()=>{const n=L().length;k=(k+n-1)%n;show()};br.onclick=()=>{k=(k+1)%L().length;show()};ok.onclick=()=>{const i=L()[k];closePop(false);answer(i)};
   let x0=null;card.onpointerdown=e=>x0=e.clientX;card.onpointerup=e=>{if(x0!=null&&Math.abs(e.clientX-x0)>40){(e.clientX<x0?br:bl).onclick()}x0=null};
   sh.append(fr,card,nav,ok);show()}
@@ -120,7 +120,7 @@ function present(q){const S=G.S;
 /* ---------- Statuszeile ---------- */
 function ui(){if(!G)return;const S=G.S,q=G.req;$('undo').disabled=G.undoIdx()<0;
  $('st').innerHTML=!S.stage?'Vorbereitung vor der Schlacht':`R${S.round}/4 · <b style="color:${COL[S.act]}">${S.P[S.act].n}</b> · ${PH[S.ph]}`;
- {const A=S.K.army;$('mu').innerHTML=A&&A[0]!=null&&A[1]!=null&&ARMY[A[0]]&&ARMY[A[1]]?`<span class="pill"><span style="color:${COL[0]}">${ARMY[A[0]].n}</span> <span style="opacity:.6;font-weight:normal">vs</span> <span style="color:${COL[1]}">${ARMY[A[1]].n}</span></span>`:''}
+ {const A=S.K.army;$('mu').innerHTML=A&&A[0]!=null&&A[1]!=null&&ARMY[A[0]]&&ARMY[A[1]]?`<span class="pill">${facSVG(ARMY[A[0]].f,16)} <span style="color:${COL[0]}">${ARMY[A[0]].n}</span> <span style="opacity:.6;font-weight:normal">vs</span> <span style="color:${COL[1]}">${ARMY[A[1]].n}</span> ${facSVG(ARMY[A[1]].f,16)}</span>`:''}
  $('next').disabled=!(q&&q.t=='act'&&!G.isAI(q.who));
  cardsUi();onceUi();$('vp').innerHTML=`SP <b style="color:${COL[0]}">${S.P[0].vp}</b>:<b style="color:${COL[1]}">${S.P[1].vp}</b>`;
  $('next').textContent=S.ph==6?'Zug beenden ▸':(S.ph==5&&!S.Ph.fs.done?'Kämpfen beginnen ▸':'Weiter ▸')}

@@ -1,3 +1,7 @@
+## v122
+- 24 Fraktions-Embleme (eigene Originale): in der Armee-Auswahl und in der „X vs Y“-Anzeige.
+- 6 weitere lore-nähere Einheitensymbole (Sturmhammer, Hoher Hut, Mondgesicht, Saurusschild, Warpfeuer, Kohlebecken); Zuordnung für Annihilatoren, Infernale Kohorte, Mondclan-Piksa, Saurus-Krieger, Warpblitzkanone angepasst.
+
 ## v121
 - Fŷrstahl-Wurfaxt (Fyreslayer): jetzt wie jede Fernkampf-Fähigkeit pro Einheit in der Fernkampfphase einsetzbar (Einheit antippen → Fähigkeit → Ziel auf der Karte antippen, 10", sichtbar, 4+ → W3 tödlicher Schaden); jede berechtigte Einheit einmal je Phase.
 
