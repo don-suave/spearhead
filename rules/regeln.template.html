@@ -180,7 +180,7 @@ details.ab{margin:6px 0}
 <div class="top" id="top"></div>
 <main id="main"></main>
 <div id="sheet"></div>
-<script>
+<script>/*__H0__*/
 /*__DATA__*/
 (()=>{
 'use strict';
@@ -472,7 +472,7 @@ function homePage(){
 }
 
 /* ---------- Router ---------- */
-function parse(){const h=(location.hash||'#/').slice(1);const p=h.split('/').filter(Boolean).map(decodeURIComponent);return p}
+function parse(){const h=(location.hash||window.__H0||'#/').slice(1);const p=h.split('/').filter(Boolean).map(decodeURIComponent);return p}
 function title(p){
  if(!p.length)return T('title');
  if(p[0]=='sp'){return p[1]!=null&&A[p[1]]?P(A[p[1]].n):T('t1')}
@@ -548,7 +548,7 @@ document.addEventListener('click',ev=>{
   return}
  if(t.id=='bk'){if(history.length>1)history.back();else location.hash='#/';return}
  if(t.id=='hm'){location.hash='#/';return}
- if(t.id=='cl'){try{parent.postMessage('close-rules',location.origin)}catch(e){}return}
+ if(t.id=='cl'){try{parent.postMessage('close-rules','*')}catch(e){}return}
  if(t.closest('.lang')){setLang(t.dataset.l);return}
  if(t.matches('.x,.back')){sheetId=null;renderSheet();return}
  if(t.dataset.s){sheetId=null;renderSheet();location.hash=t.dataset.s}

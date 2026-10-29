@@ -1,3 +1,6 @@
+## v126
+- Regel-App voll offline: Sie steckt jetzt direkt in der Spieldatei (index.html) und öffnet sich ohne Netz, ohne Server und auch aus einer lokal gespeicherten Datei. Die eigenständige regeln.html bleibt zusätzlich bestehen; ihr Offline-Cache findet sie jetzt auch mit Zusatz „?embed=1“.
+
 ## v125
 - Spiel → Regel-App: In den Detailtexten des Spiels (Einheiten-, Fähigkeits-, Karten-, Gelände- und Regel-Fenster, Einmal-Leiste, Kartenhand) sind Begriffe jetzt unterstrichen. Antippen öffnet die Regel-App direkt an der Stelle: Einheit, Kampfeigenschaft/Regiments-/Verbesserungs-/Einheitenfähigkeit, Taktik-/Wendungskarte, Gelände, Regelabschnitt oder Glossareintrag (1043 Ziele, Erzeugung per rules/gen_links.mjs). In Knöpfen sind nur Beschreibungstexte verlinkt, nie die Aktion selbst.
 - Regel-App: Einheiten-, Karten-, Wendungs-, Gelände- und Regelnamen sind jetzt auch innerhalb der Regeltexte verlinkt. Beim Öffnen aus dem Spiel startet sie auf Deutsch.

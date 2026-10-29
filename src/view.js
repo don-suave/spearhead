@@ -140,11 +140,13 @@ $('rl').onclick=()=>rot(-Math.PI/10);$('rr').onclick=()=>rot(Math.PI/10);
 addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/10);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/10)});
 // Regel-App als Overlay (Spielstand bleibt erhalten)
 function rulesApp(h){const o=$('rov');if(!o)return;h=typeof h=='string'?h:'';
+ const rd=$('rulesdoc');if(rd){let f=o.querySelector('iframe');if(h&&o.style.display=='block'&&f){try{f.contentWindow.location.hash=h;return}catch(e){}}
+  const doc=rd.textContent.replace(/<@\//g,'</').replace('/*__H0__*/',()=>'window.__H0='+JSON.stringify(h)+';');o.innerHTML='<iframe title="Regeln"></iframe>';f=o.querySelector('iframe');f.srcdoc=doc;o.style.display='block';return}
  if(h&&o.style.display=='block'){const f=o.querySelector('iframe');try{f.contentWindow.location.hash=h;return}catch(e){}}
  fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1'+(h?encodeURI(h).replace(/^/,'#'):'').replace('##','#')+'" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
 $('info').onclick=()=>rulesApp();
 watch(['pop','once','cards'],()=>{try{return G&&G.S&&G.S.K&&G.S.K.army?[...G.S.K.army]:[]}catch(e){return[]}},h=>rulesApp(h));
-addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
+addEventListener('message',e=>{const f=document.querySelector('#rov iframe');if(e.data==='close-rules'&&(e.origin===location.origin||(f&&e.source===f.contentWindow))){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
 const mw=l=>l.map(b=>({...b,fn:b.ui?()=>{pushPop();b.fn();if(keepPop){keepPop=false;closePop(false)}}:()=>{const d=$('pop');d.style.display='none';popAfter=null;popStack=[];b.fn()}}));
 $('menu').onclick=()=>{pushPop();const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
