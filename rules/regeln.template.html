@@ -536,6 +536,7 @@ function wire(){
 }
 let opts_noFocus=false;
 document.addEventListener('click',ev=>{
+ const ha=ev.target.closest&&ev.target.closest('a[href^="#"]');if(ha&&!ha.dataset.letter&&ha.getAttribute('href').length>1&&!ev.defaultPrevented){ev.preventDefault();location.hash=ha.getAttribute('href');return}
  const dj=ev.target.closest('[data-j]');if(dj){ev.preventDefault();jumpTo(dj.dataset.j,dj.closest('.cheat')!=null);return}
  const pt=ev.target.closest('[data-ptab]');if(pt){packTab=pt.dataset.ptab;window.scrollTo(0,0);render({keep:true});return}
  const pm=ev.target.closest('[data-pmap]');if(pm){pmap=+pm.dataset.pmap;render({keep:true});return}

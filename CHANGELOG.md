@@ -1,3 +1,6 @@
+## v128
+- Regel-App: Absturz beim Antippen von Menüpunkten (z. B. Spearhead on a Page) behoben. In der eingebetteten Version lösten Links wie „#/sp“ eine Navigation der Seite aus; jetzt werden sie innerhalb der Regel-App ausgeführt.
+
 ## v127
 - Statistik offline: Die zuletzt geladene Statistik bleibt offline sichtbar („Offline – Stand vom …“). Partien, die offline gespielt werden, werden lokal gespeichert, in der Statistik als „lokal“ gezeigt und beim nächsten Online-Moment automatisch nachgemeldet (mit richtiger Start- und Endzeit; doppelte Meldungen sind ausgeschlossen).
 - Regel-Links für Taktik- und Wendungskarten: Karten- und Befehlsnamen (z. B. Stand Guard, Ring of Fire) öffnen die Karte im jeweils aktiven Battlepack in der Regel-App.
