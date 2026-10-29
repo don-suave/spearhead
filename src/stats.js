@@ -15,7 +15,20 @@ export function report(G){if(!online()||!G||!G.S)return;const S=G.S,K=S.K;
  const body={ev,pid:pid(),name:myName()||'Gast',seed:G.seed,v:'__VER__',pack:K.pack|0,field:(BF[K.pack|0]||[])[K.realm|0]||'',map:K.map?'diagonal':'horizontal',
   army:ARMY[K.army[0]]?.n||'',foe:ARMY[K.army[1]]?.n||'',att:K.att,round:S.round,vp:[S.P[0].vp,S.P[1].vp],winner:ev=='end'?S.winner:null,
   opts:{pile:!!K.pile,rres:!!K.rres,rdep:!!K.rdep}};
- try{fetch('/api/result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body),keepalive:true}).catch(()=>{})}catch(e){}}
+ body.t=Date.now();body.t0=T0.get(G.seed)||(T0.set(G.seed,body.t),body.t);queue(body);flush()}
+// Offline-Warteschlange: Ergebnisse werden lokal gespeichert und beim nächsten Online-Moment nachgemeldet (Server speichert je Spieler+Seed nur einmal)
+const T0=new Map();
+const ob=()=>{try{return JSON.parse(LS('sh_outbox')||'[]')}catch(e){return[]}};
+const obSet=a=>SS('sh_outbox',JSON.stringify(a.slice(-200)));
+function queue(b){const a=ob().filter(x=>!(x.seed==b.seed&&x.ev==b.ev&&x.pid==b.pid));a.push(b);obSet(a)}
+let flushing=false;
+export async function flush(){if(!online()||flushing)return;flushing=true;
+ try{for(const b of ob()){let ok=false;try{const r=await fetch('/api/result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b),keepalive:true});ok=r.ok||r.status==400}catch(e){ok=false}
+  if(!ok)break;obSet(ob().filter(x=>!(x.seed==b.seed&&x.ev==b.ev&&x.pid==b.pid)))}}finally{flushing=false}}
+addEventListener('online',()=>flush());
+// ausstehende Partien als Zeilen für die Statistik (noch nicht auf dem Server)
+const pendRows=()=>{const m=new Map();ob().forEach(b=>{const k=b.pid+':'+b.seed;const o=m.get(k)||{};m.set(k,{...o,...b,ev:b.ev=='end'?'end':(o.ev||'start')})});
+ return [...m.values()].map(b=>({name:b.name,pack:b.pack,field:b.field,army:b.army,foe:b.foe,started:b.t0||b.t,ended:b.ev=='end'?b.t:null,round:b.round,vp_h:b.vp?b.vp[0]:0,vp_c:b.vp?b.vp[1]:0,winner:b.winner,pend:1}))};
 export function askName(force){if(!online())return;if(!force&&myName())return;
  const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:200;background:#000c;display:flex;align-items:center;justify-content:center;padding:20px';
  d.innerHTML='<div style="background:#1b1e24;border:1px solid #3a3f48;border-radius:14px;padding:18px;max-width:340px;width:100%"><b>Wie heißt du?</b><p style="color:#a09b90;margin:8px 0 12px;font-size:13px">Dein Name erscheint in der gemeinsamen Statistik (Start und Ergebnis deiner Spiele).</p><input id="shn" maxlength="20" style="width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:10px;border-radius:8px;border:1px solid #3a3f48;background:#0c0e11;color:#ece6d8;user-select:text;-webkit-user-select:text" placeholder="Name"><button id="sho" style="margin-top:12px;width:100%">OK</button></div>';
@@ -37,10 +50,15 @@ export function home(onStart){document.getElementById('home')?.remove();
  const tbl=(h,rows)=>{const w=document.createElement('div');w.className='w';const t=document.createElement('table');const hr=t.insertRow();h.forEach((x,i)=>{const c=document.createElement('th');c.textContent=x;if(i&&x!=='Spieler'&&x!=='Feld'&&x!=='Armee'&&x!=='Gegner'&&x!=='Ergebnis')c.className='n';hr.appendChild(c)});
   rows.forEach(r=>{const tr=t.insertRow();r.forEach((x,i)=>{const c=tr.insertCell();c.textContent=x;if(typeof x==='number'||x==='–'||/%$/.test(x))c.className='n'})});w.appendChild(t);return w};
  const H=['Gestartet','Beendet','Siege','Nied.','Remis','Quote'],row=a=>[a.k,a.n,a.e,a.w,a.l,a.d,a.e?Math.round(100*a.w/a.e)+'%':'–'];
- fetch('/api/stats').then(r=>r.ok?r.json():r.json().catch(()=>({})).then(j=>Promise.reject(j&&j.error||('HTTP '+r.status)))).then(G=>{const st=$('hst');st.innerHTML='<h2>Statistik</h2>';
+ const show=(G0,note)=>{const G=pendRows().concat(G0);const st=$('hst');st.innerHTML='<h2>Statistik</h2>';if(note){const n=document.createElement('div');n.className='s';n.style.cssText='color:#d2a94a;margin-bottom:6px';n.textContent=note;st.appendChild(n)}
   const e=G.filter(g=>g.ended),sm=document.createElement('div');sm.className='s';sm.textContent=G.length+' Spiele gestartet, '+e.length+' beendet, '+new Set(G.map(g=>g.name)).size+' Spieler (Sieg = Mensch gegen Computer)';st.appendChild(sm);
   if(!G.length)return;
   [['Spieler','Name',g=>g.name||'Gast'],['Schlachtfelder','Schlachtfeld',g=>PK[g.pack]+' · '+g.field],['Armeen','Armee',g=>g.army]].forEach(([t,hd,k])=>{const h=document.createElement('h2');h.textContent=t;st.appendChild(h);st.appendChild(tbl([hd,...H],agg(G,k).map(row)))});
   const h=document.createElement('h2');h.textContent='Letzte Spiele';st.appendChild(h);
-  st.appendChild(tbl(['Wann','Spieler','Feld','Armee','Gegner','Ergebnis'],G.slice(0,15).map(g=>[new Date(g.started).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}),g.name||'Gast',PK[g.pack]+' · '+g.field,g.army,g.foe||'–',g.ended?(g.winner==0?'Sieg ':g.winner==1?'Niederlage ':'Remis ')+g.vp_h+':'+g.vp_c:'offen (R'+g.round+')'])))
- }).catch(e=>{$('hsum').textContent='Statistik gerade nicht verfügbar'+(typeof e=='string'&&e?' ('+e+')':'')})}
+  st.appendChild(tbl(['Wann','Spieler','Feld','Armee','Gegner','Ergebnis'],G.slice(0,15).map(g=>[new Date(g.started).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}),g.name||'Gast',PK[g.pack]+' · '+g.field,g.army,g.foe||'–',(g.ended?(g.winner==0?'Sieg ':g.winner==1?'Niederlage ':'Remis ')+g.vp_h+':'+g.vp_c:'offen (R'+g.round+')')+(g.pend?' · lokal':'')])))
+ };
+ const cached=()=>{try{return JSON.parse(LS('sh_stats')||'null')}catch(e){return null}};
+ const fail=e=>{const c=cached(),npend=pendRows().length;if(c){show(c.G,'Offline – Stand vom '+new Date(c.t).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+(npend?' · '+npend+' Partie(n) lokal gespeichert, werden online nachgemeldet':''))}else if(npend){show([],'Offline – '+npend+' Partie(n) lokal gespeichert, werden online nachgemeldet')}else $('hsum').textContent='Statistik gerade nicht verfügbar'+(typeof e=='string'&&e?' ('+e+')':'')};
+ const load=()=>fetch('/api/stats').then(r=>r.ok?r.json():r.json().catch(()=>({})).then(j=>Promise.reject(j&&j.error||('HTTP '+r.status)))).then(G=>{SS('sh_stats',JSON.stringify({t:Date.now(),G:G.slice(0,300)}));show(G)}).catch(fail);
+ if(cached()||pendRows().length)fail(null);
+ flush().then(load)}

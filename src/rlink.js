@@ -3,11 +3,11 @@ import {LK} from './linkidx.js';
 let RE=null,MAP=null,KEY='';
 const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 // ais: Armee-Indizes der laufenden Partie (deren Fähigkeiten/Einheiten haben Vorrang)
-function build(ais){
- const key=ais.join(',');if(RE&&key==KEY)return;KEY=key;
+function build(ais,pack=-1){
+ const key=ais.join(',')+'|'+pack;if(RE&&key==KEY)return;KEY=key;
  const best=new Map();
- for(const [lab,href,ai,pr] of LK){
-  const k=lab.toLowerCase();const mine=ai<0||ais.includes(ai);if(!mine)continue;
+ for(const [lab,href,ai,pr,pk] of LK){
+  const k=lab.toLowerCase();const mine=(ai<0||ais.includes(ai))&&(pk<0||pack<0||pk==pack);if(!mine)continue;
   const cur=best.get(k);const sc=pr*10+(ai>=0?5:0);
   if(!cur||sc>cur.sc)best.set(k,{lab,href,sc})}
  MAP=best;
@@ -21,8 +21,8 @@ function okNode(n,root){
   if(t=='BUTTON'){ // in Knöpfen nur die Beschreibung (small) verlinken, nie die Beschriftung der Aktion
    let s=n.parentElement;while(s&&s!==e&&s.tagName!='SMALL')s=s.parentElement;if(!s||s===e)return false}}
  return true}
-export function linkify(root,ais=[]){
- if(!root||!LK.length)return;build(ais);
+export function linkify(root,ctx={ais:[],pack:-1}){
+ if(!root||!LK.length)return;build(ctx.ais||[],ctx.pack==null?-1:ctx.pack);
  const seen=new Set();const nodes=[];
  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))if(n.nodeValue.trim().length>=4&&okNode(n,root))nodes.push(n);
  // bereits verlinkte Begriffe dieses Fensters nicht erneut unterstreichen

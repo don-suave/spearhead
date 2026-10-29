@@ -1,3 +1,7 @@
+## v127
+- Statistik offline: Die zuletzt geladene Statistik bleibt offline sichtbar („Offline – Stand vom …“). Partien, die offline gespielt werden, werden lokal gespeichert, in der Statistik als „lokal“ gezeigt und beim nächsten Online-Moment automatisch nachgemeldet (mit richtiger Start- und Endzeit; doppelte Meldungen sind ausgeschlossen).
+- Regel-Links für Taktik- und Wendungskarten: Karten- und Befehlsnamen (z. B. Stand Guard, Ring of Fire) öffnen die Karte im jeweils aktiven Battlepack in der Regel-App.
+
 ## v126
 - Regel-App voll offline: Sie steckt jetzt direkt in der Spieldatei (index.html) und öffnet sich ohne Netz, ohne Server und auch aus einer lokal gespeicherten Datei. Die eigenständige regeln.html bleibt zusätzlich bestehen; ihr Offline-Cache findet sie jetzt auch mit Zusatz „?embed=1“.
 

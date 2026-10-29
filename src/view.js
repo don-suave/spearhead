@@ -5,7 +5,7 @@ import {abs,mDistPt,mgap,cohBad} from './models.js';
 import {PH,TWL,TERSZ,ARMY} from './data.js';
 import {chargePlan} from './plan.js';
 import {depForm,rsvForm,moveForm,pileForm,chargeForm,mvRest,chargeModelErr,CMD,rngOf,mvOf,byId,abilities,globals,stat,eligF,sfOK,dist,foes,wnd,mx,ONM,placeErr,moveErr,adjErr,adjAllow,pileModelErr,chargeErr,pileErr,chargeDest,pileDest,chargeSnap,actCheck,inCombat} from './rules.js';
-import {report,askName,home,relInfo,myName} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs,abOrigin,originOf,srcTag} from './abil.js';
+import {report,askName,home,relInfo,myName,flush as import_flush} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs,abOrigin,originOf,srcTag} from './abil.js';
 
 const SC=24,$=id=>document.getElementById(id),COL=['#4aa3ff','#ff6a4a'];
 let G,seat=0,mode=null,busy=false,timer=0,nextDelay=600;
@@ -145,7 +145,7 @@ function rulesApp(h){const o=$('rov');if(!o)return;h=typeof h=='string'?h:'';
  if(h&&o.style.display=='block'){const f=o.querySelector('iframe');try{f.contentWindow.location.hash=h;return}catch(e){}}
  fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1'+(h?encodeURI(h).replace(/^/,'#'):'').replace('##','#')+'" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
 $('info').onclick=()=>rulesApp();
-watch(['pop','once','cards'],()=>{try{return G&&G.S&&G.S.K&&G.S.K.army?[...G.S.K.army]:[]}catch(e){return[]}},h=>rulesApp(h));
+watch(['pop','once','cards'],()=>{try{return G&&G.S&&G.S.K&&G.S.K.army?{ais:[...G.S.K.army],pack:G.S.K.pack|0}:{ais:[],pack:-1}}catch(e){return{ais:[],pack:-1}}},h=>rulesApp(h));
 addEventListener('message',e=>{const f=document.querySelector('#rov iframe');if(e.data==='close-rules'&&(e.origin===location.origin||(f&&e.source===f.contentWindow))){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
 const mw=l=>l.map(b=>({...b,fn:b.ui?()=>{pushPop();b.fn();if(keepPop){keepPop=false;closePop(false)}}:()=>{const d=$('pop');d.style.display='none';popAfter=null;popStack=[];b.fn()}}));
 $('menu').onclick=()=>{pushPop();const S=G.S,q=G.req;
@@ -265,7 +265,7 @@ function tap(x,y){if(!G)return;const S=G.S,q=G.req;
   if(m.t=='tgt'){answer({t:hit.id});return}
   return}
  if(hit){if(hit.o==seat&&q&&q.t=='act'&&q.who==seat)pick(hit);else pop(hit.name,S.P[hit.o].n+'<br>'+stat(hit)+flagHtml(hit),[])}}
-window.__V={pop,rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
+window.__V={pop,report,flush:()=>import_flush(),rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
 /* ---------- Kamera ---------- */
 const cv=$('c'),cx=cv.getContext('2d');let sc=1,tx=0,ty=0,fit=1,dpr=1;
 let lastWH='';function resetView(){fit=Math.min(innerWidth/(W*SC),Math.max(200,innerHeight-110)/(H*SC));sc=fit;clampV()}
