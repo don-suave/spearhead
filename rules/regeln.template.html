@@ -148,7 +148,7 @@ details.un>summary h3{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 details.un>summary h3::before{content:"▸";color:var(--gold);font-size:14px;transition:transform .15s}
 details.un[open]>summary h3::before{transform:rotate(90deg)}
 .mini{display:flex;flex-wrap:wrap;gap:2px 9px;margin:3px 0 0 22px;font-size:13px;color:var(--mut)}
-.mini b{color:var(--fg)}
+.mini b{color:var(--fg)}.mini .cn b{color:var(--acc)}.chip.cnt{border-color:var(--acc);color:var(--acc)}
 .mini .w{display:block;flex-basis:100%;font-size:13px}
 details.un>.ub{padding:0 12px 8px}
 .cheat{padding:12px;margin:12px 0}
@@ -197,7 +197,7 @@ const UI={
  intro:['Nachschlagewerk für Warhammer Age of Sigmar: Spearhead. Antippen für Details, Fachbegriffe sind verlinkt, die Sprache lässt sich überall umschalten.','Quick reference for Warhammer Age of Sigmar: Spearhead. Tap for details, terms are linked, and you can switch language anywhere.'],
  traits:['Kampfeigenschaften','Battle traits'],reg:['Regimentsfähigkeiten','Regiment abilities'],regh:['wähle 1 von 2','pick 1 of 2'],
  enh:['Verbesserungen','Enhancements'],enhh:['wähle 1 für den General','pick 1 for the general'],units:['Einheiten','Units'],
- mv:['Bew.','Move'],hp:['Ausd.','Health'],sv:['Schutz','Save'],cv:['Kontr.','Control'],wd:['Rett.','Ward'],mo:['Mod.','Models'],
+ mv:['Bew.','Move'],hp:['Ausd.','Health'],sv:['Schutz','Save'],cv:['Kontr.','Control'],wd:['Rett.','Ward'],mo:['Mod.','Models'],cnt:['Einh.','Units'],cntL:['im Spearhead','in the Spearhead'],cntU:['Einheit','unit'],cntUs:['Einheiten','units'],
  rng:['Reichw.','Range'],att:['Att.','Atk'],hit:['Treff.','Hit'],wnd:['Verw.','Wnd'],rend:['Wucht','Rend'],dmg:['Schad.','Dmg'],
  rw:['Fernkampf','Ranged'],mw:['Nahkampf','Melee'],ab:['Fähigkeiten','Abilities'],gen:['General','General'],
  grp:[['Grundlagen','Vorbereitung & Rundenbeginn','Die Phasen eines Zugs','Angriff & Schaden','Gelände, Ziele & Sieg'],['Basics','Pre-battle & round start','The phases of a turn','Attack & damage','Terrain, objectives & victory']],cheat:['Auf einen Blick','At a glance'],nums:[[['3"','Kampfreichweite'],['½"','Zusammenhalt'],['4','Schlachtrunden'],['4 / 5','BP pro Runde (Außenseiter)'],['±1','max. Modifikator Treffer/Verw.'],['1','Kern-Fähigkeit je Phase']],[['3"','Combat range'],['½"','Coherency'],['4','Battle rounds'],['4 / 5','CP per round (underdog)'],['±1','max. hit/wound modifier'],['1','Core ability per phase']]],
@@ -213,7 +213,7 @@ const UI={
  ver:['Inoffizielles Fan-Nachschlagewerk. Texte sind zusammengefasst und übersetzt; maßgeblich sind die offiziellen Regeln von Games Workshop.','Unofficial fan reference. Texts are summarised and translated; the official Games Workshop rules are authoritative.']
 };
 const PH={x:['Allgemein','General'],v:['Vorbereitung','Pre-battle'],r:['Rundenbeginn','Round start'],z:['Zug','Turn'],h:['Heldenphase','Hero phase'],b:['Bewegung','Movement'],f:['Fernkampf','Shooting'],a:['Angriff','Charge'],k:['Kampf','Combat']};
-let L=(()=>{try{const s=localStorage.getItem('regeln.lang');if(s=='de'||s=='en')return s}catch(e){}return (navigator.language||'de').toLowerCase().startsWith('de')?'de':'en'})();
+let L=(()=>{try{const s=localStorage.getItem('regeln.lang');if(s=='de'||s=='en')return s}catch(e){}return window.parent!==window||(navigator.language||'de').toLowerCase().startsWith('de')?'de':'en'})();
 const li=()=>L=='de'?0:1;
 const T=k=>UI[k][li()];
 const P=x=>Array.isArray(x)?x[li()]:x;
@@ -235,7 +235,10 @@ function mkLinker(ai){
  G.forEach(g=>g.k[li()].forEach(lab=>{if(lab.length>=2&&!lab.endsWith('-'))items.push({lab,t:'g',id:g.id})}));
  if(ai>=0){const a=A[ai];
   const add=(arr,pre)=>arr.forEach((x,j)=>items.push({lab:P(x.n),t:'a',id:pre+j}));
-  add(a.traits,'t');add(a.reg,'r');add(a.enh,'e');a.units.forEach((u,k)=>u.ab.forEach((x,j)=>items.push({lab:P(x.n),t:'a',id:'u'+k+'a'+j})));}
+  add(a.traits,'t');add(a.reg,'r');add(a.enh,'e');a.units.forEach((u,k)=>u.ab.forEach((x,j)=>items.push({lab:P(x.n),t:'a',id:'u'+k+'a'+j})));
+  a.units.forEach((u,k)=>items.push({lab:P(u.n),t:'a',id:'u'+k}));}
+ PK.forEach((k,pi)=>{k.tac.forEach((c,j)=>items.push({lab:c.n,t:'h',id:'#/packs/'+pi+'/tac'+j}));k.tw.forEach((b,bi)=>b.l.forEach((w,j)=>items.push({lab:P(w.n),t:'h',id:'#/packs/'+pi+'/tw'+bi+'_'+j})));k.terr.forEach((w,j)=>items.push({lab:P(w.n),t:'h',id:'#/packs/'+pi+'/terr'+j}))});
+ R.forEach(r=>{const l=P(r.t);if(l.length>=8)items.push({lab:l,t:'h',id:'#/rules/'+r.id})});
  items.sort((x,y)=>(x.t=='a'?0:1)-(y.t=='a'?0:1)||y.lab.length-x.lab.length);
  const map=new Map();items.forEach(it=>{const k=it.lab.toLowerCase();if(!map.has(k))map.set(k,it)});
  const labs=[...map.values()].map(i=>i.lab).sort((a,b)=>b.length-a.length);
@@ -250,10 +253,10 @@ function linkify(text,ai,self){
   const pre=m[1],lab=m[2],at=m.index+pre.length;
   const it=map.get(lab.toLowerCase());if(!it){continue}
   if(lab.length<=3&&lab!==it.lab){continue}
-  if(it.t=='a'&&it.id===self)continue;
+  if(it.t=='a'&&self&&(it.id===self||(/^u\d+$/.test(it.id)&&self.startsWith(it.id+'a'))))continue;
   const sk=it.t+it.id;if(seen.has(sk))continue;seen.add(sk);
   out+=esc(text.slice(last,at));
-  out+=it.t=='g'?`<a class="lk" data-g="${it.id}" role="button" tabindex="0">${esc(lab)}</a>`:`<a class="lk ab" data-a="${ai}|${it.id}" role="button" tabindex="0">${esc(lab)}</a>`;
+  out+=it.t=='g'?`<a class="lk" data-g="${it.id}" role="button" tabindex="0">${esc(lab)}</a>`:it.t=='h'?`<a class="lk ab" data-h="${it.id}" role="button" tabindex="0">${esc(lab)}</a>`:`<a class="lk ab" data-a="${ai}|${it.id}" role="button" tabindex="0">${esc(lab)}</a>`;
   last=at+lab.length;
  }
  return out+esc(text.slice(last));
@@ -285,8 +288,8 @@ function armyPage(ai){
  }
  a.units.forEach((u,k)=>{
   const wl=(w,ranged)=>`<div class="wl"><span class="wn">${esc(P(w.n))}</span><span class="wv">${ranged?w.r+'" · ':''}${esc(P(w.a))}× · ${plus(w.h)}/${plus(w.w)} · ${rend(w.rd)} · ${esc(P(w.d))}</span></div>`;
-  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span></div>${u.kw.length?`<div class="kwl">${u.kw.map(w=>esc(P(w))).join(' · ')}</div>`:''}${u.rw.map(w=>wl(w,true)).join('')}${u.mw.map(w=>wl(w,false)).join('')}${u.ab.length?`<div class="abn">${u.ab.map(x=>esc(P(x.n))).join(' · ')}</div>`:''}</summary><div class="ub">`;
-  h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}${u.b?`<span class="chip">${fmtBase(u.b)}</span>`:''}</div>`;
+  h+=`<details class="un" data-k="u${k}" id="k-u${k}" ${open.has(route+'|u'+k)?'open':''}><summary><h3>${esc(P(u.n))}${u.g?`<span class="gen">${T('gen')}</span>`:''}</h3><div class="mini"><span>${T('mv')} <b>${u.mv}"</b></span><span>${T('hp')} <b>${u.hp}</b></span><span>${T('sv')} <b>${plus(u.sv)}</b></span><span>${T('cv')} <b>${u.cv}</b></span>${u.wd?`<span>${T('wd')} <b>${u.wd}+</b></span>`:''}<span>${T('mo')} <b>${u.m}</b></span><span class="cn">${T('cnt')} <b>${u.c}×</b></span></div>${u.kw.length?`<div class="kwl">${u.kw.map(w=>esc(P(w))).join(' · ')}</div>`:''}${u.rw.map(w=>wl(w,true)).join('')}${u.mw.map(w=>wl(w,false)).join('')}${u.ab.length?`<div class="abn">${u.ab.map(x=>esc(P(x.n))).join(' · ')}</div>`:''}</summary><div class="ub">`;
+  h+=`<div class="kws">${u.kw.map(w=>`<span class="chip">${esc(P(w))}</span>`).join('')}<span class="chip cnt">${u.c} ${u.c>1?T('cntUs'):T('cntU')} ${T('cntL')} · ${u.m} ${T('mo')}</span>${u.b?`<span class="chip">${fmtBase(u.b)}</span>`:''}</div>`;
   if(u.note)h+=`<p class="note">${linkify(P(u.note),ai,null)}</p>`;
   const wt=(ws,ranged)=>{
    let t=`<div class="tw"><table class="w"><tr><th></th>${ranged?`<th>${T('rng')}</th>`:''}<th>${T('att')}</th><th>${T('hit')}</th><th>${T('wnd')}</th><th>${T('rend')}</th><th>${T('dmg')}</th></tr>`;
@@ -540,6 +543,7 @@ document.addEventListener('click',ev=>{
  const t=ev.target.closest('a.lk,.lang button,#bk,#hm,#cl,.sheet [data-s],.sheet .x,.back');if(!t)return;
  if(t.matches('a.lk')){ev.preventDefault();
   if(t.dataset.g){sheetId=t.dataset.g;renderSheet()}
+  else if(t.dataset.h){location.hash=t.dataset.h}
   else if(t.dataset.a){const [ai,key]=t.dataset.a.split('|');if(parse()[1]!=ai||parse()[0]!='sp'){location.hash='#/sp/'+ai+'/'+key}else{if(tabOf(key)!=armyTab){armyTab=tabOf(key);render({keep:true})}jumpTo(key,true)}}
   return}
  if(t.id=='bk'){if(history.length>1)history.back();else location.hash='#/';return}

@@ -2,6 +2,7 @@
 # Release-Build: baut das Spiel, setzt die Version und schreibt public/ (wird von Cloudflare Pages ausgeliefert)
 # Aufruf: sh scripts/release.sh  (Version steht in VERSION)
 set -e; cd "$(dirname "$0")/.."; V="v$(cat VERSION)"
+node rules/gen_links.mjs >/dev/null
 node build.mjs --min >/dev/null
 node rules/build.mjs >/dev/null
 cp dist/regeln.html public/regeln.html

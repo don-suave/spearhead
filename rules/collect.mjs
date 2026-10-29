@@ -16,7 +16,7 @@ export function collect(){
      ab.push({n:t[0],t:t[1]});
     }
    } else (u.abs||[]).forEach(id=>{const b=AB[id];if(b)ab.push({n:b.n,t:b.s})});
-   return {n:u.n,kw:(u.kw||'').split(', ').filter(Boolean),mv:u.mv,hp:u.wm,models:u.nm,sv:u.sv,cv:u.cv,ward:u.wr||0,base:u.b,gen:!!u.gen,
+   return {n:u.n,kw:(u.kw||'').split(', ').filter(Boolean),mv:u.mv,hp:u.wm,models:u.nm,cnt:u.c||1,sv:u.sv,cv:u.cv,ward:u.wr||0,base:u.b,gen:!!u.gen,
     rw:(u.rw||[]).map(w=>({n:w[0],r:w[1],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||''})),
     mw:(u.mw||[]).map(w=>({n:w[0],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||''})),ab,note};
   });

@@ -1,3 +1,8 @@
+## v125
+- Spiel → Regel-App: In den Detailtexten des Spiels (Einheiten-, Fähigkeits-, Karten-, Gelände- und Regel-Fenster, Einmal-Leiste, Kartenhand) sind Begriffe jetzt unterstrichen. Antippen öffnet die Regel-App direkt an der Stelle: Einheit, Kampfeigenschaft/Regiments-/Verbesserungs-/Einheitenfähigkeit, Taktik-/Wendungskarte, Gelände, Regelabschnitt oder Glossareintrag (1043 Ziele, Erzeugung per rules/gen_links.mjs). In Knöpfen sind nur Beschreibungstexte verlinkt, nie die Aktion selbst.
+- Regel-App: Einheiten-, Karten-, Wendungs-, Gelände- und Regelnamen sind jetzt auch innerhalb der Regeltexte verlinkt. Beim Öffnen aus dem Spiel startet sie auf Deutsch.
+- Spearhead on a Page: Jede Einheit zeigt, wie oft sie im Spearhead vorkommt („Einh. 2×“ und Chip „2 Einheiten im Spearhead · 5 Mod.“).
+
 ## v124
 - Fliegen: Einheiten mit Fliegen (z. B. Arkanauten-Fregatte) bewegen sich bei Bewegung, Rennen und Rückzug jetzt auch über feindliche Einheiten hinweg (nicht nur über Gelände). Das Ende der Bewegung nicht auf oder neben Modellen bleibt unverändert.
 

@@ -9,6 +9,7 @@ with sync_playwright() as p:
     pg.on('console',lambda m: errs.append(m.text) if m.type=='error' else None)
     pg.on('pageerror',lambda e: errs.append('PAGEERR '+str(e)))
     pg.goto('file://'+__import__('os').path.abspath(__import__('os').path.join(__import__('os').path.dirname(__file__),'..','dist','spearhead.html'))+'')
+    pg.add_style_tag(content='.rl{pointer-events:none!important}')  # Regel-Links in Knöpfen sollen die Bot-Klicks nicht abfangen
     pg.wait_for_timeout(500)
     pg.evaluate("document.getElementById('hgo')&&document.getElementById('hgo').click()")
     def st():

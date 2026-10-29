@@ -16,7 +16,7 @@ const FL={T:['Krit. (tödlich)','Crit (Mortal)'],V:['Krit. (verwundet)','Crit (A
 const dv=v=>{if(typeof v=='string'){return v}return v};
 const A=collect().map(a=>({i:a.i,f:P(a.f),n:P(a.n),
  traits:a.traits.map(x=>({n:P(x.n),t:P(x.t)})),reg:a.reg.map(x=>({n:P(x.n),t:P(x.t)})),enh:a.enh.map(x=>({n:P(x.n),t:P(x.t)})),
- units:a.units.map(u=>({n:P(u.n),kw:u.kw.map(P),mv:u.mv,hp:u.hp,m:u.models,sv:u.sv,cv:u.cv,wd:u.ward,b:u.base,g:u.gen?1:0,note:P(u.note)||null,
+ units:a.units.map(u=>({n:P(u.n),kw:u.kw.map(P),mv:u.mv,hp:u.hp,m:u.models,c:u.cnt,sv:u.sv,cv:u.cv,wd:u.ward,b:u.base,g:u.gen?1:0,note:P(u.note)||null,
   rw:u.rw.map(w=>({n:P(w.n),r:w.r,a:dice(w.a),h:w.h,w:w.w,rd:w.rd,d:dice(w.d),f:w.f})),
   mw:u.mw.map(w=>({n:P(w.n),a:dice(w.a),h:w.h,w:w.w,rd:w.rd,d:dice(w.d),f:w.f})),
   ab:u.ab.map(x=>({n:P(x.n),t:P(x.t)}))}))}));

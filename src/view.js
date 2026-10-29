@@ -1,5 +1,5 @@
 // Ansicht: Canvas, Pop-ups, Eingabe. Kennt nur Game (Anfragen/Ereignisse), keine Regeln im Detail.
-import {facSVG} from './factions.js';import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer,aiFallback} from './ai.js';
+import {facSVG} from './factions.js';import {watch} from './rlink.js';import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer,aiFallback} from './ai.js';
 import {W,H,CR,into,OR,objR,objD,ptDist} from './geom.js';
 import {abs,mDistPt,mgap,cohBad} from './models.js';
 import {PH,TWL,TERSZ,ARMY} from './data.js';
@@ -139,9 +139,11 @@ const rot=d=>{const m=mode;if(m&&m.t=='place'&&(m.q.kind=='terr'||m.q.kind=='rel
 $('rl').onclick=()=>rot(-Math.PI/10);$('rr').onclick=()=>rot(Math.PI/10);
 addEventListener('keydown',e=>{if(e.key=='q'||e.key=='ArrowLeft')rot(-Math.PI/10);if(e.key=='e'||e.key=='ArrowRight')rot(Math.PI/10)});
 // Regel-App als Overlay (Spielstand bleibt erhalten)
-function rulesApp(){const o=$('rov');if(!o)return;
- fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
-$('info').onclick=rulesApp;
+function rulesApp(h){const o=$('rov');if(!o)return;h=typeof h=='string'?h:'';
+ if(h&&o.style.display=='block'){const f=o.querySelector('iframe');try{f.contentWindow.location.hash=h;return}catch(e){}}
+ fetch('regeln.html',{method:'HEAD'}).then(r=>{if(!r.ok)throw 0;o.innerHTML='<iframe src="regeln.html?embed=1'+(h?encodeURI(h).replace(/^/,'#'):'').replace('##','#')+'" title="Regeln"></iframe>';o.style.display='block'}).catch(()=>{const m=$('mu');if(m){m.innerHTML='<div class="pill">Regel-App nur in der installierten Version verfügbar</div>';setTimeout(()=>{m.innerHTML=''},2500)}})}
+$('info').onclick=()=>rulesApp();
+watch(['pop','once','cards'],()=>{try{return G&&G.S&&G.S.K&&G.S.K.army?[...G.S.K.army]:[]}catch(e){return[]}},h=>rulesApp(h));
 addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='close-rules'){const o=$('rov');if(o){o.style.display='none';o.innerHTML=''}}});
 const mw=l=>l.map(b=>({...b,fn:b.ui?()=>{pushPop();b.fn();if(keepPop){keepPop=false;closePop(false)}}:()=>{const d=$('pop');d.style.display='none';popAfter=null;popStack=[];b.fn()}}));
 $('menu').onclick=()=>{pushPop();const S=G.S,q=G.req;
@@ -261,7 +263,7 @@ function tap(x,y){if(!G)return;const S=G.S,q=G.req;
   if(m.t=='tgt'){answer({t:hit.id});return}
   return}
  if(hit){if(hit.o==seat&&q&&q.t=='act'&&q.who==seat)pick(hit);else pop(hit.name,S.P[hit.o].n+'<br>'+stat(hit)+flagHtml(hit),[])}}
-window.__V={rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
+window.__V={pop,rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
 /* ---------- Kamera ---------- */
 const cv=$('c'),cx=cv.getContext('2d');let sc=1,tx=0,ty=0,fit=1,dpr=1;
 let lastWH='';function resetView(){fit=Math.min(innerWidth/(W*SC),Math.max(200,innerHeight-110)/(H*SC));sc=fit;clampV()}
