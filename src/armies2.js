@@ -60,7 +60,7 @@ export const ARMY2=[
  units:[
  {n:'Fletschaboss',abs:['rj_geheul', 'rj_boss'],l:'F',kw:'Held, Kavallerie',mv:12,wm:5,nm:1,sv:5,cv:2,r:2,b:'60x35',gen:1,mw:[['Boss-Stutza',0,5,4,4,1,2,''],['Geiferndes Zahnfletscha-Maul',0,2,4,3,0,2,'G']],
   tx:[['Schnell wie Fetzgit (Kampfeigenschaft)','Passiv: Befreundete Einheiten können Angriff einsetzen, auch wenn sie im selben Zug zurückgezogen haben; Rückzug fügt ihnen keinen tödlichen Schaden zu.',1],]},
- {n:'Gefolge-Wolfsgits',abs:['rj_boss'],l:'G',kw:'Kavallerie',mv:12,wm:2,nm:2,sv:5,cv:1,r:2,b:'60x35',rw:[['Grotbogen',15,2,4,5,0,1,'']],mw:[['Piks’nda Stock',0,2,4,5,0,1,''],['Geiferndes Zahnfletscha-Maul',0,2,4,3,0,2,'G']],
+ {n:'Gefolge-Wolfsgits',abs:['rj_boss'],l:'G',kw:'Kavallerie',mv:12,wm:2,nm:2,sv:5,cv:1,r:2,b:'60x35',rw:[['Grotbogen',15,2,4,5,0,1,'',1]],mw:[['Piks’nda Stock',0,2,4,5,0,1,'',1],['Geiferndes Zahnfletscha-Maul',0,2,4,3,0,2,'G']],
   tx:[]},
  {n:'Rudelfletscha',abs:['rj_schimm'],l:'R',kw:'Kavallerie',mv:12,wm:3,nm:1,sv:4,cv:1,r:2,b:'75x42',c:2,mw:[['Spitze Pfähla',0,4,4,5,0,1,'C'],['Riesenzahnfletscha-Maul',0,3,4,3,0,2,'G']],
   tx:[]},
@@ -94,11 +94,11 @@ export const ARMY2=[
  units:[
  {n:'Endrinenmeister mit Luftschiffrüstung',abs:['gw_meister'],l:'E',kw:'Held, Infanterie, Fliegen',mv:12,wm:8,nm:1,sv:3,cv:2,r:1.2,b:'50',gen:1,rw:[['Aetherkanone',18,1,3,3,2,3,''],['Rüstungswaffenbatterie',12,6,3,3,1,1,'']],mw:[['Verbesserte Aethermatische Säge',0,4,3,3,2,2,'']],
   tx:[['Kanonenboot-Eskorte (Kampfeigenschaft)','Passiv: −1 auf Trefferwürfe gegen befreundete Himmelsherrscher-Infanterie ganz innerhalb 6 Zoll um ein befreundetes Grundstok-Kanonenboot.',1],]},
- {n:'Grundstok-Donnerschützen',abs:['gw_knall'],l:'D',kw:'Infanterie, Verstärkung',mv:4,wm:2,nm:5,sv:3,cv:1,r:1.2,b:'32',rw:[['Aetherschrotgewehr',18,2,3,4,1,1,''],['Aetherverdampfer',10,5,3,4,0,1,'B'],['Grundstok-Mörser',18,2,4,3,1,2,'']],mw:[['Gewehrkolben',0,1,4,5,0,1,'']],
+ {n:'Grundstok-Donnerschützen',abs:['gw_knall'],l:'D',kw:'Infanterie, Verstärkung',mv:4,wm:2,nm:5,sv:3,cv:1,r:1.2,b:'32',rw:[['Aetherschrotgewehr',18,2,3,4,1,1,'',1],['Aetherverdampfer',10,5,3,4,0,1,'B',2],['Grundstok-Mörser',18,2,4,3,1,2,'',2]],mw:[['Gewehrkolben',0,1,4,5,0,1,'']],
   tx:[['Waffen (je 1 Modell)','Aetherschrotgewehr, Aetherverdampfer/Deckfeger, Mörser/Aetherkanone, je 1 Modell; alle zusätzlich Gewehrkolben. (Hier vereinfacht als Einheitsprofil.)',1],['Knallkonfusionsgeschosse','Einmal pro Schlacht (Armee), Fernkampfphase: Feindliche Einheit, der durch diese Einheit Schaden zugewiesen wurde: −W6 auf Kontrolle bis Zugende.',1]]},
  {n:'Grundstok-Kanonenboot',abs:['gw_abwehr'],l:'K',kw:'Kriegsmaschine, Fliegen',mv:14,wm:10,nm:1,sv:2,cv:2,r:2.4,b:'105x70',rw:[['Himmelsartillerie',15,3,4,3,2,3,'']],mw:[['Enterwaffen',0,4,4,4,0,1,'']],
   tx:[]},
- {n:'Endrinentakler',abs:['gw_wendig'],l:'T',kw:'Infanterie, Fliegen, Verstärkung',mv:12,wm:2,nm:3,sv:3,cv:1,r:1.2,b:'32',rw:[['Schnellfeuer-Nietgewehr',10,3,3,4,1,1,'B'],['Aethermatische Salvenkanone',15,'2W6',4,4,0,1,'D'],['Schwere Himmelstakler-Waffe',15,1,4,3,1,'W3','']],mw:[['Aethermatische Säge',0,3,4,3,1,2,'N'],['Gewehrkolben',0,1,4,5,0,1,'']],
+ {n:'Endrinentakler',abs:['gw_wendig'],l:'T',kw:'Infanterie, Fliegen, Verstärkung',mv:12,wm:2,nm:3,sv:3,cv:1,r:1.2,b:'32',rw:[['Schnellfeuer-Nietgewehr',10,3,3,4,1,1,'B',1],['Aethermatische Salvenkanone',15,'2W6',4,4,0,1,'D',1],['Schwere Himmelstakler-Waffe',15,1,4,3,1,'W3','',1]],mw:[['Aethermatische Säge',0,3,4,3,1,2,'N',1],['Gewehrkolben',0,1,4,5,0,1,'',2]],
   tx:[['Wendige Himmelsfahrer','Gegnerische Bewegungsphase: Wurf 3+: Die Einheit kann sofort Normale Bewegung einsetzen.',1]]}]},
 {f:'Lichtfürsten der Lumineth',n:'Strahlende Phalanx',
  reg:[['Arkane Überlegenheit','Passiv: +1 auf Zauberwürfe des Generals.',1,'sp_arkan'],['Verbesserte Reflexe','Passiv: +1 auf Schutzwürfe befreundeter Einheiten bis Phasenende, die durch Überlegene Reaktionen unmittelbar nach einer anderen Einheit Kämpfen einsetzen.',1,'sp_reflex']],

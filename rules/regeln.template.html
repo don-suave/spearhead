@@ -197,7 +197,7 @@ const UI={
  intro:['Nachschlagewerk für Warhammer Age of Sigmar: Spearhead. Antippen für Details, Fachbegriffe sind verlinkt, die Sprache lässt sich überall umschalten.','Quick reference for Warhammer Age of Sigmar: Spearhead. Tap for details, terms are linked, and you can switch language anywhere.'],
  traits:['Kampfeigenschaften','Battle traits'],reg:['Regimentsfähigkeiten','Regiment abilities'],regh:['wähle 1 von 2','pick 1 of 2'],
  enh:['Verbesserungen','Enhancements'],enhh:['wähle 1 für den General','pick 1 for the general'],units:['Einheiten','Units'],
- mv:['Bew.','Move'],hp:['Ausd.','Health'],sv:['Schutz','Save'],cv:['Kontr.','Control'],wd:['Rett.','Ward'],mo:['Mod.','Models'],cnt:['Einh.','Units'],cntL:['im Spearhead','in the Spearhead'],cntU:['Einheit','unit'],cntUs:['Einheiten','units'],
+ mv:['Bew.','Move'],hp:['Ausd.','Health'],sv:['Schutz','Save'],cv:['Kontr.','Control'],wd:['Rett.','Ward'],mo:['Mod.','Models'],cnt:['Einh.','Units'],mdl1:['Modell','model'],mdlN:['Modelle','models'],cntL:['im Spearhead','in the Spearhead'],cntU:['Einheit','unit'],cntUs:['Einheiten','units'],
  rng:['Reichw.','Range'],att:['Att.','Atk'],hit:['Treff.','Hit'],wnd:['Verw.','Wnd'],rend:['Wucht','Rend'],dmg:['Schad.','Dmg'],
  rw:['Fernkampf','Ranged'],mw:['Nahkampf','Melee'],ab:['Fähigkeiten','Abilities'],gen:['General','General'],
  grp:[['Grundlagen','Vorbereitung & Rundenbeginn','Die Phasen eines Zugs','Angriff & Schaden','Gelände, Ziele & Sieg'],['Basics','Pre-battle & round start','The phases of a turn','Attack & damage','Terrain, objectives & victory']],cheat:['Auf einen Blick','At a glance'],nums:[[['3"','Kampfreichweite'],['½"','Zusammenhalt'],['4','Schlachtrunden'],['4 / 5','BP pro Runde (Außenseiter)'],['±1','max. Modifikator Treffer/Verw.'],['1','Kern-Fähigkeit je Phase']],[['3"','Combat range'],['½"','Coherency'],['4','Battle rounds'],['4 / 5','CP per round (underdog)'],['±1','max. hit/wound modifier'],['1','Core ability per phase']]],
@@ -293,7 +293,7 @@ function armyPage(ai){
   if(u.note)h+=`<p class="note">${linkify(P(u.note),ai,null)}</p>`;
   const wt=(ws,ranged)=>{
    let t=`<div class="tw"><table class="w"><tr><th></th>${ranged?`<th>${T('rng')}</th>`:''}<th>${T('att')}</th><th>${T('hit')}</th><th>${T('wnd')}</th><th>${T('rend')}</th><th>${T('dmg')}</th></tr>`;
-   ws.forEach(w=>{const fl=flagsOf(w.f);t+=`<tr><td>${esc(P(w.n))}${fl.length?`<span class="fl">${fl.map(esc).join(' · ')}</span>`:''}</td>${ranged?`<td>${w.r}"</td>`:''}<td>${esc(P(w.a))}</td><td>${plus(w.h)}</td><td>${plus(w.w)}</td><td>${rend(w.rd)}</td><td>${esc(P(w.d))}</td></tr>`});
+   ws.forEach(w=>{const fl=flagsOf(w.f);t+=`<tr><td>${esc(P(w.n))}${w.c!=null&&u.m>1?`<span class="fl">${w.c} ${w.c==1?T('mdl1'):T('mdlN')}</span>`:''}${fl.length?`<span class="fl">${fl.map(esc).join(' · ')}</span>`:''}</td>${ranged?`<td>${w.r}"</td>`:''}<td>${esc(P(w.a))}</td><td>${plus(w.h)}</td><td>${plus(w.w)}</td><td>${rend(w.rd)}</td><td>${esc(P(w.d))}</td></tr>`});
    return t+'</table></div>'};
   if(u.rw.length)h+=`<div class="sub">${T('rw')}</div>`+wt(u.rw,true);
   if(u.mw.length)h+=`<div class="sub">${T('mw')}</div>`+wt(u.mw,false);

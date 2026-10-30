@@ -1,3 +1,7 @@
+## v129
+- Waffenverteilung je Modell: Endrinentakler (Nietgewehr+Säge, Salvenkanone, Himmelstakler je 1 Modell; Gewehrkolben 2), Grundstok-Donnerschützen (Schrotgewehr 1, Verdampfer/Deckfeger 2, Mörser/Aetherkanone 2) und Gefolge-Wolfsgits (Grotbogen 1, Piks’nda Stock 1) haben ihre Waffen jetzt nur an den Modellen laut Einheitenkarte; bisher trug jedes Modell alles. Alle übrigen Einheiten mit gemischter Ausrüstung waren schon korrekt.
+- Die Waffenzeilen zeigen „N Modell(e)“ in der Regel-App und im Einheiten-Fenster.
+
 ## v128
 - Regel-App: Absturz beim Antippen von Menüpunkten (z. B. Spearhead on a Page) behoben. In der eingebetteten Version lösten Links wie „#/sp“ eine Navigation der Seite aus; jetzt werden sie innerhalb der Regel-App ausgeführt.
 

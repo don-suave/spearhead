@@ -17,8 +17,8 @@ export function collect(){
     }
    } else (u.abs||[]).forEach(id=>{const b=AB[id];if(b)ab.push({n:b.n,t:b.s})});
    return {n:u.n,kw:(u.kw||'').split(', ').filter(Boolean),mv:u.mv,hp:u.wm,models:u.nm,cnt:u.c||1,sv:u.sv,cv:u.cv,ward:u.wr||0,base:u.b,gen:!!u.gen,
-    rw:(u.rw||[]).map(w=>({n:w[0],r:w[1],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||''})),
-    mw:(u.mw||[]).map(w=>({n:w[0],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||''})),ab,note};
+    rw:(u.rw||[]).map(w=>({n:w[0],r:w[1],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||'',c:w[8]??null})),
+    mw:(u.mw||[]).map(w=>({n:w[0],a:w[2],h:w[3],w:w[4],rd:w[5],d:w[6],f:w[7]||'',c:w[8]??null})),ab,note};
   });
   (a.tr||[]).forEach(k=>{const b=AB[k];if(b&&!traits.some(x=>x.n==b.n))traits.push({n:b.n,t:b.s})});
   return {i,f:a.f,n:a.n,reg:a.reg.map(r=>({n:r[0],t:r[1]})),enh:a.enh.map(r=>({n:r[0],t:r[1]})),traits,units};
