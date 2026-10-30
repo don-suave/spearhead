@@ -1,3 +1,6 @@
+## v130
+- Wendige Himmelsfahrer (Endrinentakler): Die Fähigkeit wird in der gegnerischen Bewegungsphase jetzt nicht mehr nur zu Beginn angeboten, sondern auch direkt nachdem sich eine gegnerische Einheit in der Nähe (bis 24 Zoll) bewegt hat, und am Ende der Phase. Je Phase weiterhin nur 1× (3+ → sofortige Normale Bewegung).
+
 ## v129
 - Waffenverteilung je Modell: Endrinentakler (Nietgewehr+Säge, Salvenkanone, Himmelstakler je 1 Modell; Gewehrkolben 2), Grundstok-Donnerschützen (Schrotgewehr 1, Verdampfer/Deckfeger 2, Mörser/Aetherkanone 2) und Gefolge-Wolfsgits (Grotbogen 1, Piks’nda Stock 1) haben ihre Waffen jetzt nur an den Modellen laut Einheitenkarte; bisher trug jedes Modell alles. Alle übrigen Einheiten mit gemischter Ausrüstung waren schon korrekt.
 - Die Waffenzeilen zeigen „N Modell(e)“ in der Regel-App und im Einheiten-Fenster.

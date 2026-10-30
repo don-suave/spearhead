@@ -136,9 +136,11 @@ function cycStep(G){const S=G.S;if(!S.cyc)S.cyc=[0,0];
   if(S.round==1){let r=d6(S);while(r>=5)r=d6(S);S.cyc[o]=r}else S.cyc[o]=S.cyc[o]%4+1;
   G.note('Zyklus der Korrumpierung ('+(o?'Computer':'Du')+'): '+CYC[S.cyc[o]-1])})}
 // Fenster der nicht aktiven Seite (Fähigkeiten in gegnerischen Phasen)
-function* oppWindow(G,when){const S=G.S,o=1-S.act;
- for(const [id,a] of Object.entries(AB)){if(!a.opp||a.oph!==S.ph||a.when!==when||!a.src(S,o)||abUsed(S,null,id,o)||(a.can&&!a.can(S,o)))continue;
-  const y=G.isAI(o)?(a.ai(S,o)?0:1):yield* choice(G,o,a.n,a.s+' – einsetzen?',[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:1});
+export function* oppWindow(G,when,ctx){const S=G.S,o=1-S.act;
+ if(when=='after'&&G.isAI(o))return;
+ for(const [id,a] of Object.entries(AB)){if(!a.opp||a.oph!==S.ph||!(a.when===when||(a.when=='any'&&['start','after','end'].includes(when)))||!a.src(S,o)||abUsed(S,null,id,o)||(a.can&&!a.can(S,o)))continue;
+  if(when=='after'&&a.near&&!a.near(S,o,ctx))continue;
+  const y=G.isAI(o)?(a.ai(S,o)?0:1):yield* choice(G,o,a.n,a.s+(when=='after'?' – jetzt einsetzen? (gegnerische Einheit hat sich gerade bewegt)':' – einsetzen?'),[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:1});
   if(y==0)yield* runAb(G,id,null,o)}}
 // Fähigkeiten der Aufstellungsphase (nach der Aufstellung beider Armeen)
 function* depAbil(G){const S=G.S,K=S.K;
@@ -189,9 +191,10 @@ function* turn(G){const S=G.S;
   if(sk)G.tray(S.P[S.act].n+': '+PHN[ph]+' übersprungen',[{k:'txt',s:sk}]);
   while(!S.over&&!sk){const a=yield {t:'act',who:S.act,check:a=>actCheck(S,S.act,a)};
    if(a.a=='next'){if(S.ph==5&&!S.Ph.fs.done){yield* preFight(G);yield* fights(G);continue}break}
-   yield* doAction(G,a)}
+   yield* doAction(G,a);
+   if(ph==2&&!S.over&&['move','run','retreat'].includes(a.a)){const mu=byId(S,a.u);if(mu&&S.U.includes(mu))yield* oppWindow(G,'after',mu)}}
   if(!S.over)yield* autoLate(G);
-  if(ph==3&&!S.over)yield* oppWindow(G,'end');
+  if((ph==2||ph==3)&&!S.over)yield* oppWindow(G,'end');
   G.phEv=null;G.phD=null}
  if(!S.over)yield* endTurn(G)}
 
