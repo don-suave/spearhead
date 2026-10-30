@@ -1,3 +1,6 @@
+## v131
+- Wendige Himmelsfahrer: Das Würfelergebnis erscheint jetzt als eigenes Fenster (vorher nur als kurze Einblendung im gegnerischen Zug). Bei 3+ folgt direkt die Bewegung, bei weniger steht dort „Wurf unter 3: keine Bewegung“.
+
 ## v130
 - Wendige Himmelsfahrer (Endrinentakler): Die Fähigkeit wird in der gegnerischen Bewegungsphase jetzt nicht mehr nur zu Beginn angeboten, sondern auch direkt nachdem sich eine gegnerische Einheit in der Nähe (bis 24 Zoll) bewegt hat, und am Ende der Phase. Je Phase weiterhin nur 1× (3+ → sofortige Normale Bewegung).
 
