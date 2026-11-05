@@ -345,6 +345,9 @@ function draw(t){
   const ready=mineAct&&u.o==seat&&(q.t=='act'?(S.ph>0&&S.ph<6&&abilities(S,u).some(a=>!a.dis&&a.k!='fight')):(q.t=='fight'&&eligF(S,seat).filter(x=>sfOK(S,x)).includes(u)));
   const P=abs(u),cap=m=>{cx.save();cx.translate(m.x,m.y);cx.rotate(m.a);cx.beginPath();cx.ellipse(0,0,m.l/2,m.w/2,0,0,7);cx.restore()};
   const hero=/Held/.test(u.kw)||u.gen;P.forEach(m=>drawToken(cx,m,u,c,S.K.army[u.o],hero,ready,t));
+  if(S.ph==5&&S.Ph.fs&&S.Ph.fs.on&&!S.Ph.fs.done){const dn=(S.T.fought||[]).includes(u.id),can=!dn&&eligF(S,u.o).includes(u);
+   if(dn||can){cx.save();cx.beginPath();cx.arc(u.x,u.y,u.r+.35,0,7);cx.lineWidth=.12;cx.strokeStyle=dn?'#8a8a8a':'#ff6a3c';if(dn)dash();cx.stroke();solid();
+    cx.fillStyle=dn?'#555d':'#c8401ee0';cx.beginPath();cx.arc(u.x,u.y-u.r-.35,.5,0,7);cx.fill();cx.fillStyle='#fff';cx.font='bold .6px sans-serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(dn?'✓':'⚔',u.x,u.y-u.r-.33);cx.restore()}}
   flagsDraw(u,P)
   const bw=Math.max(1.6,u.r*1.6),by=Math.max(...P.map(m=>m.y+m.l/2))+.2;cx.fillStyle='#000a';cx.fillRect(u.x-bw/2,by,bw,.32);cx.fillStyle=wnd(u)/mx(u)>.4?'#6fcf6f':'#e0603c';cx.fillRect(u.x-bw/2,by,bw*wnd(u)/mx(u),.32);if(u.nd>0){cx.fillStyle='#e8c15c';cx.font='bold .6px sans-serif';cx.textAlign='center';cx.fillText('★'+u.nd,u.x,by+1)}})}
 function flagsDraw(u,P){const f=unitFlags(G.S,u);if(!f.length)return;const top=Math.min(...P.map(m=>m.y-m.l/2))-.15,show=f.slice(0,4);

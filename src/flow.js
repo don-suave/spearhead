@@ -126,9 +126,13 @@ function* startRound(G,f){const S=G.S,P=S.P,K=S.K;
  yield* applyTw(G,u);yield* roundStartAb(G);
  for(const i of [0,1]){if(f||!dr(i)||G.isAI(i))continue;
   while(P[i].hand.length){const h=P[i].hand;const k=yield* choice(G,i,'Taktikkarten ablegen?','Du darfst beliebig viele Karten offen ablegen, bevor du nachziehst.',[...h.map(c=>({t:'Ablegen: '+TAC[c-1][0]})),{t:'Fertig – nachziehen'}],{pref:h.length});if(k==h.length)break;const c=h[k];h.splice(k,1);P[i].disc.push(c)}}
+ const hb=P.map(p=>p.hand.slice());
  P.forEach((p,i)=>{if(dr(i))draw1(S,p)});
  for(const i of [0,1]){if(!dr(i)||ENI(S,i)!='sd_ritual'||!gnl(S,i))continue;const p=P[i];if(!p.deck.length){p.deck=shuffle(S,p.disc);p.disc=[]}if(!p.deck.length)continue;p.hand.push(p.deck.pop());const h=p.hand.filter(c=>!(p.aside||[]).includes(c));let pr=0;h.forEach((c,j)=>{if(!CH[c]||!CH[c](S,i))pr=j});const k=G.isAI(i)?pr:yield* choice(G,i,'Grausamer Ritualist','Du hast 1 zusätzliche Taktikkarte gezogen. Lege 1 Karte deiner Hand unter dein Deck:',h.map(c=>({t:'Unter das Deck: '+TAC[c-1][0],s:TAC[c-1][1]})),{pref:pr});const c=h[k];p.hand.splice(p.hand.indexOf(c),1);p.deck.unshift(c);G.note('Grausamer Ritualist ('+(i?'Computer':'Du')+'): zusätzliche Karte gezogen, 1 Karte unter das Deck gelegt')}
  for(const o of [0,1])yield* start4(G,o); // Befehl des Offizars: erst nach dem Nachziehen (Schritt 5), die Karte bleibt Teil der 3 Handkarten
+ for(const i of [0,1]){if(G.isAI(i))continue;const p=P[i],fr=S.off&&S.off[i],nw=p.hand.filter(c=>{const k=hb[i].indexOf(c);if(k<0)return true;hb[i][k]=-1;return false});
+  const cd=c=>`<div style="margin:6px 0;padding:6px 8px;border-left:3px solid ${nw.includes(c)?'#e8c15c':'#666'};background:#0003"><b>${TAC[c-1][0]}</b>${nw.includes(c)?' <span style="color:#e8c15c">neu</span>':''}${c===fr?' <span style="color:#9cf">beiseite (Befehl des Offiziars)</span>':''}<br><small>Vorhaben: ${TAC[c-1][1]}<br>Befehl – ${TAC[c-1][2]}: ${TAC[c-1][3]}</small></div>`;
+  yield* info(G,i,'Deine Taktikkarten – Schlachtrunde '+S.round,p.hand.length?p.hand.map(cd).join(''):'Keine Taktikkarten auf der Hand.','Weiter')}
  if(S.round==1)[0,1].forEach(o=>{if(ENI(S,o)=='ss_vorrat'){S.kes[o]=1;G.note('Gut bestückte Vorratskammer: Der Fleischerkessel ist voll')}});
  yield* infoR(G,0,'Schlachtrunde '+S.round,`1. ${t.replace(/<br>.*/,'')}<br>2. ${u>=0?(u?'Computer ist':'Du bist')+' Außenseiter (+1 BP)':'Kein Außenseiter'}<br>3. Wendungskarte: ${TWD[K.realm][K.tw-1][1]} (s. o.)<br>4. Taktikkarten gezogen${sz?' (Initiative an sich gerissen)':''}<br>5. Keine Fähigkeiten zu Beginn der Schlachtrunde<br>Kontrolle: du ${cnm(S,0)||'keins'}, Computer ${cnm(S,1)||'keins'}`,'Los');
  if(S.round==1)yield* mudCover(G)}

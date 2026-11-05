@@ -1,3 +1,7 @@
+## v133
+- Zu Beginn jeder Schlachtrunde zeigt ein Popup deine Taktikkarten (neu gezogene markiert, beiseitegelegte Karte des Offiziars gekennzeichnet) – für alle Armeen.
+- Kampfphase: Einheiten, die schon gekämpft haben, tragen eine graue gestrichelte Umrandung mit ✓; Einheiten, die noch kämpfen können, eine orange Umrandung mit ⚔ (eigene und gegnerische).
+
 ## v132
 - Befehl des Offizars (Kastellitenkompanie): Die Karte wird jetzt erst nach dem Nachziehen separat gelegt (Schritt 5 der Schlachtrunde) und bleibt Teil der 3 Handkarten. Bisher wurde sie vor dem Nachziehen weggelegt, wodurch eine 4. Karte gezogen wurde. Text in Spiel und Regel-App angepasst.
 
