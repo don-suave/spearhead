@@ -441,7 +441,6 @@ Object.assign(AB,{
 export function* roundStartAb(G){const S=G.S;
  for(const o of [0,1])yield* beuteStart(G,o);
  for(const o of [0,1])yield* wahnStart(G,o);
- for(const o of [0,1])yield* start4(G,o);
  for(const o of [0,1]){try{if(ARMY[S.K.army[o]].tr.includes('ob_pool')){(S.obp||(S.obp=[0,0]))[o]=2;G.note((o?'Computer':'Du')+': 2 Ossiarch-Befehlspunkte')}}catch(e){}}
  for(const o of [0,1]){
   if(AN(S,o)=='Strahlende Phalanx'){const c=yield* selI(G,o,'Kriegsfacette – Runde '+S.round,'Wähle die Facette dieser Schlachtrunde; nur sie ist aktiv.',['Hyshs Macht (Heldenphase, Krit. bei 5+)','Strahlende Kompanie (−1 auf Trefferwürfe gegen dich)','Überlegene Reaktionen (2 Einheiten kämpfen nacheinander)'],1);

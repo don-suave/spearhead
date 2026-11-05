@@ -1,3 +1,6 @@
+## v132
+- Befehl des Offizars (Kastellitenkompanie): Die Karte wird jetzt erst nach dem Nachziehen separat gelegt (Schritt 5 der Schlachtrunde) und bleibt Teil der 3 Handkarten. Bisher wurde sie vor dem Nachziehen weggelegt, wodurch eine 4. Karte gezogen wurde. Text in Spiel und Regel-App angepasst.
+
 ## v131
 - Wendige Himmelsfahrer: Das Würfelergebnis erscheint jetzt als eigenes Fenster (vorher nur als kurze Einblendung im gegnerischen Zug). Bei 3+ folgt direkt die Bewegung, bei weniger steht dort „Wurf unter 3: keine Bewegung“.
 
