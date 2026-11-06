@@ -1,3 +1,9 @@
+## v134
+- Konto (an das Gerät gebunden) und Freundesliste: Freunde per Einladungslink hinzufügen (Startseite / Menü ▸ „Freunde & Einladen“). Server: `/api/acct` (D1, Tabellen werden selbst angelegt).
+- Reaktionen: Fenster fragen nur, wenn eine Reaktion wirklich möglich ist. Neu: Standing Orders (Menü ▸ „Reaktionen“) – je Reaktion „Fragen / Immer einsetzen / Nie einsetzen“; wird im Spielverlauf gespeichert (replay-sicher).
+- Neuer Spielmodus „Test: gegen Freund (simuliert)“: der Computer spielt einen Freund; seine Reaktionen erscheinen als „hat reagiert“-Meldungen.
+- Tests: test/standing.mjs, test/acct.mjs.
+
 ## v133
 - Zu Beginn jeder Schlachtrunde zeigt ein Popup deine Taktikkarten (neu gezogene markiert, beiseitegelegte Karte des Offiziars gekennzeichnet) – für alle Armeen.
 - Kampfphase: Einheiten, die schon gekämpft haben, tragen eine graue gestrichelte Umrandung mit ✓; Einheiten, die noch kämpfen können, eine orange Umrandung mit ⚔ (eigene und gegnerische).

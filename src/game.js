@@ -15,7 +15,9 @@ export class Game{
  note(text){if(this.phEv)this.phEv.push(text);this.emit({t:'note',text})}
  _step(a){const r=this.gen.next(a);this.req=r.done?null:r.value;const S=this.S;S.U.forEach(u=>{if(u.M&&u.x>=0&&u.M.length!=u.n)syncM(S,u,S.U.filter(e=>e.o!=u.o))})}
  check(a){return this.req?(this.req.check?this.req.check(a):''):'Keine offene Anfrage'}
- submit(a){const e=this.check(a);if(e)return e;this.lk.push(this.req?this.req.t+':'+(this.req.kind||(a&&a.a)||''):'');this.log.push(a);this._step(a);return ''}
+ // Standing Orders: {a:'rp',who,key,v:'ask'|'yes'|'no'} – feste Antwort auf Reaktionsfenster (Titel = key); Teil des Logs, daher replay-sicher
+ submit(a){if(a&&a.a=='rp'){if(![0,1].includes(a.who)||typeof a.key!='string'||!['ask','yes','no'].includes(a.v))return 'Ungültig';const r=this.S.rp||(this.S.rp=[{},{}]);if(a.v=='ask')delete r[a.who][a.key];else r[a.who][a.key]=a.v;this.lk.push('rp:');this.log.push(a);return ''}
+  const e=this.check(a);if(e)return e;this.lk.push(this.req?this.req.t+':'+(this.req.kind||(a&&a.a)||''):'');this.log.push(a);this._step(a);return ''}
  // Rückgängig: Logindex, auf den zurückgesetzt wird (-1 = nicht möglich). Aufstellung: ganz von vorne; sonst letzte Bewegung/Anpassung.
  undoIdx(){const q=this.req,L=this.lk;if(!q||this.isAI(q.who))return -1;
   if(q.t=='place'&&q.kind=='dep'){let i=L.length;while(i>0&&L[i-1]=='place:dep')i--;return i<L.length?i:-1}
@@ -25,7 +27,11 @@ export class Game{
  static replay(seed,ctl,flow,log){const g=new Game(seed,ctl).start(flow);for(const a of log){const e=g.submit(a);if(e)throw new Error('Replay: '+e)}return g}
 }
 // ---- Anfrage-Helfer (innerhalb von Generatoren) ----
+export const isReact=(G,who,opts)=>who!==G.S.act&&opts.some(o=>/^Nicht einsetzen/.test(o.t));
 export function* choice(G,who,title,text,opts,x={}){
+ const m=G.S.rp&&G.S.rp[who]&&G.S.rp[who][title];
+ if(m&&isReact(G,who,opts)){const i=m=='no'?opts.findIndex(o=>/^Nicht einsetzen/.test(o.t)):(opts[0].dis||/^Nicht einsetzen/.test(opts[0].t)?-1:0);
+  if(i>=0){G.note('Standing Order ('+G.S.P[who].n+'): '+title+' – '+(m=='no'?'nicht eingesetzt':'eingesetzt'));return i}}
  return yield {t:'choice',who,title,text,opts,close:false,...x,check:a=>(Number.isInteger(a)&&a>=0&&a<opts.length&&!opts[a].dis)?'':'Ungültige Wahl'}}
 export function* ask(G,who,title,list,text=''){
  if(!list.length)return null;const i=yield* choice(G,who,title,text,list.map(c=>({t:c[0]})),{vals:list.map(c=>c[1]&&typeof c[1]=='object'?(c[1].dn?{u:c[1].id}:null):c[1]),tg:list.map(c=>{const v=c[1];if(v&&typeof v=='object'){if(v.dn)return {k:'u',id:v.id};const i=G.S.ter?G.S.ter.indexOf(v):-1;return i>=0?{k:'t',i}:null}return typeof v=='number'?{k:'n',v}:null})});

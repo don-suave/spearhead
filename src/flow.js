@@ -27,10 +27,11 @@ export function* flow(G){
  setPack(0);
  const st=yield* settings(G,'Spielstart','Voreinstellungen bestätigen oder ändern.',[
   {n:'Battlepack',def:0,opts:PACKN.map((t,i)=>({t,s:PACKS[i]}))},
+  {n:'Spielmodus',def:globalThis.__sim?1:0,opts:[{t:'Gegen Computer',s:'Der Computer zieht sofort.'},{t:'Test: gegen Freund (simuliert)',s:'Der Computer spielt einen Freund, der asynchron antwortet: Reaktionen des Gegners erscheinen als „hat reagiert“-Meldungen. Deine Standing Orders (Menü ▸ Reaktionen) gelten für deine Reaktionen.'}]},
   // Option „Schlachtrunden-Infos“ (Nein/Ja) ist im Startmenü ausgeblendet, K.rinfo bleibt im Code erhalten (hier auf true setzen oder wieder ins Menü aufnehmen)
   // Option „Aufstellung: Zufällig“ (K.rdep) und Knopf „Rest automatisch“ (place-Flag auto) sind vorerst abgeschaltet (AUTODEP=false)
   ]);
- K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=false;K.rdep=AUTODEP&&st[1]==1;
+ K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=false;K.rdep=false;K.asyncSim=st[1]==1;if(K.asyncSim)S.P[1].n=globalThis.__foeName||'Freund (Test)';
  setPack(K.pack);
  const i=yield* choice(G,0,'Armee wählen','Dein Gegner (Computer) spielt eine andere Armee.',ARMY.map(a=>({t:a.n,f:a.f,ga:GA[a.f]||'Ordnung',s:a.units.map(d=>d.n).join(' · ')})),{car:1});
  K.army=[i,(i+1+Math.floor(rand(S)*(ARMY.length-1)))%ARMY.length];mkUnits(S);
@@ -147,6 +148,7 @@ export function* oppWindow(G,when,ctx){const S=G.S,o=1-S.act;
  for(const [id,a] of Object.entries(AB)){if(!a.opp||a.oph!==S.ph||!(a.when===when||(a.when=='any'&&['start','after','end'].includes(when)))||!a.src(S,o)||abUsed(S,null,id,o)||(a.can&&!a.can(S,o)))continue;
   if(when=='after'&&a.near&&!a.near(S,o,ctx))continue;
   const y=G.isAI(o)?(a.ai(S,o)?0:1):yield* choice(G,o,a.n,a.s+(when=='after'?' – jetzt einsetzen? (gegnerische Einheit hat sich gerade bewegt)':' – einsetzen?'),[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:1});
+  if(G.isAI(o)&&S.K.asyncSim)G.note('⏳ '+S.P[o].n+' hat reagiert: '+a.n+' – '+(y==0?'eingesetzt':'nicht eingesetzt'));
   if(y==0)yield* runAb(G,id,null,o)}}
 // Fähigkeiten der Aufstellungsphase (nach der Aufstellung beider Armeen)
 function* depAbil(G){const S=G.S,K=S.K;

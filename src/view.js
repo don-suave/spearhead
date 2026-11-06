@@ -2,7 +2,7 @@
 import {facSVG} from './factions.js';import {watch} from './rlink.js';import {Game} from './game.js';import {flow} from './flow.js';import {aiAnswer,aiFallback} from './ai.js';
 import {W,H,CR,into,OR,objR,objD,ptDist} from './geom.js';
 import {abs,mDistPt,mgap,cohBad} from './models.js';
-import {PH,TWL,TERSZ,ARMY} from './data.js';
+import {PH,TWL,TERSZ,ARMY} from './data.js';import {friendsUi,checkInvite} from './friends.js';import {AB} from './abil.js';import {RGI,ENI} from './rules.js';
 import {chargePlan} from './plan.js';
 import {depForm,rsvForm,moveForm,pileForm,chargeForm,mvRest,chargeModelErr,CMD,rngOf,mvOf,byId,abilities,globals,stat,eligF,sfOK,dist,foes,wnd,mx,ONM,placeErr,moveErr,adjErr,adjAllow,pileModelErr,chargeErr,pileErr,chargeDest,pileDest,chargeSnap,actCheck,inCombat} from './rules.js';
 import {report,askName,home,relInfo,myName,flush as import_flush} from './stats.js';import {photoOf,ground,drawTerrain,drawObjective,drawToken} from './art.js';import {TAC} from './data.js';import {unitFlags,battleAbs,abOrigin,originOf,srcTag} from './abil.js';
@@ -152,7 +152,7 @@ $('menu').onclick=()=>{pushPop();const S=G.S,q=G.req;
  const can=q&&!G.isAI(q.who)&&(q.t=='act'||q.t=='fight');
  pop('Menü',`<div class="ph">${PH.map((p,i)=>`<span class="${i==S.ph?'on':''}">${p}</span>`).join('')}</div><br>Modus: Du gegen Computer (Testversion)${S.stage?`<br>Angreifer: ${S.P[S.K.att].n} · Taktikkarten: ${S.P[seat].hand.length}`:''}<br><small>Spielstand-Kennung: ${S.seed} · ${G.log.length} Züge protokolliert</small><br><small>Spieler: ${(myName()||'Gast').replace(/[<>&"]/g,'')} · Version: ${relInfo()}</small>`,
  mw([{t:'Ansicht zurücksetzen',fn:resetView,ui:1},...(S.stage?[{t:'Meine Taktikkarten ('+S.P[seat].hand.length+')',fn:hand,ui:1}]:[]),...(can?[{t:'Befehle jetzt',fn:()=>answer({a:'cmdwin'})}]:[]),
-  ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,s:withSrc(seat,g),fn:()=>answer({a:g.k})})):[]),{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}]))};
+  ...(can&&q.t=='act'?globals(S,seat).map(g=>({t:g.t,s:withSrc(seat,g),fn:()=>answer({a:g.k})})):[]),...(S.stage?[{t:'Reaktionen (Standing Orders)',s:'Auto-Einsatz / Auto-Pass für Reaktionen im Gegnerzug',fn:reactUi}]:[]),{t:'Freunde & Einladen',fn:friendsUi},{t:'Name ändern',fn:()=>askName(true)},{t:'Startseite / Statistik',fn:()=>home(()=>start())},{t:'Neues Spiel',fn:()=>start()}]))};
 const KC=['⚔️','💰','💥','👑','🏃','💀','🎯','🔥','☄️','🔨','🔍','⚖️'],KS=['⚡','💀','⛰️','🏴','🕯️','👻','🦴','🗿','⚰️','↩️','😱','🩸'],KG0=['⚔️','🏴','↔️','⚡','⛰️','👑','🔥','🗿','🐉','🏹','⚔️','🛡️'];
 function cardsUi(){const S=G.S,h=S.P[seat].hand,d=$('cards');d.innerHTML='';
  h.forEach(c=>{const b=document.createElement('button');b.className='kc'+(CMD[c]&&CMD[c].ph==S.ph?' on':'');b.textContent=(G.S.K.pack==2?KC:G.S.K.pack==1?KS:KG0)[c-1]||'🂠';b.setAttribute('aria-label',TAC[c-1][0]);
@@ -163,6 +163,12 @@ function onceUi(){const S=G.S,d=$('once');d.innerHTML='';if(!S.stage){document.d
   l.forEach(a=>{const b=document.createElement('button');b.className=(o==seat?'me':'en')+(a.used?' us':a.now===false?' idle':a.now===true?' on':'');b.textContent=a.ic;b.setAttribute('aria-label',a.n);
    b.onclick=()=>pop((o==seat?'Eigene':'Gegnerische')+' Fähigkeit: '+a.n,a.s+(a.u?'<br><br>Einheit: '+a.u:'')+'<br><br>'+(a.st||'<b>'+(a.used?'Bereits eingesetzt (1× pro Schlacht)':a.now===false?'Noch verfügbar (1× pro Schlacht) – aktuell nicht einsetzbar (falsche Phase oder Voraussetzung nicht erfüllt, z. B. keine passende Einheit)':'Jetzt einsetzbar (1× pro Schlacht)')+'</b>'),(o==seat&&a.now===true&&!a.used&&G.req&&(G.req.t=='act'||G.req.t=='fight')&&G.req.who==seat?[{t:'Jetzt einsetzen',fn:()=>answer(a.uid!=null?{a:'ab:'+a.id,u:a.uid}:{a:'ab:'+a.id})}]:[]),true);r.appendChild(b)});d.appendChild(r)});
  document.documentElement.style.setProperty('--oh',d.offsetHeight+'px')}
+function reactUi(){const S=G.S,rp=(S.rp&&S.rp[seat])||{};
+ const keys=Object.values(AB).filter(a=>a.opp&&a.src&&a.src(S,seat)).map(a=>[a.n,a.s]);
+ if(ENI(S,seat)=='ss_tisch')keys.push(['Reaktion: Widerliche Tischmanieren','Angriffswurf des Gegners senken']);
+ if(RGI(S,seat)=='am')keys.push(['Reaktion: Am richtigen Ort zuschlagen','Kein tödlicher Schaden; danach noch angreifen']);
+ const L={ask:'Fragen',yes:'Immer einsetzen',no:'Nie einsetzen'},N={ask:'yes',yes:'no',no:'ask'};
+ pop('Reaktionen (Standing Orders)','Lege fest, wie auf Reaktionsmöglichkeiten im Gegnerzug verfahren wird. „Fragen“ hält die Partie an, bis du antwortest. Antippen wechselt: Fragen → Immer → Nie. Die Auswahl gilt ab sofort und wird im Spielverlauf gespeichert.',keys.length?keys.map(([n,t])=>{const v=rp[n]||'ask';return {t:n+' – <b>'+L[v]+'</b>',s:t,fn:()=>{G.submit({a:'rp',who:seat,key:n,v:N[v]});reactUi()}}}):[{t:'Deine Armee hat keine Reaktionsfähigkeiten',dis:true}])}
 function hand(){const h=G.S.P[seat].hand;pop('Meine Taktikkarten','Taktiken werden am Zugende automatisch geprüft. Befehle auf der Kartenrückseite erscheinen bei Beginn der passenden Phase.',h.map(c=>({t:TAC[c-1][0],s:TAC[c-1][1]+'<br><i>Befehl '+TAC[c-1][2]+': '+TAC[c-1][3]+'</i>',dis:true})))}
 /* ---------- Eingabe auf dem Feld ---------- */
 // Herkunft einer Option (Taktikkarte, Einheit, Kampfeigenschaft, Regiment, Verbesserung, Gelände …) vor den Kurztext setzen
@@ -359,4 +365,4 @@ $('undo').onclick=()=>{if(!G||busy||popOpen())return;const n=G.undoIdx();if(n<0)
  try{clearTimeout(timer);const g=Game.replay(seed0,ctl,flow,lg);g.events.length=0;G=g;window.__G=G;busy=false;mode=null;rings=null;offer=null;closePop(false);note('Aktion zurückgesetzt');pump()}catch(e){console.error(e);note('Rückgängig nicht möglich')}};
 function start(seed){clearTimeout(timer);busy=false;mode=null;closePop(false);$('dice').style.display='none';
  G=new Game(seed||((Math.random()*2**32)>>>0),['h','ai']).start(flow);window.__G=G;pump()}
-resize();start();home(()=>{});askName();requestAnimationFrame(loop);
+window.__shNew=()=>start();resize();start();home(()=>{});askName();checkInvite();requestAnimationFrame(loop);
