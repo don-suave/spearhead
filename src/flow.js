@@ -45,6 +45,8 @@ function* prebattle(G){const S=G.S,K=S.K;let a,b;do{a=d6(S);b=d6(S)}while(a==b);
  else{yield* info(G,0,'1. Würfelduell','Der Computer gewinnt und wird Angreifer.','Weiter',{blocks});at=1}
  K.att=at;K.def=1-at;
  yield* pickReg(G,K.att);yield* pickReg(G,K.def);
+ for(const v of [0,1]){if(G.isAI(v))continue;const f=1-v,A=ARMY[K.army[f]],r=A.reg[K.reg[f]],e=A.enh[K.enh[f]];
+  yield* info(G,v,'Gegnerische Wahl: '+S.P[f].n,`<b>${A.n}</b><br><br><b>Regimentsfähigkeit:</b> ${r[0]}<br><small>${r[1]}</small><br><br><b>Verbesserung des Generals:</b> ${e[0]}<br><small>${e[1]}</small>`,'Weiter')}
  K.realm=yield* choice(G,K.def,'3. Schlachtfeldseite',K.pack>=1?'Verteidiger wählt das Schlachtfeld:':'Verteidiger wählt die Seite des Reichs:',(K.pack==1?['Dolorum','Ossia']:K.pack==2?['Ashen Bastion','Shattered Crossroads']:REALM).map(t=>({t})));K.twist=shuffle(S,range(6));
  const m=yield* choice(G,K.def,'4. Aufstellungskarte','Verteidiger wählt die Karte:',[{t:'Horizontal'},{t:'Diagonal'}]);
  const t=yield* choice(G,K.def,'4. Territorium','Welches Gebiet gehört dir?',[{t:'Gebiet A (oben'+(m?(K.pack>=1?' rechts)':' links)'):')')},{t:'Gebiet B (unten'+(m?(K.pack>=1?' links)':' rechts)'):')')}]);

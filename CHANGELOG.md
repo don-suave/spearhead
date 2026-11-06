@@ -1,3 +1,6 @@
+## v136
+- Alle Spielvarianten: Nach der Wahl von Regimentsfähigkeit und Verbesserung des Generals zeigt ein Popup, was der Gegner gewählt hat (Armee, Regimentsfähigkeit, General-Verbesserung mit Text). Im Menü steht die Wahl des Gegners dauerhaft.
+
 ## v135
 - Testmodus gegen Freund: Reaktionsleiste links unter der Kopfzeile zeigt jederzeit deine Reaktionsmöglichkeiten mit Einstellung (❓ fragen / ✔ immer / ✖ nie, Antippen wechselt, einklappbar); aktuell anstehende Reaktion leuchtet.
 - Kann der simulierte Freund reagieren, erscheint „⏳ Warte auf <Freund>“ (welche Fähigkeit, Hinweis aufs Pausieren der echten Partie), danach „hat reagiert“ mit dem Ergebnis. Der Freund reagiert nun auch direkt nach deinen Bewegungen.
