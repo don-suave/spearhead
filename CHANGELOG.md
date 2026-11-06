@@ -1,3 +1,6 @@
+## v137
+- Spielstart: Gegnerischen Spearhead wählbar („Zufällig“ oder „Selbst auswählen“ mit Armee-Auswahl); dein eigener ist dabei ausgeschlossen.
+
 ## v136
 - Alle Spielvarianten: Nach der Wahl von Regimentsfähigkeit und Verbesserung des Generals zeigt ein Popup, was der Gegner gewählt hat (Armee, Regimentsfähigkeit, General-Verbesserung mit Text). Im Menü steht die Wahl des Gegners dauerhaft.
 

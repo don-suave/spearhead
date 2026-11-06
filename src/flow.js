@@ -34,7 +34,10 @@ export function* flow(G){
  K.pack=st[0];K.pile=true;K.rres=false;K.rinfo=false;K.rdep=false;K.asyncSim=st[1]==1;if(K.asyncSim)S.P[1].n=globalThis.__foeName||'Freund (Test)';
  setPack(K.pack);
  const i=yield* choice(G,0,'Armee wählen','Dein Gegner (Computer) spielt eine andere Armee.',ARMY.map(a=>({t:a.n,f:a.f,ga:GA[a.f]||'Ordnung',s:a.units.map(d=>d.n).join(' · ')})),{car:1});
- K.army=[i,(i+1+Math.floor(rand(S)*(ARMY.length-1)))%ARMY.length];mkUnits(S);
+ const om=yield* choice(G,0,'Gegnerischer Spearhead','Welchen Spearhead spielt '+(K.asyncSim?'dein Freund':'der Computer')+'?',[{t:'Zufällig',s:'Der Gegner bekommt einen zufälligen anderen Spearhead.'},{t:'Selbst auswählen'}],{pref:0});
+ let oi;if(om==0)oi=(i+1+Math.floor(rand(S)*(ARMY.length-1)))%ARMY.length;
+ else{const ids=ARMY.map((a,k)=>k).filter(k=>k!=i);const j=yield* choice(G,0,'Gegner-Spearhead wählen','Spearhead des Gegners:',ids.map(k=>{const a=ARMY[k];return {t:a.n,f:a.f,ga:GA[a.f]||'Ordnung',s:a.units.map(d=>d.n).join(' · ')}}),{car:1});oi=ids[j]}
+ K.army=[i,oi];mkUnits(S);
  yield* prebattle(G);
  S.stage=1;updCtrl(S);S.ocs=S.oc.slice();
  yield* battle(G)}
