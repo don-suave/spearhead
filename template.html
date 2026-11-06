@@ -21,6 +21,7 @@ button:disabled{opacity:.4}
 @media (max-width:700px){#hint{left:8px;right:8px;max-width:calc(100vw - 16px);bottom:calc(env(safe-area-inset-bottom,0px) + 68px + var(--oh,0px))}}
 #hint button{padding:2px 8px}
 #once{position:fixed;left:8px;bottom:calc(env(safe-area-inset-bottom,0px) + 62px);pointer-events:none;display:flex;flex-direction:column;gap:3px;max-width:min(62vw,420px);z-index:3}
+#rx{position:fixed;left:8px;top:calc(env(safe-area-inset-top,0px) + 84px);z-index:4;display:none;flex-direction:column;gap:3px;max-width:min(60vw,300px);align-items:flex-start;pointer-events:none}#rx button{pointer-events:auto;font-size:12px;padding:5px 8px;border-radius:7px;background:#171a20ee;color:#ece6d8;border:2px solid #3d8fd9;text-align:left;max-width:100%}#rx button.rh{border-color:var(--line);font-weight:600}#rx button.on{box-shadow:0 0 0 2px #d2a94a99,0 0 10px #d2a94acc}#rx .rl2{font-size:10px;color:#a09b90;background:#0009;padding:2px 5px;border-radius:5px}
 #once .or{display:flex;flex-wrap:wrap;gap:3px}
 #once button{pointer-events:auto;width:34px;height:46px;padding:0;border-radius:7px;background:linear-gradient(#2a2f38,#171a20);border:2px solid var(--line);font-size:19px;line-height:1;position:relative;box-shadow:0 2px 6px #0008}
 #once button.me{border-color:#3d8fd9}#once button.en{border-color:#d9503d}#once button.us{opacity:.55}#once button.idle{opacity:.42;filter:grayscale(.85)}#once button.on{box-shadow:0 0 0 2px #d2a94a99,0 0 10px #d2a94acc}
@@ -45,7 +46,7 @@ button:disabled{opacity:.4}
 #dice{position:fixed;left:8px;z-index:5;top:calc(env(safe-area-inset-top,0px) + 80px);background:#14171cee;border:1px solid var(--line);border-radius:10px;padding:8px;max-width:72vw;max-height:calc(100vh - 150px);overflow:hidden;display:none;pointer-events:none;font-size:12px}
 #dice .ts{margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--line)}#dice .ts:last-of-type{border:0;margin:0;padding:0}#dice .tx{font-size:10px;opacity:.55;margin-top:4px}
 </style></head><body>
-<canvas id="c"></canvas><div id="once"></div><div id="cards"></div>
+<canvas id="c"></canvas><div id="rx"></div><div id="once"></div><div id="cards"></div>
 <div id="hud"><button id="menu">☰</button><button id="info" title="Regeln">i</button><button id="undo" title="Aktion neu starten" disabled>↶</button><div class="pill" id="st"></div><div class="sp"></div><div class="pill" id="cp" style="display:none"></div><div class="pill" id="vp"></div></div><div id="mu"></div><div id="rov"></div>
 <div id="hint" class="pill"><span id="ht"></span><button id="rl" title="links drehen">↺</button><button id="rr" title="rechts drehen">↻</button><button id="ho" style="display:none">Optionen</button><button id="hy" style="display:none">✓ Fertig</button><span id="hb"></span><button id="hx">✕</button></div>
 <button id="next">Weiter ▸</button>

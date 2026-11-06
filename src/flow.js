@@ -143,12 +143,13 @@ function cycStep(G){const S=G.S;if(!S.cyc)S.cyc=[0,0];
   if(S.round==1){let r=d6(S);while(r>=5)r=d6(S);S.cyc[o]=r}else S.cyc[o]=S.cyc[o]%4+1;
   G.note('Zyklus der Korrumpierung ('+(o?'Computer':'Du')+'): '+CYC[S.cyc[o]-1])})}
 // Fenster der nicht aktiven Seite (Fähigkeiten in gegnerischen Phasen)
-export function* oppWindow(G,when,ctx){const S=G.S,o=1-S.act;
- if(when=='after'&&G.isAI(o))return;
+export function* oppWindow(G,when,ctx){const S=G.S,o=1-S.act,sim=!!S.K.asyncSim&&G.isAI(o);
+ if(when=='after'&&G.isAI(o)&&!sim)return;
  for(const [id,a] of Object.entries(AB)){if(!a.opp||a.oph!==S.ph||!(a.when===when||(a.when=='any'&&['start','after','end'].includes(when)))||!a.src(S,o)||abUsed(S,null,id,o)||(a.can&&!a.can(S,o)))continue;
   if(when=='after'&&a.near&&!a.near(S,o,ctx))continue;
-  const y=G.isAI(o)?(a.ai(S,o)?0:1):yield* choice(G,o,a.n,a.s+(when=='after'?' – jetzt einsetzen? (gegnerische Einheit hat sich gerade bewegt)':' – einsetzen?'),[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:1});
-  if(G.isAI(o)&&S.K.asyncSim)G.note('⏳ '+S.P[o].n+' hat reagiert: '+a.n+' – '+(y==0?'eingesetzt':'nicht eingesetzt'));
+  if(sim)yield* info(G,S.act,'⏳ Warte auf '+S.P[o].n,`<b>${S.P[o].n}</b> kann jetzt reagieren:<br><b>${a.n}</b><br><small>${a.s}</small><br><br><small>In einer echten Partie pausiert das Spiel hier, bis der Gegner antwortet (oder automatisch passt).</small>`,'Antwort abwarten');
+  const y=G.isAI(o)?(a.ai(S,o)?0:1):yield* choice(G,o,a.n,a.s+(when=='after'?' – jetzt einsetzen? (gegnerische Einheit hat sich gerade bewegt)':' – einsetzen?')+(S.K.asyncSim?'<br><b>⏳ Der Gegner wartet auf deine Antwort.</b> Mit „Reaktionen“ im Menü oder der Leiste links kannst du feste Antworten setzen.':''),[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:1});
+  if(sim)G.rep(S.P[o].n+' hat reagiert',[{k:'txt',s:a.n+': '+(y==0?'eingesetzt':'nicht eingesetzt')}],S.act);
   if(y==0)yield* runAb(G,id,null,o)}}
 // Fähigkeiten der Aufstellungsphase (nach der Aufstellung beider Armeen)
 function* depAbil(G){const S=G.S,K=S.K;

@@ -1,3 +1,8 @@
+## v135
+- Testmodus gegen Freund: Reaktionsleiste links unter der Kopfzeile zeigt jederzeit deine Reaktionsmöglichkeiten mit Einstellung (❓ fragen / ✔ immer / ✖ nie, Antippen wechselt, einklappbar); aktuell anstehende Reaktion leuchtet.
+- Kann der simulierte Freund reagieren, erscheint „⏳ Warte auf <Freund>“ (welche Fähigkeit, Hinweis aufs Pausieren der echten Partie), danach „hat reagiert“ mit dem Ergebnis. Der Freund reagiert nun auch direkt nach deinen Bewegungen.
+- Eigene Reaktionsabfragen weisen darauf hin, dass der Gegner wartet.
+
 ## v134
 - Konto (an das Gerät gebunden) und Freundesliste: Freunde per Einladungslink hinzufügen (Startseite / Menü ▸ „Freunde & Einladen“). Server: `/api/acct` (D1, Tabellen werden selbst angelegt).
 - Reaktionen: Fenster fragen nur, wenn eine Reaktion wirklich möglich ist. Neu: Standing Orders (Menü ▸ „Reaktionen“) – je Reaktion „Fragen / Immer einsetzen / Nie einsetzen“; wird im Spielverlauf gespeichert (replay-sicher).

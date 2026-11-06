@@ -122,7 +122,7 @@ function ui(){if(!G)return;const S=G.S,q=G.req;$('undo').disabled=G.undoIdx()<0;
  $('st').innerHTML=!S.stage?'Vorbereitung vor der Schlacht':`R${S.round}/4 · <b style="color:${COL[S.act]}">${S.P[S.act].n}</b> · ${PH[S.ph]}`;
  {const A=S.K.army;$('mu').innerHTML=A&&A[0]!=null&&A[1]!=null&&ARMY[A[0]]&&ARMY[A[1]]?`<span class="pill">${facSVG(ARMY[A[0]].f,16)} <span style="color:${COL[0]}">${ARMY[A[0]].n}</span> <span style="opacity:.6;font-weight:normal">vs</span> <span style="color:${COL[1]}">${ARMY[A[1]].n}</span> ${facSVG(ARMY[A[1]].f,16)}</span>`:''}
  $('next').disabled=!(q&&q.t=='act'&&!G.isAI(q.who));
- cardsUi();onceUi();$('vp').innerHTML=`SP <b style="color:${COL[0]}">${S.P[0].vp}</b>:<b style="color:${COL[1]}">${S.P[1].vp}</b>`;
+ cardsUi();onceUi();rxUi();$('vp').innerHTML=`SP <b style="color:${COL[0]}">${S.P[0].vp}</b>:<b style="color:${COL[1]}">${S.P[1].vp}</b>`;
  $('next').textContent=S.ph==6?'Zug beenden ▸':(S.ph==5&&!S.Ph.fs.done?'Kämpfen beginnen ▸':'Weiter ▸')}
 $('next').onclick=()=>{const q=G.req;if(q&&q.t=='act')answer({a:'next'})};
 $('hy').onclick=()=>{const m=mode;if(!m)return;
@@ -163,12 +163,22 @@ function onceUi(){const S=G.S,d=$('once');d.innerHTML='';if(!S.stage){document.d
   l.forEach(a=>{const b=document.createElement('button');b.className=(o==seat?'me':'en')+(a.used?' us':a.now===false?' idle':a.now===true?' on':'');b.textContent=a.ic;b.setAttribute('aria-label',a.n);
    b.onclick=()=>pop((o==seat?'Eigene':'Gegnerische')+' Fähigkeit: '+a.n,a.s+(a.u?'<br><br>Einheit: '+a.u:'')+'<br><br>'+(a.st||'<b>'+(a.used?'Bereits eingesetzt (1× pro Schlacht)':a.now===false?'Noch verfügbar (1× pro Schlacht) – aktuell nicht einsetzbar (falsche Phase oder Voraussetzung nicht erfüllt, z. B. keine passende Einheit)':'Jetzt einsetzbar (1× pro Schlacht)')+'</b>'),(o==seat&&a.now===true&&!a.used&&G.req&&(G.req.t=='act'||G.req.t=='fight')&&G.req.who==seat?[{t:'Jetzt einsetzen',fn:()=>answer(a.uid!=null?{a:'ab:'+a.id,u:a.uid}:{a:'ab:'+a.id})}]:[]),true);r.appendChild(b)});d.appendChild(r)});
  document.documentElement.style.setProperty('--oh',d.offsetHeight+'px')}
+function reactKeys(S,o){const keys=Object.values(AB).filter(a=>a.opp&&a.src&&a.src(S,o)).map(a=>[a.n,a.s]);
+ if(ENI(S,o)=='ss_tisch')keys.push(['Reaktion: Widerliche Tischmanieren','Angriffswurf des Gegners senken']);
+ if(RGI(S,o)=='am')keys.push(['Reaktion: Am richtigen Ort zuschlagen','Kein tödlicher Schaden; danach noch angreifen']);return keys}
+// Reaktionsleiste (nur Testmodus „gegen Freund“): zeigt jederzeit, worauf du reagieren kannst und wie es eingestellt ist
+let rxOpen=true;
+function rxUi(){const S=G.S,d=$('rx');if(!d)return;d.innerHTML='';const keys=S.K.asyncSim&&S.stage?reactKeys(S,seat):[];if(!keys.length){d.style.display='none';return}
+ d.style.display='flex';const rp=(S.rp&&S.rp[seat])||{},q=G.req,IC={ask:'❓',yes:'✔',no:'✖'},N={ask:'yes',yes:'no',no:'ask'};
+ const h=document.createElement('button');h.className='rh';h.textContent='↩ Reaktionen '+(rxOpen?'▾':'▸');h.onclick=()=>{rxOpen=!rxOpen;rxUi()};d.appendChild(h);
+ if(!rxOpen)return;
+ keys.forEach(([n,t])=>{const v=rp[n]||'ask',b=document.createElement('button');b.className='rc'+(q&&q.who==seat&&q.title==n?' on':'');
+  b.textContent=IC[v]+' '+n.replace(/^Reaktion: /,'');b.title=t;b.onclick=()=>{G.submit({a:'rp',who:seat,key:n,v:N[v]});rxUi()};d.appendChild(b)});
+ const l=document.createElement('div');l.className='rl2';l.textContent='❓ fragen · ✔ immer einsetzen · ✖ nie – antippen zum Wechseln';d.appendChild(l)}
 function reactUi(){const S=G.S,rp=(S.rp&&S.rp[seat])||{};
- const keys=Object.values(AB).filter(a=>a.opp&&a.src&&a.src(S,seat)).map(a=>[a.n,a.s]);
- if(ENI(S,seat)=='ss_tisch')keys.push(['Reaktion: Widerliche Tischmanieren','Angriffswurf des Gegners senken']);
- if(RGI(S,seat)=='am')keys.push(['Reaktion: Am richtigen Ort zuschlagen','Kein tödlicher Schaden; danach noch angreifen']);
+ const keys=reactKeys(S,seat);
  const L={ask:'Fragen',yes:'Immer einsetzen',no:'Nie einsetzen'},N={ask:'yes',yes:'no',no:'ask'};
- pop('Reaktionen (Standing Orders)','Lege fest, wie auf Reaktionsmöglichkeiten im Gegnerzug verfahren wird. „Fragen“ hält die Partie an, bis du antwortest. Antippen wechselt: Fragen → Immer → Nie. Die Auswahl gilt ab sofort und wird im Spielverlauf gespeichert.',keys.length?keys.map(([n,t])=>{const v=rp[n]||'ask';return {t:n+' – <b>'+L[v]+'</b>',s:t,fn:()=>{G.submit({a:'rp',who:seat,key:n,v:N[v]});reactUi()}}}):[{t:'Deine Armee hat keine Reaktionsfähigkeiten',dis:true}])}
+ pop('Reaktionen (Standing Orders)','Lege fest, wie auf Reaktionsmöglichkeiten im Gegnerzug verfahren wird. „Fragen“ hält die Partie an, bis du antwortest. Antippen wechselt: Fragen → Immer → Nie. Die Auswahl gilt ab sofort und wird im Spielverlauf gespeichert.',keys.length?keys.map(([n,t])=>{const v=rp[n]||'ask';return {t:n+' – <b>'+L[v]+'</b>',s:t,fn:()=>{G.submit({a:'rp',who:seat,key:n,v:N[v]});rxUi();reactUi()}}}):[{t:'Deine Armee hat keine Reaktionsfähigkeiten',dis:true}])}
 function hand(){const h=G.S.P[seat].hand;pop('Meine Taktikkarten','Taktiken werden am Zugende automatisch geprüft. Befehle auf der Kartenrückseite erscheinen bei Beginn der passenden Phase.',h.map(c=>({t:TAC[c-1][0],s:TAC[c-1][1]+'<br><i>Befehl '+TAC[c-1][2]+': '+TAC[c-1][3]+'</i>',dis:true})))}
 /* ---------- Eingabe auf dem Feld ---------- */
 // Herkunft einer Option (Taktikkarte, Einheit, Kampfeigenschaft, Regiment, Verbesserung, Gelände …) vor den Kurztext setzen
@@ -271,7 +281,7 @@ function tap(x,y){if(!G)return;const S=G.S,q=G.req;
   if(m.t=='tgt'){answer({t:hit.id});return}
   return}
  if(hit){if(hit.o==seat&&q&&q.t=='act'&&q.who==seat)pick(hit);else pop(hit.name,S.P[hit.o].n+'<br>'+stat(hit)+flagHtml(hit),[])}}
-window.__V={pop,report,flush:()=>import_flush(),rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
+window.__V={ui:()=>ui(),pop,report,flush:()=>import_flush(),rot:d=>rot(d),splitPop,ai:aiAnswer,dist,chargeDest,pileDest,chargeSnap,get mode(){return mode},get cam(){return {sc,tx,ty,SC}},tap,get busy(){return busy}};
 /* ---------- Kamera ---------- */
 const cv=$('c'),cx=cv.getContext('2d');let sc=1,tx=0,ty=0,fit=1,dpr=1;
 let lastWH='';function resetView(){fit=Math.min(innerWidth/(W*SC),Math.max(200,innerHeight-110)/(H*SC));sc=fit;clampV()}
