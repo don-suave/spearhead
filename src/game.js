@@ -13,7 +13,7 @@ export class Game{
  rep(title,blocks,who){this.emit({t:'rep',title,blocks,act:who==null?this.S.act:who})}
  msg(title,blocks){this.emit({t:'msg',title,blocks})}
  note(text){if(this.phEv)this.phEv.push(text);this.emit({t:'note',text})}
- _step(a){const r=this.gen.next(a);this.req=r.done?null:r.value;const S=this.S;S.U.forEach(u=>{if(u.M&&u.x>=0&&u.M.length!=u.n)syncM(S,u,S.U.filter(e=>e.o!=u.o))})}
+ _step(a){const r=this.gen.next(a);this.req=r.done?null:r.value;const S=this.S;S.U.forEach(u=>{if(u.M&&u.x>=0&&u.M.length!=u.n)syncM(S,u,S.U.filter(e=>e.o!=u.o))});if(S.cohMsg&&S.cohMsg.length){const m=S.cohMsg.splice(0);this.msg('Zusammenhalt nach Verlusten',m.map(x=>({k:'txt',s:`${x.name}: ${x.k} Modell${x.k==1?'':'e'} gefallen. Die übrigen Modelle hätten den Zusammenhalt (${x.co==0.5?'½':x.co}") gebrochen, daher ${x.extra==1?'wurde ein weiteres Modell':'wurden '+x.extra+' weitere Modelle'} entfernt (${x.n} verbleiben).`})))}}
  check(a){return this.req?(this.req.check?this.req.check(a):''):'Keine offene Anfrage'}
  // Standing Orders: {a:'rp',who,key,v:'ask'|'yes'|'no'} – feste Antwort auf Reaktionsfenster (Titel = key); Teil des Logs, daher replay-sicher
  submit(a){if(a&&a.a=='rp'){if(![0,1].includes(a.who)||typeof a.key!='string'||!['ask','yes','no'].includes(a.v))return 'Ungültig';const r=this.S.rp||(this.S.rp=[{},{}]);if(a.v=='ask')delete r[a.who][a.key];else r[a.who][a.key]=a.v;this.lk.push('rp:');this.log.push(a);return ''}

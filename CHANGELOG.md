@@ -1,3 +1,8 @@
+## v140
+- Zusammenhalt nach Verlusten: Reicht die Wahl der gefallenen Modelle nicht, um den Zusammenhalt zu halten, werden weitere Modelle entfernt, bis die Einheit wieder zusammenhängt; eine Meldung nennt Einheit, Verluste und die Zahl der zusätzlich entfernten Modelle.
+- Regelabgleich mit den PDFs: Giftwindfäuste (Sturmbestien) treffen auf 4+ (war 3+). Schreibweisen angeglichen: Herolde des Nagash, Shyishianische Klinge, Oberste Jägerin.
+- Abgleich: 333 von 362 Waffenzeilen und 88 von 89 prüfbaren Einheitenwerten stimmen mit den PDFs überein; bei 388 Fähigkeiten keine abweichenden Zahlenwerte.
+
 ## v139
 - Fix: Beim Drehen einer Formation (↺/↻) bei Bewegung, Angriff und Nachrücken werden die gedrehten Modellwinkel jetzt übernommen (vorher wurde mit gedrehten Winkeln geprüft, aber mit alten gespeichert → Überlappung/Zusammenhalt bei ovalen Bases).
 - Fix: Beim Ziehen ganzer Formationen (Angriff, Nachrücken) ziehen die vordersten Modelle zuerst, hintere blockieren nicht mehr („Zusammenhalt verletzt“ bei einfacher Verschiebung).

@@ -103,7 +103,7 @@ Einmal pro Schlacht, beliebige Nahkampfphase: Feind im Nahkampf mit dem General;
 Passiv: +1 auf Verwundungswürfe im Nahkampf für befreundete Nicht-Helden, wenn das Ziel weniger Modelle hat als die angreifende Einheit.	Passive: +1 to wound rolls of non-Hero friendly melee attacks against units with fewer models than the attacker.
 Totenheerzug	Deathly March
 Einmal pro Zug (Armee), Heldenphase: Nicht-Helden-Einheit außerhalb des Nahkampfs: +1 Zoll Bewegung und +3 Kontrollwert für den Zug.	Once per turn (army), your Hero phase: a non-Hero friendly unit not in combat gets +1" Move and +3 control score for the rest of the turn.
-Shyshianische Klinge	Shyishian Blade
+Shyishianische Klinge	Shyishian Blade
 Passiv: Wucht der Unheilvollen Gruftklinge des Generals ist 2.	Passive: the Rend of your general's Baleful Tombblade is 2.
 Geraubte Lebenskraft	Stolen Vitality
 Passiv: Jeder kritische Treffer des Generals heilt ihn um 2 (nach der Attacke).	Passive: each time your general scores a critical hit, Heal (2) the general after the attack.
@@ -186,7 +186,7 @@ Schlag sie zurück	Strike Them Back
 Ende eines beliebigen Zugs: Befreundete Einheiten, die ein Ziel beanspruchen und im Nahkampf sind, rücken nach; Feind innerhalb von 1 Zoll: Wurf 4+ = 1 tödlicher Schaden.	End of any turn: friendly units claiming an objective and in combat Pile In; enemy within 1": roll 4+ = 1 mortal damage.
 Erbitterte Verteidigung	Stubborn Defence
 Passiv: Befreundete Einheiten haben Rettung 6+, solange sie ein von dir kontrolliertes Ziel beanspruchen.	Passive: friendly units have Ward 6+ while claiming an objective you control.
-Oberste Jäger	Apex Hunters
+Oberste Jägerin	Apex Huntress
 Passiv: Schaden von Thengavar ist 2W6 gegen Monster.	Passive: the Damage of Thengavar is 2D6 against Monsters.
 Mit der Wut des Sturms zuschlagen	Strike with the Fury of the Storm
 Passiv: Die Generalin kämpft zuerst, wenn sie in diesem Zug angegriffen hat.	Passive: the general fights first if she charged this turn.
@@ -1040,7 +1040,7 @@ Ende eines beliebigen Zugs: Wähle eine befreundete Mortek-Garde-Einheit innerha
 Mortisan-Elite	Mortisan Elite
 Unerbittliche Disziplin	Relentless Discipline
 Einmal pro Phase (Armee): Wähle eine befreundete Einheit; W6 (+1 wenn ganz innerhalb 12 Zoll um den General): bei 4+ ein Effekt – Bewegungsphase: +2 Zoll Bewegung; Angriffsphase: +1 auf Angriffswürfe; Nahkampfphase: +1 auf Verwundungswürfe im Nahkampf oder Rettung 5+ (für die Phase).	Once per phase (army): pick a friendly unit; D6 (+1 if wholly within 12" of the general): on 4+ one effect – Movement phase: +2" Move; Charge phase: +1 to charge rolls; Combat phase: +1 to melee wound rolls or Ward 5+ (for the phase).
-Herolde des Nagasch	Heralds of Nagash
+Herolde des Nagash	Heralds of Nagash
 Passiv: Addiere 1 zu Disziplin-Würfen für diese Einheit, solange sie nicht ganz innerhalb 12 Zoll um deinen General ist. Die Einheit wird nicht aufgestellt; ab der zweiten Schlachtrunde, einmal pro Zug (Armee), deine Bewegungsphase (Schrecklicher Sinkflug): Stelle sie weiter als 6 Zoll von allen Feinden auf.	Passive: add 1 to Discipline rolls for this unit while it is not wholly within 12" of your general. The unit is not set up; from the second battle round, once per turn (army), your Movement phase (Terrible Swoop): set it up more than 6" from all enemy units.
 Unvergleichlicher Zusammenhalt	Peerless Cohesion
 Einmal pro Zug (Armee), Reaktion: Du sagst „Unerbittliche Disziplin“ an: Du kannst die Fähigkeit in dieser Phase ein zweites Mal einsetzen, musst aber ein anderes Ziel wählen.	Once per turn (army), reaction: you declare "Relentless Discipline": you can use that ability a second time this phase, but must pick a different target.

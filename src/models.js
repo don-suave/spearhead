@@ -61,6 +61,11 @@ export function removeModels(S,u,k,foes){for(let t=0;t<k&&u.M.length>1;t++){
   const idx=P.map((p,i)=>i).sort((i,j)=>(j==0)-(i==0)||score(P[j])-score(P[i]));
   let pick=idx.find(i=>cohOK(P.filter((p,j)=>j!=i),u.coh||1));if(pick==null){let bb=1e9;for(const i of idx){const b=cohBad(P.filter((p,j)=>j!=i),u.coh||1).length;if(b<bb){bb=b;pick=i}}}
   if(S.T&&S.T.sl)S.T.sl[into(S,0,P[pick].x,P[pick].y)>0?0:1]++;P.splice(pick,1);u.M.splice(pick,1);recentre(u,P)}
+ // Zusammenhalt nach Verlusten: reicht die Wahl der Verluste nicht, werden weitere Modelle entfernt, bis die Einheit wieder zusammenhängt
+ let extra=0;const co=u.coh||1;
+ while(u.M.length>1){const P=abs(u);if(!cohBad(P,co).length)break;let best=0,bb=1e9;P.forEach((p,i)=>{const b=cohBad(P.filter((q,j)=>j!=i),co).length;if(b<bb){bb=b;best=i}});
+  P.splice(best,1);u.M.splice(best,1);recentre(u,P);extra++}
+ if(extra&&u.n>u.M.length){u.n=u.M.length;(S.cohMsg||(S.cohMsg=[])).push({name:u.name,k,extra,n:u.M.length,co})}
  if(u.M.length==1&&k>0&&u.n<=0)u.M.length=0}
 export function addModel(S,u,occupied){ // neues Modell neben vorhandenen platzieren (Rückkehr getöteter Modelle)
  const P=abs(u),base=u._b||{l:P[0].l,w:P[0].w},tpl={l:base.l,w:base.w,a:0};
