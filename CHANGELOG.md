@@ -1,3 +1,6 @@
+## v138
+- Testmodus gegen Freund: Überall, wo bisher „Computer“ den Gegner meinte (Würfelduell, Prioritätswurf, Zugende, Meldungen, Menü), steht jetzt der Name des Freunds.
+
 ## v137
 - Spielstart: Gegnerischen Spearhead wählbar („Zufällig“ oder „Selbst auswählen“ mit Armee-Auswahl); dein eigener ist dabei ausgeschlossen.
 
