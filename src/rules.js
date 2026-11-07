@@ -229,7 +229,7 @@ export const overlapErr=(S,g)=>{const A=abs(g);return S.U.some(v=>v.id!==g.id&&v
 // Zielpunkt (x,y) = gewünschter Mittelpunkt, rot = Drehung der Formation. Liefert automatisch die passende Endformation.
 export function moveForm(S,u,x,y,rng,rot=0,opt=false){setFly(flyOf(S,u));try{const r=moveForm0(S,u,x,y,rng,rot);return opt&&r.P?moveOpt(S,u,r,rng):r}finally{setFly(false)}}
 function moveOpt(S,u,r,rng){const A=abs(u),fe=foes(S,u).filter(e=>e.x>=0),E=fe.flatMap(e=>abs(e)),O=S.U.filter(v=>v!==u&&v.x>=0&&v.M).flatMap(v=>abs(v));
- const ok=P=>{const N=P.map((p,i)=>({x:p[0],y:p[1],a:A[i].a,l:A[i].l,w:A[i].w}));
+ const ok=P=>{const N=P.map((p,i)=>({x:p[0],y:p[1],a:p[2]!=null?p[2]:A[i].a,l:A[i].l,w:A[i].w}));
   return N.every((p,i)=>p.x>=p.l/2&&p.x<=W-p.l/2&&p.y>=p.l/2&&p.y<=H-p.l/2&&!onTer(S,p.x,p.y,p.l/2-.02)&&!O.some(q=>mgap(p,q)<0)&&(S.cmb||!E.some(q=>mgap(p,q)<=CR))&&!N.some((q,j)=>j>i&&mgap(p,q)<0))&&!cohBad(N,u.coh).length};
  const Q=optForm(S,u,r.P,rng,ok);if(Q===r.P)return r;
  const ob=obs(S,u);let cost=0;
@@ -258,14 +258,14 @@ function moveForm0(S,u,x,y,rng,rot=0){
   for(const i of cohBad(N,u.coh)){const q=N[i],d=Math.hypot(cx-q.x,cy-q.y)||1;
    for(const st of [.5,1,1.5]){const t={...q,x:q.x+(cx-q.x)/d*st,y:q.y+(cy-q.y)/d*st},old=N[i];N[i]=null;if(!chk(t,i)){N[i]=t;break}N[i]=old}}}
  if(cohBad(N,u.coh).length)return {err:'Zusammenhalt nicht herstellbar – Ziel näher wählen oder Modelle einzeln bewegen'};
- return {P:N.map(q=>[q.x,q.y]),cost:Math.max(0,...cost),err:''}}
+ return {P:N.map(q=>[q.x,q.y,q.a]),cost:Math.max(0,...cost),err:''}}
 
 // Automatische Formationsoptimierung (Bewegung / Angriff / Nachrücken): Modelle möglichst auf Zielen, nah am Feind und dicht beieinander.
 // ok(P) = Regelprüfung der gesamten Formation (true = erlaubt); lim = maximale Strecke je Modell vom Ausgangspunkt A.
 export function optForm(S,u,P0,lim,ok,hot){const A=abs(u),n=A.length;if(n<2&&!hot)return P0;
  const E=foes(S,u).filter(e=>e.x>=0&&Math.hypot(e.x-u.x,e.y-u.y)<lim+u.r+e.r+14).flatMap(e=>abs(e));
  const OB=S.obj.filter(p=>A.some(m=>objD(p,m.x,m.y)<=lim+3));
- const P=P0.map(p=>[p[0],p[1]]),sh=(i,x,y)=>({x,y,a:A[i].a,l:A[i].l,w:A[i].w});
+ const P=P0.map(p=>[p[0],p[1],p[2]]),sh=(i,x,y)=>({x,y,a:P[i][2]!=null?P[i][2]:A[i].a,l:A[i].l,w:A[i].w});
  const sc=(i,x,y)=>{const m=sh(i,x,y);let v=0;
   if(OB.length){const d=Math.min(...OB.map(p=>objD(p,x,y)));v+=d<=3?5:-.25*(d-3)}
   if(E.length){const g=Math.min(...E.map(q=>mgap(m,q)));v+=g<=CR?3:0;v-=(hot?.3:.08)*Math.min(Math.max(0,g),14)}
@@ -277,15 +277,15 @@ export function optForm(S,u,P0,lim,ok,hot){const A=abs(u),n=A.length;if(n<2&&!ho
    for(const st of [1.5,.75,.35,.15])for(let k=0;k<16;k++){const x=P[i][0]+Math.cos(k*Math.PI/8)*st,y=P[i][1]+Math.sin(k*Math.PI/8)*st;
     if(Math.hypot(x-A[i].x,y-A[i].y)>lim+1e-9)continue;const g=sc(i,x,y)-base;if(g>1e-6)C.push([g,x,y])}
    C.sort((a,b)=>b[0]-a[0]);
-   for(const [,x,y] of C.slice(0,5)){const old=P[i];P[i]=[x,y];if(ok(P)){imp=true;break}P[i]=old}}
+   for(const [,x,y] of C.slice(0,5)){const old=P[i];P[i]=[x,y,old[2]];if(ok(P)){imp=true;break}P[i]=old}}
   if(!imp)break}
  return P}
 export const moveErr=(S,u,x,y,rng,rot)=>moveForm(S,u,x,y,rng,rot).err||GL.mvChk.reduce((r,f)=>r||f(S,u,x,y),'');
 // Bewegung ausführen: Endformation übernehmen, Rückgabe = verbrauchte Strecke (längster Modellweg)
 export function applyMove(S,u,a,rng){
- if(a.P){const A=abs(u),L=Math.max(0,...a.P.map((p,i)=>Math.hypot(+p[0]-A[i].x,+p[1]-A[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1]})));return L}
+ if(a.P){const A=abs(u),L=Math.max(0,...a.P.map((p,i)=>Math.hypot(+p[0]-A[i].x,+p[1]-A[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1],a:p[2]})));return L}
  const r=moveForm(S,u,a.x,a.y,rng,a.rot,true);if(!r.P){u.x=a.x;u.y=a.y;return 0}
- setAbs(u,r.P.map(p=>({x:p[0],y:p[1]})));return r.cost}
+ setAbs(u,r.P.map(p=>({x:p[0],y:p[1],a:p[2]})));return r.cost}
 export const obs=(S,u)=>foes(S,u).filter(e=>e.x>=0&&!passE(S,u,e)).map(e=>({x:e.x,y:e.y,r:Math.min(e.r,2.5)}));
 export const pileR=(S,u)=>3+((S.T.pex||{})[u.id]||0);
 export function pileErr(S,u,t,x,y){const g={...u,x,y};
@@ -306,7 +306,7 @@ export const adjAllow=(S,u)=>Math.max(0,(S.T.mvt[u.id]!=null?S.T.mvt[u.id]:mvOf(
 export const mvRest=(S,u,extra=0)=>Math.max(0,mvOf(S,u)+extra-(S.T.mvd[u.id]||0));
 export function adjErr(S,u,P,allow){const A=abs(u);
  if(!Array.isArray(P)||P.length!=A.length)return 'Ungültig';
- const N=P.map((p,i)=>({x:+p[0],y:+p[1],a:A[i].a,l:A[i].l,w:A[i].w}));
+ const N=P.map((p,i)=>({x:+p[0],y:+p[1],a:p[2]!=null?+p[2]:A[i].a,l:A[i].l,w:A[i].w}));
  for(let i=0;i<N.length;i++){const m=N[i];if(!Number.isFinite(m.x)||!Number.isFinite(m.y))return 'Ungültig';
   if(Math.hypot(m.x-A[i].x,m.y-A[i].y)>allow+1e-6)return 'Ein Modell bewegt sich weiter als '+allow.toFixed(1)+' Zoll';
   if(m.x<m.l/2||m.x>W-m.l/2||m.y<m.l/2||m.y>H-m.l/2)return 'Außerhalb des Spielfelds';
@@ -318,7 +318,7 @@ export function adjErr(S,u,P,allow){const A=abs(u);
 // Nachrücken Modell für Modell: jedes bis 3 Zoll, nicht weiter vom Ziel (außer nach Angriff), im Nahkampf mit allen bisherigen Gegnern bleiben
 export function pileModelErr(S,u,t,P){const A=abs(u),B=abs(t);
  if(!Array.isArray(P)||P.length!=A.length)return 'Ungültig';
- const N=P.map((p,i)=>({x:+p[0],y:+p[1],a:A[i].a,l:A[i].l,w:A[i].w})),gp=(m,L)=>Math.min(...L.map(q=>mgap(m,q)));
+ const N=P.map((p,i)=>({x:+p[0],y:+p[1],a:p[2]!=null?+p[2]:A[i].a,l:A[i].l,w:A[i].w})),gp=(m,L)=>Math.min(...L.map(q=>mgap(m,q)));
  for(let i=0;i<N.length;i++){const m=N[i];if(!Number.isFinite(m.x)||!Number.isFinite(m.y))return 'Ungültig';
   if(Math.hypot(m.x-A[i].x,m.y-A[i].y)>pileR(S,u)+1e-6)return 'Ein Modell bewegt sich weiter als '+pileR(S,u).toFixed(0)+' Zoll';
   if(m.x<m.l/2||m.x>W-m.l/2||m.y<m.l/2||m.y>H-m.l/2)return 'Außerhalb des Spielfelds';
@@ -329,12 +329,14 @@ export function pileModelErr(S,u,t,P){const A=abs(u),B=abs(t);
  for(const e of foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR)){const C=abs(e);if(!N.some(p=>C.some(q=>mgap(p,q)<=CR)))return 'Du musst mit allen bisherigen Gegnern im Nahkampf bleiben'}
  if(cohBad(N,u.coh).length)return 'Zusammenhalt verletzt';return ''}
 // Nachrücken per Ziehen: Wunschposition je Modell (verschoben+gedreht), fehlerhafte Modelle weichen schrittweise zur Ausgangsposition zurück
+// Reihenfolge beim Verschieben einer Formation: vorderste Modelle (in Bewegungsrichtung) zuerst, damit hintere nachrücken können statt zu blockieren
+const frontOrder=(A,u,x,y)=>{const dx=x-u.x,dy=y-u.y;return A.map((m,i)=>i).sort((a,b)=>((A[b].x-u.x)*dx+(A[b].y-u.y)*dy)-((A[a].x-u.x)*dx+(A[a].y-u.y)*dy))};
 export function pileForm(S,u,t,x,y,rot=0){const A=abs(u),B=abs(t),c=Math.cos(rot||0),s=Math.sin(rot||0),ch=has(S.T.charged,u.id);
  const O=S.U.filter(v=>v!==u&&v.x>=0&&v.M).flatMap(v=>abs(v)),gp=(m,L)=>Math.min(...L.map(q=>mgap(m,q)));
- const P=A.map(m=>[m.x,m.y]),N=A.map(m=>({...m}));
+ const P=A.map(m=>[m.x,m.y,m.a]),N=A.map(m=>({...m}));
  const okM=(m,i)=>!(m.x<m.l/2||m.x>W-m.l/2||m.y<m.l/2||m.y>H-m.l/2)&&!onTer(S,m.x,m.y,m.l/2-.02)&&(ch||gp(m,B)<=gp(A[i],B)+1e-6)&&!O.some(q=>mgap(m,q)<0)&&!N.some((q,j)=>j!=i&&mgap(m,q)<0);
- A.forEach((m,i)=>{const dx=m.x-u.x,dy=m.y-u.y,wx=x+dx*c-dy*s,wy=y+dx*s+dy*c;let v=Math.hypot(wx-m.x,wy-m.y);const k0=v>pileR(S,u)?pileR(S,u)/v:1;
-  for(let k=k0;k>=-1e-9;k-=.1){const kk=Math.max(0,k),q={...m,x:m.x+(wx-m.x)*kk,y:m.y+(wy-m.y)*kk,a:m.a+(rot||0)*kk};if(okM(q,i)){N[i]=q;P[i]=[q.x,q.y];break}}});
+ frontOrder(A,u,x,y).forEach(i=>{const m=A[i],dx=m.x-u.x,dy=m.y-u.y,wx=x+dx*c-dy*s,wy=y+dx*s+dy*c;let v=Math.hypot(wx-m.x,wy-m.y);const k0=v>pileR(S,u)?pileR(S,u)/v:1;
+  for(let k=k0;k>=-1e-9;k-=.1){const kk=Math.max(0,k),q={...m,x:m.x+(wx-m.x)*kk,y:m.y+(wy-m.y)*kk,a:m.a+(rot||0)*kk};if(okM(q,i)){N[i]=q;P[i]=[q.x,q.y,q.a];break}}});
  return {P,err:pileModelErr(S,u,t,P)}}
 // Automatisches Nachrücken (Mensch): möglichst viele Modelle in Nahkampfreichweite des Ziels und nah an Zielen, Regeln wie pileModelErr; start = bisherige Wunschpositionen
 export function autoPile(S,u,t,start){const A=abs(u),B=abs(t),R=pileR(S,u),ch=has(S.T.charged,u.id);
@@ -359,10 +361,10 @@ export function autoPile(S,u,t,start){const A=abs(u),B=abs(t),R=pileR(S,u),ch=ha
 // Angriff per Ziehen: Wunschposition je Modell (verschoben+gedreht, höchstens Wurf Zoll), Modelle stoppen vor Feinden/Hindernissen und weichen schrittweise zurück
 export function chargeForm(S,u,x,y,roll,rot=0){const A=abs(u),c=Math.cos(rot||0),s=Math.sin(rot||0);
  const O=S.U.filter(v=>v!==u&&v.x>=0&&v.M).flatMap(v=>abs(v));
- const P=A.map(m=>[m.x,m.y]),N=A.map(m=>({...m}));
+ const P=A.map(m=>[m.x,m.y,m.a]),N=A.map(m=>({...m}));
  const okM=(m,i)=>!(m.x<m.l/2||m.x>W-m.l/2||m.y<m.l/2||m.y>H-m.l/2)&&!onTer(S,m.x,m.y,m.l/2-.02)&&!O.some(q=>mgap(m,q)<0)&&!N.some((q,j)=>j!=i&&mgap(m,q)<0);
- A.forEach((m,i)=>{const dx=m.x-u.x,dy=m.y-u.y,wx=x+dx*c-dy*s,wy=y+dx*s+dy*c;const v=Math.hypot(wx-m.x,wy-m.y),k0=v>roll?roll/v:1,st=v>0?.05/v:1;
-  for(let k=k0;k>=-1e-9;k-=st){const kk=Math.max(0,k),q={...m,x:m.x+(wx-m.x)*kk,y:m.y+(wy-m.y)*kk,a:m.a+(rot||0)*kk};if(okM(q,i)){N[i]=q;P[i]=[q.x,q.y];break}}});
+ frontOrder(A,u,x,y).forEach(i=>{const m=A[i],dx=m.x-u.x,dy=m.y-u.y,wx=x+dx*c-dy*s,wy=y+dx*s+dy*c;const v=Math.hypot(wx-m.x,wy-m.y),k0=v>roll?roll/v:1,st=v>0?.05/v:1;
+  for(let k=k0;k>=-1e-9;k-=st){const kk=Math.max(0,k),q={...m,x:m.x+(wx-m.x)*kk,y:m.y+(wy-m.y)*kk,a:m.a+(rot||0)*kk};if(okM(q,i)){N[i]=q;P[i]=[q.x,q.y,q.a];break}}});
  const e0=chargeModelErr(S,u,P,roll);if(e0)return {P,err:e0};
  const Q=optForm(S,u,P,roll,Pq=>!chargeModelErr(S,u,Pq,roll),true);return {P:chargeModelErr(S,u,Q,roll)?P:Q,err:''}}
 // Verzweifelter Schlaghagel: Angriff darf nicht innerhalb ½" einer Klingengeist-Einheit auf eigenem Ziel enden, außer unmodifizierter Wurf mindestens 5
@@ -384,7 +386,7 @@ export const mobs=(S,u)=>{const r=[];foes(S,u).filter(e=>e.x>=0&&!passE(S,u,e)).
 export function chargeModelErr(S,u,P,roll){setFly(flyOf(S,u));try{return chargeModelErr0(S,u,P,roll)}finally{setFly(false)}}
 function chargeModelErr0(S,u,P,roll){const A=abs(u);
  if(!Array.isArray(P)||P.length!=A.length)return 'Ungültig';
- const N=P.map((p,i)=>({x:+p[0],y:+p[1],a:A[i].a,l:A[i].l,w:A[i].w})),fs=foes(S,u).filter(e=>e.x>=0),ob=mobs(S,u);
+ const N=P.map((p,i)=>({x:+p[0],y:+p[1],a:p[2]!=null?+p[2]:A[i].a,l:A[i].l,w:A[i].w})),fs=foes(S,u).filter(e=>e.x>=0),ob=mobs(S,u);
  for(let i=0;i<N.length;i++){const m=N[i];if(!Number.isFinite(m.x)||!Number.isFinite(m.y))return 'Ungültig';
   if(m.x<m.l/2||m.x>W-m.l/2||m.y<m.l/2||m.y>H-m.l/2)return 'Außerhalb des Spielfelds';
   if(onTer(S,m.x,m.y,m.l/2-.02))return 'Nicht auf Gelände stehen';

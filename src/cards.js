@@ -99,7 +99,7 @@ export function* doCharge(G,u){const S=G.S,P=S.P[u.o];const tp=yield* tisch(G,u)
  const roll=Math.max(0,sum()+mod());S.T.cr[u.id]=roll;S.T.cr0[u.id]=sum();
  const ans=yield {t:'dest',who:u.o,u:u.id,rng:roll,chg:1,roll,text:'Angriffswurf '+roll,check:x=>x&&x.stay?'':(x&&x.P?chargeModelErr(S,u,x.P,roll):(x&&Number.isFinite(x.x)&&Number.isFinite(x.y)?chargeErr(S,u,x.x,x.y,roll):'Ungültig'))};
  if(ans.stay){G.rep('Angriff gescheitert',[{k:'txt',s:`${u.name} bleibt stehen (Wurf ${roll}").`}]);return}
- if(ans.P)setAbs(u,ans.P.map(p=>({x:+p[0],y:+p[1]})));else{u.x=ans.x;u.y=ans.y}add(S.T.charged,u.id);if(S.T.kcA&&/Kavallerie/.test(u.kw))addFx(S,{k:'first',u:u.id,exp:'turn'});if(has(S.T.bers,u.id))addFx(S,{k:'first',u:u.id,exp:'own'});G.rep('Angriff erfolgreich',[{k:'txt',s:`${u.name} hat mit Wurf ${roll}" einen Feind erreicht.`}])}
+ if(ans.P)setAbs(u,ans.P.map(p=>({x:+p[0],y:+p[1],a:p[2]})));else{u.x=ans.x;u.y=ans.y}add(S.T.charged,u.id);if(S.T.kcA&&/Kavallerie/.test(u.kw))addFx(S,{k:'first',u:u.id,exp:'turn'});if(has(S.T.bers,u.id))addFx(S,{k:'first',u:u.id,exp:'own'});G.rep('Angriff erfolgreich',[{k:'txt',s:`${u.name} hat mit Wurf ${roll}" einen Feind erreicht.`}])}
 export function* doRun(G,u){const S=G.S;
  let vf=EN(S,u.o)=='Vorwärts!'&&!S.T.vw&&!isHero(u)&&S.U.some(g=>g.o==u.o&&g.gen&&g.x>=0&&dist(u,g)<=12),r=vf?6:(()=>{let q=d6(S);if(q<=3){const g=gnl(S,u.o);if(hasAb(u,'ep_wahn')||(ENI(S,u.o)=='fp_lunge'&&g&&u.x>=0&&wholly(u,g,9)))q=4}return Math.max(0,q+fxSum(S,u,'run')+hk(S,'run',u)+(wgN(S,u.o)==3?1:0)+(AN(S,u.o)=='Herzspaltzirkel'?1:0))})();
  if(vf){S.T.vw=true;G.note('Vorwärts!: +6 Zoll statt Rennenwurf')}

@@ -271,7 +271,7 @@ export function* doAction(G,a){const S=G.S,o=S.act;
  const u=byId(S,a.u),P0=u&&u.M&&S.ph==2?abs(u).map(m=>({x:m.x,y:m.y})):null;
  if(u)yield* kdPre(G,a,u);
  if(a.a=='move'){const L=applyMove(S,u,a,mvRest(S,u));add(S.Ph.used,u.id);add(S.T.moved,u.id);S.T.mvt[u.id]=mvOf(S,u);S.T.mvd[u.id]=(S.T.mvd[u.id]||0)+L}
- else if(a.a=='adj'){const A0=abs(u),used=Math.max(...a.P.map((p,i)=>Math.hypot(+p[0]-A0[i].x,+p[1]-A0[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1]})));add(S.T.moved,u.id);
+ else if(a.a=='adj'){const A0=abs(u),used=Math.max(...a.P.map((p,i)=>Math.hypot(+p[0]-A0[i].x,+p[1]-A0[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1],a:p[2]})));add(S.T.moved,u.id);
   if(has(S.Ph.used,u.id))S.T.adj.push(u.id);else{S.T.adjB.push(u.id);S.T.mvt[u.id]=mvOf(S,u)}
   S.T.mvd[u.id]=(S.T.mvd[u.id]||0)+used}
  else if(a.a=='run')yield* doRun(G,u);

@@ -1,3 +1,9 @@
+## v139
+- Fix: Beim Drehen einer Formation (↺/↻) bei Bewegung, Angriff und Nachrücken werden die gedrehten Modellwinkel jetzt übernommen (vorher wurde mit gedrehten Winkeln geprüft, aber mit alten gespeichert → Überlappung/Zusammenhalt bei ovalen Bases).
+- Fix: Beim Ziehen ganzer Formationen (Angriff, Nachrücken) ziehen die vordersten Modelle zuerst, hintere blockieren nicht mehr („Zusammenhalt verletzt“ bei einfacher Verschiebung).
+- Fix: Zurückkehrende Modelle (z. B. Rasende Hingabe) werden nicht mehr auf Sichtblocker-Gelände oder außerhalb des Felds gesetzt.
+- Neue Tests: test/movefuzz.mjs (Bewegung/Angriff/Nachrücken, alle Armeen, alle Packs), test/invariants.mjs (KI-Partien, Invarianten nach jedem Schritt).
+
 ## v138
 - Testmodus gegen Freund: Überall, wo bisher „Computer“ den Gegner meinte (Würfelduell, Prioritätswurf, Zugende, Meldungen, Menü), steht jetzt der Name des Freunds.
 

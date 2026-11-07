@@ -1,7 +1,7 @@
 // Modellebene: Basen (rund/oval als „Kapsel“), Formationen, Zusammenhalt, Verluste.
 // Ein Modell ist {dx,dy,a,l,w}: Offset zum Einheiten-Mittelpunkt (u.x,u.y = Schwerpunkt), Winkel, Länge, Breite (Zoll).
 // Dadurch bewegt sich jede Einheit mit u.x/u.y automatisch starr mit all ihren Modellen.
-import {into,W,H} from './geom.js';
+import {into,W,H,onTer} from './geom.js';
 export const MM=25.4,GAP=.15;
 export function parseBase(b){const p=String(b||'25').split('x'),a=parseFloat(p[0])||25,c=parseFloat(p[1]);const bb=isNaN(c)?a:c;return {l:Math.max(a,bb)/MM,w:Math.min(a,bb)/MM}}
 // Formation: Raster, letzte Reihe zentriert, erstes Modell (Anführer) vorne links/mitte
@@ -66,7 +66,7 @@ export function addModel(S,u,occupied){ // neues Modell neben vorhandenen platzi
  const P=abs(u),base=u._b||{l:P[0].l,w:P[0].w},tpl={l:base.l,w:base.w,a:0};
  let best=null,bs=1e9;
  for(const p of P)for(let k=0;k<16;k++){const a=k*Math.PI/8,d=(p.l+tpl.l)/2+GAP,q={x:p.x+Math.cos(a)*d,y:p.y+Math.sin(a)*d,...tpl};
-  if(occupied.some(o=>mgap(q,o)<0))continue;const sc=Math.hypot(q.x-u.x,q.y-u.y)+100*cohBad([...P,q],u.coh||1).length;if(sc<bs){bs=sc;best=q}}
+  if(occupied.some(o=>mgap(q,o)<0)||q.x<q.w/2||q.y<q.w/2||q.x>W-q.w/2||q.y>H-q.w/2||onTer(S,q.x,q.y,q.w/2))continue;const sc=Math.hypot(q.x-u.x,q.y-u.y)+100*cohBad([...P,q],u.coh||1).length;if(sc<bs){bs=sc;best=q}}
  if(!best)return false;u.M.push({dx:0,dy:0,a:0,l:tpl.l,w:tpl.w});P.push(best);recentre(u,P);return true}
 // Modellzahl an u.n angleichen
 export function syncM(S,u,foes){if(!u.M||u.x<0)return;
