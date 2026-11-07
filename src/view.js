@@ -168,8 +168,9 @@ function reactKeys(S,o){const keys=Object.values(AB).filter(a=>a.opp&&a.src&&a.s
  if(RGI(S,o)=='am')keys.push(['Reaktion: Am richtigen Ort zuschlagen','Kein tödlicher Schaden; danach noch angreifen']);return keys}
 // Reaktionsleiste (nur Testmodus „gegen Freund“): zeigt jederzeit, worauf du reagieren kannst und wie es eingestellt ist
 let rxOpen=true;
-function rxUi(){const S=G.S,d=$('rx');if(!d)return;d.innerHTML='';const keys=S.K.asyncSim&&S.stage?reactKeys(S,seat):[];if(!keys.length){d.style.display='none';return}
- d.style.display='flex';const rp=(S.rp&&S.rp[seat])||{},q=G.req,IC={ask:'❓',yes:'✔',no:'✖'},N={ask:'yes',yes:'no',no:'ask'};
+function rxUi(){const S=G.S,d=$('rx');if(!d)return;d.innerHTML='';if(!S.K.asyncSim||!S.stage){d.style.display='none';return}const keys=reactKeys(S,seat),fn=S.P[1-seat].n;
+ d.style.display='flex';{const st=document.createElement('div');st.className='rl2';st.style.cssText='font-weight:600;background:#171a20ee;padding:5px 8px;border-radius:7px;border:1px solid #d9a441;color:#f0d9a0';const mine=S.act==seat;st.textContent='🧪 Test gegen '+fn+' (simuliert) · '+(mine?'Du bist am Zug – '+fn+' wartet und darf in deinen Phasen reagieren':fn+' ist am Zug – du darfst reagieren, wenn es möglich ist')+(keys.length?'':' · deine Armee hat keine Reaktionen');d.appendChild(st)}
+ if(!keys.length)return;const rp=(S.rp&&S.rp[seat])||{},q=G.req,IC={ask:'❓',yes:'✔',no:'✖'},N={ask:'yes',yes:'no',no:'ask'};
  const h=document.createElement('button');h.className='rh';h.textContent='↩ Reaktionen '+(rxOpen?'▾':'▸');h.onclick=()=>{rxOpen=!rxOpen;rxUi()};d.appendChild(h);
  if(!rxOpen)return;
  keys.forEach(([n,t])=>{const v=rp[n]||'ask',b=document.createElement('button');b.className='rc'+(q&&q.who==seat&&q.title==n?' on':'');

@@ -1824,3 +1824,43 @@ Jetz’ geht’s los	Here We Go!
 Aufstellung: Deine Kraftprotze werden nicht aufgestellt. Ab Runde 3 – deine Bewegungsphase: Stelle die Einheit weiter als 6" von allen feindlichen Einheiten entfernt irgendwo auf dem Schlachtfeld auf.	Setup: Your Brutes are not set up in deployment. From round 3 – your movement phase: Set the unit up anywhere on the battlefield more than 6" from all enemy units.
 Squiglawine	Squig Avalanche
 Aufstellung: Eine deiner Squighoppa-Einheiten wird nicht aufgestellt. Ab Runde 3 kann sie Squiglawine einsetzen – deine Bewegungsphase: Stelle sie vollständig innerhalb deines Territoriums, vollständig innerhalb von 3" um eine Schlachtfeldkante und weiter als 6" von allen feindlichen Einheiten entfernt auf.	Setup: One of your Squig Hoppers units is not set up in deployment. From round 3 it can use Squig Avalanche – your movement phase: Set it up wholly within your territory, wholly within 3" of a battlefield edge and more than 6" from all enemy units.
+Schrotthorde	Scrapglutt
+Das Leben ist hart	Life Is Hard
+Beliebige Heldenphase: Wähle eine befreundete Gnoblars-Einheit in Nahkampfreichweite deines Generals und wirf einen W3. Bei 2+ heilt dein General (Wurfergebnis) und 1 Modell jener Gnoblars-Einheit wird getötet.	Any hero phase: Pick a friendly Gnoblars unit within combat range of your general and roll a D3. On a 2+, your general heals (the result) and 1 model from that Gnoblars unit is slain.
+Rasende Artillerie	Ravenous Artillery
+Passiv: Bei einem unmodifizierten Angriffswurf von 6+ für eine befreundete Gnoblar-Schrottschleuder addiere für den Rest des Zugs 3 auf den Attackenwert der Begleiter-Waffen jener Einheit.	Passive: On an unmodified charge roll of 6+ for a friendly Gnoblar Scrapflinger, add 3 to the Attacks characteristic of that unit's Companion weapons for the rest of the turn.
+Wilde Instinkte	Wild Instincts
+Reaktion auf eine Kämpfen-Fähigkeit deines Generals: Wähle eine befreundete Einheit in Nahkampfreichweite deines Generals, die in diesem Zug keine Kämpfen-Fähigkeit eingesetzt hat. Sie kann gewählt werden, um unmittelbar danach eine Kämpfen-Fähigkeit einzusetzen.	Reaction to a Fight ability used by your general: Pick a friendly unit within combat range of your general that has not used a Fight ability this turn. It can be picked to use a Fight ability immediately after the Fight ability used by your general has been resolved.
+Massiger Körper	Massive Body
+Passiv: Addiere 2 auf den Ausdauer-Wert deines Generals.	Passive: Add 2 to the Health characteristic of your general.
+Fiese Falle	Nasty Trap
+Einmal pro Schlacht, deine Bewegungsphase: Wähle eine feindliche Einheit innerhalb von 12 Zoll um deinen General und gib ihr den Falle-Marker deines Generals. Wird das Ziel gewählt, um eine Bewegung- oder Angriff-Fähigkeit auszuführen, wirf einen Würfel: Bei 4+ hat jene Fähigkeit keinen Effekt und der Falle-Marker wird entfernt.	Once per battle, your movement phase: Pick an enemy unit within 12" of your general and give it your general's Trap marker. While the target has a Trap marker, each time it is picked to use a Move or Charge ability, roll a dice: on a 4+ that ability has no effect and the Trap marker is removed.
+Erfahrener Jäger	Seasoned Hunter
+Einmal pro Schlacht, beliebige Heldenphase: Wähle eine feindliche Einheit innerhalb von 12 Zoll um deinen General. Addiere für den Rest des Zugs 1 auf den Wucht-Wert der Nahkampfattacken deines Generals gegen jene Einheit.	Once per battle, any hero phase: Pick an enemy unit within 12" of your general. For the rest of the turn, add 1 to the Rend characteristic of your general's melee attacks that target that unit.
+Besser spät als nie	Better Late Than Never
+Kampfeigenschaft: Die Eisenwänste-Einheit mit 4 Modellen wird nicht aufgestellt; ab der dritten Schlachtrunde kann sie in deiner Bewegungsphase „Dann legen wir mal los“ einsetzen: ganz in eigenem Territorium, ganz innerhalb 6" um eine Schlachtfeldkante, nicht im Nahkampf	Battle trait: The Ironguts unit with 4 models is not set up during the deployment phase. In the third battle round, it can use Let's Get Cracking in your movement phase: set it up wholly within friendly territory, wholly within 6" of the battlefield edge and not in combat.
+Menschenfänger	Man-catchers
+Menschenfänger-Armbrust	Man-catcher Crossbow
+Reißzähne des Frostsäbelzahns	Frost Sabretusk Fangs
+Metzgermesser	Butcher's Knife
+Nützlich bleiben	Make Yourself Useful
+Passiv: Solange sich mindestens einer der Gnoblar- oder Frostsäbelzahn-Marker dieser Einheit auf dem Schlachtfeld befindet, hat sie Rettung 5+. Jedes Mal, wenn du einen erfolgreichen Rettungswurf für sie ausführst, entferne 1 ihrer Marker (hier zuerst Gnoblar-, dann Frostsäbelzahn-Marker). Ohne Frostsäbelzahn-Marker kann sie nicht mit den Reißzähnen des Frostsäbelzahns attackieren.	Passive: While at least one of this unit's Gnoblar or Frost Sabretusk markers is on the battlefield, this unit has Ward (5+). Each time you make a successful ward roll for this unit, remove 1 of its markers (here: Gnoblar markers first, then the Frost Sabretusk marker). Without the Frost Sabretusk marker, it cannot attack with the Frost Sabretusk Fangs.
+Marker	Markers
+Menschenfänger beginnen mit 3 Gnoblar-Markern, 1 Frostsäbelzahn-Marker und 1 Falle-Marker. Der Falle-Marker hat keinen Effekt, es sei denn, du gibst deinem General die Verbesserung „Fiese Falle“.	Man-catchers start with 3 Gnoblar markers, 1 Frost Sabretusk marker and 1 Trap marker. The Trap marker has no effect unless you give your general the Nasty Trap enhancement.
+Nicht nachlassen	Don't Slacken
+Deine Heldenphase: Wähle eine befreundete Infanterie-Einheit vollständig innerhalb von 12 Zoll um diese Einheit und wirf einen Würfel. Bei 3+ addiere bis zum Beginn deines nächsten Zugs das Wurfergebnis auf den Kontrollwert des Ziels.	Your hero phase: Pick a friendly Infantry unit wholly within 12" of this unit and roll a dice. On a 3+, add the result to the target's Control characteristic until the start of your next turn.
+Eisenwänste (Schrotthorde)	Ironguts (Scrapglutt)
+Eiserner Schneid	Iron Edge
+Passiv: Ignoriere negative Modifikatoren auf den Kontrollwert dieser Einheit.	Passive: Ignore negative modifiers to this unit's Control characteristic.
+Eisenwänste (Nachhut)	Ironguts (Rearguard)
+Diese Einheit wird nicht in der Aufstellungsphase aufgestellt. In der dritten Schlachtrunde kann sie die Fähigkeit „Dann legen wir mal los“ einsetzen (Deine Bewegungsphase): Stelle diese Einheit vollständig in befreundetem Territorium, vollständig innerhalb von 6 Zoll um die Schlachtfeldkante und nicht im Nahkampf auf.	This unit is not set up in the deployment phase. In the third battle round it can use Let's Get Cracking (your movement phase): set this unit up wholly within friendly territory, wholly within 6" of the battlefield edge and not in combat.
+Gnoblars	Gnoblars
+Scharfes Zeug	Sharp Stuff
+Zusammengewürfelte Bewaffnung	Mismatched Weaponry
+Kein Mangel an Freiwilligen	Plenty of Volunteers
+Ende eines beliebigen Zugs: Du kannst W3 Modelle in diese Einheit zurückbringen.	End of any turn: You can return D3 models to this unit.
+Gnoblar-Schrottschleuder	Gnoblar Scrapflinger
+Haufen alten Schrotts	Pile of Old Scrap
+Schrottsammler-Stecher	Scrap Collector Prod
+Schrottregen	Scrap Rain
+Deine Fernkampfphase: Wähle eine feindliche Einheit, aus der in dieser Phase durch Fernkampfattacken dieser Einheit mindestens 1 Modell getötet wurde. Subtrahiere für den Rest des Zugs 1 von Trefferwürfen für Attacken des Ziels.	Your shooting phase: Pick an enemy unit from which at least 1 model was slain in this phase by shooting attacks made by this unit. For the rest of the turn, subtract 1 from hit rolls for attacks made by the target.

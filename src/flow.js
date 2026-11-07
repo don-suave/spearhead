@@ -214,13 +214,15 @@ function* turn(G){const S=G.S;
 
 export function* fights(G){const S=G.S,fs=S.Ph.fs;fs.on=true;fs.done=false;fs.who=S.act;
  const pk=o=>eligF(S,o).filter(x=>sfOK(S,x));
- while(!S.over){if(fs.bote&&!pk(fs.who).some(x=>x.dn=='Dämonetten')){fs.bote=0;fs.who=1-fs.who}
+ while(!S.over){if(fs.bote&&fs.wild&&!pk(fs.who).some(x=>fs.wild.includes(x.id))){fs.bote=0;fs.wild=null;fs.who=1-fs.who}
+  if(fs.bote&&!fs.wild&&!pk(fs.who).some(x=>x.dn=='Dämonetten')){fs.bote=0;fs.who=1-fs.who}
   let w=fs.who;
   if(!pk(w).length){w=1-w;if(!pk(w).length){fs.on=false;fs.done=true;G.note('Nahkampf abgeschlossen – weiter mit „Weiter“');return}}
   fs.who=w;
   const a=yield {t:'fight',who:w,check:a=>{if(!a)return 'Ungültig';if(a.a=='cmdwin')return '';if(a.a&&a.a.startsWith('ab:'))return a.a=='ab:bd_leg'&&!G.isAI(w)?'Nur vor dem ersten Kampf':actCheck(S,w,a);const u=byId(S,a.u);
    if(a.a!='fight'||!u||!pk(w).includes(u))return 'Diese Einheit kann jetzt nicht kämpfen';
-   if(fs.bote&&u.dn!='Dämonetten')return 'Boten der Entehrung: Als zweite Einheit muss eine Dämonetten-Einheit kämpfen';
+   if(fs.bote&&fs.wild&&!fs.wild.includes(u.id))return 'Wilde Instinkte: Als zweite Einheit muss eine Einheit in Nahkampfreichweite des Generals kämpfen';
+   if(fs.bote&&!fs.wild&&u.dn!='Dämonetten')return 'Boten der Entehrung: Als zweite Einheit muss eine Dämonetten-Einheit kämpfen';
    const inr=foes(S,u).filter(e=>e.x>=0&&dist(u,e)<=CR),only=fxL(S,u,'only').filter(f=>inr.some(e=>e.id==f.v));
    if(only.length&&a.t!=null&&a.t!=only[0].v)return 'Kopfjäger: Alle Attacken müssen den gewählten Helden zum Ziel haben';if(only.length&&(a.d||a.split))return 'Kopfjäger: keine Verteilung möglich';
    if(a.d){const ks=Object.keys(a.d);if(!ks.length||ks.some(k=>!inr.includes(byId(S,+k))||!Number.isFinite(a.d[k])||a.d[k]<0)||ks.reduce((q,k)=>q+a.d[k],0)<=0)return 'Ungültige Verteilung'}
@@ -244,7 +246,10 @@ export function* fights(G){const S=G.S,fs=S.Ph.fs;fs.on=true;fs.done=false;fs.wh
     for(const i of dd){const tt=byId(S,i),lo=c/tot;c+=dmap[i];if(tt&&S.U.includes(tt)&&S.U.includes(u))yield* attackG(G,u,tt,0,[lo,c/tot],pre)}}
    else if(S.U.includes(t)&&S.U.includes(u)){if(perf)perfStreich(G,u,t);else yield* attackG(G,u,t,0)}}
   if(has(S.T.dbl,u.id)&&S.U.includes(u)){if(has(S.T.dm,u.id)){const d=d3(S);G.note('Grind Them to Dust: '+u.name+' erleidet '+d+' tödlichen Schaden');hurt(G,u,d)}S.T.dbl.splice(S.T.dbl.indexOf(u.id),1);S.T.fought.splice(S.T.fought.indexOf(u.id),1);add(S.T.SL,u.id);G.note('Urteil verhängen: '+u.name+' kämpft ein zweites Mal (zuletzt)')}
-  if(fs.bote){fs.bote=0;fs.who=1-w}
+  if(fs.bote){fs.bote=0;fs.wild=null;fs.who=1-w}
+  else if(u.gen&&ENI(S,w)=='sh_wild'&&S.U.includes(u)&&pk(w).some(x=>x!==u&&dist(u,x)<=CR)){const wl=pk(w).filter(x=>x!==u&&dist(u,x)<=CR);
+   const y=G.isAI(w)?true:(yield* choice(G,w,'Wilde Instinkte','Eine befreundete Einheit in Nahkampfreichweite deines Generals darf unmittelbar danach kämpfen: '+wl.map(x=>x.name).join(', ')+'.',[{t:'Einsetzen'},{t:'Nicht einsetzen'}],{pref:0}))===0||false;
+   if(y===true||y===0){fs.bote=1;fs.wild=wl.map(x=>x.id);fs.who=w;G.note('Wilde Instinkte: Eine weitere Einheit kämpft unmittelbar nach dem General')}else{fs.sec=0;fs.who=1-w}}
   else if(RGI(S,w)=='ep_bote'&&u.dn=='Dämonetten'&&pk(w).some(x=>x.dn=='Dämonetten')){fs.bote=1;fs.who=w;G.note('Boten der Entehrung: Eine zweite Dämonetten-Einheit kämpft unmittelbar danach')}
   else if(AN(S,w)=='Strahlende Phalanx'&&(S.fac||[])[w]==2&&!fs.sec&&pk(w).length&&S.U.includes(u)){fs.sec=1;fs.who=w;G.note('Überlegene Reaktionen: Du wählst eine zweite Einheit')}
   else{fs.sec=0;fs.who=1-w}}}
@@ -269,6 +274,9 @@ export function* doAction(G,a){const S=G.S,o=S.act;
  if(a.a.startsWith('rsv:')){const q=byId(S,+a.a.slice(4));const p=yield* place(G,o,'rsv',q,'Aus der Reserve aufstellen','Aufstellen: '+q.name,{cancel:true});if(p.cancel)return;{const Pf=rsvForm(q,p.x,p.y);if(Pf)setAbs(q,Pf);else{q.x=p.x;q.y=p.y}}q.rsv=0;if(q.lim)useKey(S,o+':ank','turn');add(S.T.arr,q.id);S.T.mvt[q.id]=0;add(S.Ph.used,q.id);add(S.T.moved,q.id);G.note(q.name+' erscheint auf dem Schlachtfeld');return}
  if(a.a.startsWith('ab:')){const id=a.a.slice(3);yield* runAb(G,id,a.u!=null?byId(S,a.u):null,o);return}
  const u=byId(S,a.u),P0=u&&u.M&&S.ph==2?abs(u).map(m=>({x:m.x,y:m.y})):null;
+ if(u&&u.trap&&['move','run','retreat','charge'].includes(a.a)){const r=d6(S);u.trap=0;const hit=r>=4;
+  G.rep('Fiese Falle',[{k:'row',l:'Wurf (4+)',v:[r],th:4},{k:'txt',s:hit?u.name+': Die Falle schnappt zu – '+({move:'Bewegung',run:'Rennen',retreat:'Rückzug',charge:'Angriff'})[a.a]+' ohne Effekt, Falle-Marker entfernt':u.name+': Die Falle wird nicht ausgelöst (Marker bleibt)'}]);
+  if(hit){add(S.Ph.used,u.id);if(a.a!='move'&&a.a!='charge')add(S.T.ran,u.id);return}u.trap=1}
  if(u)yield* kdPre(G,a,u);
  if(a.a=='move'){const L=applyMove(S,u,a,mvRest(S,u));add(S.Ph.used,u.id);add(S.T.moved,u.id);S.T.mvt[u.id]=mvOf(S,u);S.T.mvd[u.id]=(S.T.mvd[u.id]||0)+L}
  else if(a.a=='adj'){const A0=abs(u),used=Math.max(...a.P.map((p,i)=>Math.hypot(+p[0]-A0[i].x,+p[1]-A0[i].y)));setAbs(u,a.P.map(p=>({x:+p[0],y:+p[1],a:p[2]})));add(S.T.moved,u.id);

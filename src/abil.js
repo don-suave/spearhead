@@ -489,6 +489,7 @@ export function* eot2(G,o,act){const S=G.S,g=genOf(S,o);
  if(ENI(S,o)=='ms_tag'&&g&&has(S.T.fought,g.id)&&!fxL(S,g,'nomove').length){const r=d6(S)+d6(S);yield* nmove(G,g,'An ’nem andern Tag weiterkämpf’n',r)}
  if(ENI(S,o)=='sp_alt'&&!g&&S.G[o]===S.tn&&!usedKey(S,o+':sp_alt','battle')&&S.GY.some(x=>x.o==o&&x.gen&&x.dn=='Sonnenblut-Kohorte')){useKey(S,o+':sp_alt','battle');const r=d6(S);hdr(G,'Von den Alten gesegnet',r,r>=2,2,'Eine Ersatzeinheit erscheint','Kein Effekt');
   if(r>=2){const q=mkUnit('Sonnenblut-Kohorte',o,S.NID++,1);q.repl=1;const p=yield* place(G,o,'rein',q,'Von den Alten gesegnet','Aufstellen: mehr als 6 Zoll von allen Feinden',{cancel:true});if(!p.cancel){q.x=p.x;q.y=p.y;S.U.push(q);G.note('Von den Alten gesegnet: '+q.name+' erscheint')}}}
+ for(const x of fr(S,o).filter(x=>hasAb(x,'sh_frei')&&x.n<x.nmax)){const k=retM(G,x,d3(S));if(k)G.note('Kein Mangel an Freiwilligen: '+x.name+' '+k+' Modell(e) zurück')}
  if(AN(S,o)=='Blutgeschworene Pilger'&&g)fr(S,o).filter(x=>x.dn=='Blutjäger'&&x.n<x.nmax&&dist(x,g)<=8).forEach(x=>{const k=retM(G,x,d3(S));if(k)G.note('Rasende Hingabe: '+x.name+' '+k+' Modell(e) zurück')});
  // Ab damit in den Topf (Schlundsucher-Mob): Kessel wird voll, wenn in diesem Zug eine Feind-Einheit zerstört wurde
  if(armyN(S,o)=='Schlundsucher-Mob'&&g&&S.D[1-o]>0&&!S.kes[o]){S.kes[o]=1;G.note('Ab damit in den Topf: Der Fleischerkessel ist voll')}
@@ -581,13 +582,13 @@ export function* eot(G){const S=G.S,act=S.act;
  S.U.filter(u=>u.x>=0&&hasAb(u,'nurgl')&&u.dmg>0&&canHeal(S,u)).forEach(u=>{const h=d3(S);u.dmg=Math.max(0,u.dmg-h);G.note('Endloser Schwarm: '+u.name+' heilt '+h)})}
 
 // ---------- Reserven ----------
-export const RSVN={'Skelette (Knochenhorde)':'Die Toten erheben sich','Vargheister':'Sturzflug','Goldwächter':'Feurige Verstärkung','Annihilatoren':'Blitzartiges Eintreffen','Yndrasta, der Celestische Speer':'Blitzartiges Eintreffen','Hungrige Ogors (3 Modelle)':'Noch mehr Ogors, mein Herr!','Prankenbiestreiter':'Noch mehr Ogors, mein Herr!','Verschlinger-Schlundrudel':'Rasende Jäger','Squighoppa':'Squiglawine','Huanchis Jäger':'Chamäleon-Hinterhalt','Chotec-Echse':'Chamäleon-Hinterhalt'};
+export const RSVN={'Skelette (Knochenhorde)':'Die Toten erheben sich','Vargheister':'Sturzflug','Goldwächter':'Feurige Verstärkung','Annihilatoren':'Blitzartiges Eintreffen','Yndrasta, der Celestische Speer':'Blitzartiges Eintreffen','Hungrige Ogors (3 Modelle)':'Noch mehr Ogors, mein Herr!','Prankenbiestreiter':'Noch mehr Ogors, mein Herr!','Verschlinger-Schlundrudel':'Rasende Jäger','Squighoppa':'Squiglawine','Huanchis Jäger':'Chamäleon-Hinterhalt','Chotec-Echse':'Chamäleon-Hinterhalt','Eisenwänste (Nachhut)':'Dann legen wir mal los'};
 export const inRsv=(S,o)=>S.U.filter(u=>u.o==o&&u.x<0&&u.rsv);
-export function rsvGlobals(S,o){if(S.act!=o)return [];return inRsv(S,o).filter(u=>S.round>=u.rr&&S.ph==(u.rph==null?2:u.rph)&&!(u.lim&&usedKey(S,o+':ank','turn'))).map(u=>({k:'rsv:'+u.id,t:(RSVN[u.dn]?RSVN[u.dn]+': ':'')+u.name+' aufstellen',s:{edge:'Bis 3" vom Rand, mehr als 6" von Feinden',edge1:'Bis 1" vom Rand, mehr als 6" von Feinden',any:'Mehr als 6" von allen Feinden',edgeT:'Ganz im eigenen Territorium, bis 3" vom Rand, mehr als 6" von Feinden',corner:'Bis 6" von einer Ecke, mehr als 9" von Feinden'}[u.rsv]}))}
+export function rsvGlobals(S,o){if(S.act!=o)return [];return inRsv(S,o).filter(u=>S.round>=u.rr&&S.ph==(u.rph==null?2:u.rph)&&!(u.lim&&usedKey(S,o+':ank','turn'))).map(u=>({k:'rsv:'+u.id,t:(RSVN[u.dn]?RSVN[u.dn]+': ':'')+u.name+' aufstellen',s:{edge:'Bis 3" vom Rand, mehr als 6" von Feinden',edge1:'Bis 1" vom Rand, mehr als 6" von Feinden',any:'Mehr als 6" von allen Feinden',edgeT:'Ganz im eigenen Territorium, bis 3" vom Rand, mehr als 6" von Feinden',corner:'Bis 6" von einer Ecke, mehr als 9" von Feinden',edgeT6:'Ganz im eigenen Territorium, bis 6" vom Rand, nicht im Nahkampf',edgeT1:'Ganz im eigenen Territorium, bis 1" vom Rand, mehr als 6" von Feinden',edge6:'Bis 6" vom Rand, mehr als 6" von Feinden'}[u.rsv]}))}
 
 // ---- Flags: zeitweilige Modifikatoren, die nicht zu den Grundregeln der Einheit gehören ----
 const sg=v=>(v>0?'+':'')+v;
-const FXL={notgt:['nicht anvisierbar','kann nicht von Fernkampfattacken anvisiert werden'],only:['nur ein Ziel','Alle Attacken müssen einen bestimmten Helden zum Ziel haben'],nochg:['kein Angriff','darf nicht angreifen'],rendWS:['Wucht Fk','Wucht der Fernkampfwaffe'],hit:['Treffer','Trefferwürfe'],hitS:['Treffer Fk','Trefferwürfe (Fernkampf)'],hitTs:['Treffer','Trefferwürfe'],hitTm:['Treffer Nk','Trefferwürfe (Nahkampf)'],hitA:['Treffer','Trefferwürfe'],hitW:['Treffer Waffe','Trefferwürfe einer Waffe'],
+const FXL={rendX:['Wucht gegen Ziel','Wucht der Nahkampfattacken gegen eine bestimmte Einheit'],notgt:['nicht anvisierbar','kann nicht von Fernkampfattacken anvisiert werden'],only:['nur ein Ziel','Alle Attacken müssen einen bestimmten Helden zum Ziel haben'],nochg:['kein Angriff','darf nicht angreifen'],rendWS:['Wucht Fk','Wucht der Fernkampfwaffe'],hit:['Treffer','Trefferwürfe'],hitS:['Treffer Fk','Trefferwürfe (Fernkampf)'],hitTs:['Treffer','Trefferwürfe'],hitTm:['Treffer Nk','Trefferwürfe (Nahkampf)'],hitA:['Treffer','Trefferwürfe'],hitW:['Treffer Waffe','Trefferwürfe einer Waffe'],
  rend:['Rend','Durchschlag'],rendP:['Rend','Durchschlag'],rendV:['Rend','Durchschlag'],chg:['Angriff','Angriffswurf'],ward:['Ward','Ward-Rettung'],wardM:['Ward','Ward-Rettung'],svP:['Rettung','Rettungswürfe'],
  mv:['Bewegung','Bewegung'],run:['Rennen','Rennenwürfe'],ctl:['Kontrolle','Kontrollwert'],att:['Attacken','Attackenwert'],attW:['Attacken Waffe','Attackenwert einer Waffe'],attD:['Attacken ×2','Attackenwert verdoppelt'],
  wnd:['Wunden','Wundenwert'],wndS:['Wunden','Wundenwert'],wndT:['Wunden','Wundenwert'],wndTm:['Wunden','Wundenwert'],wndM:['Wunden','Wundenwert'],crit:['Krit.','Kritische Treffer'],critA:['Krit. Angr.','Kritisch (Attacke)'],critD:['Krit. Vert.','Kritisch (Verteidigung)'],
@@ -745,5 +746,6 @@ export const srcTag=s=>s?'<span style="display:block;color:#e8c46a;font-weight:6
 export {fr,en,lab,yn,rep,row,mort,pickF,pickE,genOf,nmove,roll2,claims,relocate,heroT,armyN,segD,pk,hdr,FL,vis,scE};
 import {install3,eot3,beuteStart,wahnStart,kdPre,kdPost} from './abil3.js';
 import {install4,eot4,start4,dep4,betr} from './abil4.js';
+import {install5} from './abil5.js';
 export {kdPre,kdPost,betr};
-install3();install4();
+install3();install4();install5();

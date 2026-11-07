@@ -1,3 +1,11 @@
+## v141
+- Neue Armee: Ogor-Schlundstämme – Schrotthorde (Speerspitze-Schriftrolle): Menschenfänger (General mit Gnoblar-, Frostsäbelzahn- und Falle-Marker), 2× 2 Eisenwänste, 4 Eisenwänste als Nachhut, 12 Gnoblars, Gnoblar-Schrottschleuder.
+- Regimentsfähigkeiten: Das Leben ist hart, Rasende Artillerie. Verbesserungen: Wilde Instinkte (zweite Einheit kämpft unmittelbar nach dem General), Massiger Körper (+2 Ausdauer), Fiese Falle, Erfahrener Jäger.
+- Marker: Rettung 5+ des Menschenfängers, solange ein Gnoblar- oder Frostsäbelzahn-Marker existiert; jeder erfolgreiche Rettungswurf entfernt einen Marker (automatisch zuerst Gnoblar-, dann Frostsäbelzahn-Marker); ohne Frostsäbelzahn-Marker keine Reißzähne. Falle-Marker: bei jeder Bewegung/Rennen/Rückzug/Angriff des Ziels W6, 4+ → ohne Effekt, Marker weg. Marker und Falle werden im Einheitenfenster angezeigt.
+- Neue Aufstellungsart „ganz im eigenen Territorium, bis 6 Zoll vom Rand, nicht im Nahkampf“ (Dann legen wir mal los, ab Runde 3, Bewegungsphase). Eiserner Schneid ignoriert negative Kontrollmodifikatoren (Näherung: Abzüge aus Effekten, Hooks und globalen Hooks).
+- Fix: KI-Kampfauswahl berücksichtigt die zweite Einheit von Wilde Instinkte.
+- Regeln-App: alle neuen Texte mit englischer Übersetzung. Tests: test/schrott.mjs (17 Tests), test/schrott_game.mjs (KI-Partien mit erzwungener Schrotthorde).
+
 ## v140
 - Zusammenhalt nach Verlusten: Reicht die Wahl der gefallenen Modelle nicht, um den Zusammenhalt zu halten, werden weitere Modelle entfernt, bis die Einheit wieder zusammenhängt; eine Meldung nennt Einheit, Verluste und die Zahl der zusätzlich entfernten Modelle.
 - Regelabgleich mit den PDFs: Giftwindfäuste (Sturmbestien) treffen auf 4+ (war 3+). Schreibweisen angeglichen: Herolde des Nagash, Shyishianische Klinge, Oberste Jägerin.

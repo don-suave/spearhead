@@ -150,7 +150,7 @@ const OVR={'Freigilden-Marschall':'pennant','Pontifex Zenestra':'halo','Flüster
  'Vampirfürst':'vampfang','Blutritter':'horseshoe','Vargheister':'bat',
  'Das Zwieträchtige Dreigestirn':'lips','Slaaneshbestien':'claw','Dämonetten':'whip','Jägerinnen':'bow',
  'Scherbensprecherin des Slaanesh':'mirror','Silbergleven-Jäger':'spear','Slaangor-Scheusale':'slaaneshhead','Giftdorn-Schützen (mit Homunkulus)':'lyre','Giftdorn-Schützen':'crossbow',
- 'Tyrann':'crown','Hungrige Ogors':'maw','Hungrige Ogors (3 Modelle)':'tusk','Eisenwänste':'belly','Prankenbiestreiter':'paw',
+ 'Menschenfänger':'crossbow','Eisenwänste (Schrotthorde)':'belly','Eisenwänste (Nachhut)':'belly','Gnoblars':'dagger','Gnoblar-Schrottschleuder':'cannon','Tyrann':'crown','Hungrige Ogors':'maw','Hungrige Ogors (3 Modelle)':'tusk','Eisenwänste':'belly','Prankenbiestreiter':'paw',
  'Fleischer':'choppa','Metzger':'dagger','Gedärmdeuter':'eye','Verschlinger-Schlundrudel':'fang',
  'Tyrann des Gebrülls':'horn','Eisenspeier':'cannon','Bleispucker':'handgun','Hungrige Ogors (Gebrüll)':'ogorhead','Trauerfangreiter':'paw',
  'Steinkloppa':'club','Steinschmeißer':'boulder','Menschenquetscher-Gargant':'giantfoot','Menschenquetscher-Gargant (Verstärkung)':'fist',
