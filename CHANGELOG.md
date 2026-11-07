@@ -1,3 +1,6 @@
+## v142
+- Schrotthorde: Basisgröße des Menschenfängers laut Battle Profiles auf 40 mm korrigiert (war 50 mm geschätzt). Eisenwänste 40 mm, Gnoblars 25 mm und Schrottschleuder 120×92 mm waren bereits korrekt.
+
 ## v141
 - Neue Armee: Ogor-Schlundstämme – Schrotthorde (Speerspitze-Schriftrolle): Menschenfänger (General mit Gnoblar-, Frostsäbelzahn- und Falle-Marker), 2× 2 Eisenwänste, 4 Eisenwänste als Nachhut, 12 Gnoblars, Gnoblar-Schrottschleuder.
 - Regimentsfähigkeiten: Das Leben ist hart, Rasende Artillerie. Verbesserungen: Wilde Instinkte (zweite Einheit kämpft unmittelbar nach dem General), Massiger Körper (+2 Ausdauer), Fiese Falle, Erfahrener Jäger.
